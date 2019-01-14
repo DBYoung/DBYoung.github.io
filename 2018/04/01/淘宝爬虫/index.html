@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="前段时间老师让我爬取淘宝的商品列表以及其商品详情数据，期间遇到了很多问题。最困难的就是淘宝的价格数据是以Ajax异步加载的，这些数据暂时还没有能力获取到。 下面介绍一下基本思路。 首先，通过抓取商品列表的商品ID获取商品的身份标识，然后根据商品ID跳转到具体的商品列表，对其他属性进行抓取。 观察两条商品列表的URL： https://s.taobao.com/search?q=帽子&amp;amp;img">
+    <meta name="description" content="前段时间老师让我爬取淘宝的商品列表以及其商品详情数据，期间遇到了很多问题。最困难的就是淘宝的价格数据是以Ajax异步加载的，这些数据暂时还没有能力获取到。 下面介绍一下基本思路。">
 <meta name="keywords" content="爬虫">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爬取淘宝商品列表">
 <meta property="og:url" content="http://yoursite.com/2018/04/01/淘宝爬虫/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="前段时间老师让我爬取淘宝的商品列表以及其商品详情数据，期间遇到了很多问题。最困难的就是淘宝的价格数据是以Ajax异步加载的，这些数据暂时还没有能力获取到。 下面介绍一下基本思路。 首先，通过抓取商品列表的商品ID获取商品的身份标识，然后根据商品ID跳转到具体的商品列表，对其他属性进行抓取。 观察两条商品列表的URL： https://s.taobao.com/search?q=帽子&amp;amp;img">
+<meta property="og:description" content="前段时间老师让我爬取淘宝的商品列表以及其商品详情数据，期间遇到了很多问题。最困难的就是淘宝的价格数据是以Ajax异步加载的，这些数据暂时还没有能力获取到。 下面介绍一下基本思路。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/scrapy.jpg">
-<meta property="og:updated_time" content="2019-05-31T03:29:12.127Z">
+<meta property="og:updated_time" content="2019-01-14T05:01:10.386Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬取淘宝商品列表">
-<meta name="twitter:description" content="前段时间老师让我爬取淘宝的商品列表以及其商品详情数据，期间遇到了很多问题。最困难的就是淘宝的价格数据是以Ajax异步加载的，这些数据暂时还没有能力获取到。 下面介绍一下基本思路。 首先，通过抓取商品列表的商品ID获取商品的身份标识，然后根据商品ID跳转到具体的商品列表，对其他属性进行抓取。 观察两条商品列表的URL： https://s.taobao.com/search?q=帽子&amp;amp;img">
+<meta name="twitter:description" content="前段时间老师让我爬取淘宝的商品列表以及其商品详情数据，期间遇到了很多问题。最困难的就是淘宝的价格数据是以Ajax异步加载的，这些数据暂时还没有能力获取到。 下面介绍一下基本思路。">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/scrapy.jpg">
 
 
@@ -150,7 +150,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    17 分钟 读完 (大约 2526 个字)
+                    17 分钟 读完 (大约 2527 个字)
                 </span>
                 
                 
@@ -165,6 +165,8 @@
         <div class="content">
             <p>前段时间老师让我爬取淘宝的商品列表以及其商品详情数据，期间遇到了很多问题。最困难的就是淘宝的价格数据是以Ajax异步加载的，这些数据暂时还没有能力获取到。</p>
 <p>下面介绍一下基本思路。</p>
+<a id="more"></a>
+
 <p>首先，通过抓取商品列表的商品ID获取商品的身份标识，然后根据商品ID跳转到具体的商品列表，对其他属性进行抓取。</p>
 <p>观察两条商品列表的URL：</p>
 <pre><code>https://s.taobao.com/search?q=帽子&amp;imgfile=&amp;commend=all&amp;ssid=s5-e&amp;search_type=item&amp;sourceId=tb.index&amp;spm=a21bo.50862.201856-taobao-item.1&amp;ie=utf8&amp;initiative_id=tbindexz_20170806&amp;bcoffset=7&amp;ntoffset=7&amp;p4ppushleft=1%2C48&amp;s=0

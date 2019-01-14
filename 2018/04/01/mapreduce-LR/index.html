@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$ 其中， $$\beta =\left[\begin{m">
+    <meta name="description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$">
 <meta name="keywords" content="MapReduce,线性回归">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapReduce计算线性回归的系数">
 <meta property="og:url" content="http://yoursite.com/2018/04/01/mapreduce-LR/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$ 其中， $$\beta =\left[\begin{m">
+<meta property="og:description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/mapreduce.jpg">
-<meta property="og:updated_time" content="2019-05-31T04:51:01.367Z">
+<meta property="og:updated_time" content="2019-01-14T04:59:28.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce计算线性回归的系数">
-<meta name="twitter:description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$ 其中， $$\beta =\left[\begin{m">
+<meta name="twitter:description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/mapreduce.jpg">
 
 
@@ -150,7 +150,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 分钟 读完 (大约 1312 个字)
+                    9 分钟 读完 (大约 1313 个字)
                 </span>
                 
                 
@@ -169,6 +169,8 @@
 <p>$$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$</p>
 <p>表示成矩阵形式为：</p>
 <p>$$Y=\beta X$$</p>
+<a id="more"></a>
+
 <p>其中，</p>
 <p>$$\beta =<br>\left[\begin{matrix}<br>\beta_0 \<br>\beta_1 \<br>\beta_2 \<br>\vdots \<br>\beta_p<br>\end{matrix}<br>\right]</p>
 <p>X=<br>\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{11} &amp;\cdots &amp;x_{1p} \<br>&amp;x_{20} &amp;x_{21} &amp;\cdots &amp;x_{2p} \<br>&amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{n0} &amp;x_{n1} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right]<br>$$</p>

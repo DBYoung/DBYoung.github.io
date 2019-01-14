@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="lubridate包简介该包的描述文档介绍道：lubridate包包含了一些处理时间点和时间段的函数：快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快. 1library(lubridate)  各种函数介绍add_with_rollbackadd_wi">
+    <meta name="description" content="lubridate包简介该包的描述文档介绍道：lubridate包包含了一些处理时间点和时间段的函数：快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快. 1library(lubridate)">
 <meta name="keywords" content="R,Lubridate">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lubridate包简介">
 <meta property="og:url" content="http://yoursite.com/2018/04/01/Lubridate_notebook/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="lubridate包简介该包的描述文档介绍道：lubridate包包含了一些处理时间点和时间段的函数：快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快. 1library(lubridate)  各种函数介绍add_with_rollbackadd_wi">
+<meta property="og:description" content="lubridate包简介该包的描述文档介绍道：lubridate包包含了一些处理时间点和时间段的函数：快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快. 1library(lubridate)">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/lubridate.jpg">
-<meta property="og:updated_time" content="2019-05-31T04:51:44.947Z">
+<meta property="og:updated_time" content="2019-01-14T04:59:18.252Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lubridate包简介">
-<meta name="twitter:description" content="lubridate包简介该包的描述文档介绍道：lubridate包包含了一些处理时间点和时间段的函数：快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快. 1library(lubridate)  各种函数介绍add_with_rollbackadd_wi">
+<meta name="twitter:description" content="lubridate包简介该包的描述文档介绍道：lubridate包包含了一些处理时间点和时间段的函数：快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快. 1library(lubridate)">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/lubridate.jpg">
 
 
@@ -150,7 +150,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    11 分钟 读完 (大约 1720 个字)
+                    11 分钟 读完 (大约 1721 个字)
                 </span>
                 
                 
@@ -165,6 +165,8 @@
         <div class="content">
             <h2 id="lubridate包简介"><a href="#lubridate包简介" class="headerlink" title="lubridate包简介"></a>lubridate包简介</h2><p>该包的描述文档介绍道：<br>lubridate包包含了一些处理时间点和时间段的函数：<br>快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快.</p>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">library</span>(lubridate)</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <h2 id="各种函数介绍"><a href="#各种函数介绍" class="headerlink" title="各种函数介绍"></a>各种函数介绍</h2><h3 id="add-with-rollback"><a href="#add-with-rollback" class="headerlink" title="add_with_rollback"></a>add_with_rollback</h3><p>add_with_rollback:Add and subtract months to a date without exceeding the last day of the new month.</p>
 <p>add_with_rollback:将某个日期加上或者减取若干个月，不考虑新获得的月份的最后一天的实际值.比如2009-10-31，加上一个月就是2009-11-31，但是11月没有31号，所以会显示NA.如果使用%m+%，则会以自然月的方式相加.</p>

@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="近期在写一份关于大数据相关的作业，需要搜索近年来市面上关于大数据的书籍信息和课程信息。其中一位同学负责在当当网上爬取书籍信息，我就负责爬取MOOC网的课程信息。 刚开始的时候，以为MOOC网作为一个公益性网站，安全性不会那么高，因此会比较好爬。然而我还是太天真了，网站上一大批JavaScript让我不知所措。好在经过一段时间的探索，终于能够成功爬取了。 网站分析打开MOOC官网，在搜索框输入“大数">
+    <meta name="description" content="近期在写一份关于大数据相关的作业，需要搜索近年来市面上关于大数据的书籍信息和课程信息。其中一位同学负责在当当网上爬取书籍信息，我就负责爬取MOOC网的课程信息。 刚开始的时候，以为MOOC网作为一个公益性网站，安全性不会那么高，因此会比较好爬。然而我还是太天真了，网站上一大批JavaScript让我不知所措。好在经过一段时间的探索，终于能够成功爬取了。">
 <meta name="keywords" content="爬虫">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Selenium爬取MOOC网课程信息">
 <meta property="og:url" content="http://yoursite.com/2018/04/01/selenium-网易云课堂/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="近期在写一份关于大数据相关的作业，需要搜索近年来市面上关于大数据的书籍信息和课程信息。其中一位同学负责在当当网上爬取书籍信息，我就负责爬取MOOC网的课程信息。 刚开始的时候，以为MOOC网作为一个公益性网站，安全性不会那么高，因此会比较好爬。然而我还是太天真了，网站上一大批JavaScript让我不知所措。好在经过一段时间的探索，终于能够成功爬取了。 网站分析打开MOOC官网，在搜索框输入“大数">
+<meta property="og:description" content="近期在写一份关于大数据相关的作业，需要搜索近年来市面上关于大数据的书籍信息和课程信息。其中一位同学负责在当当网上爬取书籍信息，我就负责爬取MOOC网的课程信息。 刚开始的时候，以为MOOC网作为一个公益性网站，安全性不会那么高，因此会比较好爬。然而我还是太天真了，网站上一大批JavaScript让我不知所措。好在经过一段时间的探索，终于能够成功爬取了。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/mooc.jpg">
-<meta property="og:updated_time" content="2019-05-31T03:08:16.784Z">
+<meta property="og:updated_time" content="2019-01-14T04:59:40.800Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Selenium爬取MOOC网课程信息">
-<meta name="twitter:description" content="近期在写一份关于大数据相关的作业，需要搜索近年来市面上关于大数据的书籍信息和课程信息。其中一位同学负责在当当网上爬取书籍信息，我就负责爬取MOOC网的课程信息。 刚开始的时候，以为MOOC网作为一个公益性网站，安全性不会那么高，因此会比较好爬。然而我还是太天真了，网站上一大批JavaScript让我不知所措。好在经过一段时间的探索，终于能够成功爬取了。 网站分析打开MOOC官网，在搜索框输入“大数">
+<meta name="twitter:description" content="近期在写一份关于大数据相关的作业，需要搜索近年来市面上关于大数据的书籍信息和课程信息。其中一位同学负责在当当网上爬取书籍信息，我就负责爬取MOOC网的课程信息。 刚开始的时候，以为MOOC网作为一个公益性网站，安全性不会那么高，因此会比较好爬。然而我还是太天真了，网站上一大批JavaScript让我不知所措。好在经过一段时间的探索，终于能够成功爬取了。">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/mooc.jpg">
 
 
@@ -150,7 +150,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    11 分钟 读完 (大约 1704 个字)
+                    11 分钟 读完 (大约 1705 个字)
                 </span>
                 
                 
@@ -165,6 +165,8 @@
         <div class="content">
             <p>近期在写一份关于大数据相关的作业，需要搜索近年来市面上关于大数据的书籍信息和课程信息。其中一位同学负责在当当网上爬取书籍信息，我就负责爬取MOOC网的课程信息。</p>
 <p>刚开始的时候，以为MOOC网作为一个公益性网站，安全性不会那么高，因此会比较好爬。然而我还是太天真了，网站上一大批JavaScript让我不知所措。好在经过一段时间的探索，终于能够成功爬取了。</p>
+<a id="more"></a>
+
 <h2 id="网站分析"><a href="#网站分析" class="headerlink" title="网站分析"></a>网站分析</h2><p>打开MOOC官网，在搜索框输入“大数据”关键词，发现返回了99条数据（当时的情况），也就是说，有99个关于大数据的课程。</p>
 <p>但是，只有课程列表是不行的。就像爬取淘宝网站的时候，获取到了商品列表，还需要进入到商品的详情页面，然后抓取我们需要的信息。在这里，我们同样需要这样的方法。</p>
 <p>但是，通过Google浏览器的检查功能可以发现，你几乎无法在课程页面获取什么东西——因为几乎都是动态变化的。我试图获取每个课程上面的超链接，然后进入到具体的详情页面，但是很显然直接使用requests方法是不行的。</p>

@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$  Boosting提升（boosting">
+    <meta name="description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="集成学习">
 <meta property="og:url" content="http://yoursite.com/2018/04/04/集成学习/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$  Boosting提升（boosting">
+<meta property="og:description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/ensemble.jpg">
-<meta property="og:updated_time" content="2019-05-31T04:44:59.883Z">
+<meta property="og:updated_time" content="2019-01-14T05:02:03.143Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集成学习">
-<meta name="twitter:description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$  Boosting提升（boosting">
+<meta name="twitter:description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/ensemble.jpg">
 
 
@@ -150,7 +150,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    31 分钟 读完 (大约 4590 个字)
+                    31 分钟 读完 (大约 4591 个字)
                 </span>
                 
                 
@@ -167,6 +167,8 @@
 <p>Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &gt; 0$有如下等式成立：</p>
 <p>$$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$</p>
 </blockquote>
+<a id="more"></a>
+
 <h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p>提升（boosting）方法是一种常用的机器学习方法，应用广泛且有效。在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。</p>
 <h3 id="提升方法的基本思路"><a href="#提升方法的基本思路" class="headerlink" title="提升方法的基本思路"></a>提升方法的基本思路</h3><p>提升方法基于这样一种思想：对于一个复杂的任务来说，将多个专家的判断进行适当的综合所得出的判断，要比其中任何一个专家单独的判断好。实际上，就是“三个臭皮匠赛过诸葛亮”的道理。</p>
 <p>历史上，Kearns和Valiant首先提出了“强可学习（strong learnable）”和“弱可学习（weakly learnable）”的概念。指出：在概率近似正确学习的框架中，一个概念（一个类），如果存在一个多项式的学习算法能够学习它，并且正确率很高，那么就称这个概念是强可学习的；一个概念，如果存在一个多项式的学习算法能够学习它，学习的正确率仅比随机猜测略好，那么就称这个概念是弱可学习的。非常有趣的是Schapire后来证明强可学习与弱可学习是等价的，也就是说，在PAC学习的框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。</p>
@@ -322,16 +324,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/线性模型/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/降维方法/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">线性模型</span>
+                <span class="level-item">降维方法</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/04/降维方法/">
-                <span class="level-item">降维方法</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/04/贝叶斯分类器/">
+                <span class="level-item">贝叶斯分类器</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
