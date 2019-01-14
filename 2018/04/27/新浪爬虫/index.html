@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。  从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。">
+    <meta name="description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。">
 <meta name="keywords" content="爬虫">
 <meta property="og:type" content="article">
 <meta property="og:title" content="新浪新闻爬虫">
 <meta property="og:url" content="http://yoursite.com/2018/04/27/新浪爬虫/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。  从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。">
+<meta property="og:description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/sina.jpg">
-<meta property="og:updated_time" content="2019-01-14T05:00:45.448Z">
+<meta property="og:updated_time" content="2019-01-14T07:19:41.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="新浪新闻爬虫">
-<meta name="twitter:description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。  从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。">
+<meta name="twitter:description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/sina.jpg">
 
 
@@ -164,10 +164,10 @@
         </h1>
         <div class="content">
             <h2 id="获取标题列表"><a href="#获取标题列表" class="headerlink" title="获取标题列表"></a>获取标题列表</h2><p>新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。</p>
-<p><img src="/picture/sina_scrapy.png" alt="sina_scrapy"></p>
-<p>从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。</p>
 <a id="more"></a>
 
+<p><img src="/picture/sina_scrapy.png" alt="sina_scrapy"></p>
+<p>从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。</p>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> requests</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="hljs-keyword">import</span> re</span><br><span class="line"><span class="hljs-keyword">import</span> time</span><br><span class="line"><span class="hljs-keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#第一页的URL</span></span><br><span class="line">startURL = <span class="hljs-string">'http://search.sina.com.cn/?c=news&amp;q=%D0%F0%C0%FB%D1%C7+%BF%D5%CF%AE&amp;range=all&amp;time=2018&amp;stime=&amp;etime=&amp;num=20'</span></span><br><span class="line"></span><br><span class="line">url = startURL</span><br><span class="line">allNewsURL = []</span><br><span class="line">errorPages = []</span><br><span class="line">count = <span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-keyword">while</span> url:</span><br><span class="line">    <span class="hljs-keyword">try</span>:</span><br><span class="line">        res = requests.get(url)</span><br><span class="line">        print(<span class="hljs-string">'已经爬取了第'</span>,count,<span class="hljs-string">'页！'</span>)</span><br><span class="line">        print(<span class="hljs-string">'URL:'</span>,url)</span><br><span class="line">        soup = BeautifulSoup(res.text,<span class="hljs-string">'html.parser'</span>)</span><br><span class="line">        <span class="hljs-keyword">for</span> news <span class="hljs-keyword">in</span> soup.findAll(<span class="hljs-string">'h2'</span>):</span><br><span class="line">            allNewsURL.append(news.find(<span class="hljs-string">'a'</span>).get(<span class="hljs-string">'href'</span>))</span><br><span class="line">        pages = soup.find(<span class="hljs-string">'div'</span>,&#123;<span class="hljs-string">'id'</span>:<span class="hljs-string">"_function_code_page"</span>&#125;).findAll(<span class="hljs-string">'a'</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> pages[<span class="hljs-number">-1</span>].get(<span class="hljs-string">'title'</span>) == <span class="hljs-string">'下一页'</span>:</span><br><span class="line">            url = <span class="hljs-string">'http://search.sina.com.cn'</span> + pages[<span class="hljs-number">-1</span>].get(<span class="hljs-string">'href'</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">        time.sleep(np.random.rand() + <span class="hljs-number">2</span>)</span><br><span class="line">        count += <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">except</span> AttributeError:</span><br><span class="line">        print(<span class="hljs-string">'ip被封！'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'xuliyakongxi.csv'</span>,<span class="hljs-string">'a'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> allNewsURL:</span><br><span class="line">        f.write(url+<span class="hljs-string">'\n'</span>)</span><br></pre></td></tr></table></figure>
 
 <h2 id="获取文章详情"><a href="#获取文章详情" class="headerlink" title="获取文章详情"></a>获取文章详情</h2><p>获取文章详情需要注意以下两点：</p>

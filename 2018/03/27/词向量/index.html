@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="引言 在机器学习领域，语言识别和图像识别都比较容易做到。语音识别的输入数据可以是音频频谱序列向量所构成的matrix，图像识别的输入数据是像素点向量构成的矩阵。但是文本是一种抽象的东西，显然不能直接把文本数据喂给机器当做输入，因此这里就需要对文本数据进行处理。 现在，有这么一个有趣的例子，我接下来要讲的模型就可以做到。">
+    <meta name="description" content="引言 在机器学习领域，语言识别和图像识别都比较容易做到。语音识别的输入数据可以是音频频谱序列向量所构成的matrix，图像识别的输入数据是像素点向量构成的矩阵。但是文本是一种抽象的东西，显然不能直接把文本数据喂给机器当做输入，因此这里就需要对文本数据进行处理。">
 <meta name="keywords" content="自然语言处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Word2Vec-语言模型的前世今生">
 <meta property="og:url" content="http://yoursite.com/2018/03/27/词向量/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="引言 在机器学习领域，语言识别和图像识别都比较容易做到。语音识别的输入数据可以是音频频谱序列向量所构成的matrix，图像识别的输入数据是像素点向量构成的矩阵。但是文本是一种抽象的东西，显然不能直接把文本数据喂给机器当做输入，因此这里就需要对文本数据进行处理。 现在，有这么一个有趣的例子，我接下来要讲的模型就可以做到。">
+<meta property="og:description" content="引言 在机器学习领域，语言识别和图像识别都比较容易做到。语音识别的输入数据可以是音频频谱序列向量所构成的matrix，图像识别的输入数据是像素点向量构成的矩阵。但是文本是一种抽象的东西，显然不能直接把文本数据喂给机器当做输入，因此这里就需要对文本数据进行处理。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/word2vec.jpg">
-<meta property="og:updated_time" content="2019-01-14T05:01:40.663Z">
+<meta property="og:updated_time" content="2019-01-14T07:20:16.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Word2Vec-语言模型的前世今生">
-<meta name="twitter:description" content="引言 在机器学习领域，语言识别和图像识别都比较容易做到。语音识别的输入数据可以是音频频谱序列向量所构成的matrix，图像识别的输入数据是像素点向量构成的矩阵。但是文本是一种抽象的东西，显然不能直接把文本数据喂给机器当做输入，因此这里就需要对文本数据进行处理。 现在，有这么一个有趣的例子，我接下来要讲的模型就可以做到。">
+<meta name="twitter:description" content="引言 在机器学习领域，语言识别和图像识别都比较容易做到。语音识别的输入数据可以是音频频谱序列向量所构成的matrix，图像识别的输入数据是像素点向量构成的矩阵。但是文本是一种抽象的东西，显然不能直接把文本数据喂给机器当做输入，因此这里就需要对文本数据进行处理。">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/word2vec.jpg">
 
 
@@ -169,9 +169,9 @@
         <div class="content">
             <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p><img src="/picture/feeding.jpg" alt="picture"></p>
 <p>在机器学习领域，语言识别和图像识别都比较容易做到。语音识别的输入数据可以是音频频谱序列向量所构成的matrix，图像识别的输入数据是像素点向量构成的矩阵。但是文本是一种抽象的东西，显然不能直接把文本数据喂给机器当做输入，因此这里就需要对文本数据进行处理。</p>
-<p>现在，有这么一个有趣的例子，我接下来要讲的模型就可以做到。</p>
 <a id="more"></a>
 
+<p>现在，有这么一个有趣的例子，我接下来要讲的模型就可以做到。</p>
 <ul>
 <li>首先给出一个例子，Paris - France + America = ?</li>
 </ul>

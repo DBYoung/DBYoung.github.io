@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。 k-means聚类的一个最大的问题是计算困难，然而，常用的启发式算法能够很快收敛到局部最优解。这通常与高斯分布的期望最大化算法相似，这两种算法都采用迭代求精的方法。此">
+    <meta name="description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
 <meta name="keywords" content="kmeans,clustering">
 <meta property="og:type" content="article">
 <meta property="og:title" content="k-means聚类算法学习笔记">
 <meta property="og:url" content="http://yoursite.com/2018/04/04/kmeans/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。 k-means聚类的一个最大的问题是计算困难，然而，常用的启发式算法能够很快收敛到局部最优解。这通常与高斯分布的期望最大化算法相似，这两种算法都采用迭代求精的方法。此">
+<meta property="og:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/Kmeans.gif">
-<meta property="og:updated_time" content="2019-01-14T07:05:20.566Z">
+<meta property="og:updated_time" content="2019-01-14T07:11:40.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k-means聚类算法学习笔记">
-<meta name="twitter:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。 k-means聚类的一个最大的问题是计算困难，然而，常用的启发式算法能够很快收敛到局部最优解。这通常与高斯分布的期望最大化算法相似，这两种算法都采用迭代求精的方法。此">
+<meta name="twitter:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/Kmeans.gif">
 
 
@@ -150,7 +150,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 小时 读完 (大约 8097 个字)
+                    1 小时 读完 (大约 8098 个字)
                 </span>
                 
                 
@@ -164,9 +164,9 @@
         </h1>
         <div class="content">
             <h2 id="聚类算法介绍"><a href="#聚类算法介绍" class="headerlink" title="聚类算法介绍"></a>聚类算法介绍</h2><h3 id="k-means算法介绍"><a href="#k-means算法介绍" class="headerlink" title="k-means算法介绍"></a>k-means算法介绍</h3><p>k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。</p>
-<p>k-means聚类的一个最大的问题是计算困难，然而，常用的启发式算法能够很快收敛到局部最优解。这通常与高斯分布的期望最大化算法相似，这两种算法都采用迭代求精的方法。此外，它们都使用聚类中心来对数据进行建模</p>
 <a id="more"></a>
 
+<p>k-means聚类的一个最大的问题是计算困难，然而，常用的启发式算法能够很快收敛到局部最优解。这通常与高斯分布的期望最大化算法相似，这两种算法都采用迭代求精的方法。此外，它们都使用聚类中心来对数据进行建模。</p>
 <h3 id="k-means算法的提出与发展"><a href="#k-means算法的提出与发展" class="headerlink" title="k-means算法的提出与发展"></a>k-means算法的提出与发展</h3><p>詹姆斯·麦奎恩（James MacQueen）1967年第一次使用这个术语“k-means”，虽然这个想法可以追溯到1957年的雨果·斯坦豪斯（Hugo Steinhaus）。<br>标准算法首先由Stuart Lloyd在1957年提出，作为脉冲编码调制技术，尽管直到1982年才发布在贝尔实验室以外。<br>1965年，E. W. Forgy发表了基本相同的方法，这就是为什么它有时被称为Lloyd-Forgy。</p>
 <h3 id="k-means算法的优势适应问题"><a href="#k-means算法的优势适应问题" class="headerlink" title="k-means算法的优势适应问题"></a>k-means算法的优势适应问题</h3><ul>
 <li><p>k-means算法优点</p>
