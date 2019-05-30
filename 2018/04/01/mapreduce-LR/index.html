@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$ 其中， $$\beta =\left[\begin{m">
+    <meta name="description" content="先修知识设多元线性回归方程的模型为 Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p可令$X_0=1$，则模型可写做： Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p表示成矩阵形式为： Y=\beta X其中， \beta =  \left[\begin{matrix} \beta_0 \\">
 <meta name="keywords" content="MapReduce,线性回归">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapReduce计算线性回归的系数">
 <meta property="og:url" content="http://yoursite.com/2018/04/01/mapreduce-LR/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$ 其中， $$\beta =\left[\begin{m">
+<meta property="og:description" content="先修知识设多元线性回归方程的模型为 Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p可令$X_0=1$，则模型可写做： Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p表示成矩阵形式为： Y=\beta X其中， \beta =  \left[\begin{matrix} \beta_0 \\">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
 <meta property="og:updated_time" content="2018-03-31T16:10:44.111Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce计算线性回归的系数">
-<meta name="twitter:description" content="先修知识设多元线性回归方程的模型为 $$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 可令$X_0=1$，则模型可写做： $$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$ 表示成矩阵形式为： $$Y=\beta X$$ 其中， $$\beta =\left[\begin{m">
+<meta name="twitter:description" content="先修知识设多元线性回归方程的模型为 Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p可令$X_0=1$，则模型可写做： Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p表示成矩阵形式为： Y=\beta X其中， \beta =  \left[\begin{matrix} \beta_0 \\">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -170,127 +170,188 @@
         </h1>
         <div class="content">
             <h2 id="先修知识"><a href="#先修知识" class="headerlink" title="先修知识"></a>先修知识</h2><p>设多元线性回归方程的模型为</p>
-<p>$$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$</p>
-<p>可令$X_0=1$，则模型可写做：</p>
-<p>$$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$</p>
-<p>表示成矩阵形式为：</p>
-<p>$$Y=\beta X$$</p>
-<p>其中，</p>
-<p>$$\beta =<br>\left[\begin{matrix}<br>\beta_0 \<br>\beta_1 \<br>\beta_2 \<br>\vdots \<br>\beta_p<br>\end{matrix}<br>\right]<br>X=<br>\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{11} &amp;\cdots &amp;x_{1p} \<br>&amp;x_{20} &amp;x_{21} &amp;\cdots &amp;x_{2p} \<br>&amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{n0} &amp;x_{n1} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right]<br>$$</p>
-<p>则线性回归方程的最小二乘系数估计值为:</p>
-<p>$$\hat{\beta} = (X’X)^{-1}X’Y$$</p>
-<h2 id="编程思路"><a href="#编程思路" class="headerlink" title="编程思路"></a>编程思路</h2><p>利用MapReduce计算系数是，由于输入数据是一行一行进行读取的，因此在计算的时候，不可能直接利用矩阵乘法进行计算。这里，我们假设输入的数据格式为：</p>
-<p>$$x_0\ x_1\ x_2\ \cdots x_p\ y$$</p>
-<p>即</p>
-<p>$$1\  x_1\ x_2\ \cdots x_p\ y$$</p>
-<p>首先，考虑最简单的，计算$X’Y$，即计算</p>
-<p>$$<br>\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{20} &amp;x_{30} &amp;\cdots &amp;x_{n0} \<br>&amp;x_{11} &amp;x_{21} &amp;x_{31} &amp;\cdots &amp;x_{n1} \<br>&amp;x_{12} &amp;x_{22} &amp;x_{32} &amp;\cdots &amp;x_{n2} \<br>&amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{1p} &amp;x_{2p} &amp;x_{3p} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right] \times<br>\left[\begin{matrix}<br>        y_1 \<br>        y_2 \<br>        y_3 \<br>        \vdots \<br>        y_n<br>    \end{matrix}\right]=\left[\begin{matrix}<br>        &amp;x_{10}y_1+&amp;x_{20}y_2+&amp;x_{30}y_3+&amp;\cdots+&amp;x_{n0}y_n \<br>        &amp;x_{11}y_1+&amp;x_{21}y_2+&amp;x_{31}y_3+&amp;\cdots+&amp;x_{n1}y_n \<br>        &amp;x_{12}y_1+&amp;x_{22}y_2+&amp;x_{32}y_3+&amp;\cdots+&amp;x_{n2}y_n \<br>        &amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>        &amp;x_{1p}y_1+&amp;x_{2p}y_2+&amp;x_{3p}y_3+&amp;\cdots+&amp;x_{np}y_n<br>        \end{matrix}\right]<br>$$</p>
-<p>观察右侧矩阵可以发现，$y_1$总是与第一列相乘，$y_2$总是与第二列相乘，……，以此类推。而第一列实际上就是我们读取数据的第一行，第二列是读取数据的第二行……。根据这种规律，我们每读取一行，就让当前的$y$与所有的自变量相乘，然后把所有的结果累加求和，即为我们想要的结果。</p>
+<script type="math/tex; mode=display">Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p</script><p>可令$X_0=1$，则模型可写做：</p>
+<script type="math/tex; mode=display">Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p</script><p>表示成矩阵形式为：</p>
+<script type="math/tex; mode=display">Y=\beta X</script><p>其中，</p>
+<script type="math/tex; mode=display">\beta = 
+\left[\begin{matrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2 \\
+\vdots \\
+\beta_p
+\end{matrix}
+\right] 
+X=
+\left[\begin{matrix}
+&x_{10} &x_{11} &\cdots &x_{1p} \\
+&x_{20} &x_{21} &\cdots &x_{2p} \\
+&\vdots &\vdots &\ddots &\vdots \\
+&x_{n0} &x_{n1} &\cdots &x_{np}
+\end{matrix}\right]</script><p>则线性回归方程的最小二乘系数估计值为:</p>
+<script type="math/tex; mode=display">\hat{\beta} = (X'X)^{-1}X'Y</script><h2 id="编程思路"><a href="#编程思路" class="headerlink" title="编程思路"></a>编程思路</h2><p>利用MapReduce计算系数是，由于输入数据是一行一行进行读取的，因此在计算的时候，不可能直接利用矩阵乘法进行计算。这里，我们假设输入的数据格式为：</p>
+<script type="math/tex; mode=display">x_0\ x_1\ x_2\ \cdots x_p\ y</script><p>即</p>
+<script type="math/tex; mode=display">1\  x_1\ x_2\ \cdots x_p\ y</script><p>首先，考虑最简单的，计算$X’Y$，即计算</p>
+<script type="math/tex; mode=display">
+\left[\begin{matrix}
+&x_{10} &x_{20} &x_{30} &\cdots &x_{n0} \\
+&x_{11} &x_{21} &x_{31} &\cdots &x_{n1} \\
+&x_{12} &x_{22} &x_{32} &\cdots &x_{n2} \\
+&\vdots &\vdots &\vdots &\ddots &\vdots \\
+&x_{1p} &x_{2p} &x_{3p} &\cdots &x_{np}
+\end{matrix}\right] \times
+\left[\begin{matrix}
+        y_1 \\
+        y_2 \\
+        y_3 \\
+        \vdots \\
+        y_n
+    \end{matrix}\right]=\left[\begin{matrix}
+        &x_{10}y_1+&x_{20}y_2+&x_{30}y_3+&\cdots+&x_{n0}y_n \\
+        &x_{11}y_1+&x_{21}y_2+&x_{31}y_3+&\cdots+&x_{n1}y_n \\
+        &x_{12}y_1+&x_{22}y_2+&x_{32}y_3+&\cdots+&x_{n2}y_n \\
+        &\vdots &\vdots &\vdots &\ddots &\vdots \\
+        &x_{1p}y_1+&x_{2p}y_2+&x_{3p}y_3+&\cdots+&x_{np}y_n
+        \end{matrix}\right]</script><p>观察右侧矩阵可以发现，$y_1$总是与第一列相乘，$y_2$总是与第二列相乘，……，以此类推。而第一列实际上就是我们读取数据的第一行，第二列是读取数据的第二行……。根据这种规律，我们每读取一行，就让当前的$y$与所有的自变量相乘，然后把所有的结果累加求和，即为我们想要的结果。</p>
 <p>上面已经解决了矩阵自变量矩阵的转置与因变量向量的乘积，即：</p>
-<p>$$part1 = X’Y$$</p>
-<p>那么，矩阵转置与矩阵的乘积$X’X$仍然可以仿照上述的方法进行。</p>
-<p>$$X’X = \left[\begin{matrix}<br>&amp;x_{10} &amp;x_{20} &amp;x_{30} &amp;\cdots &amp;x_{n0} \<br>&amp;x_{11} &amp;x_{21} &amp;x_{31} &amp;\cdots &amp;x_{n1} \<br>&amp;x_{12} &amp;x_{22} &amp;x_{32} &amp;\cdots &amp;x_{n2} \<br>&amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{1p} &amp;x_{2p} &amp;x_{3p} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right]<br>\times\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{11} &amp;\cdots &amp;x_{1p} \<br>&amp;x_{20} &amp;x_{21} &amp;\cdots &amp;x_{2p} \<br>&amp;x_{30} &amp;x_{31} &amp;\cdots &amp;x_{2p} \<br>&amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{n0} &amp;x_{n1} &amp;\cdots &amp;x_{np}<br>\end{matrix}<br>\right]<br>$$</p>
-<p>$$=\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{20} &amp;x_{30} &amp;\cdots &amp;x_{n0} \<br>&amp;x_{11} &amp;x_{21} &amp;x_{31} &amp;\cdots &amp;x_{n1} \<br>&amp;x_{12} &amp;x_{22} &amp;x_{32} &amp;\cdots &amp;x_{n2} \<br>&amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{1p} &amp;x_{2p} &amp;x_{3p} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right]\times\left[\begin{matrix}<br>x_0, x_1, x_2, \cdots, x_p<br>\end{matrix}\right]<br>$$</p>
-<p>可以把上述既然课程看作是进行了$p+1$次的矩阵转置与向量乘积过程。当读取第一行时，我们可以得到一个矩阵：</p>
-<p>$$<br>step1 = \left[\begin{matrix}<br>        &amp;x_{10}x_{10} &amp;x_{11}x_{10} &amp;\cdots &amp;x_{1p}x_{10} \<br>        &amp;x_{10}x_{11} &amp;x_{11}x_{11} &amp;\cdots &amp;x_{1p}x_{11} \<br>        &amp;x_{10}x_{12} &amp;x_{11}x_{12} &amp;\cdots &amp;x_{1p}x_{12} \<br>        &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots                   \<br>        &amp;x_{10}x_{1p} &amp;x_{11}x_{1p} &amp;\cdots &amp;x_{1p}x_{1p}<br>    \end{matrix}\right]$$<br>同理，当读取第二行的时候，同样可以得到一个矩阵：</p>
-<p>$$<br>step2 = \left[<br>    \begin{matrix}<br>        &amp;x_{20}x_{20} &amp;x_{21}x_{20} &amp;\cdots &amp;x_{2p}x_{20} \<br>        &amp;x_{20}x_{21} &amp;x_{21}x_{21} &amp;\cdots &amp;x_{2p}x_{21} \<br>        &amp;x_{20}x_{22} &amp;x_{21}x_{12} &amp;\cdots &amp;x_{2p}x_{12} \<br>        &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots                   \<br>        &amp;x_{20}x_{2p} &amp;x_{21}x_{2p} &amp;\cdots &amp;x_{2p}x_{2p}<br>    \end{matrix}\right]$$</p>
-<p>此时，将$step1\ step2$对应元素相加，即得到我们的更新矩阵。迭代下去，最终读取完所在的数据，即为$X’X$的结果。</p>
+<script type="math/tex; mode=display">part1 = X'Y</script><p>那么，矩阵转置与矩阵的乘积$X’X$仍然可以仿照上述的方法进行。</p>
+<script type="math/tex; mode=display">X'X = \left[\begin{matrix}
+&x_{10} &x_{20} &x_{30} &\cdots &x_{n0} \\
+&x_{11} &x_{21} &x_{31} &\cdots &x_{n1} \\
+&x_{12} &x_{22} &x_{32} &\cdots &x_{n2} \\
+&\vdots &\vdots &\vdots &\ddots &\vdots \\
+&x_{1p} &x_{2p} &x_{3p} &\cdots &x_{np}
+\end{matrix}\right]
+\times\left[\begin{matrix}
+&x_{10} &x_{11} &\cdots &x_{1p} \\
+&x_{20} &x_{21} &\cdots &x_{2p} \\
+&x_{30} &x_{31} &\cdots &x_{2p} \\
+&\vdots &\vdots &\ddots &\vdots \\
+&x_{n0} &x_{n1} &\cdots &x_{np}
+\end{matrix}
+\right]</script><script type="math/tex; mode=display">=\left[\begin{matrix}
+&x_{10} &x_{20} &x_{30} &\cdots &x_{n0} \\
+&x_{11} &x_{21} &x_{31} &\cdots &x_{n1} \\
+&x_{12} &x_{22} &x_{32} &\cdots &x_{n2} \\
+&\vdots &\vdots &\vdots &\ddots &\vdots \\
+&x_{1p} &x_{2p} &x_{3p} &\cdots &x_{np}
+\end{matrix}\right]\times\left[\begin{matrix}
+x_0, x_1, x_2, \cdots, x_p
+\end{matrix}\right]</script><p>可以把上述既然课程看作是进行了$p+1$次的矩阵转置与向量乘积过程。当读取第一行时，我们可以得到一个矩阵：</p>
+<script type="math/tex; mode=display">
+step1 = \left[\begin{matrix}
+        &x_{10}x_{10} &x_{11}x_{10} &\cdots &x_{1p}x_{10} \\
+        &x_{10}x_{11} &x_{11}x_{11} &\cdots &x_{1p}x_{11} \\
+        &x_{10}x_{12} &x_{11}x_{12} &\cdots &x_{1p}x_{12} \\
+        &\vdots &\vdots &\ddots &\vdots                   \\
+        &x_{10}x_{1p} &x_{11}x_{1p} &\cdots &x_{1p}x_{1p}
+    \end{matrix}\right]</script><p>同理，当读取第二行的时候，同样可以得到一个矩阵：</p>
+<script type="math/tex; mode=display">
+step2 = \left[
+    \begin{matrix}
+        &x_{20}x_{20} &x_{21}x_{20} &\cdots &x_{2p}x_{20} \\
+        &x_{20}x_{21} &x_{21}x_{21} &\cdots &x_{2p}x_{21} \\
+        &x_{20}x_{22} &x_{21}x_{12} &\cdots &x_{2p}x_{12} \\
+        &\vdots &\vdots &\ddots &\vdots                   \\
+        &x_{20}x_{2p} &x_{21}x_{2p} &\cdots &x_{2p}x_{2p}
+    \end{matrix}\right]</script><p>此时，将$step1\ step2$对应元素相加，即得到我们的更新矩阵。迭代下去，最终读取完所在的数据，即为$X’X$的结果。</p>
 <p>当数据量很大的时候，用MapReduce方法进行计算，hadoop会将数据按照block的大小切分成若干块，每一块都执行mapper函数，在reducer里面把所有的mapper结果加起来，最后计算$(X’X)^{-1}X’Y$.</p>
 <h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>由于矩阵的输出不容易处理，因此在得到矩阵的时候，可以将其拉长为向量，这样就可以使用标准化输出函数print将计算结果输出，以便于reducer使用。</p>
 <p>mapper函数如下：</p>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#! /usr/bin/anaconda2/bin/python</span>
-<span class="token comment" spellcheck="true"># -*- coding:UTF-8 -*-</span>
+<pre class=" language-lang-python"><code class="language-lang-python">#! /usr/bin/anaconda2/bin/python
+# -*- coding:UTF-8 -*-
 
-<span class="token keyword">import</span> sys
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+import sys
+import numpy as np
 
-<span class="token keyword">def</span> <span class="token function">read_input</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">for</span> line <span class="token keyword">in</span> file<span class="token punctuation">:</span>
-        <span class="token keyword">yield</span> line<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+def read_input(file):
+    for line in file:
+        yield line.strip()
 
-<span class="token keyword">def</span> <span class="token function">matmulti</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+def matmulti():
 
-    input <span class="token operator">=</span> read_input<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>stdin<span class="token punctuation">)</span>
+    input = read_input(sys.stdin)
 
-    innerLength <span class="token operator">=</span> <span class="token number">0</span>
-    length <span class="token operator">=</span> <span class="token number">0</span>
-    <span class="token keyword">for</span> line <span class="token keyword">in</span> input<span class="token punctuation">:</span>
-        fields <span class="token operator">=</span> line<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> innerLength <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-            innerLength <span class="token operator">=</span> len<span class="token punctuation">(</span>fields<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span>
-            data1 <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0.0</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>innerLength<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-        temp <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>fields<span class="token punctuation">,</span>float<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span>innerLength<span class="token punctuation">]</span><span class="token operator">*</span>float<span class="token punctuation">(</span>fields<span class="token punctuation">[</span>innerLength<span class="token punctuation">]</span><span class="token punctuation">)</span>
-        data1 <span class="token operator">=</span> data1 <span class="token operator">+</span> temp
+    innerLength = 0
+    length = 0
+    for line in input:
+        fields = line.split(",")
+        if innerLength == 0:
+            innerLength = len(fields) - 1
+            data1 = np.array([0.0 for _ in range(innerLength)])
+        temp = np.array(fields,float)[:innerLength]*float(fields[innerLength])
+        data1 = data1 + temp
 
-        <span class="token keyword">if</span> length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-            length <span class="token operator">=</span> len<span class="token punctuation">(</span>fields<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span>
-            data2 <span class="token operator">=</span> np<span class="token punctuation">.</span>diag<span class="token punctuation">(</span>np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">for</span> index <span class="token keyword">in</span> range<span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">:</span>
-            data2<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">+=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>fields<span class="token punctuation">[</span><span class="token punctuation">:</span>length<span class="token punctuation">]</span><span class="token punctuation">,</span>dtype <span class="token operator">=</span> float<span class="token punctuation">)</span><span class="token operator">*</span>float<span class="token punctuation">(</span>fields<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        if length == 0:
+            length = len(fields) - 1
+            data2 = np.diag(np.zeros(length))
+        for index in range(length):
+            data2[index] += np.array(fields[:length],dtype = float)*float(fields[index])
 
-    <span class="token keyword">return</span> data1<span class="token punctuation">,</span>data2
+    return data1,data2
 
-data1<span class="token punctuation">,</span>data2 <span class="token operator">=</span> matmulti<span class="token punctuation">(</span><span class="token punctuation">)</span>
-data1 <span class="token operator">=</span> list<span class="token punctuation">(</span>data1<span class="token punctuation">)</span>
-length <span class="token operator">=</span> len<span class="token punctuation">(</span>data2<span class="token punctuation">)</span>
-data2 <span class="token operator">=</span> data2<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>length<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span>
-data2 <span class="token operator">=</span> list<span class="token punctuation">(</span>data2<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-data <span class="token operator">=</span> data1 <span class="token operator">+</span> data2
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\t"</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>str<span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+data1,data2 = matmulti()
+data1 = list(data1)
+length = len(data2)
+data2 = data2.reshape(1,length**2)
+data2 = list(data2[0])
+data = data1 + data2
+print("\t".join(str(i) for i in data))
 </code></pre>
 <p>reducer函数如下：</p>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#! /usr/bin/anaconda2/bin/python</span>
-<span class="token comment" spellcheck="true"># -*- coding:UTF-8 -*-</span>
+<pre class=" language-lang-python"><code class="language-lang-python">#! /usr/bin/anaconda2/bin/python
+# -*- coding:UTF-8 -*-
 
-<span class="token keyword">import</span> sys
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> math
+import sys
+import numpy as np
+import math
 
-<span class="token keyword">def</span> <span class="token function">read_input</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">for</span> line <span class="token keyword">in</span> file<span class="token punctuation">:</span>
-        <span class="token keyword">yield</span> line<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+def read_input(file):
+    for line in file:
+        yield line.strip()
 
-input <span class="token operator">=</span> read_input<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>stdin<span class="token punctuation">)</span>
+input = read_input(sys.stdin)
 
-length <span class="token operator">=</span> <span class="token number">0</span>
+length = 0
 
-<span class="token keyword">for</span> line <span class="token keyword">in</span> input<span class="token punctuation">:</span>
-    fields <span class="token operator">=</span> line<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">"\t"</span><span class="token punctuation">)</span>
-    <span class="token keyword">if</span> length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
-        length <span class="token operator">=</span> len<span class="token punctuation">(</span>fields<span class="token punctuation">)</span>
-        data <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0.0</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    fields <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>fields<span class="token punctuation">,</span>dtype <span class="token operator">=</span> float<span class="token punctuation">)</span>
-    data <span class="token operator">+=</span> fields
+for line in input:
+    fields = line.split("\t")
+    if length == 0:
+        length = len(fields)
+        data = np.array([0.0 for _ in range(length)])
+    fields = np.array(fields,dtype = float)
+    data += fields
 
-lenght <span class="token operator">=</span> len<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
-varnums <span class="token operator">=</span> int<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token operator">+</span>math<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">+</span><span class="token number">4.0</span><span class="token operator">*</span>length<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2.0</span><span class="token punctuation">)</span>
+lenght = len(data)
+varnums = int((-1+math.sqrt(1+4.0*length))/2.0)
 
-part1 <span class="token operator">=</span> np<span class="token punctuation">.</span>mat<span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token punctuation">:</span>varnums<span class="token punctuation">]</span><span class="token punctuation">)</span>
-part1 <span class="token operator">=</span> part1<span class="token punctuation">.</span>T
+part1 = np.mat(data[:varnums])
+part1 = part1.T
 
-part2 <span class="token operator">=</span> data<span class="token punctuation">[</span>varnums<span class="token punctuation">:</span><span class="token punctuation">]</span>
-part2 <span class="token operator">=</span> part2<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>varnums<span class="token punctuation">,</span>varnums<span class="token punctuation">)</span>
-part2 <span class="token operator">=</span> np<span class="token punctuation">.</span>mat<span class="token punctuation">(</span>part2<span class="token punctuation">)</span>
-part2 <span class="token operator">=</span> part2<span class="token punctuation">.</span>I
+part2 = data[varnums:]
+part2 = part2.reshape(varnums,varnums)
+part2 = np.mat(part2)
+part2 = part2.I
 
-result <span class="token operator">=</span> part2<span class="token operator">*</span>part1
+result = part2*part1
 
-<span class="token keyword">print</span> result</code></pre>
+print result
+</code></pre>
 <p>用R随机生成一份样本量为100万的数据，R回归结果为：</p>
-<pre class=" language-R"><code class="language-R">Coefficients:
+<pre class=" language-lang-R"><code class="language-lang-R">Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
 (Intercept) 19.9995945  0.0602316 332.045   <2e-16 ***="" v2="" -0.0012168="" 0.0009998="" -1.217="" 0.2236="" v3="" -0.0018043="" 0.0009990="" -1.806="" 0.0709="" .="" v4="" 0.0017635="" 1.765="" 0.0775="" v5="" -0.0021161="" 0.0009987="" -2.119="" 0.0341="" *="" v6="" -0.0002982="" 0.0009997="" -0.298="" 0.7655="" v7="" 0.0008608="" 0.861="" 0.3892="" v8="" 0.0007678="" 0.0009995="" 0.768="" 0.4423="" v9="" 0.0009089="" 0.0009991="" 0.910="" 0.3630="" v10="" 0.0009761="" 0.977="" 0.3286="" <="" code=""></2e-16></code></pre>
 <p>MapReduce的输出结果为：</p>
-<pre class=" language-python"><code class="language-python"><span class="token punctuation">[</span><span class="token punctuation">[</span>  <span class="token number">1.99995945e+01</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span> <span class="token operator">-</span><span class="token number">1.21684122e-03</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span> <span class="token operator">-</span><span class="token number">1.80428969e-03</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span>  <span class="token number">1.76352620e-03</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span> <span class="token operator">-</span><span class="token number">2.11610460e-03</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span> <span class="token operator">-</span><span class="token number">2.98208998e-04</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span>  <span class="token number">8.60846240e-04</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span>  <span class="token number">7.67848910e-04</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span>  <span class="token number">9.08866936e-04</span><span class="token punctuation">]</span>    
- <span class="token punctuation">[</span>  <span class="token number">9.76052909e-04</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+<pre class=" language-lang-python"><code class="language-lang-python">[[  1.99995945e+01]    
+ [ -1.21684122e-03]    
+ [ -1.80428969e-03]    
+ [  1.76352620e-03]    
+ [ -2.11610460e-03]    
+ [ -2.98208998e-04]    
+ [  8.60846240e-04]    
+ [  7.67848910e-04]    
+ [  9.08866936e-04]    
+ [  9.76052909e-04]]
 </code></pre>
 <p>二者的计算结果是一样的。</p>
 
@@ -385,22 +446,22 @@ result <span class="token operator">=</span> part2<span class="token operator">*
             <div class="level-item has-text-centered">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="D:\BLOG\blog\source\head\head.gif" alt="冯洋洋">
+                        <img class="image is-128x128 has-mb-6" src="D:/BLOG/blog/source/head/head.gif" alt="Feng Yangyang">
                     
                     
                     <p class="is-size-4 is-block">
-                        冯洋洋
+                        Feng Yangyang
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        数据分析师
+                        Data Analyst
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>上海浦东</span>
+                        <span>PuDong,ShangHai</span>
                     </p>
                     
                 </div>

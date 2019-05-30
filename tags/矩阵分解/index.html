@@ -181,7 +181,7 @@
             <h2 id="定义基本函数"><a href="#定义基本函数" class="headerlink" title="定义基本函数"></a>定义基本函数</h2><p>下面主要定义cholesky分解函数，以及求解线性方程组的两个函数和标准化函数。</p>
 <p>代码分割线</p>
 <hr>
-<pre class=" language-R"><code class="language-R">
+<pre class=" language-lang-R"><code class="language-lang-R">
 ## mchol函数将对称方阵分解为一个下三角矩阵乘以该矩阵转置的形式,
 #函数返回值为下三角矩阵
 #输入：欲分解的矩阵x
@@ -192,8 +192,8 @@ mchol <- function(x)="" {="" #求矩阵x的行列数,m为行数,n为列数="" mn
   }
 
   #L为与x行列数相等的零矩阵，用于存放分解所得下三角矩阵
-  L <- matrix(0,="" m,="" m)="" #循环每进行一次,求解一列矩阵l的元素="" #矩阵x第i列和第i行之前的元素不再使用，相当于矩阵x减少一个维数，="" #故下述将循环所至第i列记为当前矩阵x和矩阵l的第一列="" for(i="" in="" 1:m)="" {="" #l的主对角线上第一个元素为x的主对角线上第一个元素开方="" l[i,i]="" <-="" sqrt(x[i,i])="" if(i="" <="" #求当前矩阵l的第一列除第一个元素外的其他元素="" l[(i+1):m,i]="" x[(i+1):m,i]="" #矩阵l第一列（除第一个元素）乘以它的转置得到tlm用于更新矩阵x，效果同tlm%*%tlm="" tlv="" #记录已求出第一列除第一个元素外剩下元素="" tlm="" matrix(tlv,="" m-i,="" m-i)="" #tlv按列复制成矩阵="" sweep(tlm,="" 2,="" tlv,="" "*")="" #sweep(x，="" margin，="" stats，="" fun="”-“，" …)="" 对矩阵进行运算="" #margin为1，表示行的方向上进行运算，="" #为2表示列的方向上运算(是指将参数从列的方向移下去算)="" #stats是运算的参数，fun为运算函数，默认是减法="" #减少一个维数的矩阵x更新为原来对应位置上的元素减去tlm，为下一次循环做准备="" x[(i+1):m,(i+1):m]="" -="" }="" #矩阵的返回值为我们要求的下三角矩阵l="" l="" }<="" code=""></-></-></code></pre>
-<pre class=" language-R"><code class="language-R">##mforwardsolve函数求解线性方程租Lx=b，其中L为下三角矩阵
+  L <- matrix(0,="" m,="" m)="" #循环每进行一次,求解一列矩阵l的元素="" #矩阵x第i列和第i行之前的元素不再使用，相当于矩阵x减少一个维数，="" #故下述将循环所至第i列记为当前矩阵x和矩阵l的第一列="" for(i="" in="" 1:m)="" {="" #l的主对角线上第一个元素为x的主对角线上第一个元素开方="" l[i,i]="" <-="" sqrt(x[i,i])="" if(i="" <="" #求当前矩阵l的第一列除第一个元素外的其他元素="" l[(i+1):m,i]="" x[(i+1):m,i]="" #矩阵l第一列（除第一个元素）乘以它的转置得到tlm用于更新矩阵x，效果同tlm%*%tlm="" tlv="" #记录已求出第一列除第一个元素外剩下元素="" tlm="" matrix(tlv,="" m-i,="" m-i)="" #tlv按列复制成矩阵="" sweep(tlm,="" 2,="" tlv,="" "*")="" #sweep(x，="" margin，="" stats，="" fun="”-“，" …)="" 对矩阵进行运算="" #margin为1，表示行的方向上进行运算，="" #为2表示列的方向上运算(是指将参数从列的方向移下去算)="" #stats是运算的参数，fun为运算函数，默认是减法="" #减少一个维数的矩阵x更新为原来对应位置上的元素减去tlm，为下一次循环做准备="" x[(i+1):m,(i+1):m]="" -="" }="" #矩阵的返回值为我们要求的下三角矩阵l="" l="" code=""></-></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##mforwardsolve函数求解线性方程租Lx=b，其中L为下三角矩阵
 #输入：下三角矩阵L，向量b
 #输出：线性方程组的解x
 mforwardsolve <- function(l,="" b)="" {="" #求l的行列数,m为l的行数,n为l的列数="" mn="" <-="" dim(l)="" m="" mn[1]="" n="" mn[2]="" #判断l是否为方阵="" if(m="" !="n)" return="" ("wrong="" dimensions="" of="" matrix="" l!")="" }="" #判断l是否为下三角矩阵="" for="" (i="" in="" 1:(m-1))="" if(sum(l[i,(i+1):m]=""> 0)#逐行判断上三角是否全为0元素
@@ -218,8 +218,8 @@ mforwardsolve <- function(l,="" b)="" {="" #求l的行列数,m为l的行数,n为
   for(i in 1:m)
   {
     #求当前循环中x的第一个元素
-    x[i] <- b[i]="" l[i,i]="" #降维后的b向量为原来位置上的元素减去当前矩阵l的第一列的乘积="" if(i="" <="" m)="" {="" b[(i+1):m]="" <-="" -="" x[i]*l[(i+1):m,i]="" }="" #函数返回的x向量即为线性方程组的解="" x="" }<="" code=""></-></-></code></pre>
-<pre class=" language-R"><code class="language-R">##mbacksolve函数求解线性方程租Lx=b，其中L为上三角矩阵
+    x[i] <- b[i]="" l[i,i]="" #降维后的b向量为原来位置上的元素减去当前矩阵l的第一列的乘积="" if(i="" <="" m)="" {="" b[(i+1):m]="" <-="" -="" x[i]*l[(i+1):m,i]="" }="" #函数返回的x向量即为线性方程组的解="" x="" code=""></-></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##mbacksolve函数求解线性方程租Lx=b，其中L为上三角矩阵
 #输入：上三角矩阵L，向量b
 #输出：线性方程组的解x
 mbacksolve <- function(l,="" b)="" {="" #求l的行列数,m为l的行数,n为l的列数="" mn="" <-dim(l)="" m="" <-="" mn[1]="" n="" mn[2]="" #判断l是否为方阵="" if(m="" !="n)" return="" ("wrong="" dimensions="" of="" matrix="" l!")="" }="" #判断l是否为上三角矩阵="" for="" (i="" in="" 2:m)="" if(sum(l[i,1:(i-1)]=""> 0)
@@ -236,8 +236,8 @@ mbacksolve <- function(l,="" b)="" {="" #求l的行列数,m为l的行数,n为l�
 
   x <- rep(0,="" m)="" #循环每进行一次,求解一个x中的元素，="" #看作矩阵l向量x向量b的维数减一="" #故下述将矩阵l的第i列记为当前矩阵l最后一列，="" #将向量x向量b的第i个元素记为当前向量最后一个元素="" for(i="" in="" m:1)="" {="" #求当前循环中x的最后一个元素="" x[i]="" <-="" b[i]="" l[i,i]="" #降维后的向量b为原来位置上的元素减去刚才求出的="" #x元素与当前上三角矩阵l最后一列（除最后一个元素）的乘积="" if(i=""> 1) 
     {
-      b[(i-1):1] <- b[(i-1):1]="" -="" x[i]*l[(i-1):1,i]="" }="" #函数返回值x向量即为线性方程组的解="" x="" }<="" code=""></-></-></-></code></pre>
-<pre class=" language-R"><code class="language-R">##ridgereg函数用于实现岭回归参数beta的估计，
+      b[(i-1):1] <- b[(i-1):1]="" -="" x[i]*l[(i-1):1,i]="" }="" #函数返回值x向量即为线性方程组的解="" x="" <="" code=""></-></-></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##ridgereg函数用于实现岭回归参数beta的估计，
 #参数x和y分别为回归方程的自变量和因变量,
 #lambda为L2正则项的调节参数
 #此函数求解线性方程租
@@ -249,12 +249,12 @@ mbacksolve <- function(l,="" b)="" {="" #求l的行列数,m为l的行数,n为l�
 
 #输入：自变量x，因变量y，调节参数lambda
 #输出：回归系数beta的估计值
-ridgereg <- function(lambda,="" x,="" y)="" {="" #y="data[,m];" x="data[,-m]" #n为自变量矩阵行数,即n个样本,p为自变量矩阵列数,即p个参数="" np="" <-="" dim(x)="" n="" np[1]="" p="" np[2]="" #将自变量矩阵增加一列全1元素,以便于截距项的计算="" as.matrix(cbind(rep(1,="" n),x))="" #利用cholesky分解求取回归方程的参数beta的估计值="" v="" t(x)%*%x="" +="" diag(c(0,="" rep(lambda,="" p)))="" #t(x)%*%x+lambda作为线性方程组的系数矩阵v="" u="" as.vector(t(x)%*%y)="" r="" mchol(v)="" #调用mchol函数将系数矩阵v进行cholesky分解,v="R%*%t(R)" m="" mforwardsolve(r,="" u)="" #使用前代法求解r%*%m="t(x)%*%y,其中M=t(R)%*%beta" mbacksolve(t(r),="" m)="" #使用回代法求解t(r)%*%beta="M,即可得beta的估计值" }<="" code=""></-></code></pre>
-<pre class=" language-R"><code class="language-R">##pred函数的参数b为参数向量,x为自变量,返回值为因变量的预测值
+ridgereg <- function(lambda,="" x,="" y)="" {="" #y="data[,m];" x="data[,-m]" #n为自变量矩阵行数,即n个样本,p为自变量矩阵列数,即p个参数="" np="" <-="" dim(x)="" n="" np[1]="" p="" np[2]="" #将自变量矩阵增加一列全1元素,以便于截距项的计算="" as.matrix(cbind(rep(1,="" n),x))="" #利用cholesky分解求取回归方程的参数beta的估计值="" v="" t(x)%*%x="" +="" diag(c(0,="" rep(lambda,="" p)))="" #t(x)%*%x+lambda作为线性方程组的系数矩阵v="" u="" as.vector(t(x)%*%y)="" r="" mchol(v)="" #调用mchol函数将系数矩阵v进行cholesky分解,v="R%*%t(R)" m="" mforwardsolve(r,="" u)="" #使用前代法求解r%*%m="t(x)%*%y,其中M=t(R)%*%beta" mbacksolve(t(r),="" m)="" #使用回代法求解t(r)%*%beta="M,即可得beta的估计值" }="" <="" code=""></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##pred函数的参数b为参数向量,x为自变量,返回值为因变量的预测值
 #输入：回归系数b向量,数据nx
 #输出：因变量y的预测值
-pred <- 1="" function(b,="" nx)="" {="" #nx="prostate[1:2,1:8]" b="" <-="" as.vector(b)="" p="" length(b)="" -="" #将数据矩阵nx重新排列，每一行为一个样品，="" #重排矩阵的原因是下面例子中调用的数据原结构为dataframe="" nx="" as.matrix(nx,="" ncol="" p)="" n="" dim(nx)[1]="" #计算预测值="" apply(t(nx)*b[2:(p+1)],="" 2,="" sum)="" +="" b[1]="" }<="" code=""></-></code></pre>
-<pre class=" language-R"><code class="language-R">##mridge函数用于实现删去一个样品的岭回归
+pred <- 1="" function(b,="" nx)="" {="" #nx="prostate[1:2,1:8]" b="" <-="" as.vector(b)="" p="" length(b)="" -="" #将数据矩阵nx重新排列，每一行为一个样品，="" #重排矩阵的原因是下面例子中调用的数据原结构为dataframe="" nx="" as.matrix(nx,="" ncol="" p)="" n="" dim(nx)[1]="" #计算预测值="" apply(t(nx)*b[2:(p+1)],="" 2,="" sum)="" +="" b[1]="" }="" <="" code=""></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##mridge函数用于实现删去一个样品的岭回归
 mridge=function(i,lambda,x,y) 
 {
   ridgereg(lambda,x[-i,],y[-i])
@@ -264,42 +264,64 @@ mridge=function(i,lambda,x,y)
 #参数依次为调节参数lambda,自变量x(数据矩阵),因变量y,返回值为测试均方误差   
 #输入：超参数lambda,自变量x(数据矩阵),因变量y
 #输出：删一交叉验证岭回归测试均方误差
-cvridgeregerr<-function(lambda,x,y) {="" #lambda="1" np<-dim(x)="" n<-np[1]="" p<-np[2]="" #矩阵中的元素作为第一个参数输入mridge，表示去掉的数据编号，="" #结果第i行为删去第i个样本的岭回归系数估计值="" coe<-t(apply(as.matrix(1:n,ncol="1),1,mridge,lambda,x,y))" #coe第i行和数据矩阵第i个样本做点对点相乘，对行求和，计算测试均方误差="" mean((apply(coe*cbind(1,x),1,sum)-y)^2)="" }<="" code=""></-function(lambda,x,y)></code></pre>
-<pre class=" language-R"><code class="language-R">##ridgeregerr函数用于计算训练均方误差  
+cvridgeregerr<-function(lambda,x,y) {="" #lambda="1" np<-dim(x)="" n<-np[1]="" p<-np[2]="" #矩阵中的元素作为第一个参数输入mridge，表示去掉的数据编号，="" #结果第i行为删去第i个样本的岭回归系数估计值="" coe<-t(apply(as.matrix(1:n,ncol="1),1,mridge,lambda,x,y))" #coe第i行和数据矩阵第i个样本做点对点相乘，对行求和，计算测试均方误差="" mean((apply(coe*cbind(1,x),1,sum)-y)^2)="" }="" <="" code=""></-function(lambda,x,y)></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##ridgeregerr函数用于计算训练均方误差  
 #输入：岭回归超参数lambda，数据矩阵x，因变量y
 #输出：训练均方误差
 ridgeregerr=function(lambda,x,y)
 {
   mean((pred(ridgereg(lambda,x,y),x)-y)^2)
-} </code></pre>
-<pre class=" language-R"><code class="language-R">#矩阵标准化，即先减去列均值，再除以列标准差
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">#矩阵标准化，即先减去列均值，再除以列标准差
 mystandard = function(x)
 {
   mx = apply(x, 2, mean)
   sdx = apply(x, 2, sd)
   t = sweep(x, 2, mx, '-')
   sweep(t, 2, sdx, '/')
-}</code></pre>
-<pre class=" language-R"><code class="language-R">##在不同的lambda下,比较训练均方误差和测试均方误差，
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##在不同的lambda下,比较训练均方误差和测试均方误差，
 #以选取合适的调节参数lambda
 #----------------选取lambda---------------
 library(ElemStatLearn)
-x <- as.matrix(prostate[="" ,1:8])="" x="mystandard(x)" #标准化x="" y="" <-="" as.vector(prostate[="" ,9])="" lam="" seq(0.001,="" 10,="" len="50)" #计算岭回归50个模型的训练均方误差，将结果从list展开成向量="" err="" unlist(lapply(lam,="" ridgeregerr,="" x,="" y))="" #计算岭回归50个模型的测试均方误差，将结果从list展开成向量="" pe="" cvridgeregerr,="" rep(1:50,="" 2)="" plot(pe)<="" code=""></-></code></pre>
+x <- as.matrix(prostate[="" ,1:8])="" x="mystandard(x)" #标准化x="" y="" <-="" as.vector(prostate[="" ,9])="" lam="" seq(0.001,="" 10,="" len="50)" #计算岭回归50个模型的训练均方误差，将结果从list展开成向量="" err="" unlist(lapply(lam,="" ridgeregerr,="" x,="" y))="" #计算岭回归50个模型的测试均方误差，将结果从list展开成向量="" pe="" cvridgeregerr,="" rep(1:50,="" 2)="" plot(pe)="" <="" code=""></-></code></pre>
 <p><img src="/picture/output_10_0.png" alt="png"></p>
-<pre class=" language-R"><code class="language-R">#取交叉验证中使测试均方误差最小的lambda
+<pre class=" language-lang-R"><code class="language-lang-R">#取交叉验证中使测试均方误差最小的lambda
 which.min(pe)  #30
-lam=LAM[which.min(pe)]  #5.918776</code></pre>
+lam=LAM[which.min(pe)]  #5.918776
+</code></pre>
 <p>30</p>
 <p>5.91877551020408</p>
-<h2 id="改进删一法交叉验证"><a href="#改进删一法交叉验证" class="headerlink" title="改进删一法交叉验证"></a>改进删一法交叉验证</h2><p>设
-$$<br>X = \left [<br>\begin{matrix}<br>x_1 \<br>x_2 \<br>\cdots \<br>x_n<br>\end{matrix}<br>\right ]<br>$$</p>
-<p>则，<br>$$<br>X’ = [x_1’,x_2’,…,x_n’]<br>$$</p>
-<p>那么，<br>$$<br>X’X = x_1’x_1+x_2’x_2+\cdots+x_n’x_n<br>$$</p>
-<p>删一法每次删除一个样本，又上述$x_i$对应于一个样本$i$，因此，删除一个样本后的$X’X$变成了$X’X-x_i’x_i$。</p>
-<p>同理，<br>$$<br>y’X = y’<br>\left [<br>\begin{matrix}<br>x_1 \<br>x_2 \<br>\cdots \<br>x_n<br>\end{matrix}<br>\right ]<br>=y_1x_1+y_2x_2+\cdots+y_nx_n<br>$$</p>
-<p>那么，删除一个样本$i$，则$y’X$变成了$y’X-y_ix_i$</p>
+<h2 id="改进删一法交叉验证"><a href="#改进删一法交叉验证" class="headerlink" title="改进删一法交叉验证"></a>改进删一法交叉验证</h2><p>设</p>
+<script type="math/tex; mode=display">
+X = \left [
+\begin{matrix}
+x_1 \\
+x_2 \\
+\cdots \\
+x_n
+\end{matrix}
+\right ]</script><p>则，</p>
+<script type="math/tex; mode=display">
+X' = [x_1',x_2',...,x_n']</script><p>那么，</p>
+<script type="math/tex; mode=display">
+X'X = x_1'x_1+x_2'x_2+\cdots+x_n'x_n</script><p>删一法每次删除一个样本，又上述$x_i$对应于一个样本$i$，因此，删除一个样本后的$X’X$变成了$X’X-x_i’x_i$。</p>
+<p>同理，</p>
+<script type="math/tex; mode=display">
+y'X = y' 
+\left [
+\begin{matrix}
+x_1 \\
+x_2 \\
+\cdots \\
+x_n
+\end{matrix}
+\right ]
+=y_1x_1+y_2x_2+\cdots+y_nx_n</script><p>那么，删除一个样本$i$，则$y’X$变成了$y’X-y_ix_i$</p>
 <p>根据上述思路，可以将删一法交叉验证算法进行改进，避免了每次都要计算矩阵相乘，大大降低了计算压力。</p>
-<pre class=" language-R"><code class="language-R">## 改进的删一法
+<pre class=" language-lang-R"><code class="language-lang-R">## 改进的删一法
 ##mridge_aug函数用于实现删去一个样品的岭回归
 mridge_aug=function(i,lambda,x,y,xx,xy) 
 {
@@ -307,9 +329,9 @@ mridge_aug=function(i,lambda,x,y,xx,xy)
   xy =xy-y[i]*x[i,]
   xvar=apply(x,2,var)  #各变量方差
   #利用cholesky分解求取回归方程的参数beta的估计值  
-  V <- xx="" +="" diag(lambda*xvar)="" #t(x)%*%x+lambda*xvar作为线性方程组的系数矩阵v="" r="" <-="" mchol(v)="" #调用mchol函数将系数矩阵v进行cholesky分解,v="R%*%t(R)" m="" mforwardsolve(r,="" xy)="" #使用前代法求解r%*%m="t(x)%*%y,其中M=t(R)%*%beta" beta="mbacksolve(t(R)," m)="" #使用回代法求解t(r)%*%beta="M,即可得beta的估计值" return="" (beta)="" }<="" code=""></-></code></pre>
-<pre class=" language-R"><code class="language-R">#验证上述函数功能
-x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" as.matrix(cbind(1,x))="" y="" as.vector(prostate[="" ,9])="" xx="t(x)%*%x" xy="t(y)%*%x" mridge_aug(8,0,x,y,xx,xy)<="" code=""></-></code></pre>
+  V <- xx="" +="" diag(lambda*xvar)="" #t(x)%*%x+lambda*xvar作为线性方程组的系数矩阵v="" r="" <-="" mchol(v)="" #调用mchol函数将系数矩阵v进行cholesky分解,v="R%*%t(R)" m="" mforwardsolve(r,="" xy)="" #使用前代法求解r%*%m="t(x)%*%y,其中M=t(R)%*%beta" beta="mbacksolve(t(R)," m)="" #使用回代法求解t(r)%*%beta="M,即可得beta的估计值" return="" (beta)="" }="" <="" code=""></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">#验证上述函数功能
+x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" as.matrix(cbind(1,x))="" y="" as.vector(prostate[="" ,9])="" xx="t(x)%*%x" xy="t(y)%*%x" mridge_aug(8,0,x,y,xx,xy)="" <="" code=""></-></code></pre>
 <ol class="list-inline">
     <li>0.491888211499562</li>
     <li>0.570089057625066</li>
@@ -325,27 +347,30 @@ x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" as.matrix(cbind(1,x))="" y="" a
 
 
 
-<pre class=" language-R"><code class="language-R">#改进的删一法交叉验证,计算测试均方误差
-cvridgeregerr_aug <- function(lambda,x,y)="" {="" np<-dim(x)="" n<-np[1]="" #列表中的元素作为第一个参数输入mridge，示去掉的数据编号，="" #结果第i行为删去第i个样本的岭回归系数估计值="" coe<-t(apply(as.matrix(1:n,ncol="1),1,mridge_aug,lambda,x,y,xx,xy))" #coe第i行和数据矩阵第i个样本做点对点相乘，对行求和，="" #计算测试均方误差="" mean((apply(coe*x,1,sum)-y)^2)="" }<="" code=""></-></code></pre>
-<pre class=" language-R"><code class="language-R">#验证上述函数功能
-x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" mystandard(x)="" y="" as.vector(prostate[="" ,9])="" (y-mean(y))="" sd(y)="" xx="t(x)%*%x" xy="t(y)%*%x" cvridgeregerr_aug(0.3,x,y)<="" code=""></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">#改进的删一法交叉验证,计算测试均方误差
+cvridgeregerr_aug <- function(lambda,x,y)="" {="" np<-dim(x)="" n<-np[1]="" #列表中的元素作为第一个参数输入mridge，示去掉的数据编号，="" #结果第i行为删去第i个样本的岭回归系数估计值="" coe<-t(apply(as.matrix(1:n,ncol="1),1,mridge_aug,lambda,x,y,xx,xy))" #coe第i行和数据矩阵第i个样本做点对点相乘，对行求和，="" #计算测试均方误差="" mean((apply(coe*x,1,sum)-y)^2)="" }="" <="" code=""></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">#验证上述函数功能
+x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" mystandard(x)="" y="" as.vector(prostate[="" ,9])="" (y-mean(y))="" sd(y)="" xx="t(x)%*%x" xy="t(y)%*%x" cvridgeregerr_aug(0.3,x,y)="" <="" code=""></-></code></pre>
 <p>0.396699322945445</p>
-<h2 id="利用标准化的X和Y训练模型"><a href="#利用标准化的X和Y训练模型" class="headerlink" title="利用标准化的X和Y训练模型"></a>利用标准化的X和Y训练模型</h2><pre class=" language-R"><code class="language-R">LAM = seq(0.001,10,length.out = 50)
-x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" mystandard(x)="" #y也进行标准化，因此x不用增广为(1,x)="" y="" as.vector(prostate[="" ,9])="" (y-mean(y))="" sd(y)="" #对y进行标准化="" xx="t(x)%*%x" xy="t(y)%*%x" #计算岭回归50个模型的测试均方误差，将结果从list展开成向量="" pe1="" unlist(lapply(lam,="" cvridgeregerr_aug,="" x,="" y))<="" code=""></-></code></pre>
-<pre class=" language-R"><code class="language-R">
+<h2 id="利用标准化的X和Y训练模型"><a href="#利用标准化的X和Y训练模型" class="headerlink" title="利用标准化的X和Y训练模型"></a>利用标准化的X和Y训练模型</h2><pre class=" language-lang-R"><code class="language-lang-R">LAM = seq(0.001,10,length.out = 50)
+x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" mystandard(x)="" #y也进行标准化，因此x不用增广为(1,x)="" y="" as.vector(prostate[="" ,9])="" (y-mean(y))="" sd(y)="" #对y进行标准化="" xx="t(x)%*%x" xy="t(y)%*%x" #计算岭回归50个模型的测试均方误差，将结果从list展开成向量="" pe1="" unlist(lapply(lam,="" cvridgeregerr_aug,="" x,="" y))="" <="" code=""></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">
 plot(pe1) #
-lam1 =  LAM[which.min(pe1)]</code></pre>
+lam1 =  LAM[which.min(pe1)]
+</code></pre>
 <p><img src="/picture/output_26_0.png" alt="png"></p>
-<h2 id="利用未标准化的X和Y训练模型"><a href="#利用未标准化的X和Y训练模型" class="headerlink" title="利用未标准化的X和Y训练模型"></a>利用未标准化的X和Y训练模型</h2><pre class=" language-R"><code class="language-R">x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" cbind(1,x)="" #x为未标准化="" y="" as.vector(prostate[="" ,9])="" #y未标准化="" xx="t(x)%*%x" xy="t(y)%*%x" #计算岭回归50个模型的测试均方误差，将结果从list展开成向量="" pe2="" unlist(lapply(lam,="" cvridgeregerr_aug,="" x,="" y))<="" code=""></-></code></pre>
-<pre class=" language-R"><code class="language-R">plot(pe2) #
-lam2 =  LAM[which.min(pe2)]</code></pre>
+<h2 id="利用未标准化的X和Y训练模型"><a href="#利用未标准化的X和Y训练模型" class="headerlink" title="利用未标准化的X和Y训练模型"></a>利用未标准化的X和Y训练模型</h2><pre class=" language-lang-R"><code class="language-lang-R">x <- as.matrix(prostate[="" ,1:8])="" x="" <-="" cbind(1,x)="" #x为未标准化="" y="" as.vector(prostate[="" ,9])="" #y未标准化="" xx="t(x)%*%x" xy="t(y)%*%x" #计算岭回归50个模型的测试均方误差，将结果从list展开成向量="" pe2="" unlist(lapply(lam,="" cvridgeregerr_aug,="" x,="" y))="" <="" code=""></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">plot(pe2) #
+lam2 =  LAM[which.min(pe2)]
+</code></pre>
 <p><img src="/picture/output_29_0.png" alt="png"></p>
-<pre class=" language-R"><code class="language-R">lam1;lam2</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">lam1;lam2
+</code></pre>
 <p>5.91877551020408</p>
 <p>5.91877551020408</p>
 <p><strong>可以看到，无论是用标准化的X和y还是未标准化的X和y来进行训练，最佳的lambda结果是一样的。</strong></p>
-<pre class=" language-R"><code class="language-R">#用本文自定义的函数计算回归系数
-x <- as.matrix(prostate[="" ,1:8])="" y="" <-="" as.vector(prostate[="" ,9])="" #y未标准化="" ridgereg(lambda="lam1,x,y)</code"></-></code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">#用本文自定义的函数计算回归系数
+x <- as.matrix(prostate[="" ,1:8])="" y="" <-="" as.vector(prostate[="" ,9])="" #y未标准化="" ridgereg(lambda="lam1,x,y)" <="" code=""></-></code></pre>
 <ol class="list-inline">
     <li>0.857190872862373</li>
     <li>0.54969271971446</li>
@@ -361,11 +386,12 @@ x <- as.matrix(prostate[="" ,1:8])="" y="" <-="" as.vector(prostate[="" ,9])="" 
 
 
 
-<pre class=" language-R"><code class="language-R">#用mda内置函数实现岭回归(输出结果中缺少截距项)
+<pre class=" language-lang-R"><code class="language-lang-R">#用mda内置函数实现岭回归(输出结果中缺少截距项)
 library(mda)
-ridge1 <- gen.ridge(prostate[="" ,1:8],="" prostate[="" ,9],="" drop="" <-="" false,="" lambda="lam)" ridge1$coe<="" code=""></-></code></pre>
+ridge1 <- gen.ridge(prostate[="" ,1:8],="" prostate[="" ,9],="" drop="" <-="" false,="" lambda="lam)" ridge1$coe="" <="" code=""></-></code></pre>
 <pre><code>Loading required package: class
-Loaded mda 0.4-10</code></pre><table>
+Loaded mda 0.4-10
+</code></pre><table>
 <tbody>
     <tr><td> 0.549692720</td></tr>
     <tr><td> 0.450878931</td></tr>
@@ -381,15 +407,15 @@ Loaded mda 0.4-10</code></pre><table>
 
 
 
-<pre class=" language-R"><code class="language-R">min(pe1);min(pe2)  #用标准化的X和Y来进行训练，可将预测误差降低到0.39</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">min(pe1);min(pe2)  #用标准化的X和Y来进行训练，可将预测误差降低到0.39
+</code></pre>
 <p>0.393552554589219</p>
 <p>0.536324873140668</p>
-<p>对于标准化的岭回归模型，有：<br>$$\frac{y-\bar{y}}{sd_y}=\sum \frac{x_i-\bar{x_i}}{ {sd_x}_i} \beta_i<br>$$</p>
-<p>即：<br>$$y = \bar{y} + sd_y \sum \frac{x_i-\bar{x_i}}{ {sd_x}_i} \beta_i = \sum x_i \frac{\beta_i sd_y}{ {sd_x}_i} + \bar{y} - \sum \frac{\bar{x_i}\beta_i sd_y}{ {sd_x}_i}$$</p>
-<p>令 
-$$\beta’_1 = \frac{\beta_i sd_y}{ {sd_x}_i}, \beta’_0 = \bar{y} - \sum \frac{\bar{x_i}\beta_i sd_y}{ {sd_x}_i}$$</p>
-<p>当遇到一个新样本时，可以利用上面变换得到的回归系数进行预测。</p>
-<h2 id="逐步回归结果"><a href="#逐步回归结果" class="headerlink" title="逐步回归结果"></a>逐步回归结果</h2><pre class=" language-R"><code class="language-R">data <- prostate[,1:9]="" lm.data="" <-="" lm(lpsa~.,data="data)" lm.step="" step(lm.data)<="" code=""></-></code></pre>
+<p>对于标准化的岭回归模型，有：</p>
+<script type="math/tex; mode=display">\frac{y-\bar{y}}{sd_y}=\sum \frac{x_i-\bar{x_i}}{ {sd_x}_i} \beta_i</script><p>即：</p>
+<script type="math/tex; mode=display">y = \bar{y} + sd_y \sum \frac{x_i-\bar{x_i}}{ {sd_x}_i} \beta_i = \sum x_i \frac{\beta_i sd_y}{ {sd_x}_i} + \bar{y} - \sum \frac{\bar{x_i}\beta_i sd_y}{ {sd_x}_i}</script><p>令 </p>
+<script type="math/tex; mode=display">\beta'_1 = \frac{\beta_i sd_y}{ {sd_x}_i}, \beta'_0 = \bar{y} - \sum \frac{\bar{x_i}\beta_i sd_y}{ {sd_x}_i}</script><p>当遇到一个新样本时，可以利用上面变换得到的回归系数进行预测。</p>
+<h2 id="逐步回归结果"><a href="#逐步回归结果" class="headerlink" title="逐步回归结果"></a>逐步回归结果</h2><pre class=" language-lang-R"><code class="language-lang-R">data <- prostate[,1:9]="" lm.data="" <-="" lm(lpsa~.,data="data)" lm.step="" step(lm.data)="" <="" code=""></-></code></pre>
 <pre><code>Start:  AIC=-60.78
 lpsa ~ lcavol + lweight + age + lbph + svi + lcp + gleason + 
     pgg45
@@ -439,7 +465,9 @@ lpsa ~ lcavol + lweight + age + lbph + svi
 - lbph     1    1.5087 45.945 -62.484
 - lweight  1    4.3140 48.751 -56.735
 - svi      1    5.8509 50.288 -53.724
-- lcavol   1   25.9427 70.379 -21.119</code></pre><pre class=" language-R"><code class="language-R">lm.step$coefficients</code></pre>
+- lcavol   1   25.9427 70.379 -21.119
+</code></pre><pre class=" language-lang-R"><code class="language-lang-R">lm.step$coefficients
+</code></pre>
 <dl class="dl-horizontal">
     <dt>(Intercept)</dt>
         <dd>0.494729262182627</dd>
@@ -458,9 +486,10 @@ lpsa ~ lcavol + lweight + age + lbph + svi
 
 
 <p>根据AIC信息准则，最终的模型为“lpsa ~ lcavol + lweight + age + lbph + svi”，系数如上述结果所示。</p>
-<pre class=" language-R"><code class="language-R">lm.err = mean((apply(t(t(cbind(1,data[,c(1,2,3,4,5)]))
+<pre class=" language-lang-R"><code class="language-lang-R">lm.err = mean((apply(t(t(cbind(1,data[,c(1,2,3,4,5)]))
               *lm.step$coefficients),1,sum)-data[,9])^2)
-lm.err #逐步回归的预测误差</code></pre>
+lm.err #逐步回归的预测误差
+</code></pre>
 <p>0.458110121687733</p>
 <p>可以看到，逐步回归的预测误差为0.458，略高于岭回归。</p>
 
@@ -533,22 +562,22 @@ lm.err #逐步回归的预测误差</code></pre>
             <div class="level-item has-text-centered">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="D:\BLOG\blog\source\head\head.gif" alt="冯洋洋">
+                        <img class="image is-128x128 has-mb-6" src="D:/BLOG/blog/source/head/head.gif" alt="Feng Yangyang">
                     
                     
                     <p class="is-size-4 is-block">
-                        冯洋洋
+                        Feng Yangyang
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        数据分析师
+                        Data Analyst
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>上海浦东</span>
+                        <span>PuDong,ShangHai</span>
                     </p>
                     
                 </div>

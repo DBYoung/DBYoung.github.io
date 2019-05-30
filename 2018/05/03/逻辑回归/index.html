@@ -184,12 +184,9 @@
 <li>另一种情况是，我们可以更好地利用这个事实，即我们试图通过更显式地模拟概率来估计概率。</li>
 </ol>
 <p>假设$Pr(Y=1|X=x)=p(x;\theta)$,$p$是参数为$\theta$的函数。进一步，假设我们的所有观测都是相互独立的，那么条件似然函数可以写成：</p>
-<p>$$\prod _{i=1}^nPr(Y=y_i|X=x_i)=\prod _{i=1}^np(x_i;\theta)^{y_i}(1-p(x_i;\theta))^{1-y_i}$$</p>
-<p>回忆一下，对于一系列的伯努利试验$y_1,y_2,\cdots,y_n$，如果成功的概率都是常数$p$，那么似然概率为：</p>
-<p>$$\prod _{i=1}^n p^{y_i}(1-p)^{1-y_i}$$</p>
-<p>我们知道，当$p=\hat{p}=\frac{1}{n}\sum _{i=1}^ny_i$时，似然概率取得最大值。如果每一个试验都有对应的成功概率$p_i$，那么似然概率就变成了</p>
-<p>$$\prod _{i=1}^n p_i^{y_i}(1-p_i)^{1-y_i}$$</p>
-<p>不添加任何约束的通过最大化似然函数来估计上述模型是没有意义的。当$\hat{p_i}=1$的时候，$y_i=1$，当$\hat{p_i}=0$的时候，$y_i=0$。我们学不到任何东西。如果我们假设所有的$p_i$不是任意的数字，而是相互连接在一起的，这些约束给我们提供了一个很重要的参数，我们可以通过这个约束来求得似然函数的最大值。对于我们正在讨论的这种模型，约束条件就是$p_i=p(x_i;\theta)$，当$x_i$相同的时候，$p_i$也必须相同。因为我们假设的$p$是未知的，因此似然函数是参数为$\theta$的函数，我们可以通过估计$\theta$来最大化似然函数。</p>
+<script type="math/tex; mode=display">\prod _{i=1}^nPr(Y=y_i|X=x_i)=\prod _{i=1}^np(x_i;\theta)^{y_i}(1-p(x_i;\theta))^{1-y_i}</script><p>回忆一下，对于一系列的伯努利试验$y_1,y_2,\cdots,y_n$，如果成功的概率都是常数$p$，那么似然概率为：</p>
+<script type="math/tex; mode=display">\prod _{i=1}^n p^{y_i}(1-p)^{1-y_i}</script><p>我们知道，当$p=\hat{p}=\frac{1}{n}\sum _{i=1}^ny_i$时，似然概率取得最大值。如果每一个试验都有对应的成功概率$p_i$，那么似然概率就变成了</p>
+<script type="math/tex; mode=display">\prod _{i=1}^n p_i^{y_i}(1-p_i)^{1-y_i}</script><p>不添加任何约束的通过最大化似然函数来估计上述模型是没有意义的。当$\hat{p_i}=1$的时候，$y_i=1$，当$\hat{p_i}=0$的时候，$y_i=0$。我们学不到任何东西。如果我们假设所有的$p_i$不是任意的数字，而是相互连接在一起的，这些约束给我们提供了一个很重要的参数，我们可以通过这个约束来求得似然函数的最大值。对于我们正在讨论的这种模型，约束条件就是$p_i=p(x_i;\theta)$，当$x_i$相同的时候，$p_i$也必须相同。因为我们假设的$p$是未知的，因此似然函数是参数为$\theta$的函数，我们可以通过估计$\theta$来最大化似然函数。</p>
 <h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p>总结一下：我们有一个二分输出变量$Y$，我们希望构造一个关于$x$的函数来计算$Y$的条件概率$Pr（{Y=1|X=x}）$，所有的未知参数都可以通过最大似然法来估计。到目前为止，你不会惊讶于发现统计学家们通过问自己“我们如何使用线性回归来解决这个问题”。</p>
 <ul>
 <li>最简单的一个想法就是令$p(x)$为线性函数。无论$x$在什么位置，$x$每增加一个单位，$p$的变化量是一样的。由于线性函数不能保证预测结果位于0和1之间，因此从概念上线性函数就不适合。另外，在很多情况下，根据我们的经验可知，当$p$很大的时候，对于$p$的相同的变化量，$x$的变化量将会大于$p$在1/2附近的变化量。线性函数做不到这样。</li>
@@ -197,137 +194,123 @@
 <li>最后，我们选择了$p$经过logit变换以后的函数$ln\frac{p}{1-p}$。这个函数就很好啊，满足了我们的所有需求。</li>
 </ul>
 <p>最后一个选择就是我们所说的逻辑回归。一般的，逻辑回归的模型可以表示为如下形式：</p>
-<p>$$ln\frac{p(x)}{1-p(x)}=\beta_0+x\beta$$</p>
-<p>根据上式，解出$p$</p>
-<p>$$p(x;b,w)=\frac{e^{\beta_0+x\beta}}{1+e^{\beta_0+x\beta}}=\frac{1}{1+e^{-(\beta_0+x\beta)}}$$</p>
-<p>为了最小化错分率，当$p\ge 0.5$的时候，我们预测$Y=1$，否则$Y=0$。这意味着当$\beta_0+x\beta$非负的时候，预测结果为1，否则为预测结果为0.因此，逻辑回归为我么提供了一个线性分类器。决策边界是$\beta_0+x\beta=0$，当$x$是一维的时候，决策边界是一个点，当$x$是二维的时候，决策边界是一条直线，以此类推。空间中某个点到决策边界的距离为$\beta_0/||\beta||+x\cdot\beta/||\beta||$.逻辑回归不仅告诉我们两个类的决策边界，还以一种独特的方式根据样本点到决策边界的距离给出该点分属于某类的概率。当$||\beta||$越大的时候，概率取极端值（0或1）的速度就越快。上述说明使得逻辑回归不仅仅是一个分类器，它能做出更简健壮、更详细的预测，并能以一种不同的方式进行拟合;但那些强有力的预测可能是错误的。</p>
+<script type="math/tex; mode=display">ln\frac{p(x)}{1-p(x)}=\beta_0+x\beta</script><p>根据上式，解出$p$</p>
+<script type="math/tex; mode=display">p(x;b,w)=\frac{e^{\beta_0+x\beta}}{1+e^{\beta_0+x\beta}}=\frac{1}{1+e^{-(\beta_0+x\beta)}}</script><p>为了最小化错分率，当$p\ge 0.5$的时候，我们预测$Y=1$，否则$Y=0$。这意味着当$\beta_0+x\beta$非负的时候，预测结果为1，否则为预测结果为0.因此，逻辑回归为我么提供了一个线性分类器。决策边界是$\beta_0+x\beta=0$，当$x$是一维的时候，决策边界是一个点，当$x$是二维的时候，决策边界是一条直线，以此类推。空间中某个点到决策边界的距离为$\beta_0/||\beta||+x\cdot\beta/||\beta||$.逻辑回归不仅告诉我们两个类的决策边界，还以一种独特的方式根据样本点到决策边界的距离给出该点分属于某类的概率。当$||\beta||$越大的时候，概率取极端值（0或1）的速度就越快。上述说明使得逻辑回归不仅仅是一个分类器，它能做出更简健壮、更详细的预测，并能以一种不同的方式进行拟合;但那些强有力的预测可能是错误的。</p>
 <h2 id="似然函数和逻辑回归"><a href="#似然函数和逻辑回归" class="headerlink" title="似然函数和逻辑回归"></a>似然函数和逻辑回归</h2><p>因为逻辑回归的预测结果是概率，而不是类别，因此我们可以用似然函数来拟合模型。对于每一个样本点，我们有一个特征向量$x_i$，这个向量的维度就是特征的个数。同时还有一个观测类别$y_i$。当$y_i=1$的时候，该类的概率为$p$，否则为$1-p$。因此，似然函数为：</p>
-<p>$$L(\beta_0,\beta) = \prod _{i=1}^np(x_i)^{y_i}(1-p(x_i))^{1-y_i}$$</p>
-<p>对数似然函数为：</p>
-<p>$$\begin{aligned} \ell(\beta_0,\beta) &amp;= \sum_{i=1}^ny_iln(p(x_i))+(1-y_i)ln(1-p(x_i)) \&amp;=\sum_{i=1}^n(y_i(ln\frac{p(x_i)}{1-p(x_i)})+ln(1-p(x_i))) \&amp;=\sum_{i=1}^ny_i(\beta_0+x_i\beta)-ln(1+e^{\beta_0+x_i\beta}) \end{aligned}$$</p>
-<p> 为了表示方便，统一将$\beta_0,\beta$表示成$\beta$,则$\ell$对$\beta$的一阶导数为： </p>
-<p>$$\begin{aligned} \frac{\partial \ell}{\partial \beta} &amp;=\sum _{i=1}^n[y_i-\frac{e^{\beta^Tx_i}}{1+\beta^Tx_i}]x_i\&amp; = \sum _{i=1}^n(y_i-p_i)x_i\end{aligned}$$</p>
-<h2 id="多分类逻辑回归"><a href="#多分类逻辑回归" class="headerlink" title="多分类逻辑回归"></a>多分类逻辑回归</h2><p>如果$Y$有多个类别，我们仍然可以使用逻辑回归。假如有$k$个类别，分别是$0,1,\cdots,k-1$，对于每一个类$k$，其都有对应的$\beta_0$和$\beta$，每个类对应的概率为:</p>
-<p>$$P(Y=c|X=x)=\frac{e^{\beta_0^c+x\beta^c}}{\sum e^{\beta_0^c+x\beta^c}}$$</p>
-<p>观察上式可以发现，二分类逻辑回归求是多分类逻辑回归的特例.</p>
+<script type="math/tex; mode=display">L(\beta_0,\beta) = \prod _{i=1}^np(x_i)^{y_i}(1-p(x_i))^{1-y_i}</script><p>对数似然函数为：</p>
+<script type="math/tex; mode=display">\begin{aligned} \ell(\beta_0,\beta) &= \sum_{i=1}^ny_iln(p(x_i))+(1-y_i)ln(1-p(x_i)) \\&=\sum_{i=1}^n(y_i(ln\frac{p(x_i)}{1-p(x_i)})+ln(1-p(x_i))) \\&=\sum_{i=1}^ny_i(\beta_0+x_i\beta)-ln(1+e^{\beta_0+x_i\beta}) \end{aligned}</script><p> 为了表示方便，统一将$\beta_0,\beta$表示成$\beta$,则$\ell$对$\beta$的一阶导数为： </p>
+<script type="math/tex; mode=display">\begin{aligned} \frac{\partial \ell}{\partial \beta} &=\sum _{i=1}^n[y_i-\frac{e^{\beta^Tx_i}}{1+\beta^Tx_i}]x_i\\& = \sum _{i=1}^n(y_i-p_i)x_i\end{aligned}</script><h2 id="多分类逻辑回归"><a href="#多分类逻辑回归" class="headerlink" title="多分类逻辑回归"></a>多分类逻辑回归</h2><p>如果$Y$有多个类别，我们仍然可以使用逻辑回归。假如有$k$个类别，分别是$0,1,\cdots,k-1$，对于每一个类$k$，其都有对应的$\beta_0$和$\beta$，每个类对应的概率为:</p>
+<script type="math/tex; mode=display">P(Y=c|X=x)=\frac{e^{\beta_0^c+x\beta^c}}{\sum e^{\beta_0^c+x\beta^c}}</script><p>观察上式可以发现，二分类逻辑回归求是多分类逻辑回归的特例.</p>
 <blockquote>
 <p>在这里，读者可能比较好奇，根据上式，二分类逻辑回归的分母中的1是怎么来的。其实，无论有多少个类，我们总是将第一类的系数设置为0，那么类别为0的那部分在分母中对应的就是1.这样做对模型的通用性没有任何影响。</p>
 <p>有读者可能会问，为什么偏要把第一个类的系数设置为0，而不是其他的类。事实上，你可以设置任何一个类的系数为0，并且最终计算出来的结果都是一样的。所以，按照惯例，我们都是把第一个类的系数设置为0.</p>
 </blockquote>
 <h2 id="牛顿法求解参数"><a href="#牛顿法求解参数" class="headerlink" title="牛顿法求解参数"></a>牛顿法求解参数</h2><p>为了求出待估参数$\beta$，我们利用Newton-Raphson算法。首先对对数似然函数求二阶偏导： </p>
-<p>$$\frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T}=-\sum_{i=1}^nx_ix_i^Tp_i(1-p_i)$$ </p>
-<p>注意，上面的$x_i$是个向量，也就是上面所说的特征向量，维度为特征个数加一。即假设原始数据为$n\times m$矩阵，其中n表示观测数，m表示特征数。则$x_i$的长度为m+1。根据上述说明，上面的二阶偏导实际上是一个$(m+1)\times (m+1)$的矩阵。</p>
+<script type="math/tex; mode=display">\frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T}=-\sum_{i=1}^nx_ix_i^Tp_i(1-p_i)</script><p>注意，上面的$x_i$是个向量，也就是上面所说的特征向量，维度为特征个数加一。即假设原始数据为$n\times m$矩阵，其中n表示观测数，m表示特征数。则$x_i$的长度为m+1。根据上述说明，上面的二阶偏导实际上是一个$(m+1)\times (m+1)$的矩阵。</p>
 <p>如果给定一个$\hat{\beta}^{old}$，则一步牛顿迭代为（梯度下降）：</p>
-<p>$$\hat{\beta}^{new}=\hat{\beta}^{old}-(\frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T})^{-1} \cdot\frac{\partial \ell({\beta})}{\partial \beta}$$</p>
-<p>将上述式子表示成矩阵的形式就是：</p>
-<p>$$\frac{\partial \ell(\beta)}{\partial \beta}=X^T(y-p)$$</p>
-<p>$$\frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T}=-X^TWX$$</p>
-<p>其中，$X$为原始自变量矩阵，$y$为类别向量，$p$为预测概率向量，$W$是一个$n\times n$对角矩阵，第$i$个元素取值为$p(x_i,\hat{\beta}^{old})(1-p(x_i,\hat{\beta}^{old}))$.</p>
+<script type="math/tex; mode=display">\hat{\beta}^{new}=\hat{\beta}^{old}-(\frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T})^{-1} \cdot\frac{\partial \ell({\beta})}{\partial \beta}</script><p>将上述式子表示成矩阵的形式就是：</p>
+<script type="math/tex; mode=display">\frac{\partial \ell(\beta)}{\partial \beta}=X^T(y-p)</script><script type="math/tex; mode=display">\frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T}=-X^TWX</script><p>其中，$X$为原始自变量矩阵，$y$为类别向量，$p$为预测概率向量，$W$是一个$n\times n$对角矩阵，第$i$个元素取值为$p(x_i,\hat{\beta}^{old})(1-p(x_i,\hat{\beta}^{old}))$.</p>
 <p>联立上述两个式子，可以得出参数的迭代公式：</p>
-<p>$$\begin{aligned}\hat{\beta}^{new} &amp;=\hat{\beta}^{old}+(X^TWX)^{-1}X^T(y-p) \ &amp;=(X^TWX)^{-1}X^TW(X\hat{\beta^{old}}+W^{-1}(y-p)) \ &amp;=(X^TWX)^{-1}X^TWz \end{aligned}$$</p>
-<p>其中，$z=X\hat{\beta^{old}}+W^{-1}(y-p)$.</p>
+<script type="math/tex; mode=display">\begin{aligned}\hat{\beta}^{new} &=\hat{\beta}^{old}+(X^TWX)^{-1}X^T(y-p) \\ &=(X^TWX)^{-1}X^TW(X\hat{\beta^{old}}+W^{-1}(y-p)) \\ &=(X^TWX)^{-1}X^TWz \end{aligned}</script><p>其中，$z=X\hat{\beta^{old}}+W^{-1}(y-p)$.</p>
 <p>实际上，$X^TWX$是一个黑塞矩阵</p>
-<p>$$H(\beta) = \frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T}$$</p>
-<p>即目标函数对$\beta$的二阶偏导，那么，上述迭代公式也可以写作：</p>
-<p>$$\begin{aligned} \hat{\beta}^{new} &amp;=\hat{\beta}^{old} - H(\beta)^{-1}\frac{\partial \ell(\beta)}{\beta} \ &amp;= \hat{\beta}^{old} - H(\beta)^{-1}X^T(y-p) \end{aligned} $$ </p>
-<p>上述是我们熟悉的牛顿迭代公式。</p>
+<script type="math/tex; mode=display">H(\beta) = \frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T}</script><p>即目标函数对$\beta$的二阶偏导，那么，上述迭代公式也可以写作：</p>
+<script type="math/tex; mode=display">\begin{aligned} \hat{\beta}^{new} &=\hat{\beta}^{old} - H(\beta)^{-1}\frac{\partial \ell(\beta)}{\beta} \\ &= \hat{\beta}^{old} - H(\beta)^{-1}X^T(y-p) \end{aligned}</script><p>上述是我们熟悉的牛顿迭代公式。</p>
 <p>矩阵相乘的计算不算复杂，但是当数据量上升以后，黑塞矩阵的求逆就非常复杂了，因此衍生出许多拟牛顿算法，本节不讨论优化算法。</p>
 <p>很明显，本例的目标函数就是对数似然函数$\ell(\beta)$，也就是求其最大值。然而，很多同学已经习惯了牛顿法求最小值，因此，为了大家看着方便，下面介绍梯度下降法求解逻辑回归。</p>
 <p>只需要在上述似然函数前面加一个负号，本例就变成了一个梯度下降的问题了。为了形式上好看，还可以在前面对数似然函数求一个均值，即除以样本量。</p>
 <p>假设$J(\beta)$是我们的目标函数，则</p>
-<p>$$<br>\begin{aligned}<br>J(\beta) &amp;= -\frac{1}{n}\ell(\beta) \<br>&amp;=-\frac{1}{n}\sum_{i=1}^ny_iln(p(x_i))+(1-y_i)ln(1-p(x_i))<br>\end{aligned}<br>$$</p>
-<p>此时我们的梯度公式就变成了：</p>
-<p>$$\frac{\partial J(\beta)}{\partial \beta}=-\frac{1}{n}\sum _{i=1}^n(y_i-p_i)x_i=\frac{1}{n}\sum _{i=1}^n(p_i-y_i)x_i$$</p>
-<p>我们的二阶偏导数就变成了</p>
-<p>$$\frac{\partial ^2J(\beta)}{\partial \beta\partial\beta^T} =\frac{1}{n} \sum_{i=1}^nx_ix_i^Tp_i(1-p_i)$$</p>
-<p>那么，此时为了求得我们的回归系数，即求使得$J(\beta)$最小的系数。牛顿迭代公式就变成了：</p>
-<p>$$\hat{\beta}^{new} = \hat{\beta}^{old}-H^{-1}\nabla=\hat{\beta}^{old}-\frac{1}{n}(X^T\cdot diag(p)\cdot diag(1-p) \cdot X)^{-1}\cdot \frac{1}{n}X^T(p-y)$$</p>
-<p>按照上述思路，编程实现逻辑回归求解是比较简单的。</p>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#迭代函数</span>
-<span class="token keyword">from</span> numpy <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token keyword">def</span> <span class="token function">sigmoid</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> <span class="token number">1.0</span><span class="token operator">/</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token operator">+</span>exp<span class="token punctuation">(</span><span class="token operator">-</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">def</span> <span class="token function">LogitReg</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">,</span>tol <span class="token operator">=</span> <span class="token number">0.001</span><span class="token punctuation">,</span>maxiter <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    samples<span class="token punctuation">,</span>features <span class="token operator">=</span> x<span class="token punctuation">.</span>shape  <span class="token comment" spellcheck="true">#分别表示观测样本数量和特征数量</span>
-    features <span class="token operator">+=</span> <span class="token number">1</span>
+<script type="math/tex; mode=display">
+\begin{aligned}
+J(\beta) &= -\frac{1}{n}\ell(\beta) \\
+&=-\frac{1}{n}\sum_{i=1}^ny_iln(p(x_i))+(1-y_i)ln(1-p(x_i))
+\end{aligned}</script><p>此时我们的梯度公式就变成了：</p>
+<script type="math/tex; mode=display">\frac{\partial J(\beta)}{\partial \beta}=-\frac{1}{n}\sum _{i=1}^n(y_i-p_i)x_i=\frac{1}{n}\sum _{i=1}^n(p_i-y_i)x_i</script><p>我们的二阶偏导数就变成了</p>
+<script type="math/tex; mode=display">\frac{\partial ^2J(\beta)}{\partial \beta\partial\beta^T} =\frac{1}{n} \sum_{i=1}^nx_ix_i^Tp_i(1-p_i)</script><p>那么，此时为了求得我们的回归系数，即求使得$J(\beta)$最小的系数。牛顿迭代公式就变成了：</p>
+<script type="math/tex; mode=display">\hat{\beta}^{new} = \hat{\beta}^{old}-H^{-1}\nabla=\hat{\beta}^{old}-\frac{1}{n}(X^T\cdot diag(p)\cdot diag(1-p) \cdot X)^{-1}\cdot \frac{1}{n}X^T(p-y)</script><p>按照上述思路，编程实现逻辑回归求解是比较简单的。</p>
+<pre class=" language-lang-python"><code class="language-lang-python">#迭代函数
+from numpy import *
+def sigmoid(x):
+    return 1.0/(1.0+exp(-x))
+def LogitReg(x,y,tol = 0.001,maxiter = 1000):
+    samples,features = x.shape  #分别表示观测样本数量和特征数量
+    features += 1
 
-    <span class="token comment" spellcheck="true">#全部转换为矩阵</span>
-    xdata <span class="token operator">=</span> array<span class="token punctuation">(</span>ones<span class="token punctuation">(</span><span class="token punctuation">(</span>samples<span class="token punctuation">,</span>features<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    xdata<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-    xdata<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> x
-    xdata <span class="token operator">=</span> mat<span class="token punctuation">(</span>xdata<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#sample行，features列的输入</span>
+    #全部转换为矩阵
+    xdata = array(ones((samples,features)))
+    xdata[:,0] = 1
+    xdata[:,1:] = x
+    xdata = mat(xdata)  #sample行，features列的输入
 
-    y <span class="token operator">=</span> mat<span class="token punctuation">(</span>y<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>samples<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#label，一个长度为samples的向量</span>
+    y = mat(y.reshape(samples,1))  #label，一个长度为samples的向量
 
-    <span class="token comment" spellcheck="true">#首先初始化beta，令所有的系数为1,生成一个长度为features的列向量</span>
-    beta <span class="token operator">=</span> mat<span class="token punctuation">(</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>features<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    #首先初始化beta，令所有的系数为1,生成一个长度为features的列向量
+    beta = mat(zeros((features,1)))
 
-    iternum <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment" spellcheck="true">#迭代计数器</span>
+    iternum = 0 #迭代计数器
 
-    <span class="token comment" spellcheck="true">#计算初始损失</span>
+    #计算初始损失
 
-    loss0 <span class="token operator">=</span> float<span class="token punctuation">(</span><span class="token string">'inf'</span><span class="token punctuation">)</span>
-    J <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    <span class="token keyword">while</span> iternum <span class="token operator">&lt;</span> maxiter<span class="token punctuation">:</span>
-        <span class="token keyword">try</span><span class="token punctuation">:</span>
-            p <span class="token operator">=</span> sigmoid<span class="token punctuation">(</span>xdata<span class="token operator">*</span>beta<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#计算似然概率</span>
-            nabla <span class="token operator">=</span> <span class="token number">1.0</span><span class="token operator">/</span>samples<span class="token operator">*</span>xdata<span class="token punctuation">.</span>T<span class="token operator">*</span><span class="token punctuation">(</span>p<span class="token operator">-</span>y<span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">#计算梯度</span>
-            H <span class="token operator">=</span> <span class="token number">1.0</span><span class="token operator">/</span>samples<span class="token operator">*</span>xdata<span class="token punctuation">.</span>T<span class="token operator">*</span>diag<span class="token punctuation">(</span>p<span class="token punctuation">.</span>getA1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">*</span> diag<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>p<span class="token punctuation">)</span><span class="token punctuation">.</span>getA1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">*</span>xdata  <span class="token comment" spellcheck="true">#计算黑塞矩阵</span>
+    loss0 = float('inf')
+    J = []
+    while iternum < maxiter:
+        try:
+            p = sigmoid(xdata*beta) #计算似然概率
+            nabla = 1.0/samples*xdata.T*(p-y)   #计算梯度
+            H = 1.0/samples*xdata.T*diag(p.getA1())* diag((1-p).getA1())*xdata  #计算黑塞矩阵
 
-            loss <span class="token operator">=</span> <span class="token number">1.0</span><span class="token operator">/</span>samples<span class="token operator">*</span>sum<span class="token punctuation">(</span><span class="token operator">-</span>y<span class="token punctuation">.</span>getA1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span>log<span class="token punctuation">(</span>p<span class="token punctuation">.</span>getA1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>y<span class="token punctuation">)</span><span class="token punctuation">.</span>getA1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span>log<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>p<span class="token punctuation">)</span><span class="token punctuation">.</span>getA1<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#计算损失</span>
-            J<span class="token punctuation">.</span>append<span class="token punctuation">(</span>loss<span class="token punctuation">)</span>
-            beta <span class="token operator">=</span>beta <span class="token operator">-</span>  H<span class="token punctuation">.</span>I <span class="token operator">*</span> nabla  <span class="token comment" spellcheck="true">#更新参数</span>
-            iternum <span class="token operator">+=</span> <span class="token number">1</span> <span class="token comment" spellcheck="true">#迭代器加一</span>
-            <span class="token keyword">if</span> loss0 <span class="token operator">-</span> loss <span class="token operator">&lt;</span> tol<span class="token punctuation">:</span>
-                <span class="token keyword">break</span>
-            loss0 <span class="token operator">=</span> loss
-        <span class="token keyword">except</span><span class="token punctuation">:</span>
-            H <span class="token operator">=</span> H <span class="token operator">+</span> <span class="token number">0.0001</span>
-            <span class="token comment" spellcheck="true">#通常当黑塞矩阵奇异的时候，将矩阵加上一个很小的常数。</span>
-            <span class="token keyword">break</span>
+            loss = 1.0/samples*sum(-y.getA1()*log(p.getA1())-(1-y).getA1()*log((1-p).getA1())) #计算损失
+            J.append(loss)
+            beta =beta -  H.I * nabla  #更新参数
+            iternum += 1 #迭代器加一
+            if loss0 - loss < tol:
+                break
+            loss0 = loss
+        except:
+            H = H + 0.0001
+            #通常当黑塞矩阵奇异的时候，将矩阵加上一个很小的常数。
+            break
 
-    <span class="token keyword">return</span> beta<span class="token punctuation">,</span>J
+    return beta,J
 
-<span class="token comment" spellcheck="true">#预测函数</span>
-<span class="token keyword">def</span> <span class="token function">predictLR</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span>beta<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    data <span class="token operator">=</span> array<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> len<span class="token punctuation">(</span>data<span class="token punctuation">.</span>shape<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
-        length <span class="token operator">=</span> len<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
-        newdata <span class="token operator">=</span> tile<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>length<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
-        newdata<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-        newdata<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> data
-        newdata <span class="token operator">=</span> mat<span class="token punctuation">(</span>newdata<span class="token punctuation">)</span>
-        <span class="token keyword">pass</span>
-    <span class="token keyword">else</span><span class="token punctuation">:</span>
-        shape <span class="token operator">=</span> data<span class="token punctuation">.</span>shape
-        newdata <span class="token operator">=</span> zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        newdata<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
-        newdata<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> data
-        newdata <span class="token operator">=</span> mat<span class="token punctuation">(</span>newdata<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> sigmoid<span class="token punctuation">(</span>newdata<span class="token operator">*</span>beta<span class="token punctuation">)</span>
+#预测函数
+def predictLR(data,beta):
+    data = array(data)
+    if len(data.shape) == 1:
+        length = len(data)
+        newdata = tile(0,length+1)
+        newdata[0] = 1
+        newdata[1:] = data
+        newdata = mat(newdata)
+        pass
+    else:
+        shape = data.shape
+        newdata = zeros((shape[0],shape[1]+1))
+        newdata[:,0] = 1
+        newdata[:,1:] = data
+        newdata = mat(newdata)
+    return sigmoid(newdata*beta)
 
-df <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span><span class="token string">'df.csv'</span><span class="token punctuation">,</span>header<span class="token operator">=</span>None<span class="token punctuation">)</span>
-df <span class="token operator">=</span> array<span class="token punctuation">(</span>df<span class="token punctuation">)</span>
-df<span class="token punctuation">.</span>shape
-xdata <span class="token operator">=</span> df<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token punctuation">:</span><span class="token number">3</span><span class="token punctuation">]</span>
-ydata <span class="token operator">=</span> df<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
+df = pd.read_csv('df.csv',header=None)
+df = array(df)
+df.shape
+xdata = df[:,:3]
+ydata = df[:,3]
 
-beta<span class="token punctuation">,</span>J <span class="token operator">=</span> LogitReg<span class="token punctuation">(</span>xdata<span class="token punctuation">,</span>ydata<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#拟合</span>
+beta,J = LogitReg(xdata,ydata) #拟合
 
-testdata <span class="token operator">=</span> xdata<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token punctuation">]</span>
+testdata = xdata[1:10,]
 
-predictLR<span class="token punctuation">(</span>testdata<span class="token punctuation">,</span>beta<span class="token punctuation">)</span>
+predictLR(testdata,beta)
 
-matrix<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token number">0.4959212</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">[</span> <span class="token number">0.44642627</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">[</span> <span class="token number">0.47419207</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">[</span> <span class="token number">0.42209742</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">[</span> <span class="token number">0.41802565</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">[</span> <span class="token number">0.51283217</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">[</span> <span class="token number">0.44833226</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">[</span> <span class="token number">0.41252982</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">[</span> <span class="token number">0.47853786</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
+matrix([[ 0.4959212 ],
+        [ 0.44642627],
+        [ 0.47419207],
+        [ 0.42209742],
+        [ 0.41802565],
+        [ 0.51283217],
+        [ 0.44833226],
+        [ 0.41252982],
+        [ 0.47853786]])
 </code></pre>
 <blockquote>
 <p><a href="http://www.stat.cmu.edu/~cshalizi/uADA/12/lectures/ch12.pdf" target="_blank" rel="noopener">http://www.stat.cmu.edu/~cshalizi/uADA/12/lectures/ch12.pdf</a></p>
@@ -426,22 +409,22 @@ matrix<span class="token punctuation">(</span><span class="token punctuation">[<
             <div class="level-item has-text-centered">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="D:\BLOG\blog\source\head\head.gif" alt="冯洋洋">
+                        <img class="image is-128x128 has-mb-6" src="D:/BLOG/blog/source/head/head.gif" alt="Feng Yangyang">
                     
                     
                     <p class="is-size-4 is-block">
-                        冯洋洋
+                        Feng Yangyang
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        数据分析师
+                        Data Analyst
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>上海浦东</span>
+                        <span>PuDong,ShangHai</span>
                     </p>
                     
                 </div>
