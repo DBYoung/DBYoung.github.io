@@ -1,0 +1,1471 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="改进的删一法交叉验证与逐步回归比较, Young&#39;s Blog">
+    <meta name="description" content="定义基本函数下面主要定义cholesky分解函数，以及求解线性方程组的两个函数和标准化函数。
+代码分割线
+
+
+## mchol函数将对称方阵分解为一个下三角矩阵乘以该矩阵转置的形式,
+#函数返回值为下三角矩阵
+#输入：欲分解的矩阵x
+#输出">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>改进的删一法交叉验证与逐步回归比较 | Young&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Young's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Young's Blog</div>
+        <div class="logo-desc">
+            
+            每个人都是平凡的，同时也是与众不同的。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        改进的删一法交叉验证与逐步回归比较
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/矩阵分解/" target="_blank">
+                                <span class="chip bg-color">矩阵分解</span>
+                            </a>
+                        
+                            <a href="/tags/岭回归/" target="_blank">
+                                <span class="chip bg-color">岭回归</span>
+                            </a>
+                        
+                            <a href="/tags/逐步回归/" target="_blank">
+                                <span class="chip bg-color">逐步回归</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-04-26
+                </div>
+
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="定义基本函数"><a href="#定义基本函数" class="headerlink" title="定义基本函数"></a>定义基本函数</h2><p>下面主要定义cholesky分解函数，以及求解线性方程组的两个函数和标准化函数。</p>
+<p>代码分割线</p>
+<hr>
+<pre class=" language-lang-R"><code class="language-lang-R">
+## mchol函数将对称方阵分解为一个下三角矩阵乘以该矩阵转置的形式,
+#函数返回值为下三角矩阵
+#输入：欲分解的矩阵x
+#输出：cholesky分解所得矩阵L
+mchol <- function(x)
+{
+  #求矩阵x的行列数,m为行数,n为列数
+  mn <- dim(x)
+  m <- mn[1]
+  n <- mn[2]
+
+  #检验x是否为方阵
+  if(m != n) 
+  {
+    return ("Wrong dimensions of matrix!")
+  }
+
+  #检验x是否为对称矩阵
+  if(sum(t(x) != x) > 0) 
+  {
+    return ("Input matrix is not symmetrical!")
+  }
+
+  #L为与x行列数相等的零矩阵，用于存放分解所得下三角矩阵
+  L <- matrix(0, m, m)
+
+  #循环每进行一次,求解一列矩阵L的元素
+  #矩阵x第i列和第i行之前的元素不再使用，相当于矩阵x减少一个维数，
+  #故下述将循环所至第i列记为当前矩阵x和矩阵L的第一列
+  for(i in 1:m)
+  {
+    #L的主对角线上第一个元素为x的主对角线上第一个元素开方
+    L[i,i] <- sqrt(x[i,i])
+    if(i < m)
+    {
+      #求当前矩阵L的第一列除第一个元素外的其他元素
+      L[(i+1):m,i] <- x[(i+1):m,i]/L[i,i]
+
+      #矩阵L第一列（除第一个元素）乘以它的转置得到TLM用于更新矩阵x，效果同TLM%*%TLM
+      TLV <- L[(i+1):m,i] #记录已求出第一列除第一个元素外剩下元素
+      TLM <- matrix(TLV, m-i, m-i) #TLV按列复制成矩阵
+      TLM <- sweep(TLM, 2, TLV, "*")  
+      #sweep(x， MARGIN， STATS， FUN=”-“， …) 对矩阵进行运算
+      #MARGIN为1，表示行的方向上进行运算，
+      #为2表示列的方向上运算(是指将参数从列的方向移下去算)
+      #STATS是运算的参数，FUN为运算函数，默认是减法
+
+      #减少一个维数的矩阵x更新为原来对应位置上的元素减去TLM，为下一次循环做准备
+      x[(i+1):m,(i+1):m] <- x[(i+1):m,(i+1):m] - TLM
+    }
+  }
+  #矩阵的返回值为我们要求的下三角矩阵L
+  L  
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##mforwardsolve函数求解线性方程租Lx=b，其中L为下三角矩阵
+#输入：下三角矩阵L，向量b
+#输出：线性方程组的解x
+mforwardsolve <- function(L, b)
+{
+  #求L的行列数,m为L的行数,n为L的列数
+  mn <- dim(L)
+  m <- mn[1]
+  n <- mn[2]
+
+  #判断L是否为方阵
+  if(m != n) 
+  {
+    return ("Wrong dimensions of matrix L!")
+  }
+
+  #判断L是否为下三角矩阵
+  for (i in 1:(m-1))
+  {
+    if(sum(L[i,(i+1):m] != 0) > 0)#逐行判断上三角是否全为0元素
+    {
+      return ("Matrix L must be a lower triangular matrix!")
+    }
+  }
+
+  #判断L的行数与b的长度是否相等
+  if(m != length(b))
+  {
+    return ("Wrong dimensions of matrix L or vector b!")
+  }
+
+  #0向量记录求解结果
+  x=rep(0, m)
+
+  #循环每进行一次,求解一个x中的元素，
+  #看作矩阵L向量x向量b的维数减一
+  #故下述将矩阵L的第i列记为当前矩阵L第一列，
+  #将向量x向量b的第i个元素记为当前向量第一个元素
+  for(i in 1:m)
+  {
+    #求当前循环中x的第一个元素
+    x[i] <- b[i] / L[i,i]
+    #降维后的b向量为原来位置上的元素减去当前矩阵L的第一列的乘积
+    if(i < m) 
+    {
+      b[(i+1):m] <- b[(i+1):m] - x[i]*L[(i+1):m,i]
+    }      
+  }
+  #函数返回的x向量即为线性方程组的解
+  x  
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##mbacksolve函数求解线性方程租Lx=b，其中L为上三角矩阵
+#输入：上三角矩阵L，向量b
+#输出：线性方程组的解x
+mbacksolve <- function(L, b)
+{
+  #求L的行列数,m为L的行数,n为L的列数
+  mn <-dim(L)
+  m <- mn[1]
+  n <- mn[2]
+
+  #判断L是否为方阵
+  if(m != n)
+  {  
+    return ("Wrong dimensions of matrix L!")
+  }
+
+  #判断L是否为上三角矩阵
+  for (i in 2:m)
+  {
+    if(sum(L[i,1:(i-1)] != 0) > 0)
+    {
+      return ("Matrix L must be a upper triangular matrix!")
+    }
+  }
+
+  #判断L的行数与b的列数是否相等
+  if(m != length(b))
+  {
+    return ("Wrong dimensions of matrix L or vector b!")
+  }  
+
+  x <- rep(0, m)
+
+  #循环每进行一次,求解一个x中的元素，
+  #看作矩阵L向量x向量b的维数减一
+  #故下述将矩阵L的第i列记为当前矩阵L最后一列，
+  #将向量x向量b的第i个元素记为当前向量最后一个元素
+  for(i in m:1)
+  {
+    #求当前循环中x的最后一个元素
+    x[i] <- b[i] / L[i,i]
+    #降维后的向量b为原来位置上的元素减去刚才求出的
+    #x元素与当前上三角矩阵L最后一列（除最后一个元素）的乘积
+    if(i > 1) 
+    {
+      b[(i-1):1] <- b[(i-1):1] - x[i]*L[(i-1):1,i]
+    }      
+  }
+  #函数返回值x向量即为线性方程组的解
+  x  
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##ridgereg函数用于实现岭回归参数beta的估计，
+#参数x和y分别为回归方程的自变量和因变量,
+#lambda为L2正则项的调节参数
+#此函数求解线性方程租
+#(t(x)%*%x+lambada)%*%beta=t(x)%*%y,
+#将t(x)%*%x+lambada进行cholesky分解为R%*%t(R),
+#forwardsolve求解L%*%d=t(x)%*%y,
+#其中d=t(R)%*%beta,
+#backsolve求解t(R)%*%beta=d,即得参数beta的估计值 
+
+#输入：自变量x，因变量y，调节参数lambda
+#输出：回归系数beta的估计值
+ridgereg <- function(lambda, x, y)
+{
+  #y=data[,m]; x=data[,-m]
+  #n为自变量矩阵行数,即n个样本,p为自变量矩阵列数,即p个参数
+  np <- dim(x)
+  n <- np[1]
+  p <- np[2]
+
+  #将自变量矩阵增加一列全1元素,以便于截距项的计算
+  x <- as.matrix(cbind(rep(1, n),x))
+
+  #利用cholesky分解求取回归方程的参数beta的估计值  
+  V <- t(x)%*%x + diag(c(0, rep(lambda, p)))              
+  #t(x)%*%x+lambda作为线性方程组的系数矩阵V
+  U <- as.vector(t(x)%*%y)                           
+  R <- mchol(V)                                           
+  #调用mchol函数将系数矩阵V进行cholesky分解,V=R%*%t(R)
+  M <- mforwardsolve(R, U)                                
+  #使用前代法求解R%*%M=t(x)%*%y,其中M=t(R)%*%beta
+  mbacksolve(t(R), M)                                    
+  #使用回代法求解t(R)%*%beta=M,即可得beta的估计值
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##pred函数的参数b为参数向量,x为自变量,返回值为因变量的预测值
+#输入：回归系数b向量,数据nx
+#输出：因变量y的预测值
+pred <- function(b, nx)
+{
+  #nx=prostate[1:2,1:8]
+  b <- as.vector(b)
+  p <- length(b) - 1
+
+  #将数据矩阵nx重新排列，每一行为一个样品，
+  #重排矩阵的原因是下面例子中调用的数据原结构为dataframe
+  nx <- as.matrix(nx, ncol <- p)
+  n <- dim(nx)[1]
+
+  #计算预测值
+  apply(t(nx)*b[2:(p+1)], 2, sum) + b[1]  
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##mridge函数用于实现删去一个样品的岭回归
+mridge=function(i,lambda,x,y) 
+{
+  ridgereg(lambda,x[-i,],y[-i])
+}
+
+##cvridgeregerr函数用交叉验证实现岭回归，
+#参数依次为调节参数lambda,自变量x(数据矩阵),因变量y,返回值为测试均方误差   
+#输入：超参数lambda,自变量x(数据矩阵),因变量y
+#输出：删一交叉验证岭回归测试均方误差
+cvridgeregerr<-function(lambda,x,y)
+{  
+  #lambda=1
+  np<-dim(x)
+  n<-np[1]
+  p<-np[2]
+  #矩阵中的元素作为第一个参数输入mridge，表示去掉的数据编号，
+  #结果第i行为删去第i个样本的岭回归系数估计值
+  coe<-t(apply(as.matrix(1:n,ncol=1),1,mridge,lambda,x,y))
+  #coe第i行和数据矩阵第i个样本做点对点相乘，对行求和，计算测试均方误差
+  mean((apply(coe*cbind(1,x),1,sum)-y)^2)
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##ridgeregerr函数用于计算训练均方误差  
+#输入：岭回归超参数lambda，数据矩阵x，因变量y
+#输出：训练均方误差
+ridgeregerr=function(lambda,x,y)
+{
+  mean((pred(ridgereg(lambda,x,y),x)-y)^2)
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">#矩阵标准化，即先减去列均值，再除以列标准差
+mystandard = function(x)
+{
+  mx = apply(x, 2, mean)
+  sdx = apply(x, 2, sd)
+  t = sweep(x, 2, mx, '-')
+  sweep(t, 2, sdx, '/')
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">##在不同的lambda下,比较训练均方误差和测试均方误差，
+#以选取合适的调节参数lambda
+#----------------选取lambda---------------
+library(ElemStatLearn)
+x <- as.matrix(prostate[ ,1:8])
+x = mystandard(x)  #标准化x
+y <- as.vector(prostate[ ,9])
+LAM <- seq(0.001, 10, len=50)
+#计算岭回归50个模型的训练均方误差，将结果从list展开成向量
+err <- unlist(lapply(LAM, ridgeregerr, x, y))
+#计算岭回归50个模型的测试均方误差，将结果从list展开成向量
+pe <- unlist(lapply(LAM, cvridgeregerr, x, y))
+x <- rep(1:50, 2)
+plot(pe)
+</code></pre>
+<p><img src="/picture/output_10_0.png" alt="png"></p>
+<pre class=" language-lang-R"><code class="language-lang-R">#取交叉验证中使测试均方误差最小的lambda
+which.min(pe)  #30
+lam=LAM[which.min(pe)]  #5.918776
+</code></pre>
+<p>30</p>
+<p>5.91877551020408</p>
+<h2 id="改进删一法交叉验证"><a href="#改进删一法交叉验证" class="headerlink" title="改进删一法交叉验证"></a>改进删一法交叉验证</h2><p>设</p>
+<script type="math/tex; mode=display">
+X = \left [
+\begin{matrix}
+x_1 \\
+x_2 \\
+\cdots \\
+x_n
+\end{matrix}
+\right ]</script><p>则，</p>
+<script type="math/tex; mode=display">
+X' = [x_1',x_2',...,x_n']</script><p>那么，</p>
+<script type="math/tex; mode=display">
+X'X = x_1'x_1+x_2'x_2+\cdots+x_n'x_n</script><p>删一法每次删除一个样本，又上述$x_i$对应于一个样本$i$，因此，删除一个样本后的$X’X$变成了$X’X-x_i’x_i$。</p>
+<p>同理，</p>
+<script type="math/tex; mode=display">
+y'X = y' 
+\left [
+\begin{matrix}
+x_1 \\
+x_2 \\
+\cdots \\
+x_n
+\end{matrix}
+\right ]
+=y_1x_1+y_2x_2+\cdots+y_nx_n</script><p>那么，删除一个样本$i$，则$y’X$变成了$y’X-y_ix_i$</p>
+<p>根据上述思路，可以将删一法交叉验证算法进行改进，避免了每次都要计算矩阵相乘，大大降低了计算压力。</p>
+<pre class=" language-lang-R"><code class="language-lang-R">## 改进的删一法
+##mridge_aug函数用于实现删去一个样品的岭回归
+mridge_aug=function(i,lambda,x,y,xx,xy) 
+{
+  xx =xx-x[i,]%*%t(x[i,])
+  xy =xy-y[i]*x[i,]
+  xvar=apply(x,2,var)  #各变量方差
+  #利用cholesky分解求取回归方程的参数beta的估计值  
+  V <- xx + diag(lambda*xvar)  
+  #t(x)%*%x+lambda*xvar作为线性方程组的系数矩阵V
+  R <- mchol(V)   
+  #调用mchol函数将系数矩阵V进行cholesky分解,V=R%*%t(R)
+  M <- mforwardsolve(R, xy) 
+  #使用前代法求解R%*%M=t(x)%*%y,其中M=t(R)%*%beta
+  beta=mbacksolve(t(R), M)   
+  #使用回代法求解t(R)%*%beta=M,即可得beta的估计值
+  return (beta)
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">#验证上述函数功能
+x <- as.matrix(prostate[ ,1:8])
+x <- as.matrix(cbind(1,x))
+y <- as.vector(prostate[ ,9])
+xx=t(x)%*%x
+xy=t(y)%*%x
+mridge_aug(8,0,x,y,xx,xy)
+</code></pre>
+<ol class="list-inline">
+    <li>0.491888211499562</li>
+    <li>0.570089057625066</li>
+    <li>0.601708515193068</li>
+    <li>-0.0231551000547407</li>
+    <li>0.112972308293185</li>
+    <li>0.773102592770376</li>
+    <li>-0.11433738535188</li>
+    <li>0.031977556499466</li>
+    <li>0.0045456886523957</li>
+</ol>
+
+
+
+
+<pre class=" language-lang-R"><code class="language-lang-R">#改进的删一法交叉验证,计算测试均方误差
+cvridgeregerr_aug <- function(lambda,x,y)
+{
+  np<-dim(x)
+  n<-np[1]
+  #列表中的元素作为第一个参数输入mridge，示去掉的数据编号，
+  #结果第i行为删去第i个样本的岭回归系数估计值
+  coe<-t(apply(as.matrix(1:n,ncol=1),1,mridge_aug,lambda,x,y,xx,xy))
+  #coe第i行和数据矩阵第i个样本做点对点相乘，对行求和，
+  #计算测试均方误差
+  mean((apply(coe*x,1,sum)-y)^2)
+}
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">#验证上述函数功能
+x <- as.matrix(prostate[ ,1:8])
+x <- mystandard(x)
+y <- as.vector(prostate[ ,9])
+y <- (y-mean(y)) / sd(y)
+xx=t(x)%*%x
+xy=t(y)%*%x
+cvridgeregerr_aug(0.3,x,y)
+</code></pre>
+<p>0.396699322945445</p>
+<h2 id="利用标准化的X和Y训练模型"><a href="#利用标准化的X和Y训练模型" class="headerlink" title="利用标准化的X和Y训练模型"></a>利用标准化的X和Y训练模型</h2><pre class=" language-lang-R"><code class="language-lang-R">LAM = seq(0.001,10,length.out = 50)
+x <- as.matrix(prostate[ ,1:8])
+x <- mystandard(x) #y也进行标准化，因此X不用增广为(1,X)
+y <- as.vector(prostate[ ,9])
+y <- (y-mean(y)) / sd(y) #对y进行标准化
+xx=t(x)%*%x
+xy=t(y)%*%x
+#计算岭回归50个模型的测试均方误差，将结果从list展开成向量
+pe1 <- unlist(lapply(LAM, cvridgeregerr_aug, x, y))
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">
+plot(pe1) #
+lam1 =  LAM[which.min(pe1)]
+</code></pre>
+<p><img src="/picture/output_26_0.png" alt="png"></p>
+<h2 id="利用未标准化的X和Y训练模型"><a href="#利用未标准化的X和Y训练模型" class="headerlink" title="利用未标准化的X和Y训练模型"></a>利用未标准化的X和Y训练模型</h2><pre class=" language-lang-R"><code class="language-lang-R">x <- as.matrix(prostate[ ,1:8])
+x <- cbind(1,x) #X为未标准化
+y <- as.vector(prostate[ ,9]) #y未标准化
+xx=t(x)%*%x
+xy=t(y)%*%x
+#计算岭回归50个模型的测试均方误差，将结果从list展开成向量
+pe2 <- unlist(lapply(LAM, cvridgeregerr_aug, x, y))
+</code></pre>
+<pre class=" language-lang-R"><code class="language-lang-R">plot(pe2) #
+lam2 =  LAM[which.min(pe2)]
+</code></pre>
+<p><img src="/picture/output_29_0.png" alt="png"></p>
+<pre class=" language-lang-R"><code class="language-lang-R">lam1;lam2
+</code></pre>
+<p>5.91877551020408</p>
+<p>5.91877551020408</p>
+<p><strong>可以看到，无论是用标准化的X和y还是未标准化的X和y来进行训练，最佳的lambda结果是一样的。</strong></p>
+<pre class=" language-lang-R"><code class="language-lang-R">#用本文自定义的函数计算回归系数
+x <- as.matrix(prostate[ ,1:8])
+y <- as.vector(prostate[ ,9]) #y未标准化
+ridgereg(lambda = lam1,x,y)
+</code></pre>
+<ol class="list-inline">
+    <li>0.857190872862373</li>
+    <li>0.54969271971446</li>
+    <li>0.450878931201676</li>
+    <li>-0.0172129105085714</li>
+    <li>0.103056884295319</li>
+    <li>0.466532216724395</li>
+    <li>-0.0285916273005211</li>
+    <li>0.0157990230188132</li>
+    <li>0.00488299779401389</li>
+</ol>
+
+
+
+
+<pre class=" language-lang-R"><code class="language-lang-R">#用mda内置函数实现岭回归(输出结果中缺少截距项)
+library(mda)
+ridge1 <- gen.ridge(prostate[ ,1:8], prostate[ ,9], 
+                    drop <- FALSE, lambda =lam)  
+ridge1$coe
+</code></pre>
+<pre><code>Loading required package: class
+Loaded mda 0.4-10
+</code></pre><table>
+<tbody>
+    <tr><td> 0.549692720</td></tr>
+    <tr><td> 0.450878931</td></tr>
+    <tr><td>-0.017212911</td></tr>
+    <tr><td> 0.103056884</td></tr>
+    <tr><td> 0.466532217</td></tr>
+    <tr><td>-0.028591627</td></tr>
+    <tr><td> 0.015799023</td></tr>
+    <tr><td> 0.004882998</td></tr>
+</tbody>
+</table>
+
+
+
+
+<pre class=" language-lang-R"><code class="language-lang-R">min(pe1);min(pe2)  #用标准化的X和Y来进行训练，可将预测误差降低到0.39
+</code></pre>
+<p>0.393552554589219</p>
+<p>0.536324873140668</p>
+<p>对于标准化的岭回归模型，有：</p>
+<script type="math/tex; mode=display">\frac{y-\bar{y}}{sd_y}=\sum \frac{x_i-\bar{x_i}}{ {sd_x}_i} \beta_i</script><p>即：</p>
+<script type="math/tex; mode=display">y = \bar{y} + sd_y \sum \frac{x_i-\bar{x_i}}{ {sd_x}_i} \beta_i = \sum x_i \frac{\beta_i sd_y}{ {sd_x}_i} + \bar{y} - \sum \frac{\bar{x_i}\beta_i sd_y}{ {sd_x}_i}</script><p>令 </p>
+<script type="math/tex; mode=display">\beta'_1 = \frac{\beta_i sd_y}{ {sd_x}_i}, \beta'_0 = \bar{y} - \sum \frac{\bar{x_i}\beta_i sd_y}{ {sd_x}_i}</script><p>当遇到一个新样本时，可以利用上面变换得到的回归系数进行预测。</p>
+<h2 id="逐步回归结果"><a href="#逐步回归结果" class="headerlink" title="逐步回归结果"></a>逐步回归结果</h2><pre class=" language-lang-R"><code class="language-lang-R">data <- prostate[,1:9]
+lm.data <- lm(lpsa~.,data = data)
+lm.step <- step(lm.data)
+</code></pre>
+<pre><code>Start:  AIC=-60.78
+lpsa ~ lcavol + lweight + age + lbph + svi + lcp + gleason + 
+    pgg45
+
+          Df Sum of Sq    RSS     AIC
+- gleason  1    0.0491 43.108 -62.668
+- pgg45    1    0.5102 43.569 -61.636
+- lcp      1    0.6814 43.740 -61.256
+&lt;none&gt;                 43.058 -60.779
+- lbph     1    1.3646 44.423 -59.753
+- age      1    1.7981 44.857 -58.810
+- lweight  1    4.6907 47.749 -52.749
+- svi      1    4.8803 47.939 -52.364
+- lcavol   1   20.1994 63.258 -25.467
+
+Step:  AIC=-62.67
+lpsa ~ lcavol + lweight + age + lbph + svi + lcp + pgg45
+
+          Df Sum of Sq    RSS     AIC
+- lcp      1    0.6684 43.776 -63.176
+&lt;none&gt;                 43.108 -62.668
+- pgg45    1    1.1987 44.306 -62.008
+- lbph     1    1.3844 44.492 -61.602
+- age      1    1.7579 44.865 -60.791
+- lweight  1    4.6429 47.751 -54.746
+- svi      1    4.8333 47.941 -54.360
+- lcavol   1   21.3191 64.427 -25.691
+
+Step:  AIC=-63.18
+lpsa ~ lcavol + lweight + age + lbph + svi + pgg45
+
+          Df Sum of Sq    RSS     AIC
+- pgg45    1    0.6607 44.437 -63.723
+&lt;none&gt;                 43.776 -63.176
+- lbph     1    1.3329 45.109 -62.266
+- age      1    1.4878 45.264 -61.934
+- svi      1    4.1766 47.953 -56.336
+- lweight  1    4.6553 48.431 -55.373
+- lcavol   1   22.7555 66.531 -24.572
+
+Step:  AIC=-63.72
+lpsa ~ lcavol + lweight + age + lbph + svi
+
+          Df Sum of Sq    RSS     AIC
+&lt;none&gt;                 44.437 -63.723
+- age      1    1.1588 45.595 -63.226
+- lbph     1    1.5087 45.945 -62.484
+- lweight  1    4.3140 48.751 -56.735
+- svi      1    5.8509 50.288 -53.724
+- lcavol   1   25.9427 70.379 -21.119
+</code></pre><pre class=" language-lang-R"><code class="language-lang-R">lm.step$coefficients
+</code></pre>
+<dl class="dl-horizontal">
+    <dt>(Intercept)</dt>
+        <dd>0.494729262182627</dd>
+    <dt>lcavol</dt>
+        <dd>0.543997856944351</dd>
+    <dt>lweight</dt>
+        <dd>0.58821270309519</dd>
+    <dt>age</dt>
+        <dd>-0.016444846497545</dd>
+    <dt>lbph</dt>
+        <dd>0.101223333723462</dd>
+    <dt>svi</dt>
+        <dd>0.714903976347167</dd>
+</dl>
+
+
+
+<p>根据AIC信息准则，最终的模型为“lpsa ~ lcavol + lweight + age + lbph + svi”，系数如上述结果所示。</p>
+<pre class=" language-lang-R"><code class="language-lang-R">lm.err = mean((apply(t(t(cbind(1,data[,c(1,2,3,4,5)]))
+              *lm.step$coefficients),1,sum)-data[,9])^2)
+lm.err #逐步回归的预测误差
+</code></pre>
+<p>0.458110121687733</p>
+<p>可以看到，逐步回归的预测误差为0.458，略高于岭回归。</p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《改进的删一法交叉验证与逐步回归比较》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2018/04/26/岭回归/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                冯洋洋
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2018/04/27/sina_scrapy/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="新浪新闻爬虫">
+                        
+                        <span class="card-title">新浪新闻爬虫</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。
+
+从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。
+import requ
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-04-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            冯洋洋
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/爬虫/" target="_blank">
+                        <span class="chip bg-color">爬虫</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/04/13/神经网络/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="神经网络和深度学习">
+                        
+                        <span class="card-title">神经网络和深度学习</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            感知机前向神经网络S型神经元梯度下降法反向神经网络编程实现
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-04-13
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            冯洋洋
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/感知机/" target="_blank">
+                        <span class="chip bg-color">感知机</span>
+                    </a>
+                    
+                    <a href="/tags/神经网络/" target="_blank">
+                        <span class="chip bg-color">神经网络</span>
+                    </a>
+                    
+                    <a href="/tags/深度学习/" target="_blank">
+                        <span class="chip bg-color">深度学习</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:xxx@xx.xx" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=123123123" class="tooltipped" data-tooltip="QQ联系我: 123123123" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
