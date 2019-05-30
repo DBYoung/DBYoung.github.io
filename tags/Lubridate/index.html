@@ -1,630 +1,1570 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
-
-
+<!DOCTYPE html>
+<html  lang="zh">
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="标签: Lubridate, Young&#39;s Blog">
-    <meta name="description" content="标签: Lubridate | Young&#39;s Blog">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>标签: Lubridate | Young&#39;s Blog</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
-    <style type="text/css">
-        
-    </style>
-
-    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<title>标签: Lubridate - Young&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 
-<body>
 
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper container">
-            <div class="brand-logo">
-                <a href="/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">Young's Blog</span>
-                </a>
+    <meta name="description" content="每个人都是平凡的，同时也是与众不同的。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Young&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/tags/Lubridate/index.html">
+<meta property="og:site_name" content="Young&#39;s Blog">
+<meta property="og:description" content="每个人都是平凡的，同时也是与众不同的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Young&#39;s Blog">
+<meta name="twitter:description" content="每个人都是平凡的，同时也是与众不同的。">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Young&#39;s Blog" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/categories">Categories</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
             </div>
             
-
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
-<ul class="right">
-    
-    <li class="hide-on-med-and-down">
-        <a href="/" class="waves-effect waves-light">
-            
-            <i class="fa fa-home"></i>
-            
-            <span>首页</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/tags" class="waves-effect waves-light">
-            
-            <i class="fa fa-tags"></i>
-            
-            <span>标签</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/categories" class="waves-effect waves-light">
-            
-            <i class="fa fa-bookmark"></i>
-            
-            <span>分类</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/archives" class="waves-effect waves-light">
-            
-            <i class="fa fa-archive"></i>
-            
-            <span>归档</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/about" class="waves-effect waves-light">
-            
-            <i class="fa fa-user-circle-o"></i>
-            
-            <span>关于</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/friends" class="waves-effect waves-light">
-            
-            <i class="fa fa-address-book"></i>
-            
-            <span>友情链接</span>
-        </a>
-    </li>
-    
-    <li>
-        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
-        </a>
-    </li>
-</ul>
-
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">Young's Blog</div>
-        <div class="logo-desc">
-            
-            每个人都是平凡的，同时也是与众不同的。
-            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
         </div>
     </div>
-
+</nav>
     
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li>
-            <a href="/" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-home"></i>
-                
-                首页
-            </a>
-        </li>
-        
-        <li>
-            <a href="/tags" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-tags"></i>
-                
-                标签
-            </a>
-        </li>
-        
-        <li>
-            <a href="/categories" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-bookmark"></i>
-                
-                分类
-            </a>
-        </li>
-        
-        <li>
-            <a href="/archives" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-archive"></i>
-                
-                归档
-            </a>
-        </li>
-        
-        <li>
-            <a href="/about" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-user-circle-o"></i>
-                
-                关于
-            </a>
-        </li>
-        
-        <li>
-            <a href="/friends" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-address-book"></i>
-                
-                友情链接
-            </a>
-        </li>
-        
-        
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
-                <i class="fa fa-github-square fa-fw"></i>Fork Me
-            </a>
-        </li>
-        
-    </ul>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">标签</a></li>
+            <li class="is-active"><a href="#" aria-current="page">Lubridate</a></li>
+        </ul>
+        </nav>
+    </div>
 </div>
 
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-04-01T07:58:09.000Z">2018-04-01</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1720 个字)
+                </span>
+                
+                
+            </div>
         </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2018/04/01/Lubridate_notebook/">Lubridate包简介</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="lubridate包简介"><a href="#lubridate包简介" class="headerlink" title="lubridate包简介"></a>lubridate包简介</h2><p>该包的描述文档介绍道：<br>lubridate包包含了一些处理时间点和时间段的函数：<br>快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快.</p>
+<pre class=" language-lang-r"><code class="language-lang-r">library(lubridate)
+</code></pre>
+<h2 id="各种函数介绍"><a href="#各种函数介绍" class="headerlink" title="各种函数介绍"></a>各种函数介绍</h2><h3 id="add-with-rollback"><a href="#add-with-rollback" class="headerlink" title="add_with_rollback"></a>add_with_rollback</h3><p>add_with_rollback:Add and subtract months to a date without exceeding the last day of the new month.</p>
+<p>add_with_rollback:将某个日期加上或者减取若干个月，不考虑新获得的月份的最后一天的实际值.比如2009-10-31，加上一个月就是2009-11-31，但是11月没有31号，所以会显示NA.如果使用%m+%，则会以自然月的方式相加.</p>
+<ul>
+<li>例子<br>```r<br>may &lt;- ymd_hms(“1994-05-31 07:40:38”)<br>may + months(1:3)  #六月31显示为NA<br>may %m+% months(1:3)  #不会有错误</li>
+</ul>
+<p>leap &lt;- ymd(“2012-02-29”)<br>leap + years(1)  #NA<br>leap %m+% years(1)  #2013-02-28</p>
+<pre><code>
+### am
+am:Does date time occur in the am or pm?
+
+am:判断是否是上午，显然，其需要的参数应该包含一个具体的一天中的时间信息，如果只提供日期信息，则默认为00:00:00，显示为上午时间.
+
++ 例子
+```r
+dt &lt;- ymd(&quot;2012-02-02&quot;)
+am(dt)
+time &lt;- ymd_hm(&quot;2012-02-01 13:20&quot;)
+am(time)
+</code></pre><h3 id="as-duration"><a href="#as-duration" class="headerlink" title="as.duration"></a>as.duration</h3><p>as.duration:as.duration changes Interval, Period and numeric class objects to Duration objects. Numeric objects are changed to Duration objects with the seconds unit equal to the numeric value.</p>
+<p>as.duration:将interval、period和数字转换为时间间隔——时间段.</p>
+<ul>
+<li>例子<pre class=" language-lang-r"><code class="language-lang-r">span <- interval(ymd("1994-05-01"),ymd("1995-10-28"))  #interval
+as.duration(span)  #47088000秒，约1.49年
+as.duration(10)  #10秒
+dur <- duration(hours = 10,minutes = 6)  #一段10分6秒的时间间隔
+as.numeric(dur,"hours")  #10.1小时
+as.numeric(dur,"minutes")  #606秒
+</code></pre>
+</li>
+</ul>
+<h3 id="as-interval"><a href="#as-interval" class="headerlink" title="as.interval"></a>as.interval</h3><p>as.intervel:Change an object to an interval.</p>
+<p>as.interval:将对象转换为inteval</p>
+<ul>
+<li>例子<br>```r<br>diff &lt;- make_difftime(days = 31) #加上31天<br>as.interval(diff, ymd(“2009-01-01”))<br>as.interval(diff, ymd(“2009-02-01”))</li>
+</ul>
+<p>dur &lt;- duration(days = 31) #duration<br>as.interval(dur, ymd(“2009-01-01”))<br>as.interval(dur, ymd(“2009-02-01”))</p>
+<p>per &lt;- period(months = 1) #period<br>as.interval(per, ymd(“2009-01-01”))<br>as.interval(per, ymd(“2009-02-01”))</p>
+<p>as.interval(3600,ymd(“2009-01-01”)) ##numeric，在2009-01-01的基础上加上3600天<br>as.interval(duration(hours = 3600), ymd(“2009-01-01”))  #加上3600小时 </p>
+<pre><code>
+### as.period
+as.period:Change an object to a period.
+
+as.period:将对象转换为period.
+
++ 例子
+```r
+span &lt;- interval(as.POSIXct(&quot;2009-01-01&quot;), as.POSIXct(&quot;2010-02-02 01:01:01&quot;)) #interval
+as.period(span)
+as.period(span, units = &quot;day&quot;)
+</code></pre><p>format of interval,duration and period:</p>
+<ul>
+<li><p>interval:</p>
+<p>1990-01-01 UTC—1990-01-11 UTC</p>
+</li>
+<li><p>duration:</p>
+</li>
+</ul>
+<p>47088000s (~1.49 years)</p>
+<ul>
+<li>period:</li>
+</ul>
+<p>1y 1m 1d 1H 1M 1S</p>
+<h3 id="as-date"><a href="#as-date" class="headerlink" title="as_date"></a>as_date</h3><p>as_date:Convert an object to a date or date-time</p>
+<p>as_date:将对象转换为date或者date-time类型</p>
+<ul>
+<li>例子<pre class=" language-lang-r"><code class="language-lang-r">dt_utc <- ymd_hms("2010-08-03 00:50:50")
+dt_europe <- ymd_hms("2010-08-03 00:50:50", tz = "Europe/London")
+c(as_date(dt_utc), as.Date(dt_utc))
+c(as_date(dt_europe), as.Date(dt_europe))
+## need not suply origin，不需要提供初始值
+as_date(10)  #默认中1970-01-01年开始
+</code></pre>
+<h3 id="as-datetime"><a href="#as-datetime" class="headerlink" title="as_datetime"></a>as_datetime</h3>as_datetime:Convert an object to a date or date-time</li>
+</ul>
+<p>as_datetime:将对象转换为date或者date-time类型</p>
+<ul>
+<li>例子<br>同上.</li>
+</ul>
+<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>date:Get/set Date component of a date-time.</p>
+<p>date:获取/设置日期对象</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">x <- as.POSIXct("2012-03-26 23:12:13", tz = "Etc/GMT+8")
+x
+date(x)
+as.Date(x) #as.Date()函数默认返回UTC时间
+as.Date(x,tz = 'Etc/GMT+8')  #返回Etc/GMT+8时区时间
+date(x) <- as.Date('2014-10-20')
+date(x)
+</code></pre>
+<h3 id="DateTimeUpdate"><a href="#DateTimeUpdate" class="headerlink" title="DateTimeUpdate"></a>DateTimeUpdate</h3><p>DateTimeUpdate:Description of the classes “POSIXlt” and “POSIXct” representing calendar dates and times.</p>
+<p>DateTimeUpdate:</p>
+<h3 id="date-decimal"><a href="#date-decimal" class="headerlink" title="date_decimal"></a>date_decimal</h3><p>date_decimal:Converts a decimal to a date.</p>
+<p>date_decimal:将一个小数转换为日期</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">decimal <- 2017.12
+date_decimal(decimal)
+</code></pre>
+<h3 id="day"><a href="#day" class="headerlink" title="day"></a>day</h3><p>day:Get/set days component of a date-time.</p>
+<p>day:获取/设置日期中的具体日数据</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">x <- as.Date('2017-10-30')
+day(x) #获取日期
+mday(x)  #一个月中的第几天
+yday(x)  #一年中的第几天
+wdayofdate <- wday(x,label = TRUE,abbr = FALSE) 
+levels(wdayofdate) <- c(levels(wdayofdate)[2:7],levels(wdayofdate)[1])
+wdayofdate
+#一周中的第几天,以周日为第一天
+#因为中国人默认周一为一周的第一天，所以可以更改一下因子的排序
+</code></pre>
+<h3 id="days-in-month"><a href="#days-in-month" class="headerlink" title="days_in_month"></a>days_in_month</h3><p>days_in_month:Get the number of days in the month of a date-time.</p>
+<p>days_in_month:某月份有几天,输入一个带年份的日期数据</p>
+<ul>
+<li>例子<pre class=" language-lang-r"><code class="language-lang-r">md <- ymd('1994-05-01')
+days_in_month(md)
+</code></pre>
+</li>
+</ul>
+<h3 id="decimal-date"><a href="#decimal-date" class="headerlink" title="decimal_date"></a>decimal_date</h3><p>decimal_date:Converts a date to a decimal of its year.</p>
+<p>decimal_date:将日期转换成小数.</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">dt <- ymd('2017-10-31')
+decimal_date(dt)
+</code></pre>
+<h3 id="dst"><a href="#dst" class="headerlink" title="dst"></a>dst</h3><p>dst:Get Daylight Savings Time indicator of a date-time.</p>
+<p>dst:</p>
+<h3 id="duration"><a href="#duration" class="headerlink" title="duration"></a>duration</h3><p>duration:Create a duration object.</p>
+<p>duration:创建一个duration对象</p>
+<h3 id="Duration-class"><a href="#Duration-class" class="headerlink" title="Duration_class"></a>Duration_class</h3><p>Duration_class:Fit a POSIXlt date-time to the timeline<br>Duration_class:</p>
+<h3 id="fit-to-timeline"><a href="#fit-to-timeline" class="headerlink" title="fit_to_timeline"></a>fit_to_timeline</h3><h3 id="force-tz"><a href="#force-tz" class="headerlink" title="force_tz"></a>force_tz</h3><p>force_tz:Replace time zone to create new date-time</p>
+<p>force_tz:将日期的tz换了，创建一个新日期对象</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">x <- as.POSIXct("2009-08-07 00:00:01", tz = "America/New_York")
+x
+force_tz(x, "GMT")
+</code></pre>
+<h3 id="guess-formats"><a href="#guess-formats" class="headerlink" title="guess_formats"></a>guess_formats</h3><p>guess_formats:Guess formats from the supplied date-time character vector.</p>
+<p>guess_formats:猜测提供的日期格式</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">dt <- c('1990-01','1990 09 01','1992 Jan 01','May 1 1992')
+guess_formats(dt,orders = c("ymd","ym","mdy"),print_matches = TRUE)
+</code></pre>
+<h3 id="hour"><a href="#hour" class="headerlink" title="hour"></a>hour</h3><p>hour；Get/set hours component of a date-time.<br>hour:获取/设置日期中的小时数据</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">dt <- now()
+hour(dt)
+hour(dt) <- 1
+dt
+</code></pre>
+<h3 id="interval"><a href="#interval" class="headerlink" title="interval"></a>interval</h3><p>interval:Utilities for creation and manipulation of Interval objects.</p>
+<h3 id="interval-class"><a href="#interval-class" class="headerlink" title="interval_class"></a>interval_class</h3><h3 id="is-Date"><a href="#is-Date" class="headerlink" title="is.Date"></a>is.Date</h3><p>is.Date():Is x a Date object?</p>
+<p>is.Date():x是否是一个日期对象</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">x <- '1970-01-01'
+is.Date(x)
+x1 <- as.Date(x)
+is.Date(x1)
+x2 <- ymd(x)
+is.Date(x2)
+</code></pre>
+<h3 id="is-difftime"><a href="#is-difftime" class="headerlink" title="is.difftime"></a>is.difftime</h3><p>is.difftime:Is x a difftime object?</p>
+<p>is.difftime:x是否是一个difftime对象</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">is.difftime(as.Date('1999-09-09')) #FALSE
+is.difftime(make_difftime(20))  #TRUE,默认20秒间隔
+</code></pre>
+<h3 id="is-instant"><a href="#is-instant" class="headerlink" title="is.instant"></a>is.instant</h3><p>is.instant:Is x a date-time object?</p>
+<p>is.instant:x是否为日期对象，同is.Date()</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">x <- as.Date('1999-09-09')
+is.instant(x)
+is.timepoint(x)
+is.timepoint(10)
+</code></pre>
+<h3 id="is-POSIXt"><a href="#is-POSIXt" class="headerlink" title="is.POSIXt"></a>is.POSIXt</h3><p>is.POSIXt:Is x a POSIXct or POSIXlt object?</p>
+<p>is.POSIXt:x是否为POSIXct对象或者POSIXlt对象?</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">is.POSIXt(as.Date("1997-01-01"))
+is.POSIXt(as.POSIXct("1997-01-01"))
+</code></pre>
+<h3 id="is-timespan"><a href="#is-timespan" class="headerlink" title="is.timespan"></a>is.timespan</h3><p>is.timespan:Is x a length of time?</p>
+<p>is.timespan:x是否时时间长度</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">is.timespan(as.Date("1999-09-09"))
+is.timespan(duration(second = 1))
+is.timespan(interval(ymd("1999-09-09"),ymd("2000-01-01")))
+is.timespan(period(10,units = 'month'))
+</code></pre>
+<h3 id="leap-year"><a href="#leap-year" class="headerlink" title="leap_year"></a>leap_year</h3><p>leap_year:Is a year a leap year?</p>
+<p>leap_year:是否时闰年</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">leap_year(2012)
+leap_year(2013)
+</code></pre>
+<h3 id="local-time"><a href="#local-time" class="headerlink" title="local_time"></a>local_time</h3><p>local_time:</p>
+<p>local_time:</p>
+<h3 id="make-date"><a href="#make-date" class="headerlink" title="make_date"></a>make_date</h3><h3 id="make-datetime"><a href="#make-datetime" class="headerlink" title="make_datetime"></a>make_datetime</h3><p>make_datetime:Efficient creation of date-times from numeric representations</p>
+<p>make_datetime:有效创建一个日期对象</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">dt <- make_datetime(year = 1999,month = 9,day = 10)
+dt
+</code></pre>
+<h3 id="make-difftime"><a href="#make-difftime" class="headerlink" title="make_difftime"></a>make_difftime</h3><p>make_difftime:Create a difftime object.</p>
+<p>make_difftime:创建一个时间长度对象.</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">make_difftime(1)
+make_difftime(60)
+make_difftime(3600)
+make_difftime(3600, units = "minute")
+# Time difference of 60 mins
+make_difftime(second = 90)
+# Time difference of 1.5 mins
+make_difftime(minute = 1.5)
+# Time difference of 1.5 mins
+make_difftime(second = 3, minute = 1.5, hour = 2, day = 6, week = 1)
+# Time difference of 13.08441 days
+make_difftime(hour = 1, minute = -60)
+# Time difference of 0 secs
+make_difftime(day = -1)
+# Time difference of -1 days
+make_difftime(second = 120,minute = 10,hour = 10,day = 1,week = 1, units = "hour")
+make_difftime(20,day = 6,week = 1)
+# Time differences in mins
+</code></pre>
+<h3 id="minute"><a href="#minute" class="headerlink" title="minute"></a>minute</h3><p> minute:Get/set minutes component of a date-time.</p>
+<p> minute:类似于hour.</p>
+<h3 id="month"><a href="#month" class="headerlink" title="month"></a>month</h3><p>month:Get/set months component of a date-time.</p>
+<p>month:类似于day.</p>
+<h3 id="ms"><a href="#ms" class="headerlink" title="ms"></a>ms</h3><p>ms:Create a period with the specified hours, minutes, and seconds</p>
+<p>ms:使用特定的小时、分钟和秒创建period.</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">#ms:代表分钟,s代表秒
+#hms:h代表小时
+ms("09 10")
+hms("09:10:10")
+hms("3:22:::2")
+</code></pre>
+<h3 id="now"><a href="#now" class="headerlink" title="now"></a>now</h3><p>now:The current time</p>
+<p>now:获取当前时间</p>
+<p>+例子</p>
+<pre class=" language-lang-r"><code class="language-lang-r">now()
+</code></pre>
+<h3 id="origin"><a href="#origin" class="headerlink" title="origin"></a>origin</h3><p>origin：1970-01-01 UTC</p>
+<p>origin：1970-01-01 UTC，是一个常数，不是函数</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">origin
+</code></pre>
+<h3 id="parse-date-time"><a href="#parse-date-time" class="headerlink" title="parse_date_time"></a>parse_date_time</h3><p>parse_date_time:Parse character and numeric date-time vectors with user friendly order formats.</p>
+<p>parse_date_time:将字符型或者数值型日期转换成用户友好的格式。</p>
+<ul>
+<li>例子</li>
+</ul>
+<pre class=" language-lang-r"><code class="language-lang-r">
+
+</code></pre>
+<h3 id="poriod"><a href="#poriod" class="headerlink" title="poriod"></a>poriod</h3><h3 id="peroid-to-seconds"><a href="#peroid-to-seconds" class="headerlink" title="peroid_to_seconds"></a>peroid_to_seconds</h3><h3 id="pretty-dates"><a href="#pretty-dates" class="headerlink" title="pretty_dates"></a>pretty_dates</h3><h3 id="quarter"><a href="#quarter" class="headerlink" title="quarter"></a>quarter</h3><h3 id="roll-back"><a href="#roll-back" class="headerlink" title="roll_back"></a>roll_back</h3><h3 id="round-date"><a href="#round-date" class="headerlink" title="round_date"></a>round_date</h3><h3 id="second"><a href="#second" class="headerlink" title="second"></a>second</h3><h3 id="stamp"><a href="#stamp" class="headerlink" title="stamp"></a>stamp</h3><h3 id="timespan"><a href="#timespan" class="headerlink" title="timespan"></a>timespan</h3><h3 id="time-length"><a href="#time-length" class="headerlink" title="time_length"></a>time_length</h3><h3 id="today"><a href="#today" class="headerlink" title="today"></a>today</h3><h3 id="tz"><a href="#tz" class="headerlink" title="tz"></a>tz</h3><h3 id="week"><a href="#week" class="headerlink" title="week"></a>week</h3><h3 id="with-tz"><a href="#with-tz" class="headerlink" title="with_tz"></a>with_tz</h3><h3 id="year"><a href="#year" class="headerlink" title="year"></a>year</h3><h3 id="ymd"><a href="#ymd" class="headerlink" title="ymd"></a>ymd</h3><h3 id="ymd-hms"><a href="#ymd-hms" class="headerlink" title="ymd_hms"></a>ymd_hms</h3><h3 id="m"><a href="#m" class="headerlink" title="%m+%"></a>%m+%</h3><h3 id="within"><a href="#within" class="headerlink" title="%within%"></a>%within%</h3><h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><h2 id="三、应用实例"><a href="#三、应用实例" class="headerlink" title="三、应用实例"></a>三、应用实例</h2>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="Your name">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        Your name
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Your title
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Your location</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        26
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        2
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        22
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ppoffice" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Github" href="https://github.com/ppoffice">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Facebook" href="https://facebook.com">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Twitter" href="https://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Dribbble" href="https://dribbble.com">
+                
+                <i class="fab fa-dribbble"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://hexo.io" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Hexo</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">hexo.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">PPOffice</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/NLP/">
+            <span class="level-start">
+                <span class="level-item">NLP</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/大数据/">
+            <span class="level-start">
+                <span class="level-item">大数据</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/ETL/" style="font-size: 10px;">ETL</a> <a href="/tags/Lubridate/" style="font-size: 10px;">Lubridate</a> <a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a> <a href="/tags/R/" style="font-size: 10px;">R</a> <a href="/tags/clustering/" style="font-size: 10px;">clustering</a> <a href="/tags/kmeans/" style="font-size: 10px;">kmeans</a> <a href="/tags/优化算法/" style="font-size: 10px;">优化算法</a> <a href="/tags/岭回归/" style="font-size: 10px;">岭回归</a> <a href="/tags/感知机/" style="font-size: 10px;">感知机</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/数据仓库/" style="font-size: 10px;">数据仓库</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 20px;">机器学习</a> <a href="/tags/梯度下降/" style="font-size: 10px;">梯度下降</a> <a href="/tags/深度学习/" style="font-size: 10px;">深度学习</a> <a href="/tags/爬虫/" style="font-size: 16.67px;">爬虫</a> <a href="/tags/矩阵分解/" style="font-size: 13.33px;">矩阵分解</a> <a href="/tags/神经网络/" style="font-size: 10px;">神经网络</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/自然语言处理/" style="font-size: 10px;">自然语言处理</a> <a href="/tags/逐步回归/" style="font-size: 10px;">逐步回归</a> <a href="/tags/降维/" style="font-size: 10px;">降维</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/05/30/hello-world/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="hello world">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-30T05:59:35.000Z">2019-05-30</time></div>
+                    <a href="/2019/05/30/hello-world/" class="has-link-black-ter is-size-6">hello world</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/07/02/R语言简明教程/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="R语言简明轿车">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T03:43:55.696Z">2018-07-02</time></div>
+                    <a href="/2018/07/02/R语言简明教程/" class="has-link-black-ter is-size-6">R语言简明轿车</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/05/09/排序算法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="排序算法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-08T16:00:00.000Z">2018-05-09</time></div>
+                    <a href="/2018/05/09/排序算法/" class="has-link-black-ter is-size-6">排序算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/05/05/梯度下降/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="线性回归与梯度下降算法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-04T16:00:00.000Z">2018-05-05</time></div>
+                    <a href="/2018/05/05/梯度下降/" class="has-link-black-ter is-size-6">线性回归与梯度下降算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/05/04/牛顿法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="平方根与牛顿法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-04T02:50:15.447Z">2018-05-04</time></div>
+                    <a href="/2018/05/04/牛顿法/" class="has-link-black-ter is-size-6">平方根与牛顿法</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
 
         
-            <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
-   data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewBox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-              fill="currentColor" class="octo-body"></path>
-    </svg>
-</a>
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
         
-    </nav>
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">16</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ETL/">
+                        <span class="tag">ETL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Lubridate/">
+                        <span class="tag">Lubridate</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MapReduce/">
+                        <span class="tag">MapReduce</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/R/">
+                        <span class="tag">R</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/clustering/">
+                        <span class="tag">clustering</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/kmeans/">
+                        <span class="tag">kmeans</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/优化算法/">
+                        <span class="tag">优化算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/岭回归/">
+                        <span class="tag">岭回归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/感知机/">
+                        <span class="tag">感知机</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据仓库/">
+                        <span class="tag">数据仓库</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据结构/">
+                        <span class="tag">数据结构</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/机器学习/">
+                        <span class="tag">机器学习</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/梯度下降/">
+                        <span class="tag">梯度下降</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深度学习/">
+                        <span class="tag">深度学习</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/爬虫/">
+                        <span class="tag">爬虫</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/矩阵分解/">
+                        <span class="tag">矩阵分解</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/神经网络/">
+                        <span class="tag">神经网络</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线性回归/">
+                        <span class="tag">线性回归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/自然语言处理/">
+                        <span class="tag">自然语言处理</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/逐步回归/">
+                        <span class="tag">逐步回归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/降维/">
+                        <span class="tag">降维</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
 
-</header>
+                
 
-<div class="bg-cover pd-header about-cover">
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2019/05/30/hello-world/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="hello world">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-30T05:59:35.000Z">2019-05-30</time></div>
+                    <a href="/2019/05/30/hello-world/" class="has-link-black-ter is-size-6">hello world</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/07/02/R语言简明教程/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="R语言简明轿车">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T03:43:55.696Z">2018-07-02</time></div>
+                    <a href="/2018/07/02/R语言简明教程/" class="has-link-black-ter is-size-6">R语言简明轿车</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/05/09/排序算法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="排序算法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-08T16:00:00.000Z">2018-05-09</time></div>
+                    <a href="/2018/05/09/排序算法/" class="has-link-black-ter is-size-6">排序算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/05/05/梯度下降/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="线性回归与梯度下降算法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-04T16:00:00.000Z">2018-05-05</time></div>
+                    <a href="/2018/05/05/梯度下降/" class="has-link-black-ter is-size-6">线性回归与梯度下降算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/05/04/牛顿法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="平方根与牛顿法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-04T02:50:15.447Z">2018-05-04</time></div>
+                    <a href="/2018/05/04/牛顿法/" class="has-link-black-ter is-size-6">平方根与牛顿法</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">5</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">16</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ETL/">
+                        <span class="tag">ETL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Lubridate/">
+                        <span class="tag">Lubridate</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MapReduce/">
+                        <span class="tag">MapReduce</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/R/">
+                        <span class="tag">R</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/clustering/">
+                        <span class="tag">clustering</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/kmeans/">
+                        <span class="tag">kmeans</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/优化算法/">
+                        <span class="tag">优化算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/岭回归/">
+                        <span class="tag">岭回归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/感知机/">
+                        <span class="tag">感知机</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据仓库/">
+                        <span class="tag">数据仓库</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据结构/">
+                        <span class="tag">数据结构</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/机器学习/">
+                        <span class="tag">机器学习</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/梯度下降/">
+                        <span class="tag">梯度下降</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/深度学习/">
+                        <span class="tag">深度学习</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/爬虫/">
+                        <span class="tag">爬虫</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/矩阵分解/">
+                        <span class="tag">矩阵分解</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/神经网络/">
+                        <span class="tag">神经网络</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线性回归/">
+                        <span class="tag">线性回归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/自然语言处理/">
+                        <span class="tag">自然语言处理</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/逐步回归/">
+                        <span class="tag">逐步回归</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/降维/">
+                        <span class="tag">降维</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
     <div class="container">
-    <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    life is short.
+                    <img src="/images/logo.svg" alt="Young&#39;s Blog" height="28">
                 
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 冯洋洋&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
             </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
 
-            <div class="description center-align">
-                
-                    每个人都是平凡的，同时也是与众不同的。
-                
-            </div>
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
         </div>
     </div>
 </div>
 <script>
-// 每天切换 banner 图.  Switch banner image every day.
-$('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
 </script>
-    </div>
-</div>
-
-<main class="content">
-
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
     
-
-<div id="tags" class="container chip-container">
-    <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fa fa-tags"></i>&nbsp;&nbsp;文章标签
-            </div>
-            <div class="tag-chips">
-                
-                
-                <a href="/tags/ETL/" title="ETL: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="ETL" style="background-color: #F9EBEA;">ETL
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/数据仓库/" title="数据仓库: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="数据仓库" style="background-color: #F5EEF8;">数据仓库
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/爬虫/" title="爬虫: 4">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="爬虫" style="background-color: #D5F5E3;">爬虫
-                        <span class="tag-length">4</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/MapReduce/" title="MapReduce: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="MapReduce" style="background-color: #E8F8F5;">MapReduce
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/线性回归/" title="线性回归: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="线性回归" style="background-color: #FEF9E7;">线性回归
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/排序/" title="排序: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="排序" style="background-color: #F8F9F9;">排序
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/数据结构/" title="数据结构: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="数据结构" style="background-color: #82E0AA;">数据结构
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/机器学习/" title="机器学习: 9">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="机器学习" style="background-color: #D7BDE2;">机器学习
-                        <span class="tag-length">9</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/感知机/" title="感知机: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="感知机" style="background-color: #A3E4D7;">感知机
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/神经网络/" title="神经网络: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="神经网络" style="background-color: #85C1E9;">神经网络
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/深度学习/" title="深度学习: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="深度学习" style="background-color: #F8C471;">深度学习
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/降维/" title="降维: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="降维" style="background-color: #F9E79F;">降维
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/矩阵分解/" title="矩阵分解: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="矩阵分解" style="background-color: #F9EBEA;">矩阵分解
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/R/" title="R: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="R" style="background-color: #FEF9E7;">R
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/Lubridate/" title="Lubridate: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            data-tagname="Lubridate" style="background-color: #F8F9F9;">Lubridate
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/岭回归/" title="岭回归: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="岭回归" style="background-color: #D5F5E3;">岭回归
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/逐步回归/" title="逐步回归: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="逐步回归" style="background-color: #85C1E9;">逐步回归
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/优化算法/" title="优化算法: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="优化算法" style="background-color: #D5F5E3;">优化算法
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/梯度下降/" title="梯度下降: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="梯度下降" style="background-color: #F9E79F;">梯度下降
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/自然语言处理/" title="自然语言处理: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="自然语言处理" style="background-color: #A3E4D7;">自然语言处理
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/kmeans/" title="kmeans: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="kmeans" style="background-color: #FEF9E7;">kmeans
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/clustering/" title="clustering: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="clustering" style="background-color: #D5F5E3;">clustering
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-    
-
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-            
-            
-            <div class="article tag-post col s12 m6 l4 overflow-policy" data-tags="R, Lubridate" data-aos="fade-up">
-                <div class="card">
-                    <a href="/2018/04/01/Lubridate_notebook/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Lubridate包简介">
-                            
-                            <span class="card-title">Lubridate包简介</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-04-01
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-user fa-fw"></i>
-                                冯洋洋
-                                
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </article>
-</main>
-
-
-<footer class="page-footer bg-color">
-    <div class="container row center-align">
-        <div class="col s12 m8 l8 copy-right">
-            本站由&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>基于
-            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
-            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
-
-            
-
-            
-			
-                <br>
-                
-                <span id="busuanzi_container_site_pv">
-                    <i class="fa fa-heart-o"></i>
-                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
-                </span>
-                
-                
-                <span id="busuanzi_container_site_uv">
-                    <i class="fa fa-users"></i>
-                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
-                </span>
-                
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-
-
-    <a href="mailto:xxx@xx.xx" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fa fa-envelope-open"></i>
-    </a>
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=123123123" class="tooltipped" data-tooltip="QQ联系我: 123123123" data-position="top" data-delay="50">
-        <i class="fa fa-qq"></i>
-    </a>
-
-
-</div>
-    </div>
-</footer>
-
-<div class="progress-bar"></div>
-
-
-<!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
-});
-</script>
-<!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fa fa-angle-up"></i>
-    </a>
-</div>
-
-
-<script src="/libs/materialize/materialize.min.js"></script>
-<script src="/libs/masonry/masonry.pkgd.min.js"></script>
-<script src="/libs/aos/aos.js"></script>
-<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-<script src="/js/matery.js"></script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-
-
-
-    <script src="/libs/others/clicklove.js"></script>
-
-
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-
-
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
         tex2jax: {
