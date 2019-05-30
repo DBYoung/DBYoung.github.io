@@ -84,8 +84,8 @@
     
 
 
-<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body class="is-3-column">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
     <div class="container">
@@ -134,46 +134,6 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-04-03T17:15:49.176Z">2018-04-04</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    几秒 读完 (大约 0 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2018/04/04/线性模型/">线性模型</a>
-            
-        </h1>
-        <div class="content">
-            
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
     <div class="card">
     
     <div class="card-content article ">
@@ -301,6 +261,46 @@
 <p>$$Gain=\frac{G_L^2}{H_L+\rho}+\frac{G_R^2}{H_R+\rho}-\frac{(G_L+G_R)^2}{H_L+H_R+\rho}-\gamma$$</p>
 <p>Gain的值越大，分裂后L减小越多。所以当对一个叶节点分割时，计算所有候选特征值所对应的gain，选取gain最大的进行分割。但由于精确遍历所有可能的分割点是效率很低的，所以，实际上XGBoost采用的是对于每个特征，不是简单地按照样本个数进行分位，而是以二阶导数值作为权重，进行分位点的选择，以此减少计算复杂度。在学习每棵树前，提出候选切分点，这也是XGBoost可以实现并行的原因之一，可以提前切割分位点。<br> 最后，XGBoost算法还借鉴了bagging的bootstrap自助法行抽样，还借鉴了随机森林的列抽样，即特征抽样。这样减少过拟合同时还降低了计算复杂度。</p>
 <h2 id="Bagging-amp-随机森林"><a href="#Bagging-amp-随机森林" class="headerlink" title="Bagging &amp; 随机森林"></a>Bagging &amp; 随机森林</h2>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-04-03T17:15:49.176Z">2018-04-04</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    几秒 读完 (大约 0 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2018/04/04/线性模型/">线性模型</a>
+            
+        </h1>
+        <div class="content">
+            
         </div>
         
         
@@ -1709,12 +1709,12 @@
         <ul class="menu-list">
         
             <li>
-                <a class="level is-mobile" href="https://hexo.io" target="_blank">
+                <a class="level is-mobile" href="http://pcgan.site/" target="_blank">
                     <span class="level-left">
                         <span class="level-item">甘医生</span>
                     </span>
                     <span class="level-right">
-                        <span class="level-item tag">hexo.io</span>
+                        <span class="level-item tag">pcgan.site</span>
                     </span>
                 </a>
             </li>
