@@ -212,44 +212,9 @@
 <p>可以看出，SSE从0.155降低到0.111，说明系数有改善。</p>
 <p>step 5:重复step2-step3，直到权重不再显著变化为止。</p>
 <p>我们知道，一元线性回归的系数可以用公式计算，我们用R的lm()函数来计算权重，结果为</p>
-<pre class=" language-lang-R"><code class="language-lang-R">lm(y~x,dat)
-
-Call:
-lm(formula = y ~ x, data = dat)
-
-Coefficients:
-(Intercept)            x  
--0.1167       0.9777
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lm(y~x,dat)</span><br><span class="line"></span><br><span class="line">Call:</span><br><span class="line">lm(formula = y ~ x, data = dat)</span><br><span class="line"></span><br><span class="line">Coefficients:</span><br><span class="line">(Intercept)            x  </span><br><span class="line">-<span class="hljs-number">0.1167</span>       <span class="hljs-number">0.9777</span></span><br></pre></td></tr></table></figure>
 <p>然后，我在R里面写了一个梯度下降的函数，当精度调到0.0000001的时候，与lm的结果已经很接近了。</p>
-<pre class=" language-lang-R"><code class="language-lang-R">gradientDescent <- function(dat,start = c(0,0),learning_rate = 0.01,tol = 0.001)
-{
-    a = start[1]
-    b = start[2]
-    x = dat[,1]
-    y = dat[,2]
-    iters = 0
-    while(TRUE)
-    {
-        Ypred = a + b * x
-        old_a = a
-        old_b = b
-        a = a + learning_rate * sum(y - Ypred)
-        b = b + learning_rate * sum((y-Ypred) * x)
-        iters = iters + 1
-        if(abs(a-old_a) <= tol & abs(b-old_b) <= 0.01)
-            break;
-    }
-    list(weights = c(a,b),iters = iters)
-}
-
-gradientDescent(dat,tol=0.0000001)
-$weights
-[1] -0.1167315  0.9776839
-
-$iters #迭代了975次
-[1] 975
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">gradientDescent &lt;- <span class="hljs-keyword">function</span>(dat,start = c(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),learning_rate = <span class="hljs-number">0.01</span>,tol = <span class="hljs-number">0.001</span>)</span><br><span class="line">&#123;</span><br><span class="line">	a = start[<span class="hljs-number">1</span>]</span><br><span class="line">	b = start[<span class="hljs-number">2</span>]</span><br><span class="line">	x = dat[,<span class="hljs-number">1</span>]</span><br><span class="line">	y = dat[,<span class="hljs-number">2</span>]</span><br><span class="line">	iters = <span class="hljs-number">0</span></span><br><span class="line">	<span class="hljs-keyword">while</span>(<span class="hljs-literal">TRUE</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		Ypred = a + b * x</span><br><span class="line">		old_a = a</span><br><span class="line">		old_b = b</span><br><span class="line">		a = a + learning_rate * sum(y - Ypred)</span><br><span class="line">		b = b + learning_rate * sum((y-Ypred) * x)</span><br><span class="line">		iters = iters + <span class="hljs-number">1</span></span><br><span class="line">		<span class="hljs-keyword">if</span>(abs(a-old_a) &lt;= tol &amp; abs(b-old_b) &lt;= <span class="hljs-number">0.01</span>)</span><br><span class="line">			<span class="hljs-keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	list(weights = c(a,b),iters = iters)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">gradientDescent(dat,tol=<span class="hljs-number">0.0000001</span>)</span><br><span class="line">$weights</span><br><span class="line">[<span class="hljs-number">1</span>] -<span class="hljs-number">0.1167315</span>  <span class="hljs-number">0.9776839</span></span><br><span class="line"></span><br><span class="line">$iters <span class="hljs-comment">#迭代了975次</span></span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">975</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>我们常说的梯度，其实是指向量，其方向与切线方向相同。</p>
 <p>利用梯度下降法进行权重更新的公式为:</p>
@@ -266,112 +231,22 @@ $iters #迭代了975次
 </blockquote>
 <p>随机梯度下降算法适用于大数量的计算，对于小数据量不一定准确。为了检验随机梯度下降算法，我们构造了一个有10000个样本的数据，同样是计算一元线性回归的系数。</p>
 <p>随机梯度下降的函数如下：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">stochasticGradientDescent <- function(dat,start = c(0,0),learning_rate = 0.01,tol = 0.000001,iteratons = 100)
-{
-    #start:初始参数
-    #learning_rate:学习率
-    #tol:精度
-    #iterations:迭代次数
-
-    dat = as.matrix(dat)
-    a = start[1]
-    b = start[2]
-    x = dat[,1]
-    y = dat[,2]
-    iters = 0
-    while(iters < iteratons)
-    {
-        #重排，即将样本的顺序打乱
-        index = sample(length(x))
-        old_a = a
-        old_b = b
-        for(i in index)
-        {
-
-            Ypred = a + b * x[i]
-            a = a + learning_rate * (y[i] - Ypred)
-            b = b + learning_rate * (y[i]-Ypred) * x[i]
-        }
-        if(abs(a-old_a) <= tol & abs(b-old_b) <= tol)
-             break;
-        learning_rate = learning_rate / (1 + 0.01 * iters) #自适应学习率
-        iters = iters + 1
-        if(iters > iterations)
-            break;
-    }
-    list(weights = c(a,b),iters = iters)
-}
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">stochasticGradientDescent &lt;- <span class="hljs-keyword">function</span>(dat,start = c(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),learning_rate = <span class="hljs-number">0.01</span>,tol = <span class="hljs-number">0.000001</span>,iteratons = <span class="hljs-number">100</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="hljs-comment">#start:初始参数</span></span><br><span class="line">	<span class="hljs-comment">#learning_rate:学习率</span></span><br><span class="line">	<span class="hljs-comment">#tol:精度</span></span><br><span class="line">	<span class="hljs-comment">#iterations:迭代次数</span></span><br><span class="line">	</span><br><span class="line">	dat = as.matrix(dat)</span><br><span class="line">	a = start[<span class="hljs-number">1</span>]</span><br><span class="line">	b = start[<span class="hljs-number">2</span>]</span><br><span class="line">	x = dat[,<span class="hljs-number">1</span>]</span><br><span class="line">	y = dat[,<span class="hljs-number">2</span>]</span><br><span class="line">	iters = <span class="hljs-number">0</span></span><br><span class="line">	<span class="hljs-keyword">while</span>(iters &lt; iteratons)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="hljs-comment">#重排，即将样本的顺序打乱</span></span><br><span class="line">		index = sample(length(x))</span><br><span class="line">		old_a = a</span><br><span class="line">		old_b = b</span><br><span class="line">		<span class="hljs-keyword">for</span>(i <span class="hljs-keyword">in</span> index)</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">			Ypred = a + b * x[i]</span><br><span class="line">			a = a + learning_rate * (y[i] - Ypred)</span><br><span class="line">			b = b + learning_rate * (y[i]-Ypred) * x[i]</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="hljs-keyword">if</span>(abs(a-old_a) &lt;= tol &amp; abs(b-old_b) &lt;= tol)</span><br><span class="line">		 	<span class="hljs-keyword">break</span>;</span><br><span class="line">		learning_rate = learning_rate / (<span class="hljs-number">1</span> + <span class="hljs-number">0.01</span> * iters) <span class="hljs-comment">#自适应学习率</span></span><br><span class="line">		iters = iters + <span class="hljs-number">1</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(iters &gt; iterations)</span><br><span class="line">            <span class="hljs-keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	list(weights = c(a,b),iters = iters)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后我们构造一个相对大的样本用来检验算法：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">set.seed(100)
-x <- seq(1,10,length.out = 10000)
-y <- 2 * x + rnorm(10000) * 10 + 2
-bigdata <- data.frame(x ,y )
-plot(x,y)
-cor(x,y)
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set.seed(<span class="hljs-number">100</span>)</span><br><span class="line">x &lt;- seq(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>,length.out = <span class="hljs-number">10000</span>)</span><br><span class="line">y &lt;- <span class="hljs-number">2</span> * x + rnorm(<span class="hljs-number">10000</span>) * <span class="hljs-number">10</span> + <span class="hljs-number">2</span></span><br><span class="line">bigdata &lt;- data.frame(x ,y )</span><br><span class="line">plot(x,y)</span><br><span class="line">cor(x,y)</span><br></pre></td></tr></table></figure>
 <p><img src="/picture/sgd.png" alt="sgd"></p>
 <p>回归结果：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">lm(y~x,data = bigdata )
-Call:
-lm(formula = y ~ x, data = bigdata)
-
-Coefficients:
-(Intercept)            x  
-      2.004        2.006
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lm(y~x,data = bigdata )</span><br><span class="line">Call:</span><br><span class="line">lm(formula = y ~ x, data = bigdata)</span><br><span class="line"></span><br><span class="line">Coefficients:</span><br><span class="line">(Intercept)            x  </span><br><span class="line">      <span class="hljs-number">2.004</span>        <span class="hljs-number">2.006</span></span><br></pre></td></tr></table></figure>
 <p>随机梯度下降的结果：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">stochasticGradientDescent(bigdata,learning_rate = 0.001,tol=0.000000001)
-$weights
-2.01138749995603 2.00584502615877
-$iters
-69
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">stochasticGradientDescent(bigdata,learning_rate = <span class="hljs-number">0.001</span>,tol=<span class="hljs-number">0.000000001</span>)</span><br><span class="line">$weights</span><br><span class="line"><span class="hljs-number">2.01138749995603</span> <span class="hljs-number">2.00584502615877</span></span><br><span class="line">$iters</span><br><span class="line"><span class="hljs-number">69</span></span><br></pre></td></tr></table></figure>
 <p>批量梯度下降的结果：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">batchGradientDescent(bigdata,learning_rate = 0.000001,tol = 0.000000001)
-$weights
-2.00385275101478 2.00634924457312
-$iters
-8345
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">batchGradientDescent(bigdata,learning_rate = <span class="hljs-number">0.000001</span>,tol = <span class="hljs-number">0.000000001</span>)</span><br><span class="line">$weights</span><br><span class="line"><span class="hljs-number">2.00385275101478</span> <span class="hljs-number">2.00634924457312</span></span><br><span class="line">$iters</span><br><span class="line"><span class="hljs-number">8345</span></span><br></pre></td></tr></table></figure>
 <p>可以看到，在同样的精度要求下，随机梯度下降进行59次迭代以后即收敛，而批量梯度下降则需要迭代8345次。</p>
 <p>但是随机梯度下降也有一个缺点，即参数更新频率太快，有可能出现目标函数值在最优质附近的震荡现象，因为高频率的参数更新导致了高方差。 同时也可以看出，在相同精度要求下，随机梯度下降计算出来的系数与精确值离差较大，而批量随机下降则更接近精确值。</p>
 <h2 id="Mini-batch-Gradient-Descent"><a href="#Mini-batch-Gradient-Descent" class="headerlink" title="Mini-batch Gradient Descent"></a>Mini-batch Gradient Descent</h2><p>小批量梯度下降(Mini-batch Gradient Descent)是介于上述两种方法之间的优化方法，即在更新参数时，只使用一部分样本（一般256以下）来更新参数，这样既可以保证训练过程更稳定，又可以利用批量训练方法中的矩阵计算的优势。</p>
 <p>具体更新哪些样本，通常是随机确定的，下面，我们定义一下小批量梯度下降的函数，用来求解上述bigdata的系数。</p>
-<pre class=" language-lang-R"><code class="language-lang-R">miniBatchGradientDescent <- function(dat,start = c(0,0),learning_rate = 0.01,tol = 0.001,batchSize = 256,iterations = 10000)
-{
-    a = start[1]
-    b = start[2]
-    iters = 0
-    len = length(y)
-    while(TRUE)
-    {
-        mini_index = sample(len,batchSize,replace = FALSE)
-        x = dat[mini_index,1]
-        y = dat[mini_index,2]
-        Ypred = a + b * x
-        error = y - Ypred
-        old_a = a
-        old_b = b
-        a = a + learning_rate * sum(error)
-        b = b + learning_rate * sum((error) * x)
-        start = rbind(start,c(a,b))
-        iters = iters + 1
-        if(abs(a-old_a) <= tol & abs(b-old_b) <= tol)
-            break
-        if(iters >= iterations)
-            break
-
-    }
-    list(weights = c(a,b),iters = iters,coes = start)
-}
-</code></pre>
-<pre class=" language-lang-R"><code class="language-lang-R">miniBatchGradientDescent(bigdata,learning_rate = 0.0001,tol = 0.00001,batchSize = 100)
-$weights
-2.02646349019186 2.0439693915315
-$iters
-920064
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">miniBatchGradientDescent &lt;- <span class="hljs-keyword">function</span>(dat,start = c(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),learning_rate = <span class="hljs-number">0.01</span>,tol = <span class="hljs-number">0.001</span>,batchSize = <span class="hljs-number">256</span>,iterations = <span class="hljs-number">10000</span>)</span><br><span class="line">&#123;</span><br><span class="line">    a = start[<span class="hljs-number">1</span>]</span><br><span class="line">    b = start[<span class="hljs-number">2</span>]</span><br><span class="line">    iters = <span class="hljs-number">0</span></span><br><span class="line">    len = length(y)</span><br><span class="line">    <span class="hljs-keyword">while</span>(<span class="hljs-literal">TRUE</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        mini_index = sample(len,batchSize,replace = <span class="hljs-literal">FALSE</span>)</span><br><span class="line">        x = dat[mini_index,<span class="hljs-number">1</span>]</span><br><span class="line">        y = dat[mini_index,<span class="hljs-number">2</span>]</span><br><span class="line">        Ypred = a + b * x</span><br><span class="line">        error = y - Ypred</span><br><span class="line">        old_a = a</span><br><span class="line">        old_b = b</span><br><span class="line">        a = a + learning_rate * sum(error)</span><br><span class="line">        b = b + learning_rate * sum((error) * x)</span><br><span class="line">        start = rbind(start,c(a,b))</span><br><span class="line">        iters = iters + <span class="hljs-number">1</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(abs(a-old_a) &lt;= tol &amp; abs(b-old_b) &lt;= tol)</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(iters &gt;= iterations)</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    list(weights = c(a,b),iters = iters,coes = start)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">miniBatchGradientDescent(bigdata,learning_rate = <span class="hljs-number">0.0001</span>,tol = <span class="hljs-number">0.00001</span>,batchSize = <span class="hljs-number">100</span>)</span><br><span class="line">$weights</span><br><span class="line"><span class="hljs-number">2.02646349019186</span> <span class="hljs-number">2.0439693915315</span></span><br><span class="line">$iters</span><br><span class="line"><span class="hljs-number">920064</span></span><br></pre></td></tr></table></figure>
 <p>小梯度批量梯度下降收敛时需要迭代92万次，这显然有点多了。一般来说，当数据量非常大时，小批量梯度下降比较有效，否则计算结果很有可能出现偏移。</p>
 <blockquote>
 <p>先mark，偏移的原因待考究。</p>
@@ -389,42 +264,9 @@ $iters
 <p><img src="/picture/1525839842032.png" alt="1525839842032"></p>
 <p>两者的差别仅仅在于$Z^{k+1}$的系数不同。</p>
 <p>通常，这里的学习率要比随机梯度下降小一点，因为随机梯度下降的梯度大一点。$\beta$的取值决定了前一次的梯度有多少被纳入了本次的更新。一般来说，稳定前将$\beta$设置为0.5，稳定后可以设置为0.9或更高。</p>
-<pre class=" language-lang-R"><code class="language-lang-R">#适用于求解一元或多元线性回归的回归系数，返回结果包括截距
-momentumGradientDescent <- function(dat,beta = 0.9,z = 0,start = rep(0,dim(dat)[2]),alpha = 0.001,tol=0.0000001,iterations = 100)
-{
-    dataSet = cbind(1,dat)  #将第一列加上1
-    cols = dim(dataSet)[2] #列数
-    x = as.matrix(dataSet[,1:(cols - 1)])  #自变量矩阵
-    y = as.matrix(dataSet[,cols],ncol = 1)  #因变量，矩阵
-    w = as.matrix(start,ncol = 1)  #权重矩阵
-    iters = 0
-    while(TRUE)
-    {
-        old_w = w
-        old_z = z
-        Ypred = x %*% w
-        error = y - Ypred
-        grad = - t(x) %*% error
-        z = beta * old_z + grad
-        w = old_w - alpha * z
-        if(sum(abs(w-old_w)) < tol)
-            break;
-        iters = iters + 1
-        if(is.integer(iterations))
-            if(iters >= iterations)
-                break;
-    }
-    list(weights = as.vector(w),iters = iters)
-}
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#适用于求解一元或多元线性回归的回归系数，返回结果包括截距</span></span><br><span class="line">momentumGradientDescent &lt;- <span class="hljs-keyword">function</span>(dat,beta = <span class="hljs-number">0.9</span>,z = <span class="hljs-number">0</span>,start = rep(<span class="hljs-number">0</span>,dim(dat)[<span class="hljs-number">2</span>]),alpha = <span class="hljs-number">0.001</span>,tol=<span class="hljs-number">0.0000001</span>,iterations = <span class="hljs-number">100</span>)</span><br><span class="line">&#123;</span><br><span class="line">    dataSet = cbind(<span class="hljs-number">1</span>,dat)  <span class="hljs-comment">#将第一列加上1</span></span><br><span class="line">    cols = dim(dataSet)[<span class="hljs-number">2</span>] <span class="hljs-comment">#列数</span></span><br><span class="line">    x = as.matrix(dataSet[,<span class="hljs-number">1</span>:(cols - <span class="hljs-number">1</span>)])  <span class="hljs-comment">#自变量矩阵</span></span><br><span class="line">    y = as.matrix(dataSet[,cols],ncol = <span class="hljs-number">1</span>)  <span class="hljs-comment">#因变量，矩阵</span></span><br><span class="line">    w = as.matrix(start,ncol = <span class="hljs-number">1</span>)  <span class="hljs-comment">#权重矩阵</span></span><br><span class="line">    iters = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">while</span>(<span class="hljs-literal">TRUE</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        old_w = w</span><br><span class="line">        old_z = z</span><br><span class="line">        Ypred = x %*% w</span><br><span class="line">        error = y - Ypred</span><br><span class="line">        grad = - t(x) %*% error</span><br><span class="line">        z = beta * old_z + grad</span><br><span class="line">        w = old_w - alpha * z</span><br><span class="line">        <span class="hljs-keyword">if</span>(sum(abs(w-old_w)) &lt; tol)</span><br><span class="line">            <span class="hljs-keyword">break</span>;</span><br><span class="line">        iters = iters + <span class="hljs-number">1</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(is.integer(iterations))</span><br><span class="line">            <span class="hljs-keyword">if</span>(iters &gt;= iterations)</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    list(weights = as.vector(w),iters = iters)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>利用冲量梯度下降求bigdata的系数：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">momentumGradientDescent(bigdata,alpha=0.00001)
-$weights
-[1] 2.003851 2.006354
-
-$iters
-[1] 248
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">momentumGradientDescent(bigdata,alpha=<span class="hljs-number">0.00001</span>)</span><br><span class="line">$weights</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">2.003851</span> <span class="hljs-number">2.006354</span></span><br><span class="line"></span><br><span class="line">$iters</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">248</span></span><br></pre></td></tr></table></figure>
 <p>可以看到，迭代次数明显减少，并且系数与精确值更加接近了。</p>
 <h2 id="Nesterov-Accelerated-Gradient"><a href="#Nesterov-Accelerated-Gradient" class="headerlink" title="Nesterov Accelerated Gradient"></a>Nesterov Accelerated Gradient</h2><p>然而，让一个小球盲目地沿着斜坡滚下山是不理想的。我们需要一个更聪明的球，它知道下一步要往哪里去，因此在斜坡有上升的时候，它能够自主调整方向。</p>
 <p>Nesterov Accelerated Gradient 是基于冲量梯度下降算法进行改进的一种算法，也是梯度下降算法的变种。</p>
@@ -446,43 +288,9 @@ $iters
 <script type="math/tex; mode=display">\nabla J(w) = \frac{\partial J(w)}{\partial w} = - \sum_{i=1}^n(Y_i - w'x_i)x_i'</script><p>那么</p>
 <script type="math/tex; mode=display">\nabla J(w - \beta Z^{k}) = - \sum _{i=1}^n(Y_i - (w'-\beta Z^k)'x_i)x_i'</script></blockquote>
 <p>根据上述思想，编写的NAG代码如下 ：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">#适用于求解一元或多元线性回归的回归系数，返回结果包括截距
-NAG <- function(dat,beta = 0.9,z = 0,start = rep(0,dim(dat)[2]),alpha = 0.001,tol=0.0000001,iterations = 100)
-{
-    dataSet = cbind(1,dat)  #将第一列加上1
-    cols = dim(dataSet)[2] #列数
-    x = as.matrix(dataSet[,1:(cols - 1)])  #自变量矩阵
-    y = dataSet[,cols]  #因变量，矩阵
-    w = start  #权重矩阵
-    iters = 0
-    while(TRUE)
-    {
-        old_w = w
-        old_z = z
-        #中间过程用mid1 mid2代替
-        mid1 = apply((old_w - beta * old_z) * t(x),2,sum)
-        mid2 = y - mid1
-        grad = - apply(mid2 * x,2,sum)
-        z = beta * old_z + alpha * grad
-        w = old_w - z
-        if(sum(abs(w-old_w)) < tol)
-            break;
-        iters = iters + 1
-        if(is.integer(iterations))
-            if(iters >= iterations)
-                break;
-    }
-    list(weights = as.vector(w),iters = iters)
-}
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#适用于求解一元或多元线性回归的回归系数，返回结果包括截距</span></span><br><span class="line">NAG &lt;- <span class="hljs-keyword">function</span>(dat,beta = <span class="hljs-number">0.9</span>,z = <span class="hljs-number">0</span>,start = rep(<span class="hljs-number">0</span>,dim(dat)[<span class="hljs-number">2</span>]),alpha = <span class="hljs-number">0.001</span>,tol=<span class="hljs-number">0.0000001</span>,iterations = <span class="hljs-number">100</span>)</span><br><span class="line">&#123;</span><br><span class="line">    dataSet = cbind(<span class="hljs-number">1</span>,dat)  <span class="hljs-comment">#将第一列加上1</span></span><br><span class="line">    cols = dim(dataSet)[<span class="hljs-number">2</span>] <span class="hljs-comment">#列数</span></span><br><span class="line">    x = as.matrix(dataSet[,<span class="hljs-number">1</span>:(cols - <span class="hljs-number">1</span>)])  <span class="hljs-comment">#自变量矩阵</span></span><br><span class="line">    y = dataSet[,cols]  <span class="hljs-comment">#因变量，矩阵</span></span><br><span class="line">    w = start  <span class="hljs-comment">#权重矩阵</span></span><br><span class="line">    iters = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">while</span>(<span class="hljs-literal">TRUE</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        old_w = w</span><br><span class="line">        old_z = z</span><br><span class="line">        <span class="hljs-comment">#中间过程用mid1 mid2代替</span></span><br><span class="line">        mid1 = apply((old_w - beta * old_z) * t(x),<span class="hljs-number">2</span>,sum)</span><br><span class="line">        mid2 = y - mid1</span><br><span class="line">        grad = - apply(mid2 * x,<span class="hljs-number">2</span>,sum)</span><br><span class="line">        z = beta * old_z + alpha * grad</span><br><span class="line">        w = old_w - z</span><br><span class="line">        <span class="hljs-keyword">if</span>(sum(abs(w-old_w)) &lt; tol)</span><br><span class="line">            <span class="hljs-keyword">break</span>;</span><br><span class="line">        iters = iters + <span class="hljs-number">1</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(is.integer(iterations))</span><br><span class="line">            <span class="hljs-keyword">if</span>(iters &gt;= iterations)</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    list(weights = as.vector(w),iters = iters)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>用NAG来求bigdata的系数：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">NAG(bigdata,alpha=0.000001)
-$weights
-[1] 2.003849 2.006350
-
-$iters
-[1] 598
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">NAG(bigdata,alpha=<span class="hljs-number">0.000001</span>)</span><br><span class="line">$weights</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">2.003849</span> <span class="hljs-number">2.006350</span></span><br><span class="line"></span><br><span class="line">$iters</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">598</span></span><br></pre></td></tr></table></figure>
 <h2 id="AdaGrad"><a href="#AdaGrad" class="headerlink" title="AdaGrad"></a>AdaGrad</h2><p>尽管我们可以根据损失函数的梯度来加快更新参数，我们也希望能够根据参数的重要性来决定其更新的幅度。</p>
 <p>AdaGrad是一种基于梯度算法的优化算法,它只做了一件事:根据参数来自适应调整学习率。对于不常出现的参数进行较大的更新，对于经常出现的参数进行较少的更新，因此，这种方法非常适合处理稀疏数据。</p>
 <p>之前，我们对每一个参数更新所使用的学习率都是一样的，而AdaGrad在每一步都使用不同的学习率对不同的参数进行更新。我们先写出AdaGrad的单个参数的更新方法，然后将其向量化。长话短说，假设$g_{t,i}$表示损失函数对于参数$\theta_i$的梯度：</p>
@@ -494,45 +302,9 @@ $iters
 <script type="math/tex; mode=display">\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{G_t + \epsilon}}\odot g_t</script><p>AdaGrad的一个最大的好处是不用手动调整学习率的大小，通常设置默认值为0.01，然后顺其自然就好了。</p>
 <p>AdaGrad的一个较大的缺点是，分母是不断增大的，当迭代次数不断增加时，分母会逐渐趋于无穷大，学习率进而趋于无穷小，此时，算法将变得不再有效。</p>
 <p>我们延用上述符号来写出AdaGrad的函数。</p>
-<pre class=" language-lang-R"><code class="language-lang-R">#SGD为基础
-AdaGrad <- function(dat,theta,learning_rate = 0.01,start = rep(0,dim(dat)[2]),tol = 0.000001,iterations = 1000)
-{
-    dataSet = cbind(1,dat) #将自变量进行增广，第一列全为1
-    cols = dim(dataSet)[2] #列数
-    rows = dim(dataSet)[1] #行数
-    x = as.matrix(dataSet[,1:(cols - 1)])  #自变量矩阵
-    y = dataSet[,cols]  #因变量，矩阵
-    g = 0
-    theta = start  #权重矩阵
-    iters = 0
-    while(TRUE)
-    {
-        old_theta = theta
-        index = sample(rows)
-        for(i in index)
-        {
-            grad = - (y[i] - sum(theta * x[i,])) * x[i,]
-            g = g + grad * grad
-            theta = theta - learning_rate / sqrt(g + 1e-8) * grad
-        }
-        iters = iters + 1
-        if(is.integer(iterations))
-            if(iters > iterations)
-                break;
-        if(sum(abs(old_theta - theta)) < tol)
-            break;
-    }
-    list(weights = as.vector(theta),iters = iters)
-}
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#SGD为基础</span></span><br><span class="line">AdaGrad &lt;- <span class="hljs-keyword">function</span>(dat,theta,learning_rate = <span class="hljs-number">0.01</span>,start = rep(<span class="hljs-number">0</span>,dim(dat)[<span class="hljs-number">2</span>]),tol = <span class="hljs-number">0.000001</span>,iterations = <span class="hljs-number">1000</span>)</span><br><span class="line">&#123;</span><br><span class="line">    dataSet = cbind(<span class="hljs-number">1</span>,dat) <span class="hljs-comment">#将自变量进行增广，第一列全为1</span></span><br><span class="line">    cols = dim(dataSet)[<span class="hljs-number">2</span>] <span class="hljs-comment">#列数</span></span><br><span class="line">    rows = dim(dataSet)[<span class="hljs-number">1</span>] <span class="hljs-comment">#行数</span></span><br><span class="line">    x = as.matrix(dataSet[,<span class="hljs-number">1</span>:(cols - <span class="hljs-number">1</span>)])  <span class="hljs-comment">#自变量矩阵</span></span><br><span class="line">    y = dataSet[,cols]  <span class="hljs-comment">#因变量，矩阵</span></span><br><span class="line">    g = <span class="hljs-number">0</span></span><br><span class="line">    theta = start  <span class="hljs-comment">#权重矩阵</span></span><br><span class="line">    iters = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">while</span>(<span class="hljs-literal">TRUE</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        old_theta = theta</span><br><span class="line">        index = sample(rows)</span><br><span class="line">        <span class="hljs-keyword">for</span>(i <span class="hljs-keyword">in</span> index)</span><br><span class="line">        &#123;</span><br><span class="line">            grad = - (y[i] - sum(theta * x[i,])) * x[i,]</span><br><span class="line">            g = g + grad * grad</span><br><span class="line">            theta = theta - learning_rate / sqrt(g + <span class="hljs-number">1e-8</span>) * grad</span><br><span class="line">        &#125;</span><br><span class="line">        iters = iters + <span class="hljs-number">1</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(is.integer(iterations))</span><br><span class="line">            <span class="hljs-keyword">if</span>(iters &gt; iterations)</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(sum(abs(old_theta - theta)) &lt; tol)</span><br><span class="line">            <span class="hljs-keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    list(weights = as.vector(theta),iters = iters)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>AdaGrad的计算结果如下：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">AdaGrad(bigdata)
-$weights
-[1] 2.008219 2.005682
-
-$iters
-[1] 6579
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">AdaGrad(bigdata)</span><br><span class="line">$weights</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">2.008219</span> <span class="hljs-number">2.005682</span></span><br><span class="line"></span><br><span class="line">$iters</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">6579</span></span><br></pre></td></tr></table></figure>
 <h2 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a>Adadelta</h2><p>AdaDelta是在AdaGrad的基础上发展而来的，目的是解决AdaGrad算法中学习率的单调减少问题。AdaDelta不再采用累积梯度平方和的方法来调整学习率，而是根据一些固定的$w$的大小来限制过去累积梯度的窗口。</p>
 <p>AdaDelta不再无效率地存储历史梯度的平方和，而将历史梯度平方和定义为衰减均值(decaying average)。第$t$步的移动平均值$E[g^2]_t$仅仅取决于过去的平均值和当前梯度（有点类似于momentum）：</p>
 <script type="math/tex; mode=display">E[g^2]_t = \gamma E[g^2]_{t-1} + (1-\gamma)g_t^2</script><p>同样的，我们把$\gamma$设置在0.9附近。为清楚起见，我们重新写下更新规则：</p>
@@ -552,13 +324,7 @@ $iters
 <script type="math/tex; mode=display">RMS[\Delta\theta]_t = \sqrt{E[\Delta\theta^2]_t + \epsilon}</script><p>因为$RMS[\theta]_t$是未知的，我们可以用之前所有的更新过的参数的RMS来代替。将之前的学习率$\eta$换成$RMS[\Delta\theta]_{t-1}$，那么，我们得出AdaDelta的更新规则：</p>
 <script type="math/tex; mode=display">\Delta\theta_t = -\frac{RMS[\Delta\theta]_{t-1}}{RMS[g]_t}g_t</script><script type="math/tex; mode=display">\theta_{t+1} = \theta_t + \Delta\theta_t</script><p>AdaDelta甚至不需要初始化学习率，因为在更新规则中已经不见它的身影了。</p>
 <p>根据上述思路，我们写出AdaDelta的函数:</p>
-<pre class=" language-lang-R"><code class="language-lang-R">RMS <- function(x)
-{
-    sqrt(mean(x^2) - mean(x)^2)
-}
-
-AdaDelta <- function()
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RMS &lt;- <span class="hljs-keyword">function</span>(x)</span><br><span class="line">&#123;</span><br><span class="line">    sqrt(mean(x^<span class="hljs-number">2</span>) - mean(x)^<span class="hljs-number">2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AdaDelta &lt;- <span class="hljs-keyword">function</span>()</span><br></pre></td></tr></table></figure>
 <h2 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h2><h2 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h2><p><strong>上述所有改进方法均可以运用于批量梯度下降、小批量梯度下降和随机梯度下降！</strong></p>
 <p>[1]<a href="http://netedu.xauat.edu.cn/jpkc/netedu/jpkc/gdsx/homepage/5jxsd/51/513/5308/530807.htm" target="_blank" rel="noopener">http://netedu.xauat.edu.cn/jpkc/netedu/jpkc/gdsx/homepage/5jxsd/51/513/5308/530807.htm</a></p>
 <p>[2]<a href="https://www.kdnuggets.com/2017/04/simple-understand-gradient-descent-algorithm.html" target="_blank" rel="noopener">https://www.kdnuggets.com/2017/04/simple-understand-gradient-descent-algorithm.html</a></p>

@@ -209,77 +209,7 @@
 </li>
 </ol>
 <h3 id="k-means实现流程：分步骤写"><a href="#k-means实现流程：分步骤写" class="headerlink" title="k-means实现流程：分步骤写"></a>k-means实现流程：分步骤写</h3><p>k-means算法2个核心问题，一是度量记录之间的相关性的计算公式，此处采用欧氏距离。一是更新簇内质心的方法，此处用平均值法，即means。<br>此时的输入数据为簇的数目k和包含n个对象的数据库——通常在软件中用数据框或者矩阵表示。输出k个簇，使平方误差准则最小。<br>下面为实现k-means聚类的Python代码</p>
-<pre class=" language-lang-python"><code class="language-lang-python"># (1)选择初始簇中心。
-# (2)对剩余的每个对象，根据其与各个簇中心的距离，将它赋给最近的簇。
-# (3)计算新的簇中心。
-# (4)重复(2)和(3)，直至准则函数不再明显变小为止。
-from numpy import *
-
-#定义加载数据的函数。如果数据以文本形式存储在磁盘内，可以用此函数读取
-def loadDataSet(fileName)
-dataMat = []
-fr = open(fileName)
-for line in fr.readlines()
-curLine = line.strip().split('\t')
-fltLine = list(map(float,curLine))
-dataMat.append(list(fltLine))
-return dataMat
-
-#该函数计算两个向量的距离，即欧氏距离
-def distEclud(vecA,vecB)
-return sqrt(sum(power(vecA - vecB,2)))
-
-#曼哈顿距离
-def Manhattan(vecA,vecB)
-return sum(abs(vecA-vecB))
-
-#明考夫斯基距离
-def MinKowski(vecA,vecB,p)
-return power(sum(power(abs(vecA-vecB),p)),1/p)
-
-#此处为构造质心，而不是从数据集中随机选择k个样本点作为质心，
-#也是比较合理的方法
-def randCent(dataSet,k)
-    n = shape(dataSet)[1]  #n为dataSet的列数
-    centroids = mat(zeros((k,n)))  #构造k行n列的矩阵，就是k个质心的坐标
-    for j in range(n)  #
-        minJ = min(dataSet[,j])  #该列数据的最小值
-        maxJ = max(dataSet[,j])  #该列数据的最大值
-        rangeJ = float(maxJ-minJ)  #全距
-        #随机生成k个数值，介于minJ和maxJ之间，填充J列
-        centroids[,j] = minJ + rangeJ * random.rand(k,1)  
-
-    return centroids
-
-#定义kMeans函数 
-def kMeans(dataSet,k,distMeas=distEclud,createCent=randCent)
-    m = shape(dataSet)[0]  #m为原始数据的行数
-    #clusterAssment包含两列，一列记录簇索引值，一列存储误差
-    clusterAssment = mat(zeros((m,2)))  
-    centroids = createCent(dataSet,k)  #构造初始的质心
-    clusterChanged = True  #控制变量
-    while clusterChanged  #当控制变量为真时，执行下述循环
-        clusterChanged = False  
-        for i in range(m)   
-            minDist = inf  #首先令最小值为无穷大 
-            minIndex = -1  #令最小索引为-1
-            for j in range(k)  #下面是一个嵌套循环
-             #计算点数据点I和簇中心点J的距离
-                distJI=distMeas(centroids[j,],dataSet[i,])
-                if distJI < minDist  
-                    minDist = distJI
-                    minIndex = j
-            if clusterAssment[i,0] != minIndex
-                clusterChanged = True
-            clusterAssment[i,] = minIndex,minDist**2
-        print(centroids)
-        #更新质心的位置
-        for cent in range(k)
-        #mat.A意味着将矩阵转换为数组，即matrix-->array
-            ptsInClust = dataSet[nonzero(clusterAssment[,0].A==cent)[0]]
-            centroids[cent,] = mean(ptsInClust,axis=0)
-    return centroids,clusterAssment
-</code></pre>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># (1)选择初始簇中心。</span></span><br><span class="line"><span class="hljs-comment"># (2)对剩余的每个对象，根据其与各个簇中心的距离，将它赋给最近的簇。</span></span><br><span class="line"><span class="hljs-comment"># (3)计算新的簇中心。</span></span><br><span class="line"><span class="hljs-comment"># (4)重复(2)和(3)，直至准则函数不再明显变小为止。</span></span><br><span class="line"><span class="hljs-keyword">from</span> numpy <span class="hljs-keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#定义加载数据的函数。如果数据以文本形式存储在磁盘内，可以用此函数读取</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">loadDataSet</span><span class="hljs-params">(fileName)</span></span></span><br><span class="line">dataMat = []</span><br><span class="line">fr = open(fileName)</span><br><span class="line"><span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> fr.readlines()</span><br><span class="line">curLine = line.strip().split(<span class="hljs-string">'\t'</span>)</span><br><span class="line">fltLine = list(map(float,curLine))</span><br><span class="line">dataMat.append(list(fltLine))</span><br><span class="line"><span class="hljs-keyword">return</span> dataMat</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#该函数计算两个向量的距离，即欧氏距离</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">distEclud</span><span class="hljs-params">(vecA,vecB)</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">return</span> <span class="hljs-title">sqrt</span><span class="hljs-params">(sum<span class="hljs-params">(power<span class="hljs-params">(vecA - vecB,<span class="hljs-number">2</span>)</span>)</span>)</span></span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">#曼哈顿距离</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">def</span> <span class="hljs-title">Manhattan</span><span class="hljs-params">(vecA,vecB)</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">return</span> <span class="hljs-title">sum</span><span class="hljs-params">(abs<span class="hljs-params">(vecA-vecB)</span>)</span></span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">#明考夫斯基距离</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">def</span> <span class="hljs-title">MinKowski</span><span class="hljs-params">(vecA,vecB,p)</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">return</span> <span class="hljs-title">power</span><span class="hljs-params">(sum<span class="hljs-params">(power<span class="hljs-params">(abs<span class="hljs-params">(vecA-vecB)</span>,p)</span>)</span>,<span class="hljs-number">1</span>/p)</span></span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">#此处为构造质心，而不是从数据集中随机选择<span class="hljs-title">k</span>个样本点作为质心，</span></span><br><span class="line"><span class="hljs-function">#也是比较合理的方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">def</span> <span class="hljs-title">randCent</span><span class="hljs-params">(dataSet,k)</span></span></span><br><span class="line">    n = shape(dataSet)[1]  #n为dataSet的列数</span><br><span class="line">    centroids = mat(zeros((k,n)))  <span class="hljs-comment">#构造k行n列的矩阵，就是k个质心的坐标</span></span><br><span class="line">    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(n)  <span class="hljs-comment">#</span></span><br><span class="line">        minJ = min(dataSet[,j])  <span class="hljs-comment">#该列数据的最小值</span></span><br><span class="line">        maxJ = max(dataSet[,j])  <span class="hljs-comment">#该列数据的最大值</span></span><br><span class="line">        rangeJ = float(maxJ-minJ)  <span class="hljs-comment">#全距</span></span><br><span class="line">        <span class="hljs-comment">#随机生成k个数值，介于minJ和maxJ之间，填充J列</span></span><br><span class="line">        centroids[,j] = minJ + rangeJ * random.rand(k,<span class="hljs-number">1</span>)  </span><br><span class="line">      </span><br><span class="line">    <span class="hljs-keyword">return</span> centroids</span><br><span class="line">   </span><br><span class="line"><span class="hljs-comment">#定义kMeans函数 </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">kMeans</span><span class="hljs-params">(dataSet,k,distMeas=distEclud,createCent=randCent)</span></span></span><br><span class="line">    m = shape(dataSet)[0]  #m为原始数据的行数</span><br><span class="line">    <span class="hljs-comment">#clusterAssment包含两列，一列记录簇索引值，一列存储误差</span></span><br><span class="line">    clusterAssment = mat(zeros((m,<span class="hljs-number">2</span>)))  </span><br><span class="line">    centroids = createCent(dataSet,k)  <span class="hljs-comment">#构造初始的质心</span></span><br><span class="line">    clusterChanged = <span class="hljs-keyword">True</span>  <span class="hljs-comment">#控制变量</span></span><br><span class="line">    <span class="hljs-keyword">while</span> clusterChanged  <span class="hljs-comment">#当控制变量为真时，执行下述循环</span></span><br><span class="line">        clusterChanged = <span class="hljs-keyword">False</span>  </span><br><span class="line">        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(m)   </span><br><span class="line">            minDist = inf  <span class="hljs-comment">#首先令最小值为无穷大 </span></span><br><span class="line">            minIndex = <span class="hljs-number">-1</span>  <span class="hljs-comment">#令最小索引为-1</span></span><br><span class="line">            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(k)  <span class="hljs-comment">#下面是一个嵌套循环</span></span><br><span class="line">             <span class="hljs-comment">#计算点数据点I和簇中心点J的距离</span></span><br><span class="line">                distJI=distMeas(centroids[j,],dataSet[i,])</span><br><span class="line">                <span class="hljs-keyword">if</span> distJI &lt; minDist  </span><br><span class="line">                    minDist = distJI</span><br><span class="line">                    minIndex = j</span><br><span class="line">            <span class="hljs-keyword">if</span> clusterAssment[i,<span class="hljs-number">0</span>] != minIndex</span><br><span class="line">                clusterChanged = <span class="hljs-keyword">True</span></span><br><span class="line">            clusterAssment[i,] = minIndex,minDist**<span class="hljs-number">2</span></span><br><span class="line">        print(centroids)</span><br><span class="line">        <span class="hljs-comment">#更新质心的位置</span></span><br><span class="line">        <span class="hljs-keyword">for</span> cent <span class="hljs-keyword">in</span> range(k)</span><br><span class="line">        <span class="hljs-comment">#mat.A意味着将矩阵转换为数组，即matrix--&gt;array</span></span><br><span class="line">            ptsInClust = dataSet[nonzero(clusterAssment[,<span class="hljs-number">0</span>].A==cent)[<span class="hljs-number">0</span>]]</span><br><span class="line">            centroids[cent,] = mean(ptsInClust,axis=<span class="hljs-number">0</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span> centroids,clusterAssment</span><br></pre></td></tr></table></figure>
 <h3 id="k-means与EM算法"><a href="#k-means与EM算法" class="headerlink" title="k-means与EM算法"></a>k-means与EM算法</h3><p>EM是机器学习十大算法之一，是一种好理解，但是推导过程比较复杂的方法。<br>下面将原英文版的EM算法介绍翻译一遍，在翻译的过程中也加深一点自己的理解。</p>
 <h4 id="Jensen不等式"><a href="#Jensen不等式" class="headerlink" title="Jensen不等式"></a>Jensen不等式</h4><p>假设$f$是一个定义域为实数的函数。回忆一下，如果对于所有的$x \in R,f’’(x) \geq 0$，则$f$是一个凸函数。 如果$f$的输入值是一个向量，则当$x$的海塞矩阵(hessian矩阵$H$)是半正定矩阵时，$f$是凸函数。如果对于所有的$x$，$f’’(x)&gt;0$恒成立，那么我们说$f$是严格凸函数（如果$x$是一个向量，则当$H$是严格半正定矩阵时，写做$H&gt;0$，则$f$是严格凸函数）。<br>设$f$是一个凸函数，并且$X$是一个随机变量，则：</p>
 <script type="math/tex; mode=display">E[f(X)] \geq f(EX).</script><p>当且仅当$x=$常数时，$E[f(X)]=f(EX)$$.$<br>进一步说，如果$f$是一个严格凸函数，则当P\{X=E(X)\}=1时，满足$E[f(X)] = f(EX).$</p>
@@ -391,38 +321,7 @@ def kMeans(dataSet,k,distMeas=distEclud,createCent=randCent)
 </table>
 </div>
 <p>该数据集共有5个变量，表1显示的是前6行的数据，完整数据一共有150行。五个变量的中文名称分别是：萼片长度、萼片宽度、花瓣长度、花瓣宽度和品种。以此样本作为聚类的原始数据，属于有标签聚类，可以将聚类结果与真实情况进行对比，以得出聚类效果。<br>下面是实现k-means聚类的R语言代码：</p>
-<pre class=" language-lang-R"><code class="language-lang-R">> iris_test<-iris[,14]
-> iris_test_cl<-kmeans(x = iris_test,centers = 3,iter.max = 20)
-> iris_test_cl
-K-means clustering with 3 clusters of sizes 50, 62, 38
-
-Cluster means
-  Sepal.Length Sepal.Width Petal.Length Petal.Width
-1     5.006000    3.428000     1.462000    0.246000
-2     5.901613    2.748387     4.393548    1.433871
-3     6.850000    3.073684     5.742105    2.071053
-
-Clustering vector
-  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
- [39] 1 1 1 1 1 1 1 1 1 1 1 1 2 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
- [77] 2 3 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 3 3 3 3 2 3 3 3 3 3 3 2
-[115] 2 3 3 3 3 2 3 2 3 2 3 3 2 2 3 3 3 3 3 2 3 3 3 3 2 3 3 3 2 3 3 3 2 3 3 2
-
-Within cluster sum of squares by cluster
-[1] 15.15100 39.82097 23.87947
- (between_SS / total_SS =  88.4 %)
-
-Available components
-
-[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-[6] "betweenss"    "size"         "iter"         "ifault"      
-> table(iris_test_cl$cluster,iris$Species)
-
-    setosa versicolor virginica
-  1     50          0         0
-  2      0         48        14
-  3      0          2        36
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&gt; iris_test&lt;-iris[,<span class="hljs-number">14</span>]</span><br><span class="line">&gt; iris_test_cl&lt;-kmeans(x = iris_test,centers = <span class="hljs-number">3</span>,iter.max = <span class="hljs-number">20</span>)</span><br><span class="line">&gt; iris_test_cl</span><br><span class="line">K-means clustering with <span class="hljs-number">3</span> clusters of sizes <span class="hljs-number">50</span>, <span class="hljs-number">62</span>, <span class="hljs-number">38</span></span><br><span class="line"></span><br><span class="line">Cluster means</span><br><span class="line">  Sepal.Length Sepal.Width Petal.Length Petal.Width</span><br><span class="line"><span class="hljs-number">1</span>     <span class="hljs-number">5.006000</span>    <span class="hljs-number">3.428000</span>     <span class="hljs-number">1.462000</span>    <span class="hljs-number">0.246000</span></span><br><span class="line"><span class="hljs-number">2</span>     <span class="hljs-number">5.901613</span>    <span class="hljs-number">2.748387</span>     <span class="hljs-number">4.393548</span>    <span class="hljs-number">1.433871</span></span><br><span class="line"><span class="hljs-number">3</span>     <span class="hljs-number">6.850000</span>    <span class="hljs-number">3.073684</span>     <span class="hljs-number">5.742105</span>    <span class="hljs-number">2.071053</span></span><br><span class="line"></span><br><span class="line">Clustering vector</span><br><span class="line">  [<span class="hljs-number">1</span>] <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span></span><br><span class="line"> [<span class="hljs-number">39</span>] <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span></span><br><span class="line"> [<span class="hljs-number">77</span>] <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span></span><br><span class="line">[<span class="hljs-number">115</span>] <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span></span><br><span class="line"></span><br><span class="line">Within cluster sum of squares by cluster</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">15.15100</span> <span class="hljs-number">39.82097</span> <span class="hljs-number">23.87947</span></span><br><span class="line"> (between_SS / total_SS =  <span class="hljs-number">88.4</span> %)</span><br><span class="line"></span><br><span class="line">Available components</span><br><span class="line"></span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-string">"cluster"</span>      <span class="hljs-string">"centers"</span>      <span class="hljs-string">"totss"</span>        <span class="hljs-string">"withinss"</span>     <span class="hljs-string">"tot.withinss"</span></span><br><span class="line">[<span class="hljs-number">6</span>] <span class="hljs-string">"betweenss"</span>    <span class="hljs-string">"size"</span>         <span class="hljs-string">"iter"</span>         <span class="hljs-string">"ifault"</span>      </span><br><span class="line">&gt; table(iris_test_cl$cluster,iris$Species)</span><br><span class="line">   </span><br><span class="line">    setosa versicolor virginica</span><br><span class="line">  <span class="hljs-number">1</span>     <span class="hljs-number">50</span>          <span class="hljs-number">0</span>         <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-number">2</span>      <span class="hljs-number">0</span>         <span class="hljs-number">48</span>        <span class="hljs-number">14</span></span><br><span class="line">  <span class="hljs-number">3</span>      <span class="hljs-number">0</span>          <span class="hljs-number">2</span>        <span class="hljs-number">36</span></span><br></pre></td></tr></table></figure>
 <p>根据输出结果可以看出，setosa类分类正确率为100\%，versicolor类有48个分类正确，有两个错误分到了virginica中，viginica有36个分类分类正确，有14个错误分到了versicolor中。总体来说，聚类的正确率为89.3%</p>
 <h3 id="k-means算法的改进"><a href="#k-means算法的改进" class="headerlink" title="k-means算法的改进"></a>k-means算法的改进</h3><h4 id="k-mode算法"><a href="#k-mode算法" class="headerlink" title="k-mode算法"></a>k-mode算法</h4><p>k-mode算法实现了对离散型数据的快速聚类，保留了k-means算法的效率的同时，将k-means的应用范围扩大到了离散型数据。</p>
 <p>k-mode算法是按照k-means算法的核心内容进行修改，针对分类属性的度量和更新质心的问题而改进。具体如下：</p>
@@ -452,97 +351,11 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <p> 计算总误差<br> 在给定的簇上面进行K-means聚类(k=2)<br> 计算将该簇一分为二后的总误差</p>
 <p> 选择使得误差最小的那个簇进行划分操作。</p>
 <p>另一种方法是选择SSE最大的那个簇进行划分。该算法的R代码如下。</p>
-<pre class=" language-lang-R"><code class="language-lang-R">#计算误差平方和SSE，group接受一个数值型矩阵，centroid为其均值向量
-
-
-SSE<-function(group,centroid)
-{
-  rows= nrow(group)
-  group = as.matrix(group)
-  centroid = matrix(rep(centroid,rows),nrow = rows,byrow = TRUE)
-  group = group - centroid
-  group = group * group
-  sums = apply(X = group,MARGIN = 1,FUN = sum)
-  SSE = sum(sums)
-  return(SSE)
-}
-#定义二分K-means聚类函数，dataSet为需要聚类的数据集，k为指定聚类个数
-biKmeans<-function(dataSet,k)  
-{
-  if(!is.matrix(dataSet))
-    dataSet = as.matrix(dataSet)
-  if(k==1)
-    return(dataSet)
-  else
-  {
-    #定义一个空矩阵来存放不需要再次处理的已经聚好的类
-    clusteredDataSet = matrix(nrow = 0,ncol = ncol(dataSet))
-    #定义一个空向量用来存放上述类的标签
-    clustered = vector(length = 0)
-    #计数器clusters
-    clusters = 1
-    #i用来改变每次聚类的标签
-    i = 0
-    while(clusters < k)
-    {
-      #使用k-means用来二分聚类
-      cl = kmeans(dataSet,2)
-      #类标签
-      cluster = cl$cluster+i
-      #计算聚好的两个类的与类中心的离差平方和
-      SSE1 = SSE(group = dataSet[cluster==(1+i),],centroid = cl$centers[1,])
-      SSE2 = SSE(group = dataSet[cluster==(2+i),],centroid = cl$centers[2,])
-      #将误差平方和大的拿出来，下次继续二分
-      if(SSE1 > SSE2)
-        index = (cluster == (1+i))
-      else
-        index = (cluster ==(2+i))
-      #将不需要再次聚类的类放在clusterDataSet例
-      clusteredDataSet = rbind(clusteredDataSet,dataSet[!index,])
-      #将上述类的标签存放在clustered里
-      clustered = c(clustered,cluster[!index])
-      #更新dataSet，下次继续二分
-      dataSet = dataSet[index,]
-      #计数器+1
-      clusters = clusters +1
-      #i+2，因为每次二分的结果是1和2，在结果的基础上加上2，则类标签可以明确区分
-      i = i + 2
-    }#end while
-    #得出最终聚类结果
-    clusteredDataSet = rbind(clusteredDataSet,dataSet)
-    #类标签
-    clustered = c(clustered,cluster[index])
-    #转换为数据框
-    clusteredDataSet = as.data.frame(clusteredDataSet)
-    #添加类标签列
-    clusteredDataSet$cluster = clustered
-    return(clusteredDataSet)
-  }
-}
-> iris_test_bik<-biKmeans(iris_test,3)
-> dim(iris_test_bik)
-[1] 150   5
-> table(iris_test_bik$cluster,iris$Species)
-
-    setosa versicolor virginica
-  1     50          3         0
-  3      0          9        50
-  4      0         38         0
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#计算误差平方和SSE，group接受一个数值型矩阵，centroid为其均值向量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SSE&lt;-<span class="hljs-keyword">function</span>(group,centroid)</span><br><span class="line">&#123;</span><br><span class="line">  rows= nrow(group)</span><br><span class="line">  group = as.matrix(group)</span><br><span class="line">  centroid = matrix(rep(centroid,rows),nrow = rows,byrow = <span class="hljs-literal">TRUE</span>)</span><br><span class="line">  group = group - centroid</span><br><span class="line">  group = group * group</span><br><span class="line">  sums = apply(X = group,MARGIN = <span class="hljs-number">1</span>,FUN = sum)</span><br><span class="line">  SSE = sum(sums)</span><br><span class="line">  <span class="hljs-keyword">return</span>(SSE)</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">#定义二分K-means聚类函数，dataSet为需要聚类的数据集，k为指定聚类个数</span></span><br><span class="line">biKmeans&lt;-<span class="hljs-keyword">function</span>(dataSet,k)  </span><br><span class="line">&#123;</span><br><span class="line">  <span class="hljs-keyword">if</span>(!is.matrix(dataSet))</span><br><span class="line">    dataSet = as.matrix(dataSet)</span><br><span class="line">  <span class="hljs-keyword">if</span>(k==<span class="hljs-number">1</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span>(dataSet)</span><br><span class="line">  <span class="hljs-keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="hljs-comment">#定义一个空矩阵来存放不需要再次处理的已经聚好的类</span></span><br><span class="line">    clusteredDataSet = matrix(nrow = <span class="hljs-number">0</span>,ncol = ncol(dataSet))</span><br><span class="line">    <span class="hljs-comment">#定义一个空向量用来存放上述类的标签</span></span><br><span class="line">    clustered = vector(length = <span class="hljs-number">0</span>)</span><br><span class="line">    <span class="hljs-comment">#计数器clusters</span></span><br><span class="line">    clusters = <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-comment">#i用来改变每次聚类的标签</span></span><br><span class="line">    i = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">while</span>(clusters &lt; k)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="hljs-comment">#使用k-means用来二分聚类</span></span><br><span class="line">      cl = kmeans(dataSet,<span class="hljs-number">2</span>)</span><br><span class="line">      <span class="hljs-comment">#类标签</span></span><br><span class="line">      cluster = cl$cluster+i</span><br><span class="line">      <span class="hljs-comment">#计算聚好的两个类的与类中心的离差平方和</span></span><br><span class="line">      SSE1 = SSE(group = dataSet[cluster==(<span class="hljs-number">1</span>+i),],centroid = cl$centers[<span class="hljs-number">1</span>,])</span><br><span class="line">      SSE2 = SSE(group = dataSet[cluster==(<span class="hljs-number">2</span>+i),],centroid = cl$centers[<span class="hljs-number">2</span>,])</span><br><span class="line">      <span class="hljs-comment">#将误差平方和大的拿出来，下次继续二分</span></span><br><span class="line">      <span class="hljs-keyword">if</span>(SSE1 &gt; SSE2)</span><br><span class="line">        index = (cluster == (<span class="hljs-number">1</span>+i))</span><br><span class="line">      <span class="hljs-keyword">else</span></span><br><span class="line">        index = (cluster ==(<span class="hljs-number">2</span>+i))</span><br><span class="line">      <span class="hljs-comment">#将不需要再次聚类的类放在clusterDataSet例</span></span><br><span class="line">      clusteredDataSet = rbind(clusteredDataSet,dataSet[!index,])</span><br><span class="line">      <span class="hljs-comment">#将上述类的标签存放在clustered里</span></span><br><span class="line">      clustered = c(clustered,cluster[!index])</span><br><span class="line">      <span class="hljs-comment">#更新dataSet，下次继续二分</span></span><br><span class="line">      dataSet = dataSet[index,]</span><br><span class="line">      <span class="hljs-comment">#计数器+1</span></span><br><span class="line">      clusters = clusters +<span class="hljs-number">1</span></span><br><span class="line">      <span class="hljs-comment">#i+2，因为每次二分的结果是1和2，在结果的基础上加上2，则类标签可以明确区分</span></span><br><span class="line">      i = i + <span class="hljs-number">2</span></span><br><span class="line">    &#125;<span class="hljs-comment">#end while</span></span><br><span class="line">    <span class="hljs-comment">#得出最终聚类结果</span></span><br><span class="line">    clusteredDataSet = rbind(clusteredDataSet,dataSet)</span><br><span class="line">    <span class="hljs-comment">#类标签</span></span><br><span class="line">    clustered = c(clustered,cluster[index])</span><br><span class="line">    <span class="hljs-comment">#转换为数据框</span></span><br><span class="line">    clusteredDataSet = as.data.frame(clusteredDataSet)</span><br><span class="line">    <span class="hljs-comment">#添加类标签列</span></span><br><span class="line">    clusteredDataSet$cluster = clustered</span><br><span class="line">    <span class="hljs-keyword">return</span>(clusteredDataSet)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&gt; iris_test_bik&lt;-biKmeans(iris_test,<span class="hljs-number">3</span>)</span><br><span class="line">&gt; dim(iris_test_bik)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">150</span>   <span class="hljs-number">5</span></span><br><span class="line">&gt; table(iris_test_bik$cluster,iris$Species)</span><br><span class="line">   </span><br><span class="line">    setosa versicolor virginica</span><br><span class="line">  <span class="hljs-number">1</span>     <span class="hljs-number">50</span>          <span class="hljs-number">3</span>         <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-number">3</span>      <span class="hljs-number">0</span>          <span class="hljs-number">9</span>        <span class="hljs-number">50</span></span><br><span class="line">  <span class="hljs-number">4</span>      <span class="hljs-number">0</span>         <span class="hljs-number">38</span>         <span class="hljs-number">0</span></span><br></pre></td></tr></table></figure>
 <p>由上述最终的聚类结果显示，聚类正确率约为92\%，比单纯使用k-means算法正确率高。</p>
 <h3 id="Enhanced-k-means算法更加稳健的原因"><a href="#Enhanced-k-means算法更加稳健的原因" class="headerlink" title="Enhanced k-means算法更加稳健的原因"></a>Enhanced k-means算法更加稳健的原因</h3><p>k-means算法具有明显的两个缺点，即容易陷入局部最优和出现“超级类”。局部最优比较好理解，“超级类”是指聚类结果中有一个包含许多样本点的大类，其他的类包含的样本点都较少。enhanced k-means同时考虑了样本点与聚类中心的距离和类中样本点的个数，保留了k-means聚类算法的优点，同时又克服了出现”超级类”的问题。</p>
 <h3 id="Enhanced-k-means举例及R实现"><a href="#Enhanced-k-means举例及R实现" class="headerlink" title="Enhanced k-means举例及R实现"></a>Enhanced k-means举例及R实现</h3><p>k-中心点算法可以使用R中cluster包中的pam函数(pam的全称为Partitioning Around Medoids，即围绕中心点分割)，同样以iris数据集为例，说明pam函数的使用。</p>
-<pre class=" language-lang-R"><code class="language-lang-R">> library(cluster)
-> pam.cl<-pam(iris_test,k = 3)
-> table(pam.cl$clustering,iris$Species)
-
-    setosa versicolor virginica
-  1     50          0         0
-  2      0         48        14
-  3      0          2        36
-> par(mfrow=c(1,2))
-> plot(pam.cl)
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-keyword">library</span>(cluster)</span><br><span class="line">&gt; pam.cl&lt;-pam(iris_test,k = <span class="hljs-number">3</span>)</span><br><span class="line">&gt; table(pam.cl$clustering,iris$Species)</span><br><span class="line">   </span><br><span class="line">    setosa versicolor virginica</span><br><span class="line">  <span class="hljs-number">1</span>     <span class="hljs-number">50</span>          <span class="hljs-number">0</span>         <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-number">2</span>      <span class="hljs-number">0</span>         <span class="hljs-number">48</span>        <span class="hljs-number">14</span></span><br><span class="line">  <span class="hljs-number">3</span>      <span class="hljs-number">0</span>          <span class="hljs-number">2</span>        <span class="hljs-number">36</span></span><br><span class="line">&gt; par(mfrow=c(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>))</span><br><span class="line">&gt; plot(pam.cl)</span><br></pre></td></tr></table></figure>
 <p><img src="/picture/kmeans_2.PNG" alt="图2"></p>
 <p>图2将原始数据进行了降维，提取了两个主成分，并且这两个主成分能够解释原始数据方差的95.81\%，说明降维效果很好。将这两个成分绘制成散点图，就得到了图2.结合table函数的输出结果和图2可知，setosa类与其他两个类的界限比较明显，而其他两个类之间具有交叉。</p>
 <p><img src="/picture/kmeans_3.PNG" alt="图3"></p>
@@ -857,19 +670,7 @@ d_{k \rightarrow (r,s)} =\alpha_r d_{k\rightarrow r}+\alpha_s d_{k\rightarrow s}
 </div>
 <p>将距离矩阵和共表矩阵一一对应生成两个向量，计算这两个向量之间的相关系数，就会得到共表相关系数。在这里，最终CPCC=86.339%,可以看到，这个聚类的效果比较好。</p>
 <p>这里以R中自带数据集iris作为样本，使用cluster包中的hclust函数进行层次聚类，分析聚类结果。</p>
-<pre class=" language-lang-R"><code class="language-lang-R">> library(cluster)
-> iris_test <- iris[,14]
-> d <-dist(iris_test)
-> hc1 <- hclust(d,'complete')  #最大距离法
-> d1 <- cophenetic(hc1)
-> cor(d,d1)
-[1] 0.7269857
-> 
-> hc2 <- hclust(d,'single')  #最小距离法
-> d2 <- cophenetic(hc2)
-> cor(d,d2)
-[1] 0.8638787
-</code></pre>
+<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-keyword">library</span>(cluster)</span><br><span class="line">&gt; iris_test &lt;- iris[,<span class="hljs-number">14</span>]</span><br><span class="line">&gt; d &lt;-dist(iris_test)</span><br><span class="line">&gt; hc1 &lt;- hclust(d,<span class="hljs-string">'complete'</span>)  <span class="hljs-comment">#最大距离法</span></span><br><span class="line">&gt; d1 &lt;- cophenetic(hc1)</span><br><span class="line">&gt; cor(d,d1)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">0.7269857</span></span><br><span class="line">&gt; </span><br><span class="line">&gt; hc2 &lt;- hclust(d,<span class="hljs-string">'single'</span>)  <span class="hljs-comment">#最小距离法</span></span><br><span class="line">&gt; d2 &lt;- cophenetic(hc2)</span><br><span class="line">&gt; cor(d,d2)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">0.8638787</span></span><br></pre></td></tr></table></figure>
 <p>从上述R中的运行结果来看，single方法(最小距离法)的结果要优于complete法(最大距离法)。</p>
 <h3 id="聚类个数的选择"><a href="#聚类个数的选择" class="headerlink" title="聚类个数的选择"></a>聚类个数的选择</h3><h4 id="轮廓系数-Silhouette-Coefficient-简称SC"><a href="#轮廓系数-Silhouette-Coefficient-简称SC" class="headerlink" title="轮廓系数(Silhouette Coefficient,简称SC)"></a>轮廓系数(Silhouette Coefficient,简称SC)</h4><p>对于数据集$x=\{x_1,x_2,…,x_n\}$,使用某种聚类方法得到类的集合$C=\{C_1,C_2,…,C_k\}$,每个类的样本量为$num=\{n_1,n_2,…,n_k\}$}</p>
 <script type="math/tex; mode=display">a_i=\frac{1}{n_k-1}\sum _{x_i,x_j\in C_k}dist_{i\ne j}(x_i,x_j)</script><script type="math/tex; mode=display">b_i=min(\frac{1}{n_l}\sum _{x_i\in C_k,x_j\in C_l,l\ne k}dist(x_i,x_j))</script><script type="math/tex; mode=display">S_i=\frac{b_i-a_i}{max(b_i,a_i)}</script><script type="math/tex; mode=display">SC=\frac{1}{n}\sum _{i=1}^n S_i</script><p>SC即为轮廓系数。该值处于-1-1之间，值越大，表示聚类效果越好。</p>
