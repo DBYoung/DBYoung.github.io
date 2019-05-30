@@ -172,137 +172,137 @@
             <h2 id="获取标题列表"><a href="#获取标题列表" class="headerlink" title="获取标题列表"></a>获取标题列表</h2><p>新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。</p>
 <p><img src="./picture/sina_scrapy.png" alt="sina_scrapy"></p>
 <p>从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。</p>
-<pre class=" language-lang-python"><code class="language-lang-python">import requests
-import numpy as np
-from bs4 import BeautifulSoup
-import re
-import time
-import json
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">import</span> re
+<span class="token keyword">import</span> time
+<span class="token keyword">import</span> json
 
-#第一页的URL
-startURL = 'http://search.sina.com.cn/?c=news&q=%D0%F0%C0%FB%D1%C7+%BF%D5%CF%AE&range=all&time=2018&stime=&etime=&num=20'
+<span class="token comment" spellcheck="true">#第一页的URL</span>
+startURL <span class="token operator">=</span> <span class="token string">'http://search.sina.com.cn/?c=news&amp;q=%D0%F0%C0%FB%D1%C7+%BF%D5%CF%AE&amp;range=all&amp;time=2018&amp;stime=&amp;etime=&amp;num=20'</span>
 
-url = startURL
-allNewsURL = []
-errorPages = []
-count = 1
-while url:
-    try:
-        res = requests.get(url)
-        print('已经爬取了第',count,'页！')
-        print('URL:',url)
-        soup = BeautifulSoup(res.text,'html.parser')
-        for news in soup.findAll('h2'):
-            allNewsURL.append(news.find('a').get('href'))
-        pages = soup.find('div',{'id':"_function_code_page"}).findAll('a')
-        if pages[-1].get('title') == '下一页':
-            url = 'http://search.sina.com.cn' + pages[-1].get('href')
-        else:
-            break
-        time.sleep(np.random.rand() + 2)
-        count += 1
-    except AttributeError:
-        print('ip被封！')
+url <span class="token operator">=</span> startURL
+allNewsURL <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+errorPages <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+count <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token keyword">while</span> url<span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        res <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'已经爬取了第'</span><span class="token punctuation">,</span>count<span class="token punctuation">,</span><span class="token string">'页！'</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'URL:'</span><span class="token punctuation">,</span>url<span class="token punctuation">)</span>
+        soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>res<span class="token punctuation">.</span>text<span class="token punctuation">,</span><span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> news <span class="token keyword">in</span> soup<span class="token punctuation">.</span>findAll<span class="token punctuation">(</span><span class="token string">'h2'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            allNewsURL<span class="token punctuation">.</span>append<span class="token punctuation">(</span>news<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'href'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        pages <span class="token operator">=</span> soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token string">'id'</span><span class="token punctuation">:</span><span class="token string">"_function_code_page"</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>findAll<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> pages<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'title'</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">'下一页'</span><span class="token punctuation">:</span>
+            url <span class="token operator">=</span> <span class="token string">'http://search.sina.com.cn'</span> <span class="token operator">+</span> pages<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'href'</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span>
+        count <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token keyword">except</span> AttributeError<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'ip被封！'</span><span class="token punctuation">)</span>
 
-with open('xuliyakongxi.csv','a') as f:
-    for url in allNewsURL:
-        f.write(url+'\n')
+<span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">'xuliyakongxi.csv'</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    <span class="token keyword">for</span> url <span class="token keyword">in</span> allNewsURL<span class="token punctuation">:</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>url<span class="token operator">+</span><span class="token string">'\n'</span><span class="token punctuation">)</span>
 </code></pre>
 <h2 id="获取文章详情"><a href="#获取文章详情" class="headerlink" title="获取文章详情"></a>获取文章详情</h2><p>获取文章详情需要注意以下两点：</p>
 <ul>
 <li>不同的新闻来源具有不同的channel。</li>
 <li>不是所有的新闻都具有关键词、源链接等信息，因此需要进行异常处理。</li>
 </ul>
-<pre class=" language-lang-python"><code class="language-lang-python">
-URLs = []
-with open('xuliyakongxi.csv','r') as f:
-    for url in f.readlines():
-        url = url.strip('\n')
-        URLs.append(url)
+<pre class=" language-python"><code class="language-python">
+URLs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">with</span> open<span class="token punctuation">(</span><span class="token string">'xuliyakongxi.csv'</span><span class="token punctuation">,</span><span class="token string">'r'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    <span class="token keyword">for</span> url <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        url <span class="token operator">=</span> url<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">)</span>
+        URLs<span class="token punctuation">.</span>append<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
 
-allNews = []
-count = 0
-comments = []
-notMatch= []
-for url in URLs:
-    try:
-        currentNews = []
-        request = requests.get(url,timeout=4)
-        request.encoding = 'utf-8'
-        soup = BeautifulSoup(request.text,'html.parser')
+allNews <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+count <span class="token operator">=</span> <span class="token number">0</span>
+comments <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+notMatch<span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> url <span class="token keyword">in</span> URLs<span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        currentNews <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        request <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
+        request<span class="token punctuation">.</span>encoding <span class="token operator">=</span> <span class="token string">'utf-8'</span>
+        soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>request<span class="token punctuation">.</span>text<span class="token punctuation">,</span><span class="token string">'html.parser'</span><span class="token punctuation">)</span>
 
-        newsid = re.search('doc-i(.+).shtml',url).group(1) #新闻ID
+        newsid <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">'doc-i(.+).shtml'</span><span class="token punctuation">,</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#新闻ID</span>
 
-        allChannels = ['gz','shc','gn','gj','jc','cj','kj','sh']
+        allChannels <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'gz'</span><span class="token punctuation">,</span><span class="token string">'shc'</span><span class="token punctuation">,</span><span class="token string">'gn'</span><span class="token punctuation">,</span><span class="token string">'gj'</span><span class="token punctuation">,</span><span class="token string">'jc'</span><span class="token punctuation">,</span><span class="token string">'cj'</span><span class="token punctuation">,</span><span class="token string">'kj'</span><span class="token punctuation">,</span><span class="token string">'sh'</span><span class="token punctuation">]</span>
 
-        #不同来源的新闻对应不同的channel，此处将所有的channel进行遍历，并加入了异常处理
-        for channel in allChannels:
-            try:
-                comm = 'http://comment5.news.sina.com.cn/page/info?version=1&format=json&channel='+channel+'&newsid=comos-'+ newsid
-                res_comm = requests.get(comm)
-                commentsDesc = json.loads(res_comm.text)
-                engageNum = commentsDesc['result']['count']['total'] #参与
-                commentsNum = commentsDesc['result']['count']['show'] #评论
-                comments.append(commentsDesc['result']['count'])
-            except:
-                if channel == 'sh':
-                    print('没有匹配')
-                    engageNum = None
-                    commentsNum = None
-                    notMatch.append(comm)
-                else:
-                    continue
-            else:
-                break;
+        <span class="token comment" spellcheck="true">#不同来源的新闻对应不同的channel，此处将所有的channel进行遍历，并加入了异常处理</span>
+        <span class="token keyword">for</span> channel <span class="token keyword">in</span> allChannels<span class="token punctuation">:</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                comm <span class="token operator">=</span> <span class="token string">'http://comment5.news.sina.com.cn/page/info?version=1&amp;format=json&amp;channel='</span><span class="token operator">+</span>channel<span class="token operator">+</span><span class="token string">'&amp;newsid=comos-'</span><span class="token operator">+</span> newsid
+                res_comm <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>comm<span class="token punctuation">)</span>
+                commentsDesc <span class="token operator">=</span> json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>res_comm<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+                engageNum <span class="token operator">=</span> commentsDesc<span class="token punctuation">[</span><span class="token string">'result'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'count'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'total'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true">#参与</span>
+                commentsNum <span class="token operator">=</span> commentsDesc<span class="token punctuation">[</span><span class="token string">'result'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'count'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'show'</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true">#评论</span>
+                comments<span class="token punctuation">.</span>append<span class="token punctuation">(</span>commentsDesc<span class="token punctuation">[</span><span class="token string">'result'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'count'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">except</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> channel <span class="token operator">==</span> <span class="token string">'sh'</span><span class="token punctuation">:</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'没有匹配'</span><span class="token punctuation">)</span>
+                    engageNum <span class="token operator">=</span> None
+                    commentsNum <span class="token operator">=</span> None
+                    notMatch<span class="token punctuation">.</span>append<span class="token punctuation">(</span>comm<span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    <span class="token keyword">continue</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
 
-        titleAndKeywords = soup.find('title').text 
-        tk = titleAndKeywords.split('|')
-        title = tk[0] #标题
-        if len(tk) > 2:
-            keywords = tk[1:(len(tk)-1)]
-            keywords.append(tk[-1].split('_')[0]) #关键词
-        else:
-            keywords = tk[-1].split('_')[0]
+        titleAndKeywords <span class="token operator">=</span> soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'title'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>text 
+        tk <span class="token operator">=</span> titleAndKeywords<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'|'</span><span class="token punctuation">)</span>
+        title <span class="token operator">=</span> tk<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true">#标题</span>
+        <span class="token keyword">if</span> len<span class="token punctuation">(</span>tk<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">2</span><span class="token punctuation">:</span>
+            keywords <span class="token operator">=</span> tk<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">(</span>len<span class="token punctuation">(</span>tk<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+            keywords<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tk<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'_'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#关键词</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            keywords <span class="token operator">=</span> tk<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'_'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
 
 
-        paras = soup.find('div',{'class':'article'}).text #正文，存在脏数据
+        paras <span class="token operator">=</span> soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token string">'class'</span><span class="token punctuation">:</span><span class="token string">'article'</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>text <span class="token comment" spellcheck="true">#正文，存在脏数据</span>
 
-        try:
-            date = soup.find('span',{'class':'date'}).text #日期
-        except:
-            date = None
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            date <span class="token operator">=</span> soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'span'</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token string">'class'</span><span class="token punctuation">:</span><span class="token string">'date'</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>text <span class="token comment" spellcheck="true">#日期</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            date <span class="token operator">=</span> None
 
-        try:
-            sourceUrl = soup.find('a',{'class':'source'}).get('href') #源链接
-            source = soup.find('a',{'class':'source'}).text #来源
-        except:
-            sourceUrl = None
-            source = None
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            sourceUrl <span class="token operator">=</span> soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token string">'class'</span><span class="token punctuation">:</span><span class="token string">'source'</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'href'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#源链接</span>
+            source <span class="token operator">=</span> soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token string">'class'</span><span class="token punctuation">:</span><span class="token string">'source'</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>text <span class="token comment" spellcheck="true">#来源</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            sourceUrl <span class="token operator">=</span> None
+            source <span class="token operator">=</span> None
 
-        currentNews.append(url) #url
-        currentNews.append(title)  #标题
-        currentNews.append(keywords) #关键词
-        currentNews.append(paras) #正文
-        currentNews.append(date) #日期
-        currentNews.append(sourceUrl) #源链接
-        currentNews.append(source) #来源
-        currentNews.append(engageNum) #参与人数
-        currentNews.append(commentsNum) #评论人数
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>url<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#url</span>
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>title<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#标题</span>
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>keywords<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#关键词</span>
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>paras<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#正文</span>
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>date<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#日期</span>
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>sourceUrl<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#源链接</span>
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>source<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#来源</span>
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>engageNum<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#参与人数</span>
+        currentNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>commentsNum<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#评论人数</span>
 
-        allNews.append(currentNews)
-        count += 1
+        allNews<span class="token punctuation">.</span>append<span class="token punctuation">(</span>currentNews<span class="token punctuation">)</span>
+        count <span class="token operator">+=</span> <span class="token number">1</span>
 
-        print('已经爬取',str(count),'个页面.')
-        print('comment URL:',comm)
-        time.sleep(1+abs(np.random.rand()))
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'已经爬取'</span><span class="token punctuation">,</span>str<span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'个页面.'</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'comment URL:'</span><span class="token punctuation">,</span>comm<span class="token punctuation">)</span>
+        time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">+</span>abs<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-        if count % 20 == 0:
-            time.sleep(5)
-#         if count > 36:
-#             break;
-    except Exception as e:
-        print(e)
-        continue
+        <span class="token keyword">if</span> count <span class="token operator">%</span> <span class="token number">20</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#         if count > 36:</span>
+<span class="token comment" spellcheck="true">#             break;</span>
+    <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token keyword">continue</span>
 </code></pre>
 
         </div>
@@ -363,16 +363,16 @@ for url in URLs:
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/05/02/囚徒困境/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/27/新浪爬虫/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">囚徒困境</span>
+                <span class="level-item">新浪新闻爬虫</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/27/新浪爬虫/">
-                <span class="level-item">新浪新闻爬虫</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/26/岭回归/">
+                <span class="level-item">改进的删一法交叉验证与逐步回归比较</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -396,22 +396,22 @@ for url in URLs:
             <div class="level-item has-text-centered">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="Your name">
+                        <img class="image is-128x128 has-mb-6" src="D:\BLOG\blog\source\head\head.gif" alt="冯洋洋">
                     
                     
                     <p class="is-size-4 is-block">
-                        Your name
+                        冯洋洋
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        Your title
+                        数据分析师
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>Your location</span>
+                        <span>上海浦东</span>
                     </p>
                     
                 </div>

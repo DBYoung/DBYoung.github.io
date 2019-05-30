@@ -169,128 +169,130 @@
             
         </h1>
         <div class="content">
-            <h2 id="排序算法简介"><a href="#排序算法简介" class="headerlink" title="排序算法简介"></a>排序算法简介</h2><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><h2 id="所有算法程序"><a href="#所有算法程序" class="headerlink" title="所有算法程序"></a>所有算法程序</h2><pre class=" language-lang-python"><code class="language-lang-python">#基础数据结果为python中的list
-testArr = [6,2,7,3,8,9]
+            <h2 id="排序算法简介"><a href="#排序算法简介" class="headerlink" title="排序算法简介"></a>排序算法简介</h2><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><h2 id="所有算法程序"><a href="#所有算法程序" class="headerlink" title="所有算法程序"></a>所有算法程序</h2><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#基础数据结果为python中的list</span>
+testArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span>
 
-def inverse(array):
-    lst = array.copy()
-    length = len(array)
-    mid = int((length - 1) / 2)
-    for i in range(mid+1):
-        temp = lst[i]
-        lst[i] = lst[length-i-1]
-        lst[length-i-1] = temp
-    return lst
+<span class="token keyword">def</span> <span class="token function">inverse</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    lst <span class="token operator">=</span> array<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    length <span class="token operator">=</span> len<span class="token punctuation">(</span>array<span class="token punctuation">)</span>
+    mid <span class="token operator">=</span> int<span class="token punctuation">(</span><span class="token punctuation">(</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        temp <span class="token operator">=</span> lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> lst<span class="token punctuation">[</span>length<span class="token operator">-</span>i<span class="token number">-1</span><span class="token punctuation">]</span>
+        lst<span class="token punctuation">[</span>length<span class="token operator">-</span>i<span class="token number">-1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp
+    <span class="token keyword">return</span> lst
 
-#冒泡排序
-def bubbleSort(array,desc = False):
-    lst = array.copy()
-    length = len(array)
-    #默认升序,降序只需改变符号
-    if length == 1:
-        return lst
-    else:
-        for i in range(length-1):
-            for j in range(i+1,length):
-                if lst[i] > lst[j]:
-                    temp = lst[i]
-                    lst[i] = lst[j]
-                    lst[j] = temp
-    return lst
+<span class="token comment" spellcheck="true">#冒泡排序</span>
+<span class="token keyword">def</span> <span class="token function">bubbleSort</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span>desc <span class="token operator">=</span> <span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    lst <span class="token operator">=</span> array<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    length <span class="token operator">=</span> len<span class="token punctuation">(</span>array<span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true">#默认升序,降序只需改变符号</span>
+    <span class="token keyword">if</span> length <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> lst
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>length<span class="token number">-1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>length<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> lst<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                    temp <span class="token operator">=</span> lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                    lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> lst<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+                    lst<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> temp
+    <span class="token keyword">return</span> lst
 
-#快速排序
-def shortQuickSort(array,left,right):
-    i = left
-    j = right
-    if i >= j:
-        return array
-    key = array[i]
-    while i < j:
-        while i < j and key <= array[j]:="" j="" -="1" array[i]="array[j]" while="" i="" <="" and="" key="">= array[i]:
-            i += 1
-        array[j] = array[i]
-    array[i] = key
-    print(array)
-    shortQuickSort(array,left,i-1)
-    shortQuickSort(array,j+1,right)
-    return array
+<span class="token comment" spellcheck="true">#快速排序</span>
+<span class="token keyword">def</span> <span class="token function">shortQuickSort</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span>left<span class="token punctuation">,</span>right<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    i <span class="token operator">=</span> left
+    j <span class="token operator">=</span> right
+    <span class="token keyword">if</span> i <span class="token operator">>=</span> j<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> array
+    key <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    <span class="token keyword">while</span> i <span class="token operator">&lt;</span> j<span class="token punctuation">:</span>
+        <span class="token keyword">while</span> i <span class="token operator">&lt;</span> j <span class="token operator">and</span> key <span class="token operator">&lt;=</span> array<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">:</span>
+            j <span class="token operator">-=</span> <span class="token number">1</span>
+        array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> array<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+        <span class="token keyword">while</span> i <span class="token operator">&lt;</span> j <span class="token operator">and</span> key <span class="token operator">>=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+            i <span class="token operator">+=</span> <span class="token number">1</span>
+        array<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+    array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> key
+    <span class="token keyword">print</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span>
+    shortQuickSort<span class="token punctuation">(</span>array<span class="token punctuation">,</span>left<span class="token punctuation">,</span>i<span class="token number">-1</span><span class="token punctuation">)</span>
+    shortQuickSort<span class="token punctuation">(</span>array<span class="token punctuation">,</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>right<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> array
 
-def longQuickSort(array):
-
-
-
-def simInsertSort(array):
-    lst = array.copy()
-    if len(lst) == 0:
-        return lst
-    else:
-        for i in range(1,len(lst)):
-            current = lst[i]
-            k = i
-            for j in range(i-1,-1,-1):
-                if current < lst[j]:
-                    lst[j+1] = lst[j]
-                    k = j
-            lst[k] = current
-        return lst
-
-def shellSort():
-    pass
-
-def simSelectSort(array):
-    lst = array.copy()
-    if len(lst) == 1:
-        return lst
-    else:
-        for i in range(len(lst)-1):
-            minVal = lst[i]
-            k = i
-            for j in range(i+1,len(lst)):
-                if lst[j] < minVal:
-                    minVal = lst[j]
-                    k = j
-            temp = lst[i]
-            lst[i] = lst[k]
-            lst[k] = temp
-    return lst
-
-def heapSort():
-    pass
-def mergerSort():
-    pass
-def radixSort():
-    pass
-def bucketSort():
-    pass
-
-if __name__ == "__main__":
-    simSelectSort(testArr)
-
-start = time.time()
-b = simInsertSort(a)
-time.time() - start
+<span class="token keyword">def</span> <span class="token function">longQuickSort</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
 
-def fab(n):
-    if n == 1 or n == 2:
-        return n
-    else:
-        return fab(n-1) + fab(n-2)
+
+<span class="token keyword">def</span> <span class="token function">simInsertSort</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    lst <span class="token operator">=</span> array<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> len<span class="token punctuation">(</span>lst<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> lst
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>len<span class="token punctuation">(</span>lst<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            current <span class="token operator">=</span> lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            k <span class="token operator">=</span> i
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>i<span class="token number">-1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> current <span class="token operator">&lt;</span> lst<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                    lst<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> lst<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+                    k <span class="token operator">=</span> j
+            lst<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> current
+        <span class="token keyword">return</span> lst
+
+<span class="token keyword">def</span> <span class="token function">shellSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+
+<span class="token keyword">def</span> <span class="token function">simSelectSort</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    lst <span class="token operator">=</span> array<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> len<span class="token punctuation">(</span>lst<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> lst
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>lst<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            minVal <span class="token operator">=</span> lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            k <span class="token operator">=</span> i
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>len<span class="token punctuation">(</span>lst<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> lst<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> minVal<span class="token punctuation">:</span>
+                    minVal <span class="token operator">=</span> lst<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+                    k <span class="token operator">=</span> j
+            temp <span class="token operator">=</span> lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            lst<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> lst<span class="token punctuation">[</span>k<span class="token punctuation">]</span>
+            lst<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> temp
+    <span class="token keyword">return</span> lst
+
+<span class="token keyword">def</span> <span class="token function">heapSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+<span class="token keyword">def</span> <span class="token function">mergerSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+<span class="token keyword">def</span> <span class="token function">radixSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+<span class="token keyword">def</span> <span class="token function">bucketSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    simSelectSort<span class="token punctuation">(</span>testArr<span class="token punctuation">)</span>
+
+start <span class="token operator">=</span> time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span>
+b <span class="token operator">=</span> simInsertSort<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start
 
 
-#任何递归都可以通过循环实现，因此，快速排序也使用循环
-def fab2(n):
-    if n == 1 or n ==2 :
-        return n
-    else:
-        a = 1
-        b = 2
-        for i in range(2,n):
-            temp = b
-            b = a + b
-            a = temp
-        return b
-</=></code></pre>
+<span class="token keyword">def</span> <span class="token function">fab</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">or</span> n <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> n
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> fab<span class="token punctuation">(</span>n<span class="token number">-1</span><span class="token punctuation">)</span> <span class="token operator">+</span> fab<span class="token punctuation">(</span>n<span class="token number">-2</span><span class="token punctuation">)</span>
+
+
+<span class="token comment" spellcheck="true">#任何递归都可以通过循环实现，因此，快速排序也使用循环</span>
+<span class="token keyword">def</span> <span class="token function">fab2</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">or</span> n <span class="token operator">==</span><span class="token number">2</span> <span class="token punctuation">:</span>
+        <span class="token keyword">return</span> n
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        a <span class="token operator">=</span> <span class="token number">1</span>
+        b <span class="token operator">=</span> <span class="token number">2</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            temp <span class="token operator">=</span> b
+            b <span class="token operator">=</span> a <span class="token operator">+</span> b
+            a <span class="token operator">=</span> temp
+        <span class="token keyword">return</span> b</code></pre>
 
         </div>
         
@@ -383,22 +385,22 @@ def fab2(n):
             <div class="level-item has-text-centered">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="Your name">
+                        <img class="image is-128x128 has-mb-6" src="D:\BLOG\blog\source\head\head.gif" alt="冯洋洋">
                     
                     
                     <p class="is-size-4 is-block">
-                        Your name
+                        冯洋洋
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        Your title
+                        数据分析师
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>Your location</span>
+                        <span>上海浦东</span>
                     </p>
                     
                 </div>

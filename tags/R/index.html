@@ -179,12 +179,15 @@
         </h1>
         <div class="content">
             <h2 id="lubridate包简介"><a href="#lubridate包简介" class="headerlink" title="lubridate包简介"></a>lubridate包简介</h2><p>该包的描述文档介绍道：<br>lubridate包包含了一些处理时间点和时间段的函数：<br>快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快.</p>
-<pre class=" language-lang-r"><code class="language-lang-r">library(lubridate)
-</code></pre>
+<pre class=" language-r"><code class="language-r">library<span class="token punctuation">(</span>lubridate<span class="token punctuation">)</span></code></pre>
 <h2 id="各种函数介绍"><a href="#各种函数介绍" class="headerlink" title="各种函数介绍"></a>各种函数介绍</h2><h3 id="add-with-rollback"><a href="#add-with-rollback" class="headerlink" title="add_with_rollback"></a>add_with_rollback</h3><p>add_with_rollback:Add and subtract months to a date without exceeding the last day of the new month.</p>
 <p>add_with_rollback:将某个日期加上或者减取若干个月，不考虑新获得的月份的最后一天的实际值.比如2009-10-31，加上一个月就是2009-11-31，但是11月没有31号，所以会显示NA.如果使用%m+%，则会以自然月的方式相加.</p>
 <ul>
-<li>例子<br>```r<br>may &lt;- ymd_hms(“1994-05-31 07:40:38”)<br>may + months(1:3)  #六月31显示为NA<br>may %m+% months(1:3)  #不会有错误</li>
+<li>例子<pre class=" language-r"><code class="language-r">may <span class="token operator">&lt;-</span> ymd_hms<span class="token punctuation">(</span><span class="token string">"1994-05-31 07:40:38"</span><span class="token punctuation">)</span>
+may <span class="token operator">+</span> months<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#六月31显示为NA</span>
+may <span class="token percent-operator operator">%m+%</span> months<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#不会有错误</span>
+</code></pre>
+</li>
 </ul>
 <p>leap &lt;- ymd(“2012-02-29”)<br>leap + years(1)  #NA<br>leap %m+% years(1)  #2013-02-28</p>
 <pre><code>
@@ -198,17 +201,25 @@ am:判断是否是上午，显然，其需要的参数应该包含一个具体�
 dt &lt;- ymd(&quot;2012-02-02&quot;)
 am(dt)
 time &lt;- ymd_hm(&quot;2012-02-01 13:20&quot;)
-am(time)
-</code></pre><h3 id="as-duration"><a href="#as-duration" class="headerlink" title="as.duration"></a>as.duration</h3><p>as.duration:as.duration changes Interval, Period and numeric class objects to Duration objects. Numeric objects are changed to Duration objects with the seconds unit equal to the numeric value.</p>
+am(time)</code></pre><h3 id="as-duration"><a href="#as-duration" class="headerlink" title="as.duration"></a>as.duration</h3><p>as.duration:as.duration changes Interval, Period and numeric class objects to Duration objects. Numeric objects are changed to Duration objects with the seconds unit equal to the numeric value.</p>
 <p>as.duration:将interval、period和数字转换为时间间隔——时间段.</p>
 <ul>
-<li>例子<pre class=" language-lang-r"><code class="language-lang-r">span <- interval(ymd("1994-05-01"),ymd("1995-10-28"))="" #interval="" as.duration(span)="" #47088000秒，约1.49年="" as.duration(10)="" #10秒="" dur="" <-="" duration(hours="10,minutes" =="" 6)="" #一段10分6秒的时间间隔="" as.numeric(dur,"hours")="" #10.1小时="" as.numeric(dur,"minutes")="" #606秒="" <="" code=""></-></code></pre>
+<li>例子<pre class=" language-r"><code class="language-r">span <span class="token operator">&lt;-</span> interval<span class="token punctuation">(</span>ymd<span class="token punctuation">(</span><span class="token string">"1994-05-01"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>ymd<span class="token punctuation">(</span><span class="token string">"1995-10-28"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#interval</span>
+as.duration<span class="token punctuation">(</span>span<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#47088000秒，约1.49年</span>
+as.duration<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#10秒</span>
+dur <span class="token operator">&lt;-</span> duration<span class="token punctuation">(</span>hours <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span>minutes <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#一段10分6秒的时间间隔</span>
+as.numeric<span class="token punctuation">(</span>dur<span class="token punctuation">,</span><span class="token string">"hours"</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#10.1小时</span>
+as.numeric<span class="token punctuation">(</span>dur<span class="token punctuation">,</span><span class="token string">"minutes"</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#606秒</span></code></pre>
 </li>
 </ul>
 <h3 id="as-interval"><a href="#as-interval" class="headerlink" title="as.interval"></a>as.interval</h3><p>as.intervel:Change an object to an interval.</p>
 <p>as.interval:将对象转换为inteval</p>
 <ul>
-<li>例子<br>```r<br>diff &lt;- make_difftime(days = 31) #加上31天<br>as.interval(diff, ymd(“2009-01-01”))<br>as.interval(diff, ymd(“2009-02-01”))</li>
+<li>例子<pre class=" language-r"><code class="language-r">diff <span class="token operator">&lt;-</span> make_difftime<span class="token punctuation">(</span>days <span class="token operator">=</span> <span class="token number">31</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#加上31天</span>
+as.interval<span class="token punctuation">(</span>diff<span class="token punctuation">,</span> ymd<span class="token punctuation">(</span><span class="token string">"2009-01-01"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+as.interval<span class="token punctuation">(</span>diff<span class="token punctuation">,</span> ymd<span class="token punctuation">(</span><span class="token string">"2009-02-01"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+</li>
 </ul>
 <p>dur &lt;- duration(days = 31) #duration<br>as.interval(dur, ymd(“2009-01-01”))<br>as.interval(dur, ymd(“2009-02-01”))</p>
 <p>per &lt;- period(months = 1) #period<br>as.interval(per, ymd(“2009-01-01”))<br>as.interval(per, ymd(“2009-02-01”))</p>
@@ -223,11 +234,10 @@ as.period:将对象转换为period.
 ```r
 span &lt;- interval(as.POSIXct(&quot;2009-01-01&quot;), as.POSIXct(&quot;2010-02-02 01:01:01&quot;)) #interval
 as.period(span)
-as.period(span, units = &quot;day&quot;)
-</code></pre><p>format of interval,duration and period:</p>
+as.period(span, units = &quot;day&quot;)</code></pre><p>format of interval,duration and period:</p>
 <ul>
 <li><p>interval:</p>
-<p>1990-01-01 UTC—1990-01-11 UTC</p>
+<p>1990-01-01 UTC–1990-01-11 UTC</p>
 </li>
 <li><p>duration:</p>
 </li>
@@ -240,7 +250,12 @@ as.period(span, units = &quot;day&quot;)
 <h3 id="as-date"><a href="#as-date" class="headerlink" title="as_date"></a>as_date</h3><p>as_date:Convert an object to a date or date-time</p>
 <p>as_date:将对象转换为date或者date-time类型</p>
 <ul>
-<li>例子<pre class=" language-lang-r"><code class="language-lang-r">dt_utc <- ymd_hms("2010-08-03="" 00:50:50")="" dt_europe="" <-="" 00:50:50",="" tz="Europe/London" )="" c(as_date(dt_utc),="" as.date(dt_utc))="" c(as_date(dt_europe),="" as.date(dt_europe))="" ##="" need="" not="" suply="" origin，不需要提供初始值="" as_date(10)="" #默认中1970-01-01年开始="" <="" code=""></-></code></pre>
+<li>例子<pre class=" language-r"><code class="language-r">dt_utc <span class="token operator">&lt;-</span> ymd_hms<span class="token punctuation">(</span><span class="token string">"2010-08-03 00:50:50"</span><span class="token punctuation">)</span>
+dt_europe <span class="token operator">&lt;-</span> ymd_hms<span class="token punctuation">(</span><span class="token string">"2010-08-03 00:50:50"</span><span class="token punctuation">,</span> tz <span class="token operator">=</span> <span class="token string">"Europe/London"</span><span class="token punctuation">)</span>
+c<span class="token punctuation">(</span>as_date<span class="token punctuation">(</span>dt_utc<span class="token punctuation">)</span><span class="token punctuation">,</span> as.Date<span class="token punctuation">(</span>dt_utc<span class="token punctuation">)</span><span class="token punctuation">)</span>
+c<span class="token punctuation">(</span>as_date<span class="token punctuation">(</span>dt_europe<span class="token punctuation">)</span><span class="token punctuation">,</span> as.Date<span class="token punctuation">(</span>dt_europe<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">## need not suply origin，不需要提供初始值</span>
+as_date<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#默认中1970-01-01年开始</span></code></pre>
 <h3 id="as-datetime"><a href="#as-datetime" class="headerlink" title="as_datetime"></a>as_datetime</h3>as_datetime:Convert an object to a date or date-time</li>
 </ul>
 <p>as_datetime:将对象转换为date或者date-time类型</p>
@@ -252,7 +267,13 @@ as.period(span, units = &quot;day&quot;)
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">x <- as.posixct("2012-03-26="" 23:12:13",="" tz="Etc/GMT+8" )="" x="" date(x)="" as.date(x)="" #as.date()函数默认返回utc时间="" as.date(x,tz="Etc/GMT+8" #返回etc="" gmt+8时区时间="" <-="" as.date('2014-10-20')="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">x <span class="token operator">&lt;-</span> as.POSIXct<span class="token punctuation">(</span><span class="token string">"2012-03-26 23:12:13"</span><span class="token punctuation">,</span> tz <span class="token operator">=</span> <span class="token string">"Etc/GMT+8"</span><span class="token punctuation">)</span>
+x
+date<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+as.Date<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#as.Date()函数默认返回UTC时间</span>
+as.Date<span class="token punctuation">(</span>x<span class="token punctuation">,</span>tz <span class="token operator">=</span> <span class="token string">'Etc/GMT+8'</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#返回Etc/GMT+8时区时间</span>
+date<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">&lt;-</span> as.Date<span class="token punctuation">(</span><span class="token string">'2014-10-20'</span><span class="token punctuation">)</span>
+date<span class="token punctuation">(</span>x<span class="token punctuation">)</span></code></pre>
 <h3 id="DateTimeUpdate"><a href="#DateTimeUpdate" class="headerlink" title="DateTimeUpdate"></a>DateTimeUpdate</h3><p>DateTimeUpdate:Description of the classes “POSIXlt” and “POSIXct” representing calendar dates and times.</p>
 <p>DateTimeUpdate:</p>
 <h3 id="date-decimal"><a href="#date-decimal" class="headerlink" title="date_decimal"></a>date_decimal</h3><p>date_decimal:Converts a decimal to a date.</p>
@@ -260,17 +281,28 @@ as.period(span, units = &quot;day&quot;)
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">decimal <- 2017.12="" date_decimal(decimal)="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">decimal <span class="token operator">&lt;-</span> <span class="token number">2017.12</span>
+date_decimal<span class="token punctuation">(</span>decimal<span class="token punctuation">)</span></code></pre>
 <h3 id="day"><a href="#day" class="headerlink" title="day"></a>day</h3><p>day:Get/set days component of a date-time.</p>
 <p>day:获取/设置日期中的具体日数据</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">x <- as.date('2017-10-30')="" day(x)="" #获取日期="" mday(x)="" #一个月中的第几天="" yday(x)="" #一年中的第几天="" wdayofdate="" <-="" wday(x,label="TRUE,abbr" =="" false)="" levels(wdayofdate)="" c(levels(wdayofdate)[2:7],levels(wdayofdate)[1])="" #一周中的第几天,以周日为第一天="" #因为中国人默认周一为一周的第一天，所以可以更改一下因子的排序="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">x <span class="token operator">&lt;-</span> as.Date<span class="token punctuation">(</span><span class="token string">'2017-10-30'</span><span class="token punctuation">)</span>
+day<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#获取日期</span>
+mday<span class="token punctuation">(</span>x<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#一个月中的第几天</span>
+yday<span class="token punctuation">(</span>x<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#一年中的第几天</span>
+wdayofdate <span class="token operator">&lt;-</span> wday<span class="token punctuation">(</span>x<span class="token punctuation">,</span>label <span class="token operator">=</span> <span class="token boolean">TRUE</span><span class="token punctuation">,</span>abbr <span class="token operator">=</span> <span class="token boolean">FALSE</span><span class="token punctuation">)</span> 
+levels<span class="token punctuation">(</span>wdayofdate<span class="token punctuation">)</span> <span class="token operator">&lt;-</span> c<span class="token punctuation">(</span>levels<span class="token punctuation">(</span>wdayofdate<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token operator">:</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">,</span>levels<span class="token punctuation">(</span>wdayofdate<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+wdayofdate
+<span class="token comment" spellcheck="true">#一周中的第几天,以周日为第一天</span>
+<span class="token comment" spellcheck="true">#因为中国人默认周一为一周的第一天，所以可以更改一下因子的排序</span>
+</code></pre>
 <h3 id="days-in-month"><a href="#days-in-month" class="headerlink" title="days_in_month"></a>days_in_month</h3><p>days_in_month:Get the number of days in the month of a date-time.</p>
 <p>days_in_month:某月份有几天,输入一个带年份的日期数据</p>
 <ul>
-<li>例子<pre class=" language-lang-r"><code class="language-lang-r">md <- ymd('1994-05-01')="" days_in_month(md)="" <="" code=""></-></code></pre>
+<li>例子<pre class=" language-r"><code class="language-r">md <span class="token operator">&lt;-</span> ymd<span class="token punctuation">(</span><span class="token string">'1994-05-01'</span><span class="token punctuation">)</span>
+days_in_month<span class="token punctuation">(</span>md<span class="token punctuation">)</span></code></pre>
 </li>
 </ul>
 <h3 id="decimal-date"><a href="#decimal-date" class="headerlink" title="decimal_date"></a>decimal_date</h3><p>decimal_date:Converts a date to a decimal of its year.</p>
@@ -278,7 +310,8 @@ as.period(span, units = &quot;day&quot;)
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">dt <- ymd('2017-10-31')="" decimal_date(dt)="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">dt <span class="token operator">&lt;-</span> ymd<span class="token punctuation">(</span><span class="token string">'2017-10-31'</span><span class="token punctuation">)</span>
+decimal_date<span class="token punctuation">(</span>dt<span class="token punctuation">)</span></code></pre>
 <h3 id="dst"><a href="#dst" class="headerlink" title="dst"></a>dst</h3><p>dst:Get Daylight Savings Time indicator of a date-time.</p>
 <p>dst:</p>
 <h3 id="duration"><a href="#duration" class="headerlink" title="duration"></a>duration</h3><p>duration:Create a duration object.</p>
@@ -289,65 +322,75 @@ as.period(span, units = &quot;day&quot;)
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">x <- as.posixct("2009-08-07="" 00:00:01",="" tz="America/New_York" )="" x="" force_tz(x,="" "gmt")="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">x <span class="token operator">&lt;-</span> as.POSIXct<span class="token punctuation">(</span><span class="token string">"2009-08-07 00:00:01"</span><span class="token punctuation">,</span> tz <span class="token operator">=</span> <span class="token string">"America/New_York"</span><span class="token punctuation">)</span>
+x
+force_tz<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token string">"GMT"</span><span class="token punctuation">)</span></code></pre>
 <h3 id="guess-formats"><a href="#guess-formats" class="headerlink" title="guess_formats"></a>guess_formats</h3><p>guess_formats:Guess formats from the supplied date-time character vector.</p>
 <p>guess_formats:猜测提供的日期格式</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">dt <- 1="" c('1990-01','1990="" 09="" 01','1992="" jan="" 01','may="" 1992')="" guess_formats(dt,orders="c("ymd","ym","mdy"),print_matches" =="" true)="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">dt <span class="token operator">&lt;-</span> c<span class="token punctuation">(</span><span class="token string">'1990-01'</span><span class="token punctuation">,</span><span class="token string">'1990 09 01'</span><span class="token punctuation">,</span><span class="token string">'1992 Jan 01'</span><span class="token punctuation">,</span><span class="token string">'May 1 1992'</span><span class="token punctuation">)</span>
+guess_formats<span class="token punctuation">(</span>dt<span class="token punctuation">,</span>orders <span class="token operator">=</span> c<span class="token punctuation">(</span><span class="token string">"ymd"</span><span class="token punctuation">,</span><span class="token string">"ym"</span><span class="token punctuation">,</span><span class="token string">"mdy"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>print_matches <span class="token operator">=</span> <span class="token boolean">TRUE</span><span class="token punctuation">)</span></code></pre>
 <h3 id="hour"><a href="#hour" class="headerlink" title="hour"></a>hour</h3><p>hour；Get/set hours component of a date-time.<br>hour:获取/设置日期中的小时数据</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">dt <- 1="" now()="" hour(dt)="" <-="" dt="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">dt <span class="token operator">&lt;-</span> now<span class="token punctuation">(</span><span class="token punctuation">)</span>
+hour<span class="token punctuation">(</span>dt<span class="token punctuation">)</span>
+hour<span class="token punctuation">(</span>dt<span class="token punctuation">)</span> <span class="token operator">&lt;-</span> <span class="token number">1</span>
+dt</code></pre>
 <h3 id="interval"><a href="#interval" class="headerlink" title="interval"></a>interval</h3><p>interval:Utilities for creation and manipulation of Interval objects.</p>
 <h3 id="interval-class"><a href="#interval-class" class="headerlink" title="interval_class"></a>interval_class</h3><h3 id="is-Date"><a href="#is-Date" class="headerlink" title="is.Date"></a>is.Date</h3><p>is.Date():Is x a Date object?</p>
 <p>is.Date():x是否是一个日期对象</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">x <- '1970-01-01'="" is.date(x)="" x1="" <-="" as.date(x)="" is.date(x1)="" x2="" ymd(x)="" is.date(x2)="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">x <span class="token operator">&lt;-</span> <span class="token string">'1970-01-01'</span>
+is.Date<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+x1 <span class="token operator">&lt;-</span> as.Date<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+is.Date<span class="token punctuation">(</span>x1<span class="token punctuation">)</span>
+x2 <span class="token operator">&lt;-</span> ymd<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+is.Date<span class="token punctuation">(</span>x2<span class="token punctuation">)</span></code></pre>
 <h3 id="is-difftime"><a href="#is-difftime" class="headerlink" title="is.difftime"></a>is.difftime</h3><p>is.difftime:Is x a difftime object?</p>
 <p>is.difftime:x是否是一个difftime对象</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">is.difftime(as.Date('1999-09-09')) #FALSE
-is.difftime(make_difftime(20))  #TRUE,默认20秒间隔
-</code></pre>
+<pre class=" language-r"><code class="language-r">is.difftime<span class="token punctuation">(</span>as.Date<span class="token punctuation">(</span><span class="token string">'1999-09-09'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#FALSE</span>
+is.difftime<span class="token punctuation">(</span>make_difftime<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">#TRUE,默认20秒间隔</span></code></pre>
 <h3 id="is-instant"><a href="#is-instant" class="headerlink" title="is.instant"></a>is.instant</h3><p>is.instant:Is x a date-time object?</p>
 <p>is.instant:x是否为日期对象，同is.Date()</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">x <- as.date('1999-09-09')="" is.instant(x)="" is.timepoint(x)="" is.timepoint(10)="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">x <span class="token operator">&lt;-</span> as.Date<span class="token punctuation">(</span><span class="token string">'1999-09-09'</span><span class="token punctuation">)</span>
+is.instant<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+is.timepoint<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+is.timepoint<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span></code></pre>
 <h3 id="is-POSIXt"><a href="#is-POSIXt" class="headerlink" title="is.POSIXt"></a>is.POSIXt</h3><p>is.POSIXt:Is x a POSIXct or POSIXlt object?</p>
 <p>is.POSIXt:x是否为POSIXct对象或者POSIXlt对象?</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">is.POSIXt(as.Date("1997-01-01"))
-is.POSIXt(as.POSIXct("1997-01-01"))
-</code></pre>
+<pre class=" language-r"><code class="language-r">is.POSIXt<span class="token punctuation">(</span>as.Date<span class="token punctuation">(</span><span class="token string">"1997-01-01"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+is.POSIXt<span class="token punctuation">(</span>as.POSIXct<span class="token punctuation">(</span><span class="token string">"1997-01-01"</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 <h3 id="is-timespan"><a href="#is-timespan" class="headerlink" title="is.timespan"></a>is.timespan</h3><p>is.timespan:Is x a length of time?</p>
 <p>is.timespan:x是否时时间长度</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">is.timespan(as.Date("1999-09-09"))
-is.timespan(duration(second = 1))
-is.timespan(interval(ymd("1999-09-09"),ymd("2000-01-01")))
-is.timespan(period(10,units = 'month'))
-</code></pre>
+<pre class=" language-r"><code class="language-r">is.timespan<span class="token punctuation">(</span>as.Date<span class="token punctuation">(</span><span class="token string">"1999-09-09"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+is.timespan<span class="token punctuation">(</span>duration<span class="token punctuation">(</span>second <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+is.timespan<span class="token punctuation">(</span>interval<span class="token punctuation">(</span>ymd<span class="token punctuation">(</span><span class="token string">"1999-09-09"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>ymd<span class="token punctuation">(</span><span class="token string">"2000-01-01"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+is.timespan<span class="token punctuation">(</span>period<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span>units <span class="token operator">=</span> <span class="token string">'month'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 <h3 id="leap-year"><a href="#leap-year" class="headerlink" title="leap_year"></a>leap_year</h3><p>leap_year:Is a year a leap year?</p>
 <p>leap_year:是否时闰年</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">leap_year(2012)
-leap_year(2013)
-</code></pre>
+<pre class=" language-r"><code class="language-r">leap_year<span class="token punctuation">(</span><span class="token number">2012</span><span class="token punctuation">)</span>
+leap_year<span class="token punctuation">(</span><span class="token number">2013</span><span class="token punctuation">)</span></code></pre>
 <h3 id="local-time"><a href="#local-time" class="headerlink" title="local_time"></a>local_time</h3><p>local_time:</p>
 <p>local_time:</p>
 <h3 id="make-date"><a href="#make-date" class="headerlink" title="make_date"></a>make_date</h3><h3 id="make-datetime"><a href="#make-datetime" class="headerlink" title="make_datetime"></a>make_datetime</h3><p>make_datetime:Efficient creation of date-times from numeric representations</p>
@@ -355,31 +398,31 @@ leap_year(2013)
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">dt <- make_datetime(year="1999,month" =="" 9,day="10)" dt="" <="" code=""></-></code></pre>
+<pre class=" language-r"><code class="language-r">dt <span class="token operator">&lt;-</span> make_datetime<span class="token punctuation">(</span>year <span class="token operator">=</span> <span class="token number">1999</span><span class="token punctuation">,</span>month <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">,</span>day <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">)</span>
+dt</code></pre>
 <h3 id="make-difftime"><a href="#make-difftime" class="headerlink" title="make_difftime"></a>make_difftime</h3><p>make_difftime:Create a difftime object.</p>
 <p>make_difftime:创建一个时间长度对象.</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">make_difftime(1)
-make_difftime(60)
-make_difftime(3600)
-make_difftime(3600, units = "minute")
-# Time difference of 60 mins
-make_difftime(second = 90)
-# Time difference of 1.5 mins
-make_difftime(minute = 1.5)
-# Time difference of 1.5 mins
-make_difftime(second = 3, minute = 1.5, hour = 2, day = 6, week = 1)
-# Time difference of 13.08441 days
-make_difftime(hour = 1, minute = -60)
-# Time difference of 0 secs
-make_difftime(day = -1)
-# Time difference of -1 days
-make_difftime(second = 120,minute = 10,hour = 10,day = 1,week = 1, units = "hour")
-make_difftime(20,day = 6,week = 1)
-# Time differences in mins
-</code></pre>
+<pre class=" language-r"><code class="language-r">make_difftime<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+make_difftime<span class="token punctuation">(</span><span class="token number">60</span><span class="token punctuation">)</span>
+make_difftime<span class="token punctuation">(</span><span class="token number">3600</span><span class="token punctuation">)</span>
+make_difftime<span class="token punctuation">(</span><span class="token number">3600</span><span class="token punctuation">,</span> units <span class="token operator">=</span> <span class="token string">"minute"</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Time difference of 60 mins</span>
+make_difftime<span class="token punctuation">(</span>second <span class="token operator">=</span> <span class="token number">90</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Time difference of 1.5 mins</span>
+make_difftime<span class="token punctuation">(</span>minute <span class="token operator">=</span> <span class="token number">1.5</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Time difference of 1.5 mins</span>
+make_difftime<span class="token punctuation">(</span>second <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> minute <span class="token operator">=</span> <span class="token number">1.5</span><span class="token punctuation">,</span> hour <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> day <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">,</span> week <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Time difference of 13.08441 days</span>
+make_difftime<span class="token punctuation">(</span>hour <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> minute <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">60</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Time difference of 0 secs</span>
+make_difftime<span class="token punctuation">(</span>day <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Time difference of -1 days</span>
+make_difftime<span class="token punctuation">(</span>second <span class="token operator">=</span> <span class="token number">120</span><span class="token punctuation">,</span>minute <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span>hour <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span>day <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>week <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> units <span class="token operator">=</span> <span class="token string">"hour"</span><span class="token punctuation">)</span>
+make_difftime<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span>day <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">,</span>week <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Time differences in mins</span></code></pre>
 <h3 id="minute"><a href="#minute" class="headerlink" title="minute"></a>minute</h3><p> minute:Get/set minutes component of a date-time.</p>
 <p> minute:类似于hour.</p>
 <h3 id="month"><a href="#month" class="headerlink" title="month"></a>month</h3><p>month:Get/set months component of a date-time.</p>
@@ -389,32 +432,27 @@ make_difftime(20,day = 6,week = 1)
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">#ms:代表分钟,s代表秒
-#hms:h代表小时
-ms("09 10")
-hms("09:10:10")
-hms("3:22:::2")
-</code></pre>
+<pre class=" language-r"><code class="language-r"><span class="token comment" spellcheck="true">#ms:代表分钟,s代表秒</span>
+<span class="token comment" spellcheck="true">#hms:h代表小时</span>
+ms<span class="token punctuation">(</span><span class="token string">"09 10"</span><span class="token punctuation">)</span>
+hms<span class="token punctuation">(</span><span class="token string">"09:10:10"</span><span class="token punctuation">)</span>
+hms<span class="token punctuation">(</span><span class="token string">"3:22:::2"</span><span class="token punctuation">)</span></code></pre>
 <h3 id="now"><a href="#now" class="headerlink" title="now"></a>now</h3><p>now:The current time</p>
 <p>now:获取当前时间</p>
 <p>+例子</p>
-<pre class=" language-lang-r"><code class="language-lang-r">now()
-</code></pre>
+<pre class=" language-r"><code class="language-r">now<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <h3 id="origin"><a href="#origin" class="headerlink" title="origin"></a>origin</h3><p>origin：1970-01-01 UTC</p>
 <p>origin：1970-01-01 UTC，是一个常数，不是函数</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">origin
-</code></pre>
+<pre class=" language-r"><code class="language-r">origin</code></pre>
 <h3 id="parse-date-time"><a href="#parse-date-time" class="headerlink" title="parse_date_time"></a>parse_date_time</h3><p>parse_date_time:Parse character and numeric date-time vectors with user friendly order formats.</p>
 <p>parse_date_time:将字符型或者数值型日期转换成用户友好的格式。</p>
 <ul>
 <li>例子</li>
 </ul>
-<pre class=" language-lang-r"><code class="language-lang-r">
-
-</code></pre>
+<pre class=" language-r"><code class="language-r"></code></pre>
 <h3 id="poriod"><a href="#poriod" class="headerlink" title="poriod"></a>poriod</h3><h3 id="peroid-to-seconds"><a href="#peroid-to-seconds" class="headerlink" title="peroid_to_seconds"></a>peroid_to_seconds</h3><h3 id="pretty-dates"><a href="#pretty-dates" class="headerlink" title="pretty_dates"></a>pretty_dates</h3><h3 id="quarter"><a href="#quarter" class="headerlink" title="quarter"></a>quarter</h3><h3 id="roll-back"><a href="#roll-back" class="headerlink" title="roll_back"></a>roll_back</h3><h3 id="round-date"><a href="#round-date" class="headerlink" title="round_date"></a>round_date</h3><h3 id="second"><a href="#second" class="headerlink" title="second"></a>second</h3><h3 id="stamp"><a href="#stamp" class="headerlink" title="stamp"></a>stamp</h3><h3 id="timespan"><a href="#timespan" class="headerlink" title="timespan"></a>timespan</h3><h3 id="time-length"><a href="#time-length" class="headerlink" title="time_length"></a>time_length</h3><h3 id="today"><a href="#today" class="headerlink" title="today"></a>today</h3><h3 id="tz"><a href="#tz" class="headerlink" title="tz"></a>tz</h3><h3 id="week"><a href="#week" class="headerlink" title="week"></a>week</h3><h3 id="with-tz"><a href="#with-tz" class="headerlink" title="with_tz"></a>with_tz</h3><h3 id="year"><a href="#year" class="headerlink" title="year"></a>year</h3><h3 id="ymd"><a href="#ymd" class="headerlink" title="ymd"></a>ymd</h3><h3 id="ymd-hms"><a href="#ymd-hms" class="headerlink" title="ymd_hms"></a>ymd_hms</h3><h3 id="m"><a href="#m" class="headerlink" title="%m+%"></a>%m+%</h3><h3 id="within"><a href="#within" class="headerlink" title="%within%"></a>%within%</h3><h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><h2 id="三、应用实例"><a href="#三、应用实例" class="headerlink" title="三、应用实例"></a>三、应用实例</h2>
         </div>
         
@@ -445,22 +483,22 @@ hms("3:22:::2")
             <div class="level-item has-text-centered">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="Your name">
+                        <img class="image is-128x128 has-mb-6" src="D:\BLOG\blog\source\head\head.gif" alt="冯洋洋">
                     
                     
                     <p class="is-size-4 is-block">
-                        Your name
+                        冯洋洋
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        Your title
+                        数据分析师
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>Your location</span>
+                        <span>上海浦东</span>
                     </p>
                     
                 </div>
