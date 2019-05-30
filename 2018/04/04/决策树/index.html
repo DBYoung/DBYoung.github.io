@@ -66,9 +66,6 @@
 
     
     
-
-    
-    
     
     
 
@@ -86,8 +83,8 @@
     
 
 
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 <body class="is-3-column">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
     <div class="container">
@@ -501,9 +498,9 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/支持向量机/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/特征选择/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">支持向量机</span>
+                <span class="level-item">特征选择</span>
             </a>
         </div>
         
@@ -524,23 +521,22 @@
     <div class="card-content">
         <h3 class="title is-5 has-text-weight-normal">评论</h3>
         
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
-    var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2018/04/04/决策树/';
-        this.page.identifier = '2018/04/04/决策树/';
-    };
-    (function() {
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'comm' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+	var gitment = new Gitment({
+		id: '2018/04/04/决策树/',
+		owner: 'DBYoung',
+		repo: 'DBYoung.github.io',
+		oauth: {
+			client_id: '8d18b3fd5680c5d741e1',
+			client_secret: '25467664c1b21fda4268673ffdefd4c74f669640',
+		},
+	})
+	gitment.render('comment-container')
 </script>
 
-<div id="disqus_thread">
-    
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
     </div>
 </div>
 </div>
@@ -1466,9 +1462,6 @@ document.addEventListener('DOMContentLoaded', function () {
 </a>
 <script src="/js/back-to-top.js" defer></script>
 
-
-    
-    
 
     
     
