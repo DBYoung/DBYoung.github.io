@@ -98,19 +98,19 @@
             <div class="navbar-start">
                 
                 <a class="navbar-item"
-                href="/">Home</a>
+                href="/">主页</a>
                 
                 <a class="navbar-item"
-                href="/archives">Archives</a>
+                href="/archives">归档</a>
                 
                 <a class="navbar-item"
-                href="/categories">Categories</a>
+                href="/categories">分类</a>
                 
                 <a class="navbar-item"
-                href="/tags">Tags</a>
+                href="/tags">标签</a>
                 
                 <a class="navbar-item"
-                href="/about">About</a>
+                href="/about">关于</a>
                 
             </div>
             
@@ -198,7 +198,8 @@
         <div class="content">
             <h2 id="个体与集成"><a href="#个体与集成" class="headerlink" title="个体与集成"></a>个体与集成</h2><blockquote>
 <p>Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &gt; 0$有如下等式成立：</p>
-<script type="math/tex; mode=display">P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}</script></blockquote>
+<p>$$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$</p>
+</blockquote>
 <h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p>提升（boosting）方法是一种常用的机器学习方法，应用广泛且有效。在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。</p>
 <h3 id="提升方法的基本思路"><a href="#提升方法的基本思路" class="headerlink" title="提升方法的基本思路"></a>提升方法的基本思路</h3><p>提升方法基于这样一种思想：对于一个复杂的任务来说，将多个专家的判断进行适当的综合所得出的判断，要比其中任何一个专家单独的判断好。实际上，就是“三个臭皮匠赛过诸葛亮”的道理。</p>
 <p>历史上，Kearns和Valiant首先提出了“强可学习（strong learnable）”和“弱可学习（weakly learnable）”的概念。指出：在概率近似正确学习的框架中，一个概念（一个类），如果存在一个多项式的学习算法能够学习它，并且正确率很高，那么就称这个概念是强可学习的；一个概念，如果存在一个多项式的学习算法能够学习它，学习的正确率仅比随机猜测略好，那么就称这个概念是弱可学习的。非常有趣的是Schapire后来证明强可学习与弱可学习是等价的，也就是说，在PAC学习的框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。</p>
@@ -207,50 +208,64 @@
 <p>这样，对提升方法来说，有两个问题需要回答：一是在每一轮如何改变数据的权值或概率分布；二是如何将弱分类器组合为一个强分类器。关于第1个问题，AdaBoost的做法是，提高那些被前一轮弱分类器分错的样本权值，而降低那些被正确分类样本的权值。这样一来，那些没有得到正确分类的数据，由于其权值的加大而受到后一轮的弱分类器的更大关注。于是，分类问题被一系列弱分类器“分而治之”。至于第2个问题，即弱分类器的组合，AdaBoost采取加权多数表决的方法。具体地，加大分类误差率小的弱分类器的权值，使其在表决中起较大的作用，减小分类误差率大的弱分类器的权值，使其在表决中起较小的作用。</p>
 <p>AdaBoost的巧妙之处在于它将这些想法自然且有效地实现在一种算法里。</p>
 <h3 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h3><p>现在叙述AdaBoost算法。假设给定一个二分类的训练数据集</p>
-<script type="math/tex; mode=display">T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}</script><p>其中，每个样本点由实例与标记组成。实例$x_i\in R^n$,标记$y_i\in \{-1,1\}$。AdaBoost利用以下算法，从训练数据中学习一系列弱分类器或基本分类器，并将这些弱分类器线性组合为一个强分类器。</p>
-<p>输入：训练数据集$T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}$,其中$x_i\in R^n$,标记$y_i\in \{-1,1\}$；弱分类算法。</p>
+<p>$$T={(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)}$$</p>
+<p>其中，每个样本点由实例与标记组成。实例$x_i\in R^n$,标记$y_i\in {-1,1}$。AdaBoost利用以下算法，从训练数据中学习一系列弱分类器或基本分类器，并将这些弱分类器线性组合为一个强分类器。</p>
+<p>输入：训练数据集$T={(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)}$,其中$x_i\in R^n$,标记$y_i\in {-1,1}$；弱分类算法。</p>
 <p>输出：最终分类器$G(x)$。</p>
 <ol>
 <li>初始化训练数据的权值分布，</li>
 </ol>
-<script type="math/tex; mode=display">D_1=(w_{11},\cdots,w_{1i},\cdots,w_{1N}),w_{1i}=\frac{1}{N},i=1,2,\cdots,N</script><ol>
+<p>$$D_1=(w_{11},\cdots,w_{1i},\cdots,w_{1N}),w_{1i}=\frac{1}{N},i=1,2,\cdots,N$$</p>
+<ol start="2">
 <li>对$m=1,2,\cdots,M$  </li>
 </ol>
 <ul>
 <li>使用具有权值分布$D_m$的训练数据集学习，得到基本分类器</li>
 </ul>
 <blockquote>
-<script type="math/tex; mode=display">G_m(x):R^n \rightarrow \{-1,1\}</script></blockquote>
+<p>$$G_m(x):R^n \rightarrow {-1,1}$$</p>
+</blockquote>
 <ul>
 <li>计算$G_m(x)$在训练数据上的分类误差率</li>
 </ul>
 <blockquote>
-<script type="math/tex; mode=display">e_m=\sum _{i=1}^NP(G_m(x)\ne y_i)=\sum _{i=1}^Nw_{mi}I(G_m(x)\ne y_i)</script></blockquote>
+<p>$$e_m=\sum <em>{i=1}^NP(G_m(x)\ne y_i)=\sum _{i=1}^Nw</em>{mi}I(G_m(x)\ne y_i) $$</p>
+</blockquote>
 <ul>
 <li>计算$G_m(x)$的系数</li>
 </ul>
 <blockquote>
-<script type="math/tex; mode=display">\alpha _m = \frac{1}{2} ln \frac{1-e_m}{e_m}</script></blockquote>
+<p>$$\alpha _m = \frac{1}{2} ln \frac{1-e_m}{e_m}$$ </p>
+</blockquote>
 <ul>
 <li>更新训练数据集的权值分布</li>
 </ul>
 <blockquote>
-<script type="math/tex; mode=display">D_{m+1} = (w_{m+1,1},\cdots,w_{m+1,i},\cdots,w_{m+1,N})</script><script type="math/tex; mode=display">w_{m+1,i} = \frac{w_{mi}}{Z_m}e^{-\alpha _m y_i G_m(x_i)},i=1,2,\cdots,N</script></blockquote>
+<p>$$D_{m+1} = (w_{m+1,1},\cdots,w_{m+1,i},\cdots,w_{m+1,N})$$ </p>
+</blockquote>
+<blockquote>
+<p>$$w_{m+1,i} = \frac{w_{mi}}{Z_m}e^{-\alpha _m y_i G_m(x_i)},i=1,2,\cdots,N$$ </p>
+</blockquote>
 <p>这里，$Z_m$是规范化因子</p>
-<script type="math/tex; mode=display">Z_m = \sum _{i=1}^N e^{-\alpha _m y_i G_m(x_i)}</script><p>它使$D_{m+1}$成为一个概率分布。</p>
-<ol>
+<p>$$Z_m = \sum _{i=1}^N e^{-\alpha _m y_i G_m(x_i)}$$ </p>
+<p>它使$D_{m+1}$成为一个概率分布。</p>
+<ol start="3">
 <li>构建基本分类器的线性组合</li>
 </ol>
-<script type="math/tex; mode=display">f(x) = \sum _{m=1}^M \alpha_m G_m(x)</script><p>得到最终的分类器</p>
-<script type="math/tex; mode=display">G(X) = sign(f(x)) = sign(\sum _{m=1}^M \alpha_m G_m(x))</script><p>对AdaBoost算法作如下说明：</p>
+<p>$$f(x) = \sum _{m=1}^M \alpha_m G_m(x)$$ </p>
+<p>得到最终的分类器</p>
+<p>$$G(X) = sign(f(x)) = sign(\sum _{m=1}^M \alpha_m G_m(x))$$ </p>
+<p>对AdaBoost算法作如下说明：</p>
 <p>步骤1 假设数据集具有均匀的权值分布，即每个训练样本在基本分类器中作用相同，这一假设保证第1步能够在原始数据集上学习基本分类器$G_1(x)$。</p>
 <p>步骤2 AdaBoost反复学习基本分类器，在每一轮$m=1,2,\cdots,M$中顺次地执行下列操作：</p>
 <p>（a）使用当前分布$D_m$加权的训练数据集，学习基本分类器$G_m(x)$。</p>
 <p>（b）计算基本分类器$G_m(x)$在加权训练数据集上的分类误差率：</p>
-<script type="math/tex; mode=display">e_m = \sum _{i=1}^N P(G_m(x_i)\ne y_i) = \sum _{G_m(x_i)\ne y_i} w_{mi}</script><p>这里，$w_{mi}$表示第$m$轮中第$i$个实例的权值，$\sum _{i=1}^N w_{mi}=1$。这表明，$G_m(x)$在加权的训练数据上的分类误差率是被$G_m(x)$误分类样本的权值之和，由此可以看出数据权值分布$D_m$与基本分类器$G_m(x)$的分类误差率的关系。</p>
+<p>$$e_m = \sum <em>{i=1}^N P(G_m(x_i)\ne y_i) = \sum _{G_m(x_i)\ne y_i} w</em>{mi}$$  </p>
+<p>这里，$w_{mi}$表示第$m$轮中第$i$个实例的权值，$\sum <em>{i=1}^N w</em>{mi}=1$。这表明，$G_m(x)$在加权的训练数据上的分类误差率是被$G_m(x)$误分类样本的权值之和，由此可以看出数据权值分布$D_m$与基本分类器$G_m(x)$的分类误差率的关系。</p>
 <p>（c）计算基本分类器$G_m(x)$的系数$\alpha _m$，$\alpha _m$表示$G_m(x)$在最终分类器中的重要性。由(2)可知，当$e_m\le \frac{1}{2}$时，$\alpha_m \ge 0$，并且$\alpha_m$随着$e_m$的减小而增大，所以分类误差率越小的基本分类器在最终分类器中的所用越大。</p>
 <p>（d）更新训练数据的权值分布为下一轮作准备，式(4)可以写成：</p>
-<script type="math/tex; mode=display">w_{m+1,i}=\left\{\begin{aligned}\frac{w_{mi}}{Z_m}e^{-\alpha_m} &  & G_m(x_i)=y_i \\\frac{w_{mi}}{Z_m}e^{\alpha_m} &  & G_m(x_i) \ne y_i \end{aligned}\right.</script><p>由此可知，被基本分类器$G_m(x)$误分类样本的权值得以扩大，而被正确分类样本的权值却得以缩小。两相比较，由式(2)知误分类样本的权值被放大$e^{2\alpha_m}=\frac{1-e_m}{e_m}$倍。因此，误分类样本在下一轮学习中起更大的作用。不改变所给的训练数据，而不断改变训练数据的权值分布，使得训练数据在基本分类器的学习中起到不同的作用，这是AdaBoost的一个特点。</p>
+<p>$$ w_{m+1,i}=\left{\begin{aligned}\frac{w_{mi}}{Z_m}e^{-\alpha_m} &amp;  &amp; G_m(x_i)=y_i \\frac{w_{mi}}{Z_m}e^{\alpha_m} &amp;  &amp; G_m(x_i) \ne y_i \end{aligned}\right.$$</p>
+<p>由此可知，被基本分类器$G_m(x)$误分类样本的权值得以扩大，而被正确分类样本的权值却得以缩小。两相比较，由式(2)知误分类样本的权值被放大$e^{2\alpha_m}=\frac{1-e_m}{e_m}$倍。因此，误分类样本在下一轮学习中起更大的作用。不改变所给的训练数据，而不断改变训练数据的权值分布，使得训练数据在基本分类器的学习中起到不同的作用，这是AdaBoost的一个特点。</p>
 <p>步骤3 线性组合$f(x)$实现$M$个基本分类器的加权表决。系数$\alpha_m$表示了基本分类器$G_m(x)$的重要性，这里，所有$\alpha_m$之和并不为1.$f(x)$的符号决定实例$x$的分类，$f(x)$的绝对值表示分类的确信度。利用基本分类器的线性组合构建最终分类器是AdaBoost的另一个特点。</p>
 <h3 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h3><h3 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h3><p>XGBoost是”极端梯度上升”(Extreme Gradient Boosting)的简称,从技术上说，XGBoost是Extreme Gradient Boosting的缩写。它的流行源于在著名的Kaggle数据科学竞赛上被称为”奥托分类”的挑战。它可以处理多种目标函数，包括回归，分类和排序，是一个较为全面的分类器。<br>由于其他许多分类器，不管是强分类器或是集成分类器，在预测性能上的强大但是相对缓慢的实现，如上一章的Adaboost集成算法，不管是在在运行时间上还是在内存占有上开销都很大。XGBoost成为很多比赛的理想选择。XGBoost包还添加了做交叉验证和发现关键变量的额外功能。在优化模型时，这个算法使用了好几个参数。所以为了提高模型的表现，参数的调整十分必要。本节将讨论这些因素。</p>
 <h4 id="XGBoost优势"><a href="#XGBoost优势" class="headerlink" title="XGBoost优势"></a>XGBoost优势</h4><p>XGBoost算法总结起来大致其有三个优点：高效、准确度、模型的交互性。</p>
@@ -263,15 +278,25 @@
 <li>内置交叉验证：XGBoost允许在每一轮boosting迭代中使用交叉验证。因此，可以方便地获得最优boosting迭代次数。而传统的GBDT使用网格搜索，只能检测有限个值。</li>
 </ul>
 <h4 id="XGBoost算法推导"><a href="#XGBoost算法推导" class="headerlink" title="XGBoost算法推导"></a>XGBoost算法推导</h4><p>XGBoost 在函数空间中用牛顿法进行优化。首先，boosting是一种加法模型。XGBoost同样属于GBDT梯度提升法，模型的基分类器都包含有树，对于给定的数据集D={($x_i​$,$y_i​$)}，XGBoost进行additive learning，学习K棵树，采用以下函数对样本进行预测。</p>
-<script type="math/tex; mode=display">\widehat{y}=\phi(x_i)=\sum_{k=1}^{K}f_{k}(x_i)\qquad f_k\in F</script><p>这里F是函数空间，$f(x)$是回归树CART。</p>
-<script type="math/tex; mode=display">F=\{f(x)=w_{q(x)}\}(q:R^m\to T,w\in R)</script><p>$q(x)$标识将样本x分到了某个叶子节点上，$w$是叶子节点的分数，（leaf score），所以$w_q(x)$ 表示回归树对样本的预测值。<br>回归树的预测输出是实数分数，可以用于回归，分类，排序等任务中，对于回归问题，可以直接作为目标值，对于分类问题，需要映射成概率，比如采用逻辑函数，然后可以控制阈值，进行两种分类错误的把控。<br>XGBoost对传统的提升树算法Adaboost等的改进，在于在参数空间的目标函数中加入了正则化项，来惩罚模型的复杂程度，进而控制过拟合。和Adaboost一样都是通过最小化损失函数求解最优模型，并加入了阈值，如下公式所示：</p>
-<script type="math/tex; mode=display">L(\phi)=\sum_{i}l(\widehat{y}_l,y_i)+\sum_{k}\Omega(f_k)</script><p>误差函数可以是square loss，logloss等，也可以自己定义损失函数，只要能够求出目标函数的梯度和Hessian矩阵，用户就可以自定义训练模型时的目标函数 这也正是XGBoost的优势之一，可以通过研究目的的不同自己定义损失函数，<br>在公式（3-3）中，相比于原始的GBDT，XGBoost的目标函数多了正则项，是学习出来的模型更加不容易过拟合。衡量树的复杂程度主要与树的深度，内部节点的个数，叶子节点的个数，叶子节点的权重有关，因此XGBoost对这些参量进行了约束。得出了正则项为：</p>
-<script type="math/tex; mode=display">\Omega(f)=\gamma T+\frac{1}{2}\rho\|w\|^2</script><p>正则项对每棵树的复杂程度都应进行惩罚，对每个节点进行了复杂度的惩罚，从另一种角度来说也就进行了自动的剪枝。<br>另外，还可以选择使用线性模型替代树模型，从而得到带$L1+L2$惩罚的线性回归正则项可以是$L1$正则，$L2$正则 。<br>第$t$次迭代后，模型的预测等于前$t-1$次的模型预测加上第t棵树的预测。将目标函数在前$t-1$次的模型$y_i^{t-1}$处进行泰勒展开，并将常数项去掉即得到：</p>
-<script type="math/tex; mode=display">L^{(t)}=\sum_{i=1}^{n}[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)</script><p>公式中，$g_i=\delta_{\widehat{y}^{(t-1)}}l(y_i,\widehat{y}^{(t-1)})\qquad h_i=\delta^2_{\widehat{y}^{(t-1)}}l(y_i,\widehat{y}^{(t-1)})$<br>把$f_t$, $\Omega(f_t)$写成树结构的形式，得到：</p>
-<script type="math/tex; mode=display">L^{(t)}=\sum_{i=1}^{n}[g_iw_{q(x_i)}+\frac{1}{2}h_iw^2_{q(x_i)}]+\gamma T+\rho\frac{1}{2}\sum_{j=i}^{T}w_j^2</script><p>则目标函数可以写成按叶节点累加的形式：</p>
-<script type="math/tex; mode=display">L^{(t)}=\sum_{j=1}^{T}[G_iw_j+\frac{1}{2}(H_j+\rho)w_j^2]+\gamma T</script><p>如果确定了树的结构（即$q(x)$确定），为了使目标函数最小，可以令其导数为0，解得每个叶节点的最优预测分数为：</p>
-<script type="math/tex; mode=display">W_j^*=-\frac{G_j}{H_j+\rho}</script><script type="math/tex; mode=display">\widehat{L}^*=-\frac{1}{2}\sum_{j=1}^{T}\frac{G_j^2}{H_j+\rho}+\gamma T</script><p>公式（3-9）的负部衡量了每个叶子节点对总体损失的的贡献，我们希望损失越小越好，则公式的（3-9）的负部值越大越好。<br>因此，对一个叶子节点进行分裂，分裂前后的增益定义为：</p>
-<script type="math/tex; mode=display">Gain=\frac{G_L^2}{H_L+\rho}+\frac{G_R^2}{H_R+\rho}-\frac{(G_L+G_R)^2}{H_L+H_R+\rho}-\gamma</script><p>Gain的值越大，分裂后L减小越多。所以当对一个叶节点分割时，计算所有候选特征值所对应的gain，选取gain最大的进行分割。但由于精确遍历所有可能的分割点是效率很低的，所以，实际上XGBoost采用的是对于每个特征，不是简单地按照样本个数进行分位，而是以二阶导数值作为权重，进行分位点的选择，以此减少计算复杂度。在学习每棵树前，提出候选切分点，这也是XGBoost可以实现并行的原因之一，可以提前切割分位点。<br> 最后，XGBoost算法还借鉴了bagging的bootstrap自助法行抽样，还借鉴了随机森林的列抽样，即特征抽样。这样减少过拟合同时还降低了计算复杂度。</p>
+<p>$$\widehat{y}=\phi(x_i)=\sum_{k=1}^{K}f_{k}(x_i)\qquad f_k\in F$$</p>
+<p>这里F是函数空间，$f(x)$是回归树CART。</p>
+<p>$$F={f(x)=w_{q(x)}}(q:R^m\to T,w\in R)$$</p>
+<p>$q(x)$标识将样本x分到了某个叶子节点上，$w$是叶子节点的分数，（leaf score），所以$w_q(x)$ 表示回归树对样本的预测值。<br>回归树的预测输出是实数分数，可以用于回归，分类，排序等任务中，对于回归问题，可以直接作为目标值，对于分类问题，需要映射成概率，比如采用逻辑函数，然后可以控制阈值，进行两种分类错误的把控。<br>XGBoost对传统的提升树算法Adaboost等的改进，在于在参数空间的目标函数中加入了正则化项，来惩罚模型的复杂程度，进而控制过拟合。和Adaboost一样都是通过最小化损失函数求解最优模型，并加入了阈值，如下公式所示：</p>
+<p>$$L(\phi)=\sum_{i}l(\widehat{y}<em>l,y_i)+\sum</em>{k}\Omega(f_k)$$</p>
+<p>误差函数可以是square loss，logloss等，也可以自己定义损失函数，只要能够求出目标函数的梯度和Hessian矩阵，用户就可以自定义训练模型时的目标函数 这也正是XGBoost的优势之一，可以通过研究目的的不同自己定义损失函数，<br>在公式（3-3）中，相比于原始的GBDT，XGBoost的目标函数多了正则项，是学习出来的模型更加不容易过拟合。衡量树的复杂程度主要与树的深度，内部节点的个数，叶子节点的个数，叶子节点的权重有关，因此XGBoost对这些参量进行了约束。得出了正则项为：</p>
+<p>$$\Omega(f)=\gamma T+\frac{1}{2}\rho|w|^2$$</p>
+<p>正则项对每棵树的复杂程度都应进行惩罚，对每个节点进行了复杂度的惩罚，从另一种角度来说也就进行了自动的剪枝。<br>另外，还可以选择使用线性模型替代树模型，从而得到带$L1+L2$惩罚的线性回归正则项可以是$L1$正则，$L2$正则 。<br>第$t$次迭代后，模型的预测等于前$t-1$次的模型预测加上第t棵树的预测。将目标函数在前$t-1$次的模型$y_i^{t-1}$处进行泰勒展开，并将常数项去掉即得到：</p>
+<p>$$L^{(t)}=\sum_{i=1}^{n}[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)$$</p>
+<p>公式中，$g_i=\delta_{\widehat{y}^{(t-1)}}l(y_i,\widehat{y}^{(t-1)})\qquad h_i=\delta^2_{\widehat{y}^{(t-1)}}l(y_i,\widehat{y}^{(t-1)})$<br>把$f_t$, $\Omega(f_t)$写成树结构的形式，得到：</p>
+<p>$$L^{(t)}=\sum_{i=1}^{n}[g_iw_{q(x_i)}+\frac{1}{2}h_iw^2_{q(x_i)}]+\gamma T+\rho\frac{1}{2}\sum_{j=i}^{T}w_j^2$$</p>
+<p>则目标函数可以写成按叶节点累加的形式：</p>
+<p>$$L^{(t)}=\sum_{j=1}^{T}[G_iw_j+\frac{1}{2}(H_j+\rho)w_j^2]+\gamma T$$</p>
+<p>如果确定了树的结构（即$q(x)$确定），为了使目标函数最小，可以令其导数为0，解得每个叶节点的最优预测分数为：</p>
+<p>$$W_j^*=-\frac{G_j}{H_j+\rho}$$</p>
+<p>$$\widehat{L}^*=-\frac{1}{2}\sum_{j=1}^{T}\frac{G_j^2}{H_j+\rho}+\gamma T$$</p>
+<p>公式（3-9）的负部衡量了每个叶子节点对总体损失的的贡献，我们希望损失越小越好，则公式的（3-9）的负部值越大越好。<br>因此，对一个叶子节点进行分裂，分裂前后的增益定义为：</p>
+<p>$$Gain=\frac{G_L^2}{H_L+\rho}+\frac{G_R^2}{H_R+\rho}-\frac{(G_L+G_R)^2}{H_L+H_R+\rho}-\gamma$$</p>
+<p>Gain的值越大，分裂后L减小越多。所以当对一个叶节点分割时，计算所有候选特征值所对应的gain，选取gain最大的进行分割。但由于精确遍历所有可能的分割点是效率很低的，所以，实际上XGBoost采用的是对于每个特征，不是简单地按照样本个数进行分位，而是以二阶导数值作为权重，进行分位点的选择，以此减少计算复杂度。在学习每棵树前，提出候选切分点，这也是XGBoost可以实现并行的原因之一，可以提前切割分位点。<br> 最后，XGBoost算法还借鉴了bagging的bootstrap自助法行抽样，还借鉴了随机森林的列抽样，即特征抽样。这样减少过拟合同时还降低了计算复杂度。</p>
 <h2 id="Bagging-amp-随机森林"><a href="#Bagging-amp-随机森林" class="headerlink" title="Bagging &amp; 随机森林"></a>Bagging &amp; 随机森林</h2>
         </div>
         
@@ -474,12 +499,14 @@
         <div class="content">
             <h2 id="几种主要的决策树"><a href="#几种主要的决策树" class="headerlink" title="几种主要的决策树"></a>几种主要的决策树</h2><p>决策树算法的关键是选择最优划分属性，据此人们提出了三种决策树模型。</p>
 <h3 id="ID3决策树"><a href="#ID3决策树" class="headerlink" title="ID3决策树"></a>ID3决策树</h3><p>信息熵(Information entropy)是度量样本集合纯度最常用的一种指标，假定当前样本集合$D$中第$k$类样本所占的比例为$p_k,(k=1,2,\cdots,n)$，则$D$的信息熵定义为：</p>
-<script type="math/tex; mode=display">Ent(D)=-\sum _{k=1}^np_k\ log_2p_k</script><p>$Ent(D)$的值越小，则$D$的纯度越高</p>
+<p>$$Ent(D)=-\sum _{k=1}^np_k\ log_2p_k$$</p>
+<p>$Ent(D)$的值越小，则$D$的纯度越高</p>
 <blockquote>
 <p>其实我们在高中化学就接触过“熵”的概念，指的是物质的混乱程度。是纯度的对立面。我们说熵越大，混乱程度越高，也就是纯度越低。同理，熵越小，混乱程度越低，即纯度越高。 </p>
 </blockquote>
-<p>假设离散属性$a$有$V$个可能的取值$\{a^1,a^2,\cdots,a^V\}$,若使用$a$来对样本集$D$进行划分，则会产生$V$个分支结点，其中第$v$个分支结点包含了$D$中所有在属性$a$上取值为$a^v$的样本，记为$D^v$。我们可以根据上式计算法$D^v$的信息熵，再考虑到不同的分支结点所包含的样本数不同，给分支结点赋予权重$|D^v|/|D|$，即样本越多的分支结点的影响越大，于是计算出用属性$a$对样本集$D$进行划分所获得的“信息增益”：</p>
-<script type="math/tex; mode=display">Gain(D,a) = Ent(D) - \sum _{v=1}^V \frac{|D^v|}{|D|}Ent(D^v)</script><p>一般来说，信息增益越大，意味着使用属性$a$来进行划分所获得的“纯度提升”越大。因此，我们总是选择使得信息增益最大的那个属性来进行划分。</p>
+<p>假设离散属性$a$有$V$个可能的取值${a^1,a^2,\cdots,a^V}$,若使用$a$来对样本集$D$进行划分，则会产生$V$个分支结点，其中第$v$个分支结点包含了$D$中所有在属性$a$上取值为$a^v$的样本，记为$D^v$。我们可以根据上式计算法$D^v$的信息熵，再考虑到不同的分支结点所包含的样本数不同，给分支结点赋予权重$|D^v|/|D|$，即样本越多的分支结点的影响越大，于是计算出用属性$a$对样本集$D$进行划分所获得的“信息增益”：</p>
+<p>$$Gain(D,a) = Ent(D) - \sum _{v=1}^V \frac{|D^v|}{|D|}Ent(D^v)$$</p>
+<p>一般来说，信息增益越大，意味着使用属性$a$来进行划分所获得的“纯度提升”越大。因此，我们总是选择使得信息增益最大的那个属性来进行划分。</p>
 <p>我们用下面的例子来说明划分的过程。该数据是一份医学数据，根据病人的一些特征，给出佩戴硬质隐形眼镜、软质隐形眼镜和不佩戴隐形眼镜的建议。数据共有5个变量，其中4个自变量，1个因变量。</p>
 <ul>
 <li>age of patient：简称age，患者年龄，(1) young, (2) pre-presbyopic, (3) presbyopic</li>
@@ -488,7 +515,6 @@
 <li>tear production rate:  简称tpr，眼泪生成率，(1) reduced, (2) normal</li>
 <li>suggestion：1 : hard contact lenses,     2 : soft contact lenses,     3 : should not</li>
 </ul>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -500,8 +526,7 @@
 <th>suggestion</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>1</td>
 <td>1</td>
 <td>1</td>
@@ -693,16 +718,22 @@
 <td>2</td>
 <td>3</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>我们首先计算出总的信息熵：</p>
-<script type="math/tex; mode=display">Ent(D) = \sum_{k=1}^3 -p_klog_2p_k = -(\frac{4}{24}log_2\frac{4}{24} + \frac{5}{24}log_2\frac{5}{24} + \frac{15}{24}log_2\frac{15}{24})=1.326</script><p>我们首先选择age作为分支结点，age有三个取值，分布为1,2,3。当age=1时，suggestion取值为2个1,2个2,4个3。则当age=1时，$D^1$的信息熵为：</p>
-<script type="math/tex; mode=display">Ent(D^1) = \sum_{k=1}^3 -p_klog_2p_k=-(\frac{2}{8}log_2\frac{2}{8} + \frac{2}{8}log_2\frac{2}{8} + \frac{4}{8}log_2\frac{4}{8})=1.5</script><p>同理，</p>
-<script type="math/tex; mode=display">Ent(D^2)== \sum_{k=1}^3 -p_klog_2p_k=-(\frac{1}{8}log_2\frac{1}{8} + \frac{2}{8}log_2\frac{2}{8} + \frac{5}{8}log_2\frac{5}{8})=1.299</script><script type="math/tex; mode=display">Ent(D^2)== \sum_{k=1}^3 -p_klog_2p_k=-(\frac{1}{8}log_2\frac{1}{8} + \frac{1}{8}log_2\frac{1}{8} + \frac{6}{8}log_2\frac{6}{8})=1.061</script><p>那么，age的信息增益为：</p>
-<script type="math/tex; mode=display">\begin{aligned}Gain(D,age) = & Ent(D) - \sum _{v=1}^3\frac{|D^v|}{|D|}Ent(D^v) \\ =&   1.326 - (\frac{1}{3}\times 1.5 + \frac{1}{3}\times 1.299+ \frac{1}{3}\times 1.061)=0.0393\end{aligned}</script><p>类似的，我们可以计算出其他属性的信息增益：</p>
-<script type="math/tex; mode=display">Gain(D,sp)=0.0395</script><script type="math/tex; mode=display">Gain(D,astigmatic ) = 0.377</script><script type="math/tex; mode=display">Gain(D,tpr) = 0.549</script><p>可以看到，$tpr$的信息增益最大，因此把它选为划分属性，下图表示基于$tpr$进行划分的结果。</p>
-<p><img src="/picture/图2-1525346184642.png" alt="图2"></p>
+<p>$$Ent(D) = \sum_{k=1}^3 -p_klog_2p_k = -(\frac{4}{24}log_2\frac{4}{24} + \frac{5}{24}log_2\frac{5}{24} + \frac{15}{24}log_2\frac{15}{24})=1.326$$</p>
+<p>我们首先选择age作为分支结点，age有三个取值，分布为1,2,3。当age=1时，suggestion取值为2个1,2个2,4个3。则当age=1时，$D^1$的信息熵为：</p>
+<p>$$Ent(D^1) = \sum_{k=1}^3 -p_klog_2p_k=-(\frac{2}{8}log_2\frac{2}{8} + \frac{2}{8}log_2\frac{2}{8} + \frac{4}{8}log_2\frac{4}{8})=1.5$$</p>
+<p>同理，</p>
+<p>$$Ent(D^2)== \sum_{k=1}^3 -p_klog_2p_k=-(\frac{1}{8}log_2\frac{1}{8} + \frac{2}{8}log_2\frac{2}{8} + \frac{5}{8}log_2\frac{5}{8})=1.299$$</p>
+<p>$$Ent(D^2)== \sum_{k=1}^3 -p_klog_2p_k=-(\frac{1}{8}log_2\frac{1}{8} + \frac{1}{8}log_2\frac{1}{8} + \frac{6}{8}log_2\frac{6}{8})=1.061$$</p>
+<p>那么，age的信息增益为：</p>
+<p>$$\begin{aligned}Gain(D,age) = &amp; Ent(D) - \sum _{v=1}^3\frac{|D^v|}{|D|}Ent(D^v) \ =&amp;   1.326 - (\frac{1}{3}\times 1.5 + \frac{1}{3}\times 1.299+ \frac{1}{3}\times 1.061)=0.0393\end{aligned}$$</p>
+<p>类似的，我们可以计算出其他属性的信息增益：</p>
+<p>$$Gain(D,sp)=0.0395$$</p>
+<p>$$Gain(D,astigmatic ) = 0.377$$</p>
+<p>$$Gain(D,tpr) = 0.549$$</p>
+<p>可以看到，$tpr$的信息增益最大，因此把它选为划分属性，下图表示基于$tpr$进行划分的结果。</p>
+<p><img src="/picture/%E5%9B%BE2-1525346184642.png" alt="图2"></p>
 <p>然后，决策树按照同样的规则，对上面两个已经生成的结点继续划分。这个时候，决策树有以下三个停止原则：</p>
 <ul>
 <li>当前结点包含的样本全部属于同一个类别，无需划分。上述左子树就是这种情况；</li>
@@ -712,13 +743,21 @@
 <p>接下来，由于左子树无法继续划分，因此我们继续划分右子树。此时，右子树相当于根节点，我们计算其他三个属性的信息增益。</p>
 <p>上述计算出的右子树的熵为1.555.</p>
 <p>则有：</p>
-<script type="math/tex; mode=display">Gain(D^2,age)=0.221</script><script type="math/tex; mode=display">Gain(D^2,sp)=0.095</script><script type="math/tex; mode=display">Gain(D^2,astigmatic) = 0.771</script><p>此轮选择的划分属性为$astigmatic$，下图表示继续划分的结果。</p>
+<p>$$Gain(D^2,age)=0.221$$</p>
+<p>$$Gain(D^2,sp)=0.095$$</p>
+<p>$$Gain(D^2,astigmatic) = 0.771$$</p>
+<p>此轮选择的划分属性为$astigmatic$，下图表示继续划分的结果。</p>
 <p><img src="/picture/1525347678542.png" alt="1525347678542"></p>
 <p>截止目前，决策树还没结束，以上两个新的叶子节点包含的样本仍然归属于不同的类型，因此还需要继续进行划分。</p>
 <p>我们仍然沿用上面的符号，根据计算可知，</p>
-<script type="math/tex; mode=display">Ent(D^1) = 0.650</script><p>$Ent(D^2) = 0.918$</p>
+<p>$$Ent(D^1) = 0.650$$</p>
+<p>$Ent(D^2) = 0.918$</p>
 <p>目前还剩下age和sp两个属性，计算出相应的信息增益：</p>
-<script type="math/tex; mode=display">Gain(D^1,age) = 0.32</script><script type="math/tex; mode=display">Gain(D^1,sp) = 0.191</script><script type="math/tex; mode=display">Gain(D^2,age) = 0.251</script><script type="math/tex; mode=display">Gain(D^2,sp) = 0.459</script><p>因此，对于$D^1$，选择age进行划分，对于$D^2$，选择sp进行划分。划分结果如下。</p>
+<p>$$Gain(D^1,age) = 0.32$$</p>
+<p>$$Gain(D^1,sp) = 0.191$$</p>
+<p>$$Gain(D^2,age) = 0.251$$</p>
+<p>$$Gain(D^2,sp) = 0.459$$</p>
+<p>因此，对于$D^1$，选择age进行划分，对于$D^2$，选择sp进行划分。划分结果如下。</p>
 <p><img src="/picture/1525348835180.png" alt="1525348835180"></p>
 <p>截止目前，我们的决策树还没有完全将样本划分开来。比如21和23分属于2和3。但是目前每个分支只剩下一个属性可以继续划分，因此我们不需要再计算信息增益，直接划分即可。</p>
 <p><img src="/picture/1525349480833.png" alt="1525349480833"></p>
@@ -729,15 +768,19 @@
 <p>ID3决策树就是根据信息增益来选择最优划分属性，然后构建决策树的。该算法简单易懂，十分容易上手。</p>
 <h3 id="C4-5决策树"><a href="#C4-5决策树" class="headerlink" title="C4.5决策树"></a>C4.5决策树</h3><p>如果在上述划分的过程中，把id也作为一个候选属性参与划分，那么可计算出$Gain(D,id)=1.326$，是最大的。但是根据id会划分出24个分支，再出现一个新样本的话，则无法预测该样本属于哪一类，也就是泛化能力较差。</p>
 <p>实际上，信息增益准则对可取值数目较多的属性有所偏好，为减少这种偏好可能带来的不利影响，C4.5算法使用增益率(gain ratio)来选择最有划分属性。延用上述符号，增益率定义为：</p>
-<script type="math/tex; mode=display">Gain\_ratio(D,a) = \frac{Gain(D,a)}{IV(a)}</script><p>其中</p>
-<script type="math/tex; mode=display">IV(a) = - \sum _{v=1}^V\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}</script><p>称为$a$的固有值。属性$a$的可能取值数目却大，则$IV(a)$的值通常会越大。</p>
+<p>$$Gain_ratio(D,a) = \frac{Gain(D,a)}{IV(a)}$$</p>
+<p>其中</p>
+<p>$$IV(a) = - \sum _{v=1}^V\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}$$</p>
+<p>称为$a$的固有值。属性$a$的可能取值数目却大，则$IV(a)$的值通常会越大。</p>
 <h3 id="CART决策树"><a href="#CART决策树" class="headerlink" title="CART决策树"></a>CART决策树</h3><p>CART树使用基尼指数(Gini index)来选择划分属性，延用上述符号，数据集$D$的纯度可用基尼值来度量：</p>
-<script type="math/tex; mode=display">Gini(D) = \sum _{k=1}^n\sum _{k' \ne k}p_kp_{k'} = 1- \sum _{k=1}^n p_k^2</script><p>直观来说，$Gini(D)$反映了从数据集D中随机抽取两个样本，其类别标记不一致的概率。因此，Gini(D)越小，则数据的纯度越高。</p>
+<p>$$Gini(D) = \sum <em>{k=1}^n\sum _{k’ \ne k}p_kp</em>{k’} = 1- \sum _{k=1}^n p_k^2$$</p>
+<p>直观来说，$Gini(D)$反映了从数据集D中随机抽取两个样本，其类别标记不一致的概率。因此，Gini(D)越小，则数据的纯度越高。</p>
 <blockquote>
 <p>假设所有的类别都是一样的，则Gini(D)=0,纯度最高</p>
 </blockquote>
 <p>那么，属性$a$的基尼指数定义为：</p>
-<script type="math/tex; mode=display">Gini\_index(D,a)=\sum _{v=1}^V\frac{|D^v|}{|D|}Gini(D^v)</script><p>于是，我们在候选属性集合$A$中，选择那个使得划分后基尼指数最小的属性作为划分属性。</p>
+<p>$$Gini_index(D,a)=\sum _{v=1}^V\frac{|D^v|}{|D|}Gini(D^v)$$</p>
+<p>于是，我们在候选属性集合$A$中，选择那个使得划分后基尼指数最小的属性作为划分属性。</p>
 <blockquote>
 <p>可以看出，CART树的构建比前两种树都简单一点。</p>
 </blockquote>
@@ -794,13 +837,11 @@
 </ul>
 <h3 id="k-means算法的思想介绍"><a href="#k-means算法的思想介绍" class="headerlink" title="k-means算法的思想介绍"></a>k-means算法的思想介绍</h3><p>(1) 选定某种距离作为数据样本件的相似性度量</p>
 <p>由于k-means聚类算法不适合处理离散型数据，因此在计算个样本距离时，可以根据实际需要选择欧氏距离、曼哈顿距离或者明可夫斯基距离中的一种来作为算法的相似性度量。</p>
-<p>假设给定的数据集$X=\{x_m|m=1,2,…,total\}$,$X$中的样本用d个属性$A_1,A_2,…,A_d$来表示，并且d个描述属性都是连续型数据。数据样本$x_i=(x_{i1},x_{i2},x_{id}),x_j=(x_{j1},x_{j2}…,x_{jd})$，其中，$x_{i1},x_{i2},x_{id}$和$x_{j1},x_{j2}…,x_{jd}$分别是样本$x_i$和$x_j$对应的d个描述属性$A_1,A_2,…,A_d$的具体取值。样本$x_i$和$x_j$之间的相似度通常用他们之间的距离d($x_i,x_j$)来表示，距离越小，样本$x_i$和$x_j$越相似，差异度越小。距离越大，样本$x_i$和$x_j$越不相似，差异越大。<br>欧氏距离公式如下：</p>
-<script type="math/tex; mode=display">d(x_i,x_j)=\sqrt{\sum_{k=1}^d(x_{ik}-x_{jk})^2}</script><p>曼哈顿距离如下：</p>
-<script type="math/tex; mode=display">d(x_i,x_j)=\sum_{k=1}^d|x_{ik}-x_{jk}|</script><p>明可夫斯基距离如下：</p>
-<script type="math/tex; mode=display">d(x_i,x_j)=\sqrt[p]{\sum_{k=1}^d|x_{ik}-x_{jk}|^p}</script><p>当$p=1$时，明氏距离即为曼哈顿距离，当$p=2$时，明氏距离即为欧氏距离，当$p=\infty$时，明氏距离即为切比雪夫距离。</p>
+<p>假设给定的数据集$X={x_m|m=1,2,…,total}$,$X$中的样本用d个属性$A_1,A_2,…,A_d$来表示，并且d个描述属性都是连续型数据。数据样本$x_i=(x_{i1},x_{i2},x_{id}),x_j=(x_{j1},x_{j2}…,x_{jd})$，其中，$x_{i1},x_{i2},x_{id}$和$x_{j1},x_{j2}…,x_{jd}$分别是样本$x_i$和$x_j$对应的d个描述属性$A_1,A_2,…,A_d$的具体取值。样本$x_i$和$x_j$之间的相似度通常用他们之间的距离d($x_i,x_j$)来表示，距离越小，样本$x_i$和$x_j$越相似，差异度越小。距离越大，样本$x_i$和$x_j$越不相似，差异越大。<br>欧氏距离公式如下：<br>$$d(x_i,x_j)=\sqrt{\sum_{k=1}^d(x_{ik}-x_{jk})^2}$$<br>曼哈顿距离如下：<br>$$d(x_i,x_j)=\sum_{k=1}^d|x_{ik}-x_{jk}|$$<br>明可夫斯基距离如下：<br>$$d(x_i,x_j)=\sqrt[p]{\sum_{k=1}^d|x_{ik}-x_{jk}|^p}$$<br>当$p=1$时，明氏距离即为曼哈顿距离，当$p=2$时，明氏距离即为欧氏距离，当$p=\infty$时，明氏距离即为切比雪夫距离。</p>
 <p>(2) 选择评价聚类性能的准则函数</p>
 <p>k-means聚类算法使用误差平方和准则函数来评价聚类性能。给定数据集X，其中只包含描述属性，不包含类别属性。假设X包含k个聚类子集$X_1,X2,…,X_k$,各个聚类子集中的样本量分别为$n_1,n_2,…,n_k$，各个聚类子集均值代表点分别为$m_1,m_2,…,m_k$，则误差平方和准则函数公式为：</p>
-<script type="math/tex; mode=display">E=\sum_{i=1}^k \sum_{p\in X_i}(p-m_i)^2</script><p>(3) 相似度的计算根据一个簇中对象的平均值来进行</p>
+<p>$$E=\sum_{i=1}^k \sum_{p\in X_i}(p-m_i)^2$$</p>
+<p>(3) 相似度的计算根据一个簇中对象的平均值来进行</p>
 <ol>
 <li><p>将所有对象随机分配到k个非空的簇中。</p>
 </li>
@@ -813,119 +854,58 @@
 </ol>
 <h3 id="k-means实现流程：分步骤写"><a href="#k-means实现流程：分步骤写" class="headerlink" title="k-means实现流程：分步骤写"></a>k-means实现流程：分步骤写</h3><p>k-means算法2个核心问题，一是度量记录之间的相关性的计算公式，此处采用欧氏距离。一是更新簇内质心的方法，此处用平均值法，即means。<br>此时的输入数据为簇的数目k和包含n个对象的数据库——通常在软件中用数据框或者矩阵表示。输出k个簇，使平方误差准则最小。<br>下面为实现k-means聚类的Python代码</p>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># (1)选择初始簇中心。</span></span><br><span class="line"><span class="hljs-comment"># (2)对剩余的每个对象，根据其与各个簇中心的距离，将它赋给最近的簇。</span></span><br><span class="line"><span class="hljs-comment"># (3)计算新的簇中心。</span></span><br><span class="line"><span class="hljs-comment"># (4)重复(2)和(3)，直至准则函数不再明显变小为止。</span></span><br><span class="line"><span class="hljs-keyword">from</span> numpy <span class="hljs-keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#定义加载数据的函数。如果数据以文本形式存储在磁盘内，可以用此函数读取</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">loadDataSet</span><span class="hljs-params">(fileName)</span></span></span><br><span class="line">dataMat = []</span><br><span class="line">fr = open(fileName)</span><br><span class="line"><span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> fr.readlines()</span><br><span class="line">curLine = line.strip().split(<span class="hljs-string">'\t'</span>)</span><br><span class="line">fltLine = list(map(float,curLine))</span><br><span class="line">dataMat.append(list(fltLine))</span><br><span class="line"><span class="hljs-keyword">return</span> dataMat</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#该函数计算两个向量的距离，即欧氏距离</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">distEclud</span><span class="hljs-params">(vecA,vecB)</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">return</span> <span class="hljs-title">sqrt</span><span class="hljs-params">(sum<span class="hljs-params">(power<span class="hljs-params">(vecA - vecB,<span class="hljs-number">2</span>)</span>)</span>)</span></span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">#曼哈顿距离</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">def</span> <span class="hljs-title">Manhattan</span><span class="hljs-params">(vecA,vecB)</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">return</span> <span class="hljs-title">sum</span><span class="hljs-params">(abs<span class="hljs-params">(vecA-vecB)</span>)</span></span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">#明考夫斯基距离</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">def</span> <span class="hljs-title">MinKowski</span><span class="hljs-params">(vecA,vecB,p)</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">return</span> <span class="hljs-title">power</span><span class="hljs-params">(sum<span class="hljs-params">(power<span class="hljs-params">(abs<span class="hljs-params">(vecA-vecB)</span>,p)</span>)</span>,<span class="hljs-number">1</span>/p)</span></span></span><br><span class="line"><span class="hljs-function"></span></span><br><span class="line"><span class="hljs-function">#此处为构造质心，而不是从数据集中随机选择<span class="hljs-title">k</span>个样本点作为质心，</span></span><br><span class="line"><span class="hljs-function">#也是比较合理的方法</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-title">def</span> <span class="hljs-title">randCent</span><span class="hljs-params">(dataSet,k)</span></span></span><br><span class="line">    n = shape(dataSet)[1]  #n为dataSet的列数</span><br><span class="line">    centroids = mat(zeros((k,n)))  <span class="hljs-comment">#构造k行n列的矩阵，就是k个质心的坐标</span></span><br><span class="line">    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(n)  <span class="hljs-comment">#</span></span><br><span class="line">        minJ = min(dataSet[,j])  <span class="hljs-comment">#该列数据的最小值</span></span><br><span class="line">        maxJ = max(dataSet[,j])  <span class="hljs-comment">#该列数据的最大值</span></span><br><span class="line">        rangeJ = float(maxJ-minJ)  <span class="hljs-comment">#全距</span></span><br><span class="line">        <span class="hljs-comment">#随机生成k个数值，介于minJ和maxJ之间，填充J列</span></span><br><span class="line">        centroids[,j] = minJ + rangeJ * random.rand(k,<span class="hljs-number">1</span>)  </span><br><span class="line">      </span><br><span class="line">    <span class="hljs-keyword">return</span> centroids</span><br><span class="line">   </span><br><span class="line"><span class="hljs-comment">#定义kMeans函数 </span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">kMeans</span><span class="hljs-params">(dataSet,k,distMeas=distEclud,createCent=randCent)</span></span></span><br><span class="line">    m = shape(dataSet)[0]  #m为原始数据的行数</span><br><span class="line">    <span class="hljs-comment">#clusterAssment包含两列，一列记录簇索引值，一列存储误差</span></span><br><span class="line">    clusterAssment = mat(zeros((m,<span class="hljs-number">2</span>)))  </span><br><span class="line">    centroids = createCent(dataSet,k)  <span class="hljs-comment">#构造初始的质心</span></span><br><span class="line">    clusterChanged = <span class="hljs-keyword">True</span>  <span class="hljs-comment">#控制变量</span></span><br><span class="line">    <span class="hljs-keyword">while</span> clusterChanged  <span class="hljs-comment">#当控制变量为真时，执行下述循环</span></span><br><span class="line">        clusterChanged = <span class="hljs-keyword">False</span>  </span><br><span class="line">        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(m)   </span><br><span class="line">            minDist = inf  <span class="hljs-comment">#首先令最小值为无穷大 </span></span><br><span class="line">            minIndex = <span class="hljs-number">-1</span>  <span class="hljs-comment">#令最小索引为-1</span></span><br><span class="line">            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(k)  <span class="hljs-comment">#下面是一个嵌套循环</span></span><br><span class="line">             <span class="hljs-comment">#计算点数据点I和簇中心点J的距离</span></span><br><span class="line">                distJI=distMeas(centroids[j,],dataSet[i,])</span><br><span class="line">                <span class="hljs-keyword">if</span> distJI &lt; minDist  </span><br><span class="line">                    minDist = distJI</span><br><span class="line">                    minIndex = j</span><br><span class="line">            <span class="hljs-keyword">if</span> clusterAssment[i,<span class="hljs-number">0</span>] != minIndex</span><br><span class="line">                clusterChanged = <span class="hljs-keyword">True</span></span><br><span class="line">            clusterAssment[i,] = minIndex,minDist**<span class="hljs-number">2</span></span><br><span class="line">        print(centroids)</span><br><span class="line">        <span class="hljs-comment">#更新质心的位置</span></span><br><span class="line">        <span class="hljs-keyword">for</span> cent <span class="hljs-keyword">in</span> range(k)</span><br><span class="line">        <span class="hljs-comment">#mat.A意味着将矩阵转换为数组，即matrix--&gt;array</span></span><br><span class="line">            ptsInClust = dataSet[nonzero(clusterAssment[,<span class="hljs-number">0</span>].A==cent)[<span class="hljs-number">0</span>]]</span><br><span class="line">            centroids[cent,] = mean(ptsInClust,axis=<span class="hljs-number">0</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span> centroids,clusterAssment</span><br></pre></td></tr></table></figure>
+
 <h3 id="k-means与EM算法"><a href="#k-means与EM算法" class="headerlink" title="k-means与EM算法"></a>k-means与EM算法</h3><p>EM是机器学习十大算法之一，是一种好理解，但是推导过程比较复杂的方法。<br>下面将原英文版的EM算法介绍翻译一遍，在翻译的过程中也加深一点自己的理解。</p>
-<h4 id="Jensen不等式"><a href="#Jensen不等式" class="headerlink" title="Jensen不等式"></a>Jensen不等式</h4><p>假设$f$是一个定义域为实数的函数。回忆一下，如果对于所有的$x \in R,f’’(x) \geq 0$，则$f$是一个凸函数。 如果$f$的输入值是一个向量，则当$x$的海塞矩阵(hessian矩阵$H$)是半正定矩阵时，$f$是凸函数。如果对于所有的$x$，$f’’(x)&gt;0$恒成立，那么我们说$f$是严格凸函数（如果$x$是一个向量，则当$H$是严格半正定矩阵时，写做$H&gt;0$，则$f$是严格凸函数）。<br>设$f$是一个凸函数，并且$X$是一个随机变量，则：</p>
-<script type="math/tex; mode=display">E[f(X)] \geq f(EX).</script><p>当且仅当$x=$常数时，$E[f(X)]=f(EX)$$.$<br>进一步说，如果$f$是一个严格凸函数，则当P\{X=E(X)\}=1时，满足$E[f(X)] = f(EX).$</p>
+<h4 id="Jensen不等式"><a href="#Jensen不等式" class="headerlink" title="Jensen不等式"></a>Jensen不等式</h4><p>假设$f$是一个定义域为实数的函数。回忆一下，如果对于所有的$x \in R,f’’(x) \geq 0$，则$f$是一个凸函数。 如果$f$的输入值是一个向量，则当$x$的海塞矩阵(hessian矩阵$H$)是半正定矩阵时，$f$是凸函数。如果对于所有的$x$，$f’’(x)&gt;0$恒成立，那么我们说$f$是严格凸函数（如果$x$是一个向量，则当$H$是严格半正定矩阵时，写做$H&gt;0$，则$f$是严格凸函数）。<br>设$f$是一个凸函数，并且$X$是一个随机变量，则：<br>$$E[f(X)] \geq f(EX).$$<br>当且仅当$x=$常数时，$E[f(X)]=f(EX)$$.$<br>进一步说，如果$f$是一个严格凸函数，则当P{X=E(X)}=1时，满足$E[f(X)] = f(EX).$</p>
 <p>由于我们在写某一随机变量的期望时，习惯上是不写方括号的，因此在上述式子中，$f(EX)=f(E[X])$<br>为了解释上述理论，可以用图1帮助理解。</p>
 <p><img src="/picture/kmeans_1.PNG" alt="图1"></p>
 <p>如图1所示，实黑线表示凸函数$f$，$X$是一个随机变量，取值为$a$和$b$的概率均为0.5。因此，$a$和$b$的均值$E(X)$在二者之间。</p>
 <p>与此同时，我们在y轴上可以看见$f(x)$,$f(b)$和$f(EX)$的值，并且，$E[f(X)]$$f(a)$和$f(b)$之间。从这个例子可以看出，因为$f$是一个凸函数，所以肯定满足$E[f(X)]\ge f(EX)$。<br>一般来说，很多人会忘记上式的不等号方向，那么，记住这个图，就很易能够想起来上面的公式了。</p>
 <p>注意，如果$f$是一个(严格的)凹函数($f’’(x)\le 0$或者$H\le0$)，Jensen不等式仍然成立，只是方向反过来而已，即$E[f(X)]\le f(EX).$}</p>
-<h4 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h4><p>假设我们有包含m个独立样本的训练集$\{x^{(1)},x^{(2)},…,x^{(m)}\}$,基于该样本和模型$p(x,z)$估计待估参数$\theta$,似然函数如下：</p>
-<script type="math/tex; mode=display">\ell (\theta)=\sum _{i=1}^mlogp(x;\theta)=\sum _{i=1}^mlog\sum _zp(x,z;\theta).</script><p>但是，明确找出$\theta$的最大似然估计值恐怕非常困难。因为在这里，$z^{(i)}$是隐含随机变量，通常情况下如果已知$z^{(i)}$，那么求上述最大似然估计值会比较容易。</p>
+<h4 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h4><p>假设我们有包含m个独立样本的训练集${x^{(1)},x^{(2)},…,x^{(m)}}$,基于该样本和模型$p(x,z)$估计待估参数$\theta$,似然函数如下：</p>
+<p>$$\ell (\theta)=\sum _{i=1}^mlogp(x;\theta)=\sum _{i=1}^mlog\sum _zp(x,z;\theta). $$</p>
+<p>但是，明确找出$\theta$的最大似然估计值恐怕非常困难。因为在这里，$z^{(i)}$是隐含随机变量，通常情况下如果已知$z^{(i)}$，那么求上述最大似然估计值会比较容易。</p>
 <p>在这种情况下，EM算法给出了一种有效的求最大似然估计值的方法。直接求$\ell (\theta)$的最大似然估计值也许会很困难，我们的策略是在$\ell (\theta)$下面构造一个下界(E-步骤)，然后优化这个下界，使其不断逼近求$\ell (\theta)$的最大似然估计值(M-步骤)。</p>
 <p> 对于每一个$i$，令$Q_i$是$z^{(i)}$上关于某一分布的概率，($\sum _zQ_i(z)=1,Q_i(z)\ge 0$).}得到下面的式子.如果z是连续型随机变量，那么$Q_i$就是密度函数，$Q_i$在z上的总和就是$Q_i$在z上的积分：</p>
-<script type="math/tex; mode=display">\sum _i logp(x^{(i)};\theta)=\sum _ilog\sum _{z^{(i)}} p(x^{(i)},z^{(i)};\theta)</script><script type="math/tex; mode=display">
- =\sum _i log \sum _{z^{(i)}}Q_i(z^{(i)})\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}</script><script type="math/tex; mode=display">
- \ge \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}</script><p> 最后一步应用了Jensen不等式。特别地，在这里$f(x)=logx$是一个凹函数，因为在实数范围内</p>
-<script type="math/tex; mode=display">f''(x)=-1/x^2<0</script><p> 式子</p>
-<script type="math/tex; mode=display">\sum _{z^{(i)}}Q_i(z^{(i)})[\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}]</script><p> 是式子的$[p(x^{(i)},z^{(i)};\theta)/Q_i(z^{(i)})]$关于$z^{(i)}$在$Q_i$给出的分布上的期望。根据Jensen不等式，有：</p>
-<script type="math/tex; mode=display">f(E_{z^{(i)}\sim Q_i}[\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}])\ge E_{z^{(i)}\sim Q_i}[f(\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})})]</script><p> 下标$z^{(i)}\sim Q_i$表示期望是对来自于分布$Q_i$的随机变量$z^{(i)}$所求的期望。这个条件使式子(2)到式子(3)得以成立。</p>
+<p> $$\sum _i logp(x^{(i)};\theta)=\sum _ilog\sum _{z^{(i)}} p(x^{(i)},z^{(i)};\theta)<br> $$<br> $$<br> =\sum _i log \sum _{z^{(i)}}Q_i(z^{(i)})\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br> $$</p>
+<p> $$<br> \ge \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$$</p>
+<p> 最后一步应用了Jensen不等式。特别地，在这里$f(x)=logx$是一个凹函数，因为在实数范围内</p>
+<p> $$f’’(x)=-1/x^2&lt;0$$</p>
+<p> 式子</p>
+<p> $$\sum _{z^{(i)}}Q_i(z^{(i)})[\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}] $$</p>
+<p> 是式子的$[p(x^{(i)},z^{(i)};\theta)/Q_i(z^{(i)})]$关于$z^{(i)}$在$Q_i$给出的分布上的期望。根据Jensen不等式，有：</p>
+<p> $$f(E_{z^{(i)}\sim Q_i}[\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}])\ge E_{z^{(i)}\sim Q_i}[f(\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})})]$$</p>
+<p> 下标$z^{(i)}\sim Q_i$表示期望是对来自于分布$Q_i$的随机变量$z^{(i)}$所求的期望。这个条件使式子(2)到式子(3)得以成立。</p>
 <p> 现在，对于来自于$Q_i$的任意一个集合，式子(3)给出了一个$\ell (\theta)$的一个下界。$Q_i$有很多种可能的选择，我们应该选哪个呢?如果我们当前对参数$\theta$(基于已有的条件)已经有了一些猜测，那么使这个下界与$\theta$的值接近看起来就比较自然了。换句话说，我们可以使上述的不等式在$\theta$的某个特定值的条件下变成等式。(稍后我们就能看到上述是何如使$\ell (\theta)$在EM的迭代下单调递增的。)</p>
 <p> 为了使下界尽可能地靠近$\theta$的某个特定值，我们需要在步骤中加入上面推导的Jensen不等式以得到等式。为了实现上述步骤，我们知道只需要使期望变成常量——固定的随机变量就行了。例如，我们需要满足：</p>
-<script type="math/tex; mode=display">\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}=c</script><p> 而这个常数$c$不依赖于$z^{(i)}$。这个很简单就可以实现，只需要使</p>
-<script type="math/tex; mode=display">Q_i(z^{(i)})\propto p(x^{(i)},z^{(i)};\theta)</script><p> 实际上，因为我们已知$\sum _zQ_i(z^{(i)})=1$,所以有：</p>
-<script type="math/tex; mode=display">Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum _zp(x^{(i)},z^{(i)};\theta)}</script><script type="math/tex; mode=display">=\frac{p(x^{(i)},z^{(i)};\theta)}{p(x^{(i)};\theta)}</script><script type="math/tex; mode=display">=p(z^{(i)}|x^{(i)};\theta)</script><p> 因此，我们简单假设$Q_i$是在给定$x^{(i)}$和参数$\theta$的情况下$z^{(i)}$的后验概率.</p>
+<p>$$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}=c$$</p>
+<p> 而这个常数$c$不依赖于$z^{(i)}$。这个很简单就可以实现，只需要使</p>
+<p>$$Q_i(z^{(i)})\propto p(x^{(i)},z^{(i)};\theta) $$</p>
+<p> 实际上，因为我们已知$\sum _zQ_i(z^{(i)})=1$,所以有：</p>
+<p>$$Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum _zp(x^{(i)},z^{(i)};\theta)} $$<br>$$=\frac{p(x^{(i)},z^{(i)};\theta)}{p(x^{(i)};\theta)} $$<br>$$=p(z^{(i)}|x^{(i)};\theta)$$</p>
+<p> 因此，我们简单假设$Q_i$是在给定$x^{(i)}$和参数$\theta$的情况下$z^{(i)}$的后验概率.</p>
 <p> 现在，对于上述的$Q_i$，公式(3)给出了我们想取极大值的似然函数$\ell$的下界。这是E步骤。在算法里的M步骤，我们又对公式(3)取极大值以获得新的$\theta$.重复执行上述步骤，即：</p>
 <p> start循环直到收敛</p>
 <p>(E-step)对于每一个i,令：</p>
-<script type="math/tex; mode=display">Q_i(z^{(i)})=p(z^{(i)}|x^{(i)};\theta)</script><p>M-step 令：</p>
-<script type="math/tex; mode=display">\theta=arg\ max_\theta \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}</script><p> 我们怎么知道这个算法最终收敛呢？假设$\theta^{(t)}$和$\theta^{(t+1)}$是EM算法连续迭代两次以后得到的参数。下面证明$\theta^{(t)} \le \theta^{(t+1)}$，即证明EM算法会使log似然概率单调递增。证明上述的关键是对于$Q_i$的选择。在以$\theta^{(t)}$为起始标志的EM算法迭代过程中，我们会选择$Q_i^{(t)}(z^{(i)})=p(z^{(i)}|x^{(i)};\theta^{(t)})$.我们在前面已经看到了，上述选择会满足Jensen不等式，像公式(3)的应用一样，能够得到收敛的等式，即：</p>
-<script type="math/tex; mode=display">\ell (\theta^{(t)})=\sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t)})}{Q_i^{(t)}(z^{(i)})}</script><p> 最大化等式右边得到参数$\theta^{(t+1)}$，因此：</p>
-<script type="math/tex; mode=display">
- \ell (\theta^{(t+1)})\ge 
-  \sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t+1)})}{Q_i^{(t)}(z^{(i)})}</script><script type="math/tex; mode=display">
- \ge \sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t)})}{Q_i^{(t)}(z^{(i)})}
- =\ell (\theta^{(t)})</script><p> 第一个不等式来自于：</p>
-<script type="math/tex; mode=display">
- \ell(\theta) \ge \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}</script><p> 上式对于$Q_i$和$\theta$的任意值，尤其是$Q_i=Q_i^{(t)}$,$\theta=\theta^{(t+1)}$时成立。为了得到不等式(5)，我们依据的是$\theta^{(t+1)}$应该等于：</p>
-<script type="math/tex; mode=display">
- arg\ max_\theta \ \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}</script><p> 因此根据上式计算的$\theta^{(t+1)}$肯定是大于等于$\theta^{(t)}$的。最后，自然而然就推到了公式(6).</p>
+<p>$$Q_i(z^{(i)})=p(z^{(i)}|x^{(i)};\theta) $$</p>
+<p>M-step 令：</p>
+<p>$$\theta=arg\ max_\theta \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})} $$</p>
+<p> 我们怎么知道这个算法最终收敛呢？假设$\theta^{(t)}$和$\theta^{(t+1)}$是EM算法连续迭代两次以后得到的参数。下面证明$\theta^{(t)} \le \theta^{(t+1)}$，即证明EM算法会使log似然概率单调递增。证明上述的关键是对于$Q_i$的选择。在以$\theta^{(t)}$为起始标志的EM算法迭代过程中，我们会选择$Q_i^{(t)}(z^{(i)})=p(z^{(i)}|x^{(i)};\theta^{(t)})$.我们在前面已经看到了，上述选择会满足Jensen不等式，像公式(3)的应用一样，能够得到收敛的等式，即：</p>
+<p>$$\ell (\theta^{(t)})=\sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t)})}{Q_i^{(t)}(z^{(i)})}$$</p>
+<p> 最大化等式右边得到参数$\theta^{(t+1)}$，因此：</p>
+<p> $$<br> \ell (\theta^{(t+1)})\ge<br>  \sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t+1)})}{Q_i^{(t)}(z^{(i)})}<br>$$</p>
+<p>$$<br> \ge \sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t)})}{Q_i^{(t)}(z^{(i)})}<br> =\ell (\theta^{(t)})<br> $$</p>
+<p> 第一个不等式来自于：<br>$$<br> \ell(\theta) \ge \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br> $$<br> 上式对于$Q_i$和$\theta$的任意值，尤其是$Q_i=Q_i^{(t)}$,$\theta=\theta^{(t+1)}$时成立。为了得到不等式(5)，我们依据的是$\theta^{(t+1)}$应该等于：<br>$$<br> arg\ max_\theta \ \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br> $$<br> 因此根据上式计算的$\theta^{(t+1)}$肯定是大于等于$\theta^{(t)}$的。最后，自然而然就推到了公式(6).</p>
 <p> 因此，EM使得似然函数单调收敛。我们们关于EM算法的描述中，我们说最终似然函数会收敛。尽管我们的结果已经展示了上述结论，但是一个令人信服的收敛性检验将会检查在给定的参数容忍度的情况下，</p>
 <p> $\ell(\theta)$会随着EM算法的迭代而不断增加，如果EM使得$\ell(\theta)$的上升速度慢到一定程度，就意味着收敛。</p>
-<p> 如果我们定义</p>
-<script type="math/tex; mode=display">
- J(Q,\theta)=\sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}
- ,</script><p> 在我们前面的推导中已经知道了$\ell (\theta)\ge J(Q,\theta)$。EM算法还可以看作使畸变函数J不断上升的过程。E-step固定Q，最大化J；M-step固定$\theta$最大化J。而Q和$\theta$都是在迭代过程中不断更新的。</p>
+<p> 如果我们定义<br>$$<br> J(Q,\theta)=\sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br> ,$$<br> 在我们前面的推导中已经知道了$\ell (\theta)\ge J(Q,\theta)$。EM算法还可以看作使畸变函数J不断上升的过程。E-step固定Q，最大化J；M-step固定$\theta$最大化J。而Q和$\theta$都是在迭代过程中不断更新的。</p>
 <h4 id="k-means与EM"><a href="#k-means与EM" class="headerlink" title="k-means与EM"></a>k-means与EM</h4><p>在1.8.4节对k-means算法的迭代思想进行了说明，可以看出与EM算法具有很大的相似性，在原理上几乎相同。</p>
 <h3 id="k-means举例及R实现"><a href="#k-means举例及R实现" class="headerlink" title="k-means举例及R实现"></a>k-means举例及R实现</h3><p>本文以R自带数据集iris为例，实现聚类的k-means算法。首先，看一下iris数据集的基本结构，如表1所示。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Sepal.Length</th>
-<th>Sepal.Width</th>
-<th>Petal.Length</th>
-<th>Petal.Width</th>
-<th>Species </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>5.10</td>
-<td>3.50</td>
-<td>1.40</td>
-<td>0.20</td>
-<td>setosa </td>
-</tr>
-<tr>
-<td>  2</td>
-<td>4.90</td>
-<td>3.00</td>
-<td>1.40</td>
-<td>0.20</td>
-<td>setosa </td>
-</tr>
-<tr>
-<td>  3</td>
-<td>4.70</td>
-<td>3.20</td>
-<td>1.30</td>
-<td>0.20</td>
-<td>setosa </td>
-</tr>
-<tr>
-<td>  4</td>
-<td>4.60</td>
-<td>3.10</td>
-<td>1.50</td>
-<td>0.20</td>
-<td>setosa </td>
-</tr>
-<tr>
-<td>  5</td>
-<td>5.00</td>
-<td>3.60</td>
-<td>1.40</td>
-<td>0.20</td>
-<td>setosa </td>
-</tr>
-<tr>
-<td>  6</td>
-<td>5.40</td>
-<td>3.90</td>
-<td>1.70</td>
-<td>0.40</td>
-<td>setosa </td>
-</tr>
-</tbody>
-</table>
-</div>
+<p> | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width | Species<br> -|-|-|-|-|-<br>1 | 5.10 | 3.50 | 1.40 | 0.20 | setosa<br>  2 | 4.90 | 3.00 | 1.40 | 0.20 | setosa<br>  3 | 4.70 | 3.20 | 1.30 | 0.20 | setosa<br>  4 | 4.60 | 3.10 | 1.50 | 0.20 | setosa<br>  5 | 5.00 | 3.60 | 1.40 | 0.20 | setosa<br>  6 | 5.40 | 3.90 | 1.70 | 0.40 | setosa </p>
 <p>该数据集共有5个变量，表1显示的是前6行的数据，完整数据一共有150行。五个变量的中文名称分别是：萼片长度、萼片宽度、花瓣长度、花瓣宽度和品种。以此样本作为聚类的原始数据，属于有标签聚类，可以将聚类结果与真实情况进行对比，以得出聚类效果。<br>下面是实现k-means聚类的R语言代码：</p>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&gt; iris_test&lt;-iris[,<span class="hljs-number">14</span>]</span><br><span class="line">&gt; iris_test_cl&lt;-kmeans(x = iris_test,centers = <span class="hljs-number">3</span>,iter.max = <span class="hljs-number">20</span>)</span><br><span class="line">&gt; iris_test_cl</span><br><span class="line">K-means clustering with <span class="hljs-number">3</span> clusters of sizes <span class="hljs-number">50</span>, <span class="hljs-number">62</span>, <span class="hljs-number">38</span></span><br><span class="line"></span><br><span class="line">Cluster means</span><br><span class="line">  Sepal.Length Sepal.Width Petal.Length Petal.Width</span><br><span class="line"><span class="hljs-number">1</span>     <span class="hljs-number">5.006000</span>    <span class="hljs-number">3.428000</span>     <span class="hljs-number">1.462000</span>    <span class="hljs-number">0.246000</span></span><br><span class="line"><span class="hljs-number">2</span>     <span class="hljs-number">5.901613</span>    <span class="hljs-number">2.748387</span>     <span class="hljs-number">4.393548</span>    <span class="hljs-number">1.433871</span></span><br><span class="line"><span class="hljs-number">3</span>     <span class="hljs-number">6.850000</span>    <span class="hljs-number">3.073684</span>     <span class="hljs-number">5.742105</span>    <span class="hljs-number">2.071053</span></span><br><span class="line"></span><br><span class="line">Clustering vector</span><br><span class="line">  [<span class="hljs-number">1</span>] <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span></span><br><span class="line"> [<span class="hljs-number">39</span>] <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span></span><br><span class="line"> [<span class="hljs-number">77</span>] <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span></span><br><span class="line">[<span class="hljs-number">115</span>] <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span></span><br><span class="line"></span><br><span class="line">Within cluster sum of squares by cluster</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">15.15100</span> <span class="hljs-number">39.82097</span> <span class="hljs-number">23.87947</span></span><br><span class="line"> (between_SS / total_SS =  <span class="hljs-number">88.4</span> %)</span><br><span class="line"></span><br><span class="line">Available components</span><br><span class="line"></span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-string">"cluster"</span>      <span class="hljs-string">"centers"</span>      <span class="hljs-string">"totss"</span>        <span class="hljs-string">"withinss"</span>     <span class="hljs-string">"tot.withinss"</span></span><br><span class="line">[<span class="hljs-number">6</span>] <span class="hljs-string">"betweenss"</span>    <span class="hljs-string">"size"</span>         <span class="hljs-string">"iter"</span>         <span class="hljs-string">"ifault"</span>      </span><br><span class="line">&gt; table(iris_test_cl$cluster,iris$Species)</span><br><span class="line">   </span><br><span class="line">    setosa versicolor virginica</span><br><span class="line">  <span class="hljs-number">1</span>     <span class="hljs-number">50</span>          <span class="hljs-number">0</span>         <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-number">2</span>      <span class="hljs-number">0</span>         <span class="hljs-number">48</span>        <span class="hljs-number">14</span></span><br><span class="line">  <span class="hljs-number">3</span>      <span class="hljs-number">0</span>          <span class="hljs-number">2</span>        <span class="hljs-number">36</span></span><br></pre></td></tr></table></figure>
-<p>根据输出结果可以看出，setosa类分类正确率为100\%，versicolor类有48个分类正确，有两个错误分到了virginica中，viginica有36个分类分类正确，有14个错误分到了versicolor中。总体来说，聚类的正确率为89.3%</p>
+
+<p>根据输出结果可以看出，setosa类分类正确率为100%，versicolor类有48个分类正确，有两个错误分到了virginica中，viginica有36个分类分类正确，有14个错误分到了versicolor中。总体来说，聚类的正确率为89.3%</p>
 <h3 id="k-means算法的改进"><a href="#k-means算法的改进" class="headerlink" title="k-means算法的改进"></a>k-means算法的改进</h3><h4 id="k-mode算法"><a href="#k-mode算法" class="headerlink" title="k-mode算法"></a>k-mode算法</h4><p>k-mode算法实现了对离散型数据的快速聚类，保留了k-means算法的效率的同时，将k-means的应用范围扩大到了离散型数据。</p>
 <p>k-mode算法是按照k-means算法的核心内容进行修改，针对分类属性的度量和更新质心的问题而改进。具体如下：</p>
 <p> 度量记录之间的相关性D的计算公式是比较两记录之间，属性相同为0，不同为1，并把所有的值相加。因此D越大，就说明两个记录之间的不相关性越强，也可以理解为距离越大，与欧氏距离代表的意义是一样的。<br> 更新modes，使用每个簇的每个属性出现频率最大的那个属性值作为代表簇的属性值。</p>
@@ -937,17 +917,16 @@
 <p>任意生成k个初始类中心$\mu_1,\mu_2,…,\mu_k \in R$.</p>
 <p>重复如下步骤直到收敛：</p>
 <p> 对于每一个i，令</p>
-<script type="math/tex; mode=display">
-c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</p>
-<script type="math/tex; mode=display">\mu_j=\frac{\sum _{i=1}^m1\{c^{(i)}=j\}x^{(i)}}
-{\sum _{i=1}^m1\{c^{(i)}=j\}}</script><p>那么，k-means算法是否能够保证一定收敛呢？答案是肯定的。<br>定义畸变函数</p>
-<script type="math/tex; mode=display">J(c,\mu)=\sum _{i=1}^n||x^{(i)}-\mu _c^{(i)}||^2</script><p>k-means算法的目的就是使J降至最小。在内循环中，固定$\mu$,可以通过调整$c$来使J减小；同样的，固定$c$，调整每个类的质心$\mu$也可以使J减小。当J减到最小时，$\mu$和$c$也同时收敛。</p>
+<p>$$<br>c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}<br>$$</p>
+<p> 对于每一个j，令<br>$$\mu_j=\frac{\sum _{i=1}^m1{c^{(i)}=j}x^{(i)}}<br>{\sum _{i=1}^m1{c^{(i)}=j}} $$</p>
+<p>那么，k-means算法是否能够保证一定收敛呢？答案是肯定的。<br>定义畸变函数</p>
+<p>$$J(c,\mu)=\sum _{i=1}^n||x^{(i)}-\mu _c^{(i)}||^2$$</p>
+<p>k-means算法的目的就是使J降至最小。在内循环中，固定$\mu$,可以通过调整$c$来使J减小；同样的，固定$c$，调整每个类的质心$\mu$也可以使J减小。当J减到最小时，$\mu$和$c$也同时收敛。</p>
 <p>但是，需要注意的是，J函数是一个非凸函数，所以J不能保证收敛到全局最优，而可以保证收敛到局部最优。通常，k-means达到局部最优的结果差不多是全局最优。但是如果担心陷入了很严重的局部最优，可以多运行几次k-means算法（(给出不同的初始类中心)，选出使J达到最小值的那个模型的$\mu$和$c$。</p>
 <p>为了克服k-means上述缺点，可以在k-mean的结果上对其进行改进(enhanced k-means)。该算法步骤如下：</p>
 <p> 根据k-means算法得出k个类和相应的类中心。</p>
 <p> 计算每一个样本点与所有类中心的欧氏距离。</p>
-<p> 假设$x_i$在第$r$个类中，$n_r$表示第$r$个类包含的样本点数目，$d_{ir}^2$表示$x_i$与第$r$个类的中心点的欧氏距离。如果存在类$s$，使得</p>
-<script type="math/tex; mode=display">\frac{n_r}{n_r-1}d_{ir}^2>\frac{n_s}{n_s+1}d_{is}^2,</script><p>则将$x_i$移到类$s$中。<br> 如果有多个类满足上述不等式，则将$x_i$移动到使得<br>$\frac{n_s}{n_s+1}d_{ir}^2$最小的那个类中。<br> 重复步骤2$\sim$4，直到没有变化为止。</p>
+<p> 假设$x_i$在第$r$个类中，$n_r$表示第$r$个类包含的样本点数目，$d_{ir}^2$表示$x_i$与第$r$个类的中心点的欧氏距离。如果存在类$s$，使得<br>$$\frac{n_r}{n_r-1}d_{ir}^2&gt;\frac{n_s}{n_s+1}d_{is}^2,$$<br>则将$x_i$移到类$s$中。<br> 如果有多个类满足上述不等式，则将$x_i$移动到使得<br>$\frac{n_s}{n_s+1}d_{ir}^2$最小的那个类中。<br> 重复步骤2$\sim$4，直到没有变化为止。</p>
 <h4 id="二分K-均值算法"><a href="#二分K-均值算法" class="headerlink" title="二分K-均值算法"></a>二分K-均值算法</h4><p>为了克服k-means算法收敛于局部最小值的问题，有人提出了使用另一个称为二分-K均值(bisecting K-means)的算法。该算法首先将所有的点作为一个簇，然后将该簇一分为二。之后选择其中一个簇继续划分，选择哪一个簇进行划分取决于对其划分是否可以最大程度降低SSE的值。上述基于SSE的划分过程不断重复，直到得到用户指定的簇数目为止。</p>
 <p>二分K-均值算法的步骤如下：</p>
 <p> 将所有的点看成一个簇<br> 当簇数目小于k时，对于每一个簇</p>
@@ -955,29 +934,34 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <p> 选择使得误差最小的那个簇进行划分操作。</p>
 <p>另一种方法是选择SSE最大的那个簇进行划分。该算法的R代码如下。</p>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#计算误差平方和SSE，group接受一个数值型矩阵，centroid为其均值向量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SSE&lt;-<span class="hljs-keyword">function</span>(group,centroid)</span><br><span class="line">&#123;</span><br><span class="line">  rows= nrow(group)</span><br><span class="line">  group = as.matrix(group)</span><br><span class="line">  centroid = matrix(rep(centroid,rows),nrow = rows,byrow = <span class="hljs-literal">TRUE</span>)</span><br><span class="line">  group = group - centroid</span><br><span class="line">  group = group * group</span><br><span class="line">  sums = apply(X = group,MARGIN = <span class="hljs-number">1</span>,FUN = sum)</span><br><span class="line">  SSE = sum(sums)</span><br><span class="line">  <span class="hljs-keyword">return</span>(SSE)</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-comment">#定义二分K-means聚类函数，dataSet为需要聚类的数据集，k为指定聚类个数</span></span><br><span class="line">biKmeans&lt;-<span class="hljs-keyword">function</span>(dataSet,k)  </span><br><span class="line">&#123;</span><br><span class="line">  <span class="hljs-keyword">if</span>(!is.matrix(dataSet))</span><br><span class="line">    dataSet = as.matrix(dataSet)</span><br><span class="line">  <span class="hljs-keyword">if</span>(k==<span class="hljs-number">1</span>)</span><br><span class="line">    <span class="hljs-keyword">return</span>(dataSet)</span><br><span class="line">  <span class="hljs-keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="hljs-comment">#定义一个空矩阵来存放不需要再次处理的已经聚好的类</span></span><br><span class="line">    clusteredDataSet = matrix(nrow = <span class="hljs-number">0</span>,ncol = ncol(dataSet))</span><br><span class="line">    <span class="hljs-comment">#定义一个空向量用来存放上述类的标签</span></span><br><span class="line">    clustered = vector(length = <span class="hljs-number">0</span>)</span><br><span class="line">    <span class="hljs-comment">#计数器clusters</span></span><br><span class="line">    clusters = <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-comment">#i用来改变每次聚类的标签</span></span><br><span class="line">    i = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">while</span>(clusters &lt; k)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="hljs-comment">#使用k-means用来二分聚类</span></span><br><span class="line">      cl = kmeans(dataSet,<span class="hljs-number">2</span>)</span><br><span class="line">      <span class="hljs-comment">#类标签</span></span><br><span class="line">      cluster = cl$cluster+i</span><br><span class="line">      <span class="hljs-comment">#计算聚好的两个类的与类中心的离差平方和</span></span><br><span class="line">      SSE1 = SSE(group = dataSet[cluster==(<span class="hljs-number">1</span>+i),],centroid = cl$centers[<span class="hljs-number">1</span>,])</span><br><span class="line">      SSE2 = SSE(group = dataSet[cluster==(<span class="hljs-number">2</span>+i),],centroid = cl$centers[<span class="hljs-number">2</span>,])</span><br><span class="line">      <span class="hljs-comment">#将误差平方和大的拿出来，下次继续二分</span></span><br><span class="line">      <span class="hljs-keyword">if</span>(SSE1 &gt; SSE2)</span><br><span class="line">        index = (cluster == (<span class="hljs-number">1</span>+i))</span><br><span class="line">      <span class="hljs-keyword">else</span></span><br><span class="line">        index = (cluster ==(<span class="hljs-number">2</span>+i))</span><br><span class="line">      <span class="hljs-comment">#将不需要再次聚类的类放在clusterDataSet例</span></span><br><span class="line">      clusteredDataSet = rbind(clusteredDataSet,dataSet[!index,])</span><br><span class="line">      <span class="hljs-comment">#将上述类的标签存放在clustered里</span></span><br><span class="line">      clustered = c(clustered,cluster[!index])</span><br><span class="line">      <span class="hljs-comment">#更新dataSet，下次继续二分</span></span><br><span class="line">      dataSet = dataSet[index,]</span><br><span class="line">      <span class="hljs-comment">#计数器+1</span></span><br><span class="line">      clusters = clusters +<span class="hljs-number">1</span></span><br><span class="line">      <span class="hljs-comment">#i+2，因为每次二分的结果是1和2，在结果的基础上加上2，则类标签可以明确区分</span></span><br><span class="line">      i = i + <span class="hljs-number">2</span></span><br><span class="line">    &#125;<span class="hljs-comment">#end while</span></span><br><span class="line">    <span class="hljs-comment">#得出最终聚类结果</span></span><br><span class="line">    clusteredDataSet = rbind(clusteredDataSet,dataSet)</span><br><span class="line">    <span class="hljs-comment">#类标签</span></span><br><span class="line">    clustered = c(clustered,cluster[index])</span><br><span class="line">    <span class="hljs-comment">#转换为数据框</span></span><br><span class="line">    clusteredDataSet = as.data.frame(clusteredDataSet)</span><br><span class="line">    <span class="hljs-comment">#添加类标签列</span></span><br><span class="line">    clusteredDataSet$cluster = clustered</span><br><span class="line">    <span class="hljs-keyword">return</span>(clusteredDataSet)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&gt; iris_test_bik&lt;-biKmeans(iris_test,<span class="hljs-number">3</span>)</span><br><span class="line">&gt; dim(iris_test_bik)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">150</span>   <span class="hljs-number">5</span></span><br><span class="line">&gt; table(iris_test_bik$cluster,iris$Species)</span><br><span class="line">   </span><br><span class="line">    setosa versicolor virginica</span><br><span class="line">  <span class="hljs-number">1</span>     <span class="hljs-number">50</span>          <span class="hljs-number">3</span>         <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-number">3</span>      <span class="hljs-number">0</span>          <span class="hljs-number">9</span>        <span class="hljs-number">50</span></span><br><span class="line">  <span class="hljs-number">4</span>      <span class="hljs-number">0</span>         <span class="hljs-number">38</span>         <span class="hljs-number">0</span></span><br></pre></td></tr></table></figure>
-<p>由上述最终的聚类结果显示，聚类正确率约为92\%，比单纯使用k-means算法正确率高。</p>
+
+<p>由上述最终的聚类结果显示，聚类正确率约为92%，比单纯使用k-means算法正确率高。</p>
 <h3 id="Enhanced-k-means算法更加稳健的原因"><a href="#Enhanced-k-means算法更加稳健的原因" class="headerlink" title="Enhanced k-means算法更加稳健的原因"></a>Enhanced k-means算法更加稳健的原因</h3><p>k-means算法具有明显的两个缺点，即容易陷入局部最优和出现“超级类”。局部最优比较好理解，“超级类”是指聚类结果中有一个包含许多样本点的大类，其他的类包含的样本点都较少。enhanced k-means同时考虑了样本点与聚类中心的距离和类中样本点的个数，保留了k-means聚类算法的优点，同时又克服了出现”超级类”的问题。</p>
 <h3 id="Enhanced-k-means举例及R实现"><a href="#Enhanced-k-means举例及R实现" class="headerlink" title="Enhanced k-means举例及R实现"></a>Enhanced k-means举例及R实现</h3><p>k-中心点算法可以使用R中cluster包中的pam函数(pam的全称为Partitioning Around Medoids，即围绕中心点分割)，同样以iris数据集为例，说明pam函数的使用。</p>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-keyword">library</span>(cluster)</span><br><span class="line">&gt; pam.cl&lt;-pam(iris_test,k = <span class="hljs-number">3</span>)</span><br><span class="line">&gt; table(pam.cl$clustering,iris$Species)</span><br><span class="line">   </span><br><span class="line">    setosa versicolor virginica</span><br><span class="line">  <span class="hljs-number">1</span>     <span class="hljs-number">50</span>          <span class="hljs-number">0</span>         <span class="hljs-number">0</span></span><br><span class="line">  <span class="hljs-number">2</span>      <span class="hljs-number">0</span>         <span class="hljs-number">48</span>        <span class="hljs-number">14</span></span><br><span class="line">  <span class="hljs-number">3</span>      <span class="hljs-number">0</span>          <span class="hljs-number">2</span>        <span class="hljs-number">36</span></span><br><span class="line">&gt; par(mfrow=c(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>))</span><br><span class="line">&gt; plot(pam.cl)</span><br></pre></td></tr></table></figure>
+
 <p><img src="/picture/kmeans_2.PNG" alt="图2"></p>
-<p>图2将原始数据进行了降维，提取了两个主成分，并且这两个主成分能够解释原始数据方差的95.81\%，说明降维效果很好。将这两个成分绘制成散点图，就得到了图2.结合table函数的输出结果和图2可知，setosa类与其他两个类的界限比较明显，而其他两个类之间具有交叉。</p>
+<p>图2将原始数据进行了降维，提取了两个主成分，并且这两个主成分能够解释原始数据方差的95.81%，说明降维效果很好。将这两个成分绘制成散点图，就得到了图2.结合table函数的输出结果和图2可知，setosa类与其他两个类的界限比较明显，而其他两个类之间具有交叉。</p>
 <p><img src="/picture/kmeans_3.PNG" alt="图3"></p>
 <h2 id="聚类指标评价"><a href="#聚类指标评价" class="headerlink" title="聚类指标评价"></a>聚类指标评价</h2><h3 id="多种聚类结果的比较"><a href="#多种聚类结果的比较" class="headerlink" title="多种聚类结果的比较"></a>多种聚类结果的比较</h3><p>聚类性能的度量大致有两类，一类是将聚类结果与某个“参考模型”进行比较，称为“外部指标”；另一类是直接考察聚类结果而不利用任何参考模型，称为“内部指标”。</p>
-<h4 id="外部指标"><a href="#外部指标" class="headerlink" title="外部指标"></a>外部指标</h4><p>对数据集$D=\{x_1,x_2,…,x_m\}$,假定通过聚类给出的簇划分为</p>
-<script type="math/tex; mode=display">C=\{C_1,C_2,...,C_k\},</script><p>参考模型给出的簇划分为</p>
-<script type="math/tex; mode=display">C^+=\{C_1^+,C_2^+,...,C_s^+\}</script><p>相应地，令 $\lambda$ 与 $\lambda^+$ 分别表示与 $C$ 和 $C^+$ 对应的簇标记向量，我们将样本两两配对考虑，定义</p>
-<script type="math/tex; mode=display">a=|SS|,SS=\{(x_i,x_j)|\lambda _i=\lambda _j,\lambda _i^+=\lambda _j^+,i<j \}</script><script type="math/tex; mode=display">b=|SD|,SD=\{(x_i,x_j)|\lambda _i =\lambda _j,\lambda _i^+ \ne \lambda _j^+,i<j \}</script><script type="math/tex; mode=display">c=|DS|,DS=\{(x_i,x_j)|\lambda _i \ne \lambda _j,\lambda _i^+=\lambda _j^+,i<j \}</script><script type="math/tex; mode=display">d=|DD|,DD=\{(x_i,x_j)|\lambda _i \ne \lambda _j,\lambda _i^+ \ne \lambda _j^+,i<j \}</script><p>其中集合$SS$包含了在$C$中隶属于相同簇且在$C^+$中也隶属于相同簇的样本对，集合$SD$包含了在$C$中隶属于相同簇但在$C^+$中隶属于不同簇的样本对，……由于每个样本对 $(x_i,x_j)(i&lt;j)$ 仅能出现在一个集合中，因此有 $a+b+c+d=m(m-1)/2$成立。</p>
+<h4 id="外部指标"><a href="#外部指标" class="headerlink" title="外部指标"></a>外部指标</h4><p>对数据集$D={x_1,x_2,…,x_m}$,假定通过聚类给出的簇划分为</p>
+<p>$$C={C_1,C_2,…,C_k},$$</p>
+<p>参考模型给出的簇划分为</p>
+<p>$$C^+={C_1^+,C_2^+,…,C_s^+}$$</p>
+<p>相应地，令 $\lambda$ 与 $\lambda^+$ 分别表示与 $C$ 和 $C^+$ 对应的簇标记向量，我们将样本两两配对考虑，定义</p>
+<p>$$a=|SS|,SS={(x_i,x_j)|\lambda _i=\lambda _j,\lambda _i^+=\lambda _j^+,i&lt;j }$$<br>$$b=|SD|,SD={(x_i,x_j)|\lambda _i =\lambda _j,\lambda _i^+ \ne \lambda _j^+,i&lt;j }$$<br>$$c=|DS|,DS={(x_i,x_j)|\lambda _i \ne \lambda _j,\lambda _i^+=\lambda _j^+,i&lt;j }$$<br>$$d=|DD|,DD={(x_i,x_j)|\lambda _i \ne \lambda _j,\lambda _i^+ \ne \lambda _j^+,i&lt;j }$$</p>
+<p>其中集合$SS$包含了在$C$中隶属于相同簇且在$C^+$中也隶属于相同簇的样本对，集合$SD$包含了在$C$中隶属于相同簇但在$C^+$中隶属于不同簇的样本对，……由于每个样本对 $(x_i,x_j)(i&lt;j)$ 仅能出现在一个集合中，因此有 $a+b+c+d=m(m-1)/2$成立。</p>
 <p>基于以上给出的信息，可以导出下面常用的聚类性能度量外部指标。</p>
-<p> Jaccard系数(Jaccard Coefficient,简称JC)</p>
-<script type="math/tex; mode=display">JC=\frac{a}{a+b+c}.</script><p> FM指数(Fowlkws and Mallows Index,简称FMI)</p>
-<script type="math/tex; mode=display">FMI=\sqrt{\frac{a}{a+b}\times \frac{a}{a+c}}.</script><p> Rand指数(Rand Index,简称RI)</p>
-<script type="math/tex; mode=display">RI=\frac{a+d}{m(m-1)/2}=\frac{a+d}{C_m^2}.</script><p>显然，上述性能度量的结果均在[0,1]之间，值越大越好。}</p>
-<h4 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h4><p>考虑聚类结果的划分$C=\{C_1,C_2,…,C_k\}$,定义：</p>
-<script type="math/tex; mode=display">avg(C)=\frac{2}{|C|(|C|-1)} \sum _{1\le i<j \le |C|}dist(x_i,x_j),</script><script type="math/tex; mode=display">diam(C)=max_{1\le i<j \le |C|}dist(x_i,x_j),</script><script type="math/tex; mode=display">d_{min}(C_i,C_j)=min_{x_i\in C_i,x_i\in C_j}dist(x_i,x_j),</script><script type="math/tex; mode=display">d_{cen}(C_i,C_j)=dist(\mu _i,\mu _j),</script><p>其中，$dist(·,·)$ 用于计算两个样本之间的距离，$\mu$代表$C$的中心点$\mu =\frac{1}{|C|}\sum _{1\le i \le |C|}x_{i}.$显然，$avg(C)$对应于$C$内样本间的平均距离，$diam(C)$对应于簇$C$内样本间的最远距离，$d_{min}(C_i,C_j)$对应于簇$C_i$与簇$C_j$最近样本间的距离，$d_{cen}(C_i,C_j)$对应于簇$C_i$与簇$C_j$中心点的距离。</p>
+<p> Jaccard系数(Jaccard Coefficient,简称JC)<br>$$JC=\frac{a}{a+b+c}.$$<br> FM指数(Fowlkws and Mallows Index,简称FMI)</p>
+<p>$$FMI=\sqrt{\frac{a}{a+b}\times \frac{a}{a+c}}.$$</p>
+<p> Rand指数(Rand Index,简称RI)</p>
+<p>$$RI=\frac{a+d}{m(m-1)/2}=\frac{a+d}{C_m^2}.$$</p>
+<p>显然，上述性能度量的结果均在[0,1]之间，值越大越好。}</p>
+<h4 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h4><p>考虑聚类结果的划分$C={C_1,C_2,…,C_k}$,定义：<br>$$avg(C)=\frac{2}{|C|(|C|-1)} \sum <em>{1\le i&lt;j \le |C|}dist(x_i,x_j),$$<br>$$diam(C)=max</em>{1\le i&lt;j \le |C|}dist(x_i,x_j),$$<br>$$d_{min}(C_i,C_j)=min_{x_i\in C_i,x_i\in C_j}dist(x_i,x_j),$$<br>$$d_{cen}(C_i,C_j)=dist(\mu _i,\mu _j),$$</p>
+<p>其中，$dist(·,·)$ 用于计算两个样本之间的距离，$\mu$代表$C$的中心点$\mu =\frac{1}{|C|}\sum <em>{1\le i \le |C|}x</em>{i}.$显然，$avg(C)$对应于$C$内样本间的平均距离，$diam(C)$对应于簇$C$内样本间的最远距离，$d_{min}(C_i,C_j)$对应于簇$C_i$与簇$C_j$最近样本间的距离，$d_{cen}(C_i,C_j)$对应于簇$C_i$与簇$C_j$中心点的距离。</p>
 <p>基于上式可以导出下面这些常用的聚类性能度量内部指标。</p>
-<p> DB指数(Davies-Bouldin Index,简称DBI)</p>
-<script type="math/tex; mode=display">DBI=\frac{1}{k}\sum _{i=1}^k max_{j\ne i}(\frac{avg(C_i)+avg(C_j)}{d_{cen}(\mu _i,\mu _j)}).</script><p> Dunn指数(Dunn Index，简称DI)</p>
-<script type="math/tex; mode=display">DI=min_{1\le i \le k}\{min_{j\ne i}(\frac{d_{min}(C_i,C_j)}{max_{1\le l \le k}\ diam(C_l)})\}</script><p>显然，DBI的值越小越好，而DI则相反，值越大越好。 </p>
+<p> DB指数(Davies-Bouldin Index,简称DBI)<br>$$DBI=\frac{1}{k}\sum <em>{i=1}^k max</em>{j\ne i}(\frac{avg(C_i)+avg(C_j)}{d_{cen}(\mu <em>i,\mu _j)}).$$<br> Dunn指数(Dunn Index，简称DI)<br>$$DI=min</em>{1\le i \le k}{min_{j\ne i}(\frac{d_{min}(C_i,C_j)}{max_{1\le l \le k}\ diam(C_l)})}$$</p>
+<p>显然，DBI的值越小越好，而DI则相反，值越大越好。 </p>
 <h4 id="共表型相关系数"><a href="#共表型相关系数" class="headerlink" title="共表型相关系数"></a>共表型相关系数</h4><p>共表型相关系数(Cophenetic Correlation Coefficient，简称CPCC)</p>
 <p>内容参考：http//people.revoledu.com/kardi/tutorial/Clustering/index.html.</p>
 <p>另外，共表相关系数也属于内部指标，这里单独拿出来是因为其计算比较复杂，且仅仅用在层次聚类方法上。共表型相关系数是用于衡量层次聚类聚类性能的指标，为了清楚说明共表相关系数的计算，下面先从层次聚类说起。<br>层次聚类的标准输出结果是一个树状图，树状图的横坐标显示的是样本点，纵坐标是树的高度。树状图可以看作是层次聚类的可视化结果。</p>
@@ -993,7 +977,6 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <p>为了以图示方法演示层次聚类算法，本文引入了一个小例子。假设我们有6个对象，每个对象有两个特征，具体数据如表2所示。我们可以绘制X1与X2的散点图观察对象之间的关系，如图5所示。可以看到，A与B的距离较近，D、F、E的距离较近，C有点离群。可以通过计算样本间的距离矩阵来反应样本之间的关系。一般来说，计算距离会采用上面所说的欧氏距离。注意，距离矩阵的输出结果肯定是一个对称矩阵。这里的输出结果如表3所示。</p>
 <p><img src="/picture/kmeans_5.PNG" alt="图5"></p>
 <hr>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1002,42 +985,38 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <th>X2</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>A</td>
 <td>1.00</td>
-<td>1.00 </td>
+<td>1.00</td>
 </tr>
 <tr>
 <td>B</td>
 <td>1.50</td>
-<td>1.50 </td>
+<td>1.50</td>
 </tr>
 <tr>
 <td>C</td>
 <td>5.00</td>
-<td>5.00 </td>
+<td>5.00</td>
 </tr>
 <tr>
 <td>D</td>
 <td>3.00</td>
-<td>4.00 </td>
+<td>4.00</td>
 </tr>
 <tr>
 <td>E</td>
 <td>4.00</td>
-<td>4.00 </td>
+<td>4.00</td>
 </tr>
 <tr>
 <td>F</td>
 <td>3.00</td>
-<td>3.50 </td>
+<td>3.50</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <hr>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1047,18 +1026,17 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <th>C</th>
 <th>D</th>
 <th>E</th>
-<th>F </th>
+<th>F</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>A</td>
 <td>0.00</td>
 <td>0.71</td>
 <td>5.66</td>
 <td>3.61</td>
 <td>4.24</td>
-<td>3.20 </td>
+<td>3.20</td>
 </tr>
 <tr>
 <td>B</td>
@@ -1067,7 +1045,7 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <td>4.95</td>
 <td>2.92</td>
 <td>3.54</td>
-<td>2.50 </td>
+<td>2.50</td>
 </tr>
 <tr>
 <td>C</td>
@@ -1076,7 +1054,7 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <td>0.00</td>
 <td>2.24</td>
 <td>1.41</td>
-<td>2.50 </td>
+<td>2.50</td>
 </tr>
 <tr>
 <td>D</td>
@@ -1085,7 +1063,7 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <td>2.24</td>
 <td>0.00</td>
 <td>1.00</td>
-<td>0.50 </td>
+<td>0.50</td>
 </tr>
 <tr>
 <td>E</td>
@@ -1094,7 +1072,7 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <td>1.41</td>
 <td>1.00</td>
 <td>0.00</td>
-<td>1.12 </td>
+<td>1.12</td>
 </tr>
 <tr>
 <td>F</td>
@@ -1103,22 +1081,22 @@ c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}</script><p> 对于每一个j，令</
 <td>2.50</td>
 <td>0.50</td>
 <td>1.12</td>
-<td>0.00 </td>
+<td>0.00</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>因为距离矩阵是一个对称矩阵，所以一般只采用上三角或者下三角数据，本文采用的是下三角矩阵。对角线上的元素全为0，因为计算的是样本点与自己的距离。总的来说，如果有m个样本点，那么下三角矩阵包含有$\frac{1}{2}m(m-1)$的数据。在我们的例子里，一共有$1/2\times6\times(6-1)=15$个元素。可以看出，在距离矩阵中最小的元素是0.5，即D与F之间的距离。如果样本点包含的还有分类数据，则可以采用其他方法计算样本点之间的距离。</p>
 <p>如何将对象聚在一个类中是层次聚类的关键。给出一个距离矩阵，对象之间的距离可以通过计算类之间的距离的一些标准来确定。最基础和最常用的几个方法如下。</p>
 <p>Single Linkageminimun distance criteron</p>
-<script type="math/tex; mode=display">d_{A\rightarrow B}=min_{\forall i \in A,\forall j \in B}(d_{ij})</script><p>Complete Linkagemaximun distance criteron</p>
-<script type="math/tex; mode=display">d_{A\rightarrow B}=max_{\forall i \in A,\forall j \in B}(d_{ij})</script><p>Average Groupaverage distance criteron</p>
-<script type="math/tex; mode=display">d_{A\rightarrow B}=average_{\forall i \in A,\forall j \in B}(d_{ij})</script><p>Centroid distance criteron</p>
-<script type="math/tex; mode=display">d_{A\rightarrow B}=||c_A-c_B||=\frac{1}{n_in_j}\sum_ {\forall i \in A,\forall j \in B}(d_{ij})</script><p>已存在的包含有$n_k$个样本的类k与新聚成的类$(r,s)$之间的距离公式如下：</p>
-<script type="math/tex; mode=display">
-d_{k \rightarrow (r,s)} =\alpha_r d_{k\rightarrow r}+\alpha_s d_{k\rightarrow s}+\beta d_{r\rightarrow s}+
-\gamma |d_{k\rightarrow r}-d_{k\rightarrow s}|</script><p>具体的参数如表4所示。</p>
-<div class="table-container">
+<p>$$d_{A\rightarrow B}=min_{\forall i \in A,\forall j \in B}(d_{ij}) $$</p>
+<p>Complete Linkagemaximun distance criteron</p>
+<p>$$d_{A\rightarrow B}=max_{\forall i \in A,\forall j \in B}(d_{ij}) $$</p>
+<p>Average Groupaverage distance criteron</p>
+<p>$$d_{A\rightarrow B}=average_{\forall i \in A,\forall j \in B}(d_{ij}) $$</p>
+<p>Centroid distance criteron</p>
+<p>$$d_{A\rightarrow B}=||c_A-c_B||=\frac{1}{n_in_j}\sum_ {\forall i \in A,\forall j \in B}(d_{ij}) $$</p>
+<p>已存在的包含有$n_k$个样本的类k与新聚成的类$(r,s)$之间的距离公式如下：</p>
+<p>$$<br>d_{k \rightarrow (r,s)} =\alpha_r d_{k\rightarrow r}+\alpha_s d_{k\rightarrow s}+\beta d_{r\rightarrow s}+<br>\gamma |d_{k\rightarrow r}-d_{k\rightarrow s}|<br>$$</p>
+<p>具体的参数如表4所示。</p>
 <table>
 <thead>
 <tr>
@@ -1129,59 +1107,56 @@ d_{k \rightarrow (r,s)} =\alpha_r d_{k\rightarrow r}+\alpha_s d_{k\rightarrow s}
 <th>$\gamma$</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>Single Link</td>
 <td>1/2</td>
 <td>1/2</td>
 <td>0</td>
-<td>-1/2  </td>
+<td>-1/2</td>
 </tr>
 <tr>
 <td>Complete Link</td>
 <td>1/2</td>
 <td>1/2</td>
 <td>0</td>
-<td>1/2   </td>
+<td>1/2</td>
 </tr>
 <tr>
 <td>Unweighted pair group method average(UPGMA)</td>
 <td>$\frac{n_r}{n_r+n_s}$</td>
 <td>$\frac{n_s}{n_r+n_s}$</td>
 <td>0</td>
-<td>0   </td>
+<td>0</td>
 </tr>
 <tr>
 <td>weighted pair group method average(WPGMA)</td>
 <td>1/2</td>
 <td>1/2</td>
 <td>0</td>
-<td>0  </td>
+<td>0</td>
 </tr>
 <tr>
 <td>unweighted pair group method centroid(UPGMC)</td>
 <td>$\frac{n_r}{n_r+n_s}$</td>
 <td>$\frac{n_s}{n_r+n_s}$</td>
 <td>$\frac{-n_sn_s}{(n_r+n_s)^2}$</td>
-<td>0   </td>
+<td>0</td>
 </tr>
 <tr>
 <td>weighted pair group method centroid(WPGMC)</td>
 <td>1/2</td>
 <td>1/2</td>
 <td>-1/4</td>
-<td>0   </td>
+<td>0</td>
 </tr>
 <tr>
 <td>Ward’s method</td>
 <td>$\frac{n_r+n_k}{n_r+n_s+n_k}$</td>
 <td>$\frac{n_s+n_k}{n_r+n_s+n_k}$</td>
 <td>$\frac{-n_k}{n_r+n_s+n_k}$</td>
-<td>0   </td>
+<td>0</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>最小距离层次聚类法也被称为单链聚类或者最近邻聚类。两个类之间的距离定义为两个类中对象之间距离的最小值。比如对于该例来说，最小的是D和E的距离0.50，选择先把D和E聚为一类(D,F)。然后其他单个样本之间的距离不变，计算(D,F)和其他样本之间的距离，采用最小距离法，得到的结果为：$d((D,F),A)=d(F,A)=3.20,d((D,F),B)=d(B,D)=2.92,d((D,F),C)$<br>$=d(D,C)=2.24,d((D,F),E)=d(D,E)=1.00$,然后可以与原来的样本间距离放在一起，发现0.71——A与B之间的距离最小，因此将A与B聚为一类，得到(A,B).依次类推，最终将所有的样本点聚成一个大类。总结一下计算过程如下：</p>
 <p> 在一开始，我们有6个类，即A，B，C，D，E，F，</p>
 <p> 将距离最小为0.5的D和F聚为一类(D,F)</p>
@@ -1200,7 +1175,6 @@ d_{k \rightarrow (r,s)} =\alpha_r d_{k\rightarrow r}+\alpha_s d_{k\rightarrow s}
 </li>
 </ul>
 <p>我们在上文已经计算出来了样本之间的距离矩阵，现在只需要计算共表矩阵就行了。我们需要使用在合并类的过程中使用的最小距离来填充距离矩阵的下三角。上面我们已经将合并时所使用的距离进行了总结，利用上面的总结信息，可以得到如表所示的共表矩阵。</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1210,11 +1184,10 @@ d_{k \rightarrow (r,s)} =\alpha_r d_{k\rightarrow r}+\alpha_s d_{k\rightarrow s}
 <th>C</th>
 <th>D</th>
 <th>E</th>
-<th>F  </th>
+<th>F</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>A</td>
 <td></td>
 <td></td>
@@ -1268,35 +1241,30 @@ d_{k \rightarrow (r,s)} =\alpha_r d_{k\rightarrow r}+\alpha_s d_{k\rightarrow s}
 <td>1.00</td>
 <td></td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>将距离矩阵和共表矩阵一一对应生成两个向量，计算这两个向量之间的相关系数，就会得到共表相关系数。在这里，最终CPCC=86.339%,可以看到，这个聚类的效果比较好。</p>
 <p>这里以R中自带数据集iris作为样本，使用cluster包中的hclust函数进行层次聚类，分析聚类结果。</p>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-keyword">library</span>(cluster)</span><br><span class="line">&gt; iris_test &lt;- iris[,<span class="hljs-number">14</span>]</span><br><span class="line">&gt; d &lt;-dist(iris_test)</span><br><span class="line">&gt; hc1 &lt;- hclust(d,<span class="hljs-string">'complete'</span>)  <span class="hljs-comment">#最大距离法</span></span><br><span class="line">&gt; d1 &lt;- cophenetic(hc1)</span><br><span class="line">&gt; cor(d,d1)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">0.7269857</span></span><br><span class="line">&gt; </span><br><span class="line">&gt; hc2 &lt;- hclust(d,<span class="hljs-string">'single'</span>)  <span class="hljs-comment">#最小距离法</span></span><br><span class="line">&gt; d2 &lt;- cophenetic(hc2)</span><br><span class="line">&gt; cor(d,d2)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">0.8638787</span></span><br></pre></td></tr></table></figure>
+
 <p>从上述R中的运行结果来看，single方法(最小距离法)的结果要优于complete法(最大距离法)。</p>
-<h3 id="聚类个数的选择"><a href="#聚类个数的选择" class="headerlink" title="聚类个数的选择"></a>聚类个数的选择</h3><h4 id="轮廓系数-Silhouette-Coefficient-简称SC"><a href="#轮廓系数-Silhouette-Coefficient-简称SC" class="headerlink" title="轮廓系数(Silhouette Coefficient,简称SC)"></a>轮廓系数(Silhouette Coefficient,简称SC)</h4><p>对于数据集$x=\{x_1,x_2,…,x_n\}$,使用某种聚类方法得到类的集合$C=\{C_1,C_2,…,C_k\}$,每个类的样本量为$num=\{n_1,n_2,…,n_k\}$}</p>
-<script type="math/tex; mode=display">a_i=\frac{1}{n_k-1}\sum _{x_i,x_j\in C_k}dist_{i\ne j}(x_i,x_j)</script><script type="math/tex; mode=display">b_i=min(\frac{1}{n_l}\sum _{x_i\in C_k,x_j\in C_l,l\ne k}dist(x_i,x_j))</script><script type="math/tex; mode=display">S_i=\frac{b_i-a_i}{max(b_i,a_i)}</script><script type="math/tex; mode=display">SC=\frac{1}{n}\sum _{i=1}^n S_i</script><p>SC即为轮廓系数。该值处于-1-1之间，值越大，表示聚类效果越好。</p>
+<h3 id="聚类个数的选择"><a href="#聚类个数的选择" class="headerlink" title="聚类个数的选择"></a>聚类个数的选择</h3><h4 id="轮廓系数-Silhouette-Coefficient-简称SC"><a href="#轮廓系数-Silhouette-Coefficient-简称SC" class="headerlink" title="轮廓系数(Silhouette Coefficient,简称SC)"></a>轮廓系数(Silhouette Coefficient,简称SC)</h4><p>对于数据集$x={x_1,x_2,…,x_n}$,使用某种聚类方法得到类的集合$C={C_1,C_2,…,C_k}$,每个类的样本量为$num={n_1,n_2,…,n_k}$}<br>$$a_i=\frac{1}{n_k-1}\sum <em>{x_i,x_j\in C_k}dist</em>{i\ne j}(x_i,x_j) $$<br>$$b_i=min(\frac{1}{n_l}\sum _{x_i\in C_k,x_j\in C_l,l\ne k}dist(x_i,x_j))$$<br>$$S_i=\frac{b_i-a_i}{max(b_i,a_i)}$$<br>$$SC=\frac{1}{n}\sum _{i=1}^n S_i$$<br>SC即为轮廓系数。该值处于-1-1之间，值越大，表示聚类效果越好。</p>
 <h4 id="Gap统计量-Gap-Statistic-简称GS"><a href="#Gap统计量-Gap-Statistic-简称GS" class="headerlink" title="Gap统计量(Gap Statistic,简称GS)}"></a>Gap统计量(Gap Statistic,简称GS)}</h4><p>下面简单说一下Gap统计量原理及计算方法。}<br>Tibshirani等人在2001年提出了使用Gap统计量来确定聚类过程中最佳聚类个数k，这个统计量除了可以使用在最常用的k-means聚类方法上，对于任何聚类方法都适用。</p>
-<p>假设有数据集$\{x_{ij}\},i=1,2,3…,n,j=1,2,…,p$，该数据有n个观测点和p个特征。令$d_{ii’}$表示观测点$i$和观测点$i’$之间的距离，最常用的是欧氏距离。</p>
+<p>假设有数据集${x_{ij}},i=1,2,3…,n,j=1,2,…,p$，该数据有n个观测点和p个特征。令$d_{ii’}$表示观测点$i$和观测点$i’$之间的距离，最常用的是欧氏距离。</p>
 <p>假设我们已经将数据聚成$k$个类，分别是$C_1,C_2,…,C_k$，其中$C_r$表示第$r$个类的下标，令$n_r=|C_r|.$即$n_r$表示类$C_r$中的观测点的个数。令</p>
-<script type="math/tex; mode=display">D_r=\sum _{i,i'\in C_r}d_{ii'}=\sum _{i,i'\in C_r}|x_i-x_i'|^2=2n_r\sum _{i\in C_r}|xi-\bar x|^2</script><script type="math/tex; mode=display">W_k=\sum _{r=1}^k\frac{1}{2n_r}D_r</script><p>也可以使用$W_k$来确定聚类个数$k$，寻找使得$W_k$突然变小的$k$.但是使用$W_k$来确定聚类个数有以下两个问题：}</p>
+<p>$$D_r=\sum <em>{i,i’\in C_r}d</em>{ii’}=\sum _{i,i’\in C_r}|x_i-x_i’|^2=2n_r\sum _{i\in C_r}|xi-\bar x|^2$$<br>$$W_k=\sum _{r=1}^k\frac{1}{2n_r}D_r $$</p>
+<p>也可以使用$W_k$来确定聚类个数$k$，寻找使得$W_k$突然变小的$k$.但是使用$W_k$来确定聚类个数有以下两个问题：}</p>
 <p> 没有相关的类进行比较。<br> $W_k-W_{k-1}$的值没有进行标准化，以至于不同的模型无法进行比较。</p>
-<p>Gap统计量将$W_k$进行了标准化，公式为</p>
-<script type="math/tex; mode=display">Gap_n(k)=E_n^+\{log(W_k)\}-log(W_k) ,</script><p>寻找使得$Gap(k)$达到最大的那个$k$，即为最佳的聚类个数。<br>其中，$E_n^+$表示根据某一相关分布构造的样本量为n的数据，其<br>$log(W_k)$的期望值。<br>通常，构造上述的样本具有以下两种方法，即：</p>
-<p> 计算出每个特征（或变量）的取值范围，然后在该范围内随机生成n个服从均匀分布的数字，作为构造的样本观测值。<br> 如果$X$是一个$n\times p$的数值矩阵，假设每一列的均值都是0，然后对$X$进行奇异值分解，</p>
-<script type="math/tex; mode=display">X=UDV^T.</script><p>将$X$进行转换，得到$X’$</p>
-<script type="math/tex; mode=display">X'=XV.</script><p>然后利用方法1根据$X’$得到每一列的数值$Z’$。<br>最后，将$Z’$进行转换，</p>
-<script type="math/tex; mode=display">Z=Z'V^T</script><p>最终得到我们需要的数据$Z$。</p>
+<p>Gap统计量将$W_k$进行了标准化，公式为<br>$$Gap_n(k)=E_n^+{log(W_k)}-log(W_k) ,$$<br>寻找使得$Gap(k)$达到最大的那个$k$，即为最佳的聚类个数。<br>其中，$E_n^+$表示根据某一相关分布构造的样本量为n的数据，其<br>$log(W_k)$的期望值。<br>通常，构造上述的样本具有以下两种方法，即：</p>
+<p> 计算出每个特征（或变量）的取值范围，然后在该范围内随机生成n个服从均匀分布的数字，作为构造的样本观测值。<br> 如果$X$是一个$n\times p$的数值矩阵，假设每一列的均值都是0，然后对$X$进行奇异值分解，<br>$$X=UDV^T.$$<br>将$X$进行转换，得到$X’$<br>$$X’=XV.$$<br>然后利用方法1根据$X’$得到每一列的数值$Z’$。<br>最后，将$Z’$进行转换，<br>$$Z=Z’V^T$$<br>最终得到我们需要的数据$Z$。</p>
 <p>计算Gap统计量的步骤如下。</p>
 <p> 将数据聚类，类的个数分别取$k=1,2,…,K$，得出$W_k,k=1,2,…,K.$<br> 根据均匀分布，使用上面的方法生成B个数据集。计算出每个数据集的<br>$W_{kb}^+,b=1,2,…,B,k=1,2,…,K$，计算出估计的Gap统计量的值：</p>
-<script type="math/tex; mode=display">Gap(k)=(1/B)\sum _b log(W_{kb}^+)-log(W_k)</script><p>令</p>
-<script type="math/tex; mode=display">\bar l = (1/B)\sum _b log(W_{kb}^+)$$，
+<p>$$Gap(k)=(1/B)\sum <em>b log(W</em>{kb}^+)-log(W_k) $$</p>
+<p>令</p>
+<p>$$\bar l = (1/B)\sum <em>b log(W</em>{kb}^+)$$，</p>
+<p>计算标准误差</p>
+<p>$$sd_k=[(1/B)\sum <em>b {log(W</em>{kb}^+)-\bar l}^2]^{1/2}$$</p>
+<p>定义$s_k=sd_k\sqrt {1+1/B}$，最后，计算出最佳的聚类个数$\hat k$，<br>$$\hat k=smallest\  k\  such\  that\  Gap(k) \le Gap(k+1)-s_{k+1} $$</p>
 
-计算标准误差
-
-$$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_k\sqrt {1+1/B}$，最后，计算出最佳的聚类个数$\hat k$，</p>
-<script type="math/tex; mode=display">\hat k=smallest\  k\  such\  that\  Gap(k) \le Gap(k+1)-s_{k+1}</script>
         </div>
         
         
@@ -1338,40 +1306,46 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
         <div class="content">
             <h2 id="lubridate包简介"><a href="#lubridate包简介" class="headerlink" title="lubridate包简介"></a>lubridate包简介</h2><p>该包的描述文档介绍道：<br>lubridate包包含了一些处理时间点和时间段的函数：<br>快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快.</p>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">library</span>(lubridate)</span><br></pre></td></tr></table></figure>
+
 <h2 id="各种函数介绍"><a href="#各种函数介绍" class="headerlink" title="各种函数介绍"></a>各种函数介绍</h2><h3 id="add-with-rollback"><a href="#add-with-rollback" class="headerlink" title="add_with_rollback"></a>add_with_rollback</h3><p>add_with_rollback:Add and subtract months to a date without exceeding the last day of the new month.</p>
 <p>add_with_rollback:将某个日期加上或者减取若干个月，不考虑新获得的月份的最后一天的实际值.比如2009-10-31，加上一个月就是2009-11-31，但是11月没有31号，所以会显示NA.如果使用%m+%，则会以自然月的方式相加.</p>
 <ul>
 <li>例子<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">may &lt;- ymd_hms(<span class="hljs-string">"1994-05-31 07:40:38"</span>)</span><br><span class="line">may + months(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>)  <span class="hljs-comment">#六月31显示为NA</span></span><br><span class="line">may %m+% months(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>)  <span class="hljs-comment">#不会有错误</span></span><br><span class="line"></span><br><span class="line">leap &lt;- ymd(<span class="hljs-string">"2012-02-29"</span>)</span><br><span class="line">leap + years(<span class="hljs-number">1</span>)  <span class="hljs-comment">#NA</span></span><br><span class="line">leap %m+% years(<span class="hljs-number">1</span>)  <span class="hljs-comment">#2013-02-28</span></span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h3 id="am"><a href="#am" class="headerlink" title="am"></a>am</h3><p>am:Does date time occur in the am or pm?</p>
 <p>am:判断是否是上午，显然，其需要的参数应该包含一个具体的一天中的时间信息，如果只提供日期信息，则默认为00:00:00，显示为上午时间.</p>
 <ul>
 <li>例子<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- ymd(<span class="hljs-string">"2012-02-02"</span>)</span><br><span class="line">am(dt)</span><br><span class="line">time &lt;- ymd_hm(<span class="hljs-string">"2012-02-01 13:20"</span>)</span><br><span class="line">am(time)</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h3 id="as-duration"><a href="#as-duration" class="headerlink" title="as.duration"></a>as.duration</h3><p>as.duration:as.duration changes Interval, Period and numeric class objects to Duration objects. Numeric objects are changed to Duration objects with the seconds unit equal to the numeric value.</p>
 <p>as.duration:将interval、period和数字转换为时间间隔——时间段.</p>
 <ul>
 <li>例子<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">span &lt;- interval(ymd(<span class="hljs-string">"1994-05-01"</span>),ymd(<span class="hljs-string">"1995-10-28"</span>))  <span class="hljs-comment">#interval</span></span><br><span class="line">as.duration(span)  <span class="hljs-comment">#47088000秒，约1.49年</span></span><br><span class="line">as.duration(<span class="hljs-number">10</span>)  <span class="hljs-comment">#10秒</span></span><br><span class="line">dur &lt;- duration(hours = <span class="hljs-number">10</span>,minutes = <span class="hljs-number">6</span>)  <span class="hljs-comment">#一段10分6秒的时间间隔</span></span><br><span class="line">as.numeric(dur,<span class="hljs-string">"hours"</span>)  <span class="hljs-comment">#10.1小时</span></span><br><span class="line">as.numeric(dur,<span class="hljs-string">"minutes"</span>)  <span class="hljs-comment">#606秒</span></span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h3 id="as-interval"><a href="#as-interval" class="headerlink" title="as.interval"></a>as.interval</h3><p>as.intervel:Change an object to an interval.</p>
 <p>as.interval:将对象转换为inteval</p>
 <ul>
 <li>例子<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">diff &lt;- make_difftime(days = <span class="hljs-number">31</span>) <span class="hljs-comment">#加上31天</span></span><br><span class="line">as.interval(diff, ymd(<span class="hljs-string">"2009-01-01"</span>))</span><br><span class="line">as.interval(diff, ymd(<span class="hljs-string">"2009-02-01"</span>))</span><br><span class="line"></span><br><span class="line">dur &lt;- duration(days = <span class="hljs-number">31</span>) <span class="hljs-comment">#duration</span></span><br><span class="line">as.interval(dur, ymd(<span class="hljs-string">"2009-01-01"</span>))</span><br><span class="line">as.interval(dur, ymd(<span class="hljs-string">"2009-02-01"</span>))</span><br><span class="line"></span><br><span class="line">per &lt;- period(months = <span class="hljs-number">1</span>) <span class="hljs-comment">#period</span></span><br><span class="line">as.interval(per, ymd(<span class="hljs-string">"2009-01-01"</span>))</span><br><span class="line">as.interval(per, ymd(<span class="hljs-string">"2009-02-01"</span>))</span><br><span class="line"></span><br><span class="line">as.interval(<span class="hljs-number">3600</span>,ymd(<span class="hljs-string">"2009-01-01"</span>)) <span class="hljs-comment">##numeric，在2009-01-01的基础上加上3600天</span></span><br><span class="line">as.interval(duration(hours = <span class="hljs-number">3600</span>), ymd(<span class="hljs-string">"2009-01-01"</span>))  <span class="hljs-comment">#加上3600小时</span></span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h3 id="as-period"><a href="#as-period" class="headerlink" title="as.period"></a>as.period</h3><p>as.period:Change an object to a period.</p>
 <p>as.period:将对象转换为period.</p>
 <ul>
 <li>例子<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">span &lt;- interval(as.POSIXct(<span class="hljs-string">"2009-01-01"</span>), as.POSIXct(<span class="hljs-string">"2010-02-02 01:01:01"</span>)) <span class="hljs-comment">#interval</span></span><br><span class="line">as.period(span)</span><br><span class="line">as.period(span, units = <span class="hljs-string">"day"</span>)</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <p>format of interval,duration and period:</p>
 <ul>
 <li><p>interval:</p>
-<p>1990-01-01 UTC—1990-01-11 UTC</p>
+<p>1990-01-01 UTC–1990-01-11 UTC</p>
 </li>
 <li><p>duration:</p>
 </li>
@@ -1385,6 +1359,7 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <p>as_date:将对象转换为date或者date-time类型</p>
 <ul>
 <li>例子<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dt_utc &lt;- ymd_hms(<span class="hljs-string">"2010-08-03 00:50:50"</span>)</span><br><span class="line">dt_europe &lt;- ymd_hms(<span class="hljs-string">"2010-08-03 00:50:50"</span>, tz = <span class="hljs-string">"Europe/London"</span>)</span><br><span class="line">c(as_date(dt_utc), as.Date(dt_utc))</span><br><span class="line">c(as_date(dt_europe), as.Date(dt_europe))</span><br><span class="line"><span class="hljs-comment">## need not suply origin，不需要提供初始值</span></span><br><span class="line">as_date(<span class="hljs-number">10</span>)  <span class="hljs-comment">#默认中1970-01-01年开始</span></span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h3 id="as-datetime"><a href="#as-datetime" class="headerlink" title="as_datetime"></a>as_datetime</h3><p>as_datetime:Convert an object to a date or date-time</p>
@@ -1398,6 +1373,7 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- as.POSIXct(<span class="hljs-string">"2012-03-26 23:12:13"</span>, tz = <span class="hljs-string">"Etc/GMT+8"</span>)</span><br><span class="line">x</span><br><span class="line">date(x)</span><br><span class="line">as.Date(x) <span class="hljs-comment">#as.Date()函数默认返回UTC时间</span></span><br><span class="line">as.Date(x,tz = <span class="hljs-string">'Etc/GMT+8'</span>)  <span class="hljs-comment">#返回Etc/GMT+8时区时间</span></span><br><span class="line">date(x) &lt;- as.Date(<span class="hljs-string">'2014-10-20'</span>)</span><br><span class="line">date(x)</span><br></pre></td></tr></table></figure>
+
 <h3 id="DateTimeUpdate"><a href="#DateTimeUpdate" class="headerlink" title="DateTimeUpdate"></a>DateTimeUpdate</h3><p>DateTimeUpdate:Description of the classes “POSIXlt” and “POSIXct” representing calendar dates and times.</p>
 <p>DateTimeUpdate:</p>
 <h3 id="date-decimal"><a href="#date-decimal" class="headerlink" title="date_decimal"></a>date_decimal</h3><p>date_decimal:Converts a decimal to a date.</p>
@@ -1406,16 +1382,19 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">decimal &lt;- <span class="hljs-number">2017.12</span></span><br><span class="line">date_decimal(decimal)</span><br></pre></td></tr></table></figure>
+
 <h3 id="day"><a href="#day" class="headerlink" title="day"></a>day</h3><p>day:Get/set days component of a date-time.</p>
 <p>day:获取/设置日期中的具体日数据</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- as.Date(<span class="hljs-string">'2017-10-30'</span>)</span><br><span class="line">day(x) <span class="hljs-comment">#获取日期</span></span><br><span class="line">mday(x)  <span class="hljs-comment">#一个月中的第几天</span></span><br><span class="line">yday(x)  <span class="hljs-comment">#一年中的第几天</span></span><br><span class="line">wdayofdate &lt;- wday(x,label = <span class="hljs-literal">TRUE</span>,abbr = <span class="hljs-literal">FALSE</span>) </span><br><span class="line">levels(wdayofdate) &lt;- c(levels(wdayofdate)[<span class="hljs-number">2</span>:<span class="hljs-number">7</span>],levels(wdayofdate)[<span class="hljs-number">1</span>])</span><br><span class="line">wdayofdate</span><br><span class="line"><span class="hljs-comment">#一周中的第几天,以周日为第一天</span></span><br><span class="line"><span class="hljs-comment">#因为中国人默认周一为一周的第一天，所以可以更改一下因子的排序</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="days-in-month"><a href="#days-in-month" class="headerlink" title="days_in_month"></a>days_in_month</h3><p>days_in_month:Get the number of days in the month of a date-time.</p>
 <p>days_in_month:某月份有几天,输入一个带年份的日期数据</p>
 <ul>
 <li>例子<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">md &lt;- ymd(<span class="hljs-string">'1994-05-01'</span>)</span><br><span class="line">days_in_month(md)</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h3 id="decimal-date"><a href="#decimal-date" class="headerlink" title="decimal_date"></a>decimal_date</h3><p>decimal_date:Converts a date to a decimal of its year.</p>
@@ -1424,6 +1403,7 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- ymd(<span class="hljs-string">'2017-10-31'</span>)</span><br><span class="line">decimal_date(dt)</span><br></pre></td></tr></table></figure>
+
 <h3 id="dst"><a href="#dst" class="headerlink" title="dst"></a>dst</h3><p>dst:Get Daylight Savings Time indicator of a date-time.</p>
 <p>dst:</p>
 <h3 id="duration"><a href="#duration" class="headerlink" title="duration"></a>duration</h3><p>duration:Create a duration object.</p>
@@ -1435,17 +1415,20 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- as.POSIXct(<span class="hljs-string">"2009-08-07 00:00:01"</span>, tz = <span class="hljs-string">"America/New_York"</span>)</span><br><span class="line">x</span><br><span class="line">force_tz(x, <span class="hljs-string">"GMT"</span>)</span><br></pre></td></tr></table></figure>
+
 <h3 id="guess-formats"><a href="#guess-formats" class="headerlink" title="guess_formats"></a>guess_formats</h3><p>guess_formats:Guess formats from the supplied date-time character vector.</p>
 <p>guess_formats:猜测提供的日期格式</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- c(<span class="hljs-string">'1990-01'</span>,<span class="hljs-string">'1990 09 01'</span>,<span class="hljs-string">'1992 Jan 01'</span>,<span class="hljs-string">'May 1 1992'</span>)</span><br><span class="line">guess_formats(dt,orders = c(<span class="hljs-string">"ymd"</span>,<span class="hljs-string">"ym"</span>,<span class="hljs-string">"mdy"</span>),print_matches = <span class="hljs-literal">TRUE</span>)</span><br></pre></td></tr></table></figure>
+
 <h3 id="hour"><a href="#hour" class="headerlink" title="hour"></a>hour</h3><p>hour；Get/set hours component of a date-time.<br>hour:获取/设置日期中的小时数据</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- now()</span><br><span class="line">hour(dt)</span><br><span class="line">hour(dt) &lt;- <span class="hljs-number">1</span></span><br><span class="line">dt</span><br></pre></td></tr></table></figure>
+
 <h3 id="interval"><a href="#interval" class="headerlink" title="interval"></a>interval</h3><p>interval:Utilities for creation and manipulation of Interval objects.</p>
 <h3 id="interval-class"><a href="#interval-class" class="headerlink" title="interval_class"></a>interval_class</h3><h3 id="is-Date"><a href="#is-Date" class="headerlink" title="is.Date"></a>is.Date</h3><p>is.Date():Is x a Date object?</p>
 <p>is.Date():x是否是一个日期对象</p>
@@ -1453,36 +1436,42 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- <span class="hljs-string">'1970-01-01'</span></span><br><span class="line">is.Date(x)</span><br><span class="line">x1 &lt;- as.Date(x)</span><br><span class="line">is.Date(x1)</span><br><span class="line">x2 &lt;- ymd(x)</span><br><span class="line">is.Date(x2)</span><br></pre></td></tr></table></figure>
+
 <h3 id="is-difftime"><a href="#is-difftime" class="headerlink" title="is.difftime"></a>is.difftime</h3><p>is.difftime:Is x a difftime object?</p>
 <p>is.difftime:x是否是一个difftime对象</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">is.difftime(as.Date(<span class="hljs-string">'1999-09-09'</span>)) <span class="hljs-comment">#FALSE</span></span><br><span class="line">is.difftime(make_difftime(<span class="hljs-number">20</span>))  <span class="hljs-comment">#TRUE,默认20秒间隔</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="is-instant"><a href="#is-instant" class="headerlink" title="is.instant"></a>is.instant</h3><p>is.instant:Is x a date-time object?</p>
 <p>is.instant:x是否为日期对象，同is.Date()</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- as.Date(<span class="hljs-string">'1999-09-09'</span>)</span><br><span class="line">is.instant(x)</span><br><span class="line">is.timepoint(x)</span><br><span class="line">is.timepoint(<span class="hljs-number">10</span>)</span><br></pre></td></tr></table></figure>
+
 <h3 id="is-POSIXt"><a href="#is-POSIXt" class="headerlink" title="is.POSIXt"></a>is.POSIXt</h3><p>is.POSIXt:Is x a POSIXct or POSIXlt object?</p>
 <p>is.POSIXt:x是否为POSIXct对象或者POSIXlt对象?</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">is.POSIXt(as.Date(<span class="hljs-string">"1997-01-01"</span>))</span><br><span class="line">is.POSIXt(as.POSIXct(<span class="hljs-string">"1997-01-01"</span>))</span><br></pre></td></tr></table></figure>
+
 <h3 id="is-timespan"><a href="#is-timespan" class="headerlink" title="is.timespan"></a>is.timespan</h3><p>is.timespan:Is x a length of time?</p>
 <p>is.timespan:x是否时时间长度</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">is.timespan(as.Date(<span class="hljs-string">"1999-09-09"</span>))</span><br><span class="line">is.timespan(duration(second = <span class="hljs-number">1</span>))</span><br><span class="line">is.timespan(interval(ymd(<span class="hljs-string">"1999-09-09"</span>),ymd(<span class="hljs-string">"2000-01-01"</span>)))</span><br><span class="line">is.timespan(period(<span class="hljs-number">10</span>,units = <span class="hljs-string">'month'</span>))</span><br></pre></td></tr></table></figure>
+
 <h3 id="leap-year"><a href="#leap-year" class="headerlink" title="leap_year"></a>leap_year</h3><p>leap_year:Is a year a leap year?</p>
 <p>leap_year:是否时闰年</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">leap_year(<span class="hljs-number">2012</span>)</span><br><span class="line">leap_year(<span class="hljs-number">2013</span>)</span><br></pre></td></tr></table></figure>
+
 <h3 id="local-time"><a href="#local-time" class="headerlink" title="local_time"></a>local_time</h3><p>local_time:</p>
 <p>local_time:</p>
 <h3 id="make-date"><a href="#make-date" class="headerlink" title="make_date"></a>make_date</h3><h3 id="make-datetime"><a href="#make-datetime" class="headerlink" title="make_datetime"></a>make_datetime</h3><p>make_datetime:Efficient creation of date-times from numeric representations</p>
@@ -1491,12 +1480,14 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- make_datetime(year = <span class="hljs-number">1999</span>,month = <span class="hljs-number">9</span>,day = <span class="hljs-number">10</span>)</span><br><span class="line">dt</span><br></pre></td></tr></table></figure>
+
 <h3 id="make-difftime"><a href="#make-difftime" class="headerlink" title="make_difftime"></a>make_difftime</h3><p>make_difftime:Create a difftime object.</p>
 <p>make_difftime:创建一个时间长度对象.</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">make_difftime(<span class="hljs-number">1</span>)</span><br><span class="line">make_difftime(<span class="hljs-number">60</span>)</span><br><span class="line">make_difftime(<span class="hljs-number">3600</span>)</span><br><span class="line">make_difftime(<span class="hljs-number">3600</span>, units = <span class="hljs-string">"minute"</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 60 mins</span></span><br><span class="line">make_difftime(second = <span class="hljs-number">90</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 1.5 mins</span></span><br><span class="line">make_difftime(minute = <span class="hljs-number">1.5</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 1.5 mins</span></span><br><span class="line">make_difftime(second = <span class="hljs-number">3</span>, minute = <span class="hljs-number">1.5</span>, hour = <span class="hljs-number">2</span>, day = <span class="hljs-number">6</span>, week = <span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 13.08441 days</span></span><br><span class="line">make_difftime(hour = <span class="hljs-number">1</span>, minute = -<span class="hljs-number">60</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 0 secs</span></span><br><span class="line">make_difftime(day = -<span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of -1 days</span></span><br><span class="line">make_difftime(second = <span class="hljs-number">120</span>,minute = <span class="hljs-number">10</span>,hour = <span class="hljs-number">10</span>,day = <span class="hljs-number">1</span>,week = <span class="hljs-number">1</span>, units = <span class="hljs-string">"hour"</span>)</span><br><span class="line">make_difftime(<span class="hljs-number">20</span>,day = <span class="hljs-number">6</span>,week = <span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-comment"># Time differences in mins</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="minute"><a href="#minute" class="headerlink" title="minute"></a>minute</h3><p> minute:Get/set minutes component of a date-time.</p>
 <p> minute:类似于hour.</p>
 <h3 id="month"><a href="#month" class="headerlink" title="month"></a>month</h3><p>month:Get/set months component of a date-time.</p>
@@ -1507,22 +1498,26 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#ms:代表分钟,s代表秒</span></span><br><span class="line"><span class="hljs-comment">#hms:h代表小时</span></span><br><span class="line">ms(<span class="hljs-string">"09 10"</span>)</span><br><span class="line">hms(<span class="hljs-string">"09:10:10"</span>)</span><br><span class="line">hms(<span class="hljs-string">"3:22:::2"</span>)</span><br></pre></td></tr></table></figure>
+
 <h3 id="now"><a href="#now" class="headerlink" title="now"></a>now</h3><p>now:The current time</p>
 <p>now:获取当前时间</p>
 <p>+例子</p>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">now()</span><br></pre></td></tr></table></figure>
+
 <h3 id="origin"><a href="#origin" class="headerlink" title="origin"></a>origin</h3><p>origin：1970-01-01 UTC</p>
 <p>origin：1970-01-01 UTC，是一个常数，不是函数</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">origin</span><br></pre></td></tr></table></figure>
+
 <h3 id="parse-date-time"><a href="#parse-date-time" class="headerlink" title="parse_date_time"></a>parse_date_time</h3><p>parse_date_time:Parse character and numeric date-time vectors with user friendly order formats.</p>
 <p>parse_date_time:将字符型或者数值型日期转换成用户友好的格式。</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h3 id="poriod"><a href="#poriod" class="headerlink" title="poriod"></a>poriod</h3><h3 id="peroid-to-seconds"><a href="#peroid-to-seconds" class="headerlink" title="peroid_to_seconds"></a>peroid_to_seconds</h3><h3 id="pretty-dates"><a href="#pretty-dates" class="headerlink" title="pretty_dates"></a>pretty_dates</h3><h3 id="quarter"><a href="#quarter" class="headerlink" title="quarter"></a>quarter</h3><h3 id="roll-back"><a href="#roll-back" class="headerlink" title="roll_back"></a>roll_back</h3><h3 id="round-date"><a href="#round-date" class="headerlink" title="round_date"></a>round_date</h3><h3 id="second"><a href="#second" class="headerlink" title="second"></a>second</h3><h3 id="stamp"><a href="#stamp" class="headerlink" title="stamp"></a>stamp</h3><h3 id="timespan"><a href="#timespan" class="headerlink" title="timespan"></a>timespan</h3><h3 id="time-length"><a href="#time-length" class="headerlink" title="time_length"></a>time_length</h3><h3 id="today"><a href="#today" class="headerlink" title="today"></a>today</h3><h3 id="tz"><a href="#tz" class="headerlink" title="tz"></a>tz</h3><h3 id="week"><a href="#week" class="headerlink" title="week"></a>week</h3><h3 id="with-tz"><a href="#with-tz" class="headerlink" title="with_tz"></a>with_tz</h3><h3 id="year"><a href="#year" class="headerlink" title="year"></a>year</h3><h3 id="ymd"><a href="#ymd" class="headerlink" title="ymd"></a>ymd</h3><h3 id="ymd-hms"><a href="#ymd-hms" class="headerlink" title="ymd_hms"></a>ymd_hms</h3><h3 id="m"><a href="#m" class="headerlink" title="%m+%"></a>%m+%</h3><h3 id="within"><a href="#within" class="headerlink" title="%within%"></a>%within%</h3><h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><h2 id="三、应用实例"><a href="#三、应用实例" class="headerlink" title="三、应用实例"></a>三、应用实例</h2>
         </div>
         
@@ -1574,12 +1569,15 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
 <p><img src="/picture/mooc_2.png" alt="response"></p>
 <p>问题搞清楚了，下面使用requests包的post函数发送请求，然后分析获取到的response。</p>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> requests</span><br><span class="line"><span class="hljs-keyword">import</span> urllib.parse <span class="hljs-keyword">as</span> up</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#准备进行搜索的关键词</span></span><br><span class="line">keywords = [<span class="hljs-string">'大数据'</span>,<span class="hljs-string">'机器学习'</span>,<span class="hljs-string">'数据挖掘'</span>,<span class="hljs-string">'数据科学'</span>,<span class="hljs-string">'人工智能'</span>]</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#转换成URL编码</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">quote</span><span class="hljs-params">(x)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">return</span> up.quote(x)</span><br><span class="line"><span class="hljs-comment">#转换编码</span></span><br><span class="line">keywords = list(map(quote,keywords))</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#URL前缀</span></span><br><span class="line">startUrl = <span class="hljs-string">"http://www.icourse163.org/search.htm?search="</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#构造URL</span></span><br><span class="line">urls = []</span><br><span class="line"><span class="hljs-keyword">for</span> kws <span class="hljs-keyword">in</span> keywords:</span><br><span class="line">    urls.append(startUrl+kws)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#post的URL</span></span><br><span class="line">jsurl = <span class="hljs-string">"http://www.icourse163.org/dwr/call/plaincall/MocSearchBean.searchMocCourse.dwr"</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#请求头</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="hljs-string">"Accept"</span>:<span class="hljs-string">"*/*"</span>,</span><br><span class="line">        <span class="hljs-string">"Accept-Encoding"</span>:<span class="hljs-string">"gzip,deflate"</span>,</span><br><span class="line">        <span class="hljs-string">"Accept-Language"</span>:<span class="hljs-string">"zh-CN,zh;q=0.9"</span>,</span><br><span class="line">        <span class="hljs-string">"Connection"</span>:<span class="hljs-string">"keep-alive"</span>,</span><br><span class="line">        <span class="hljs-string">"Content-Length"</span>:<span class="hljs-string">"522"</span>,</span><br><span class="line">        <span class="hljs-string">"Content-Type"</span>:<span class="hljs-string">"text/plain"</span>,</span><br><span class="line">        <span class="hljs-string">"Host"</span>:<span class="hljs-string">"www.icourse163.org"</span>,</span><br><span class="line">        <span class="hljs-string">"Origin"</span>:<span class="hljs-string">"http://www.icourse163.org"</span></span><br><span class="line">        <span class="hljs-comment">#Refere是我们查询的时候对应的URL，也需要根据不同的关键词进行调整</span></span><br><span class="line">        <span class="hljs-comment">#"Referer":"http://www.icourse163.org/search.htm?search=%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"</span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="hljs-comment">#发送的数据</span></span><br><span class="line">payload = &#123;</span><br><span class="line">    <span class="hljs-string">"callCount"</span>:<span class="hljs-string">"1"</span>,</span><br><span class="line">    <span class="hljs-string">"scriptSessionId"</span>:<span class="hljs-string">"$&#123;scriptSessionId&#125;190"</span>,</span><br><span class="line">    <span class="hljs-string">"httpSessionId"</span>:<span class="hljs-string">"907805e60a6540c4a268164e9e89ac4c"</span>,</span><br><span class="line">    <span class="hljs-string">"c0-scriptName"</span>:<span class="hljs-string">"MocSearchBean"</span>,</span><br><span class="line">    <span class="hljs-string">"c0-methodName"</span>:<span class="hljs-string">"searchMocCourse"</span>,</span><br><span class="line">    <span class="hljs-string">"c0-id"</span>:<span class="hljs-string">"0"</span>,</span><br><span class="line">    <span class="hljs-comment">#c0-e1的string是我们查询的关键词，需要根据不同的关键词进行更改</span></span><br><span class="line">    <span class="hljs-comment">#"c0-e1":"string:%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0",</span></span><br><span class="line">    <span class="hljs-comment">#c0-e2的number表示获取的是第几页数据，需要动态变化</span></span><br><span class="line">    <span class="hljs-comment">#"c0-e2":"number:1",</span></span><br><span class="line">    <span class="hljs-string">"c0-e3"</span>:<span class="hljs-string">"boolean:true"</span>,</span><br><span class="line">    <span class="hljs-string">"c0-e4"</span>:<span class="hljs-string">"null:null"</span>,</span><br><span class="line">    <span class="hljs-string">"c0-e5"</span>:<span class="hljs-string">"number:0"</span>,</span><br><span class="line">    <span class="hljs-string">"c0-e6"</span>:<span class="hljs-string">"number:30"</span>,</span><br><span class="line">    <span class="hljs-string">"c0-e7"</span>:<span class="hljs-string">"number:20"</span>,</span><br><span class="line">    <span class="hljs-string">"c0-param0"</span>:<span class="hljs-string">"Object_Object:&#123;keyword:reference:c0-e1,pageIndex:reference:c0-e2,highlight:reference:c0-e3,categoryId:reference:c0-e4,orderBy:reference:c0-e5,stats:reference:c0-e6,pageSize:reference:c0-e7&#125;"</span>,</span><br><span class="line">    <span class="hljs-string">"batchId"</span>:<span class="hljs-string">"1511830181483"</span></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#构造一个空字典，用于存储课程列表中每一门课程的id</span></span><br><span class="line">courses = &#123;&#125;</span><br><span class="line"><span class="hljs-comment">#分析response</span></span><br><span class="line"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>,len(urls)):</span><br><span class="line">    headers[<span class="hljs-string">"Referer"</span>] = urls[i]</span><br><span class="line">    string = <span class="hljs-string">"string:"</span> + keywords[i]</span><br><span class="line">    payload[<span class="hljs-string">"c0-e1"</span>] = string</span><br><span class="line">    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">20</span>):  <span class="hljs-comment">#大致查询了一下，课程数量不会超过20页</span></span><br><span class="line">        page = <span class="hljs-string">"number:"</span> + str(j)</span><br><span class="line">        payload[<span class="hljs-string">"c0-e2"</span>] = page</span><br><span class="line">        <span class="hljs-comment">#目前为止，上面请求的部分已经做完</span></span><br><span class="line">        response = requests.post(data=payload,url=jsurl,headers = headers)</span><br><span class="line">        courseid = re.findall(pattern=<span class="hljs-string">r'courseId=([0-9]&#123;0,20&#125;)'</span>,string=response.text)</span><br><span class="line">        <span class="hljs-keyword">if</span>(len(courseid) == <span class="hljs-number">0</span>):</span><br><span class="line">            <span class="hljs-keyword">break</span>;</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            kw = up.unquote(keywords[i])</span><br><span class="line">            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> kw <span class="hljs-keyword">in</span> courses.keys():</span><br><span class="line">                courses[kw] = courseid</span><br><span class="line">            <span class="hljs-keyword">else</span>:</span><br><span class="line">                courses[kw].extend(courseid)</span><br></pre></td></tr></table></figure>
+
 <h3 id="获取详情"><a href="#获取详情" class="headerlink" title="获取详情"></a>获取详情</h3><p>上面已经获取到了课程的id，我们只需要使用该id构造课程详情页的URL就行了。</p>
 <p><img src="/picture/mooc_3.png" alt="URL"></p>
 <p>上图展示了课程详情页的URL信息，总结可以发现，前面的部分”<a href="http://www.icourse163.org/course/“" target="_blank" rel="noopener">http://www.icourse163.org/course/“</a> 都是一样的，只有后面的大学简称和id是变化的。而且大学简称可以使用任何非空值……利用上面的信息，构造好需要的URL，然后就可以使用selenium进行爬取了。</p>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#使用无头浏览器phantomjs获取页面信息</span></span><br><span class="line">browser = webdriver.PhantomJS(<span class="hljs-string">'C:/phantomjs/bin/phantomjs.exe'</span>)</span><br><span class="line"><span class="hljs-comment">#data用来存储我们获取到的数据</span></span><br><span class="line">data = <span class="hljs-keyword">None</span></span><br><span class="line">data = pd.DataFrame(&#123;<span class="hljs-string">"course_name"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"start_times"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"lasting"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"start_date"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"end_date"</span>:<span class="hljs-string">""</span>,</span><br><span class="line">                     <span class="hljs-string">"rollnum"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"coursehrs"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"outline"</span>:<span class="hljs-string">""</span>,<span class="hljs-string">"key_word"</span>:<span class="hljs-string">""</span>&#125;,index=[<span class="hljs-string">"0"</span>])</span><br><span class="line"><span class="hljs-comment">#data frame的行索引</span></span><br><span class="line">index = <span class="hljs-number">0</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> courses.keys():  <span class="hljs-comment">#k是键</span></span><br><span class="line">    <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> courses[k]:  <span class="hljs-comment">#v是值</span></span><br><span class="line">        <span class="hljs-comment">#page是构造的课程详情页URL</span></span><br><span class="line">        page = <span class="hljs-string">"http://www.icourse163.org/course/ABC-"</span> + str(v)</span><br><span class="line">        <span class="hljs-comment">#get数据</span></span><br><span class="line">        browser.get(page)</span><br><span class="line">        <span class="hljs-comment">#每个页面之间停顿3秒，否则有可能还没有渲染成功，获取不到数据</span></span><br><span class="line">        <span class="hljs-comment">#这应该是一种隐式等待</span></span><br><span class="line">        time.sleep(<span class="hljs-number">3</span>)</span><br><span class="line">        <span class="hljs-comment">#info是我们需要的一系列信息，根据id(j-center)返回</span></span><br><span class="line">        info = browser.find_element_by_id(<span class="hljs-string">'j-center'</span>).text</span><br><span class="line">        info = re.sub(re.compile(<span class="hljs-string">"\n"</span>),<span class="hljs-string">""</span>,info)</span><br><span class="line">        info = re.sub(re.compile(<span class="hljs-string">r'[0-9]&#123;2&#125;:[0-9]&#123;2&#125;'</span>),<span class="hljs-string">""</span>,string=info)</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">#1.课程名称</span></span><br><span class="line">        course_name = browser.find_element_by_tag_name(<span class="hljs-string">'h1'</span>).text</span><br><span class="line">        <span class="hljs-comment">#2.第几次开课</span></span><br><span class="line">        start_times = re.search(pattern=<span class="hljs-string">"第([0-9])次开课"</span>,string=info)</span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> start_times <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:</span><br><span class="line">            start_times = start_times.group(<span class="hljs-number">1</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            start_times = <span class="hljs-string">"NA"</span></span><br><span class="line">        <span class="hljs-comment">#3.持续时长</span></span><br><span class="line">        lasting = re.search(pattern=<span class="hljs-string">"课程已进行至([0-9]&#123;0,2&#125;\/[0-9]&#123;0,2&#125;)周"</span>,string=info)</span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> lasting <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:</span><br><span class="line">            lasting = lasting.group(<span class="hljs-number">1</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            lasting = <span class="hljs-string">"NA"</span></span><br><span class="line">        <span class="hljs-comment">#4.开始日期</span></span><br><span class="line">        start_date = re.search(pattern= <span class="hljs-string">r"开课：([0-9]&#123;0,4&#125;[年]&#123;0,1&#125;[0-9]&#123;0,2&#125;月[0-9]&#123;0,2&#125;日)"</span>,string=info)</span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> start_date <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:</span><br><span class="line">            start_date = start_date.group(<span class="hljs-number">1</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            start_date = <span class="hljs-string">"NA"</span></span><br><span class="line">        <span class="hljs-comment">#5.结束日期</span></span><br><span class="line">        end_date = re.search(pattern = <span class="hljs-string">r"结束：([0-9]&#123;0,4&#125;[年]&#123;0,1&#125;[0-9]&#123;0,2&#125;月[0-9]&#123;0,2&#125;日)"</span>,string=info)</span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> end_date <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:</span><br><span class="line">            end_date = end_date.group(<span class="hljs-number">1</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            end_date = <span class="hljs-string">"NA"</span></span><br><span class="line">        <span class="hljs-comment">#6.参与人数</span></span><br><span class="line">        rollnum = re.search(pattern = <span class="hljs-string">r"([0-9]&#123;0,9&#125;)人参加"</span>,string = info)</span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> rollnum <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:</span><br><span class="line">            rollnum = rollnum.group(<span class="hljs-number">1</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            rollnum = <span class="hljs-string">"NA"</span></span><br><span class="line">        <span class="hljs-comment">#7.课程时长</span></span><br><span class="line">        coursehrs = re.search(pattern=<span class="hljs-string">r"课程时长(.*?)周"</span>,string=info)</span><br><span class="line">        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> coursehrs <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:</span><br><span class="line">            coursehrs = coursehrs.group(<span class="hljs-number">1</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            coursehrs = <span class="hljs-string">"NA"</span></span><br><span class="line">        <span class="hljs-comment">#8.课程概述</span></span><br><span class="line">        outline = browser.find_element_by_id(<span class="hljs-string">'j-rectxt2'</span>).text</span><br><span class="line">        <span class="hljs-keyword">if</span> outline <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:</span><br><span class="line">            outline = <span class="hljs-string">"NA"</span></span><br><span class="line"></span><br><span class="line">        data.loc[index] = &#123;<span class="hljs-string">"course_name"</span>:course_name,<span class="hljs-string">"start_times"</span>:start_times,<span class="hljs-string">"lasting"</span>:lasting,<span class="hljs-string">"start_date"</span>:start_date,</span><br><span class="line">                       <span class="hljs-string">"end_date"</span>:end_date,<span class="hljs-string">"rollnum"</span>:rollnum,<span class="hljs-string">"coursehrs"</span>:coursehrs,<span class="hljs-string">"outline"</span>:outline,<span class="hljs-string">"key_word"</span>:k&#125;</span><br><span class="line"></span><br><span class="line">        index = index + <span class="hljs-number">1</span></span><br><span class="line"></span><br><span class="line">        print(<span class="hljs-string">"已经获取第%d个课程数据！"</span>%(index))</span><br></pre></td></tr></table></figure>
+
 <h2 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h2><p>数据获取完毕以后，把存储在内存中的数据输出到Excel</p>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">from</span> pandas <span class="hljs-keyword">import</span>  ExcelWriter</span><br><span class="line">writer = ExcelWriter(<span class="hljs-string">"MOOC.xlsx"</span>)</span><br><span class="line">data.to_excel(writer,<span class="hljs-string">"mooc"</span>)</span><br><span class="line">writer.save()</span><br></pre></td></tr></table></figure>
+
 <p>最终展示在Excel中的数据如下图：</p>
 <p><img src="/picture/mooc_4.png" alt="result"></p>
 
@@ -1714,6 +1712,17 @@ $$sd_k=[(1/B)\sum _b \{log(W_{kb}^+)-\bar l\}^2]^{1/2}</script><p>定义$s_k=sd_
                     </span>
                     <span class="level-right">
                         <span class="level-item tag">pcgan.site</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="http://yinhongyu.com" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">尹宏宇</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">yinhongyu.com</span>
                     </span>
                 </a>
             </li>
