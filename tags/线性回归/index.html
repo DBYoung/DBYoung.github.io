@@ -81,8 +81,8 @@
     
 
 
-<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body class="is-3-column">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
     <div class="container">
@@ -167,46 +167,100 @@
         </h1>
         <div class="content">
             <h2 id="先修知识"><a href="#先修知识" class="headerlink" title="先修知识"></a>先修知识</h2><p>设多元线性回归方程的模型为</p>
-<p>$$Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$</p>
-<p>可令$X_0=1$，则模型可写做：</p>
-<p>$$Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p $$</p>
-<p>表示成矩阵形式为：</p>
-<p>$$Y=\beta X$$</p>
-<p>其中，</p>
-<p>$$\beta =<br>\left[\begin{matrix}<br>\beta_0 \<br>\beta_1 \<br>\beta_2 \<br>\vdots \<br>\beta_p<br>\end{matrix}<br>\right]</p>
-<p>X=<br>\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{11} &amp;\cdots &amp;x_{1p} \<br>&amp;x_{20} &amp;x_{21} &amp;\cdots &amp;x_{2p} \<br>&amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{n0} &amp;x_{n1} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right]<br>$$</p>
-<p>则线性回归方程的最小二乘系数估计值为:</p>
-<p>$$\hat{\beta} = (X’X)^{-1}X’Y$$</p>
-<h2 id="编程思路"><a href="#编程思路" class="headerlink" title="编程思路"></a>编程思路</h2><p>利用MapReduce计算系数是，由于输入数据是一行一行进行读取的，因此在计算的时候，不可能直接利用矩阵乘法进行计算。这里，我们假设输入的数据格式为：</p>
-<p>$$x_0\ x_1\ x_2\ \cdots x_p\ y$$</p>
-<p>即</p>
-<p>$$1\  x_1\ x_2\ \cdots x_p\ y$$</p>
-<p>首先，考虑最简单的，计算$X’Y$，即计算</p>
-<p>$$<br>\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{20} &amp;x_{30} &amp;\cdots &amp;x_{n0} \<br>&amp;x_{11} &amp;x_{21} &amp;x_{31} &amp;\cdots &amp;x_{n1} \<br>&amp;x_{12} &amp;x_{22} &amp;x_{32} &amp;\cdots &amp;x_{n2} \<br>&amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{1p} &amp;x_{2p} &amp;x_{3p} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right] \times<br>\left[\begin{matrix}<br>        y_1 \<br>        y_2 \<br>        y_3 \<br>        \vdots \<br>        y_n<br>    \end{matrix}\right]=\left[\begin{matrix}<br>        &amp;x_{10}y_1+&amp;x_{20}y_2+&amp;x_{30}y_3+&amp;\cdots+&amp;x_{n0}y_n \<br>        &amp;x_{11}y_1+&amp;x_{21}y_2+&amp;x_{31}y_3+&amp;\cdots+&amp;x_{n1}y_n \<br>        &amp;x_{12}y_1+&amp;x_{22}y_2+&amp;x_{32}y_3+&amp;\cdots+&amp;x_{n2}y_n \<br>        &amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>        &amp;x_{1p}y_1+&amp;x_{2p}y_2+&amp;x_{3p}y_3+&amp;\cdots+&amp;x_{np}y_n<br>        \end{matrix}\right]<br>$$</p>
-<p>观察右侧矩阵可以发现，$y_1$总是与第一列相乘，$y_2$总是与第二列相乘，……，以此类推。而第一列实际上就是我们读取数据的第一行，第二列是读取数据的第二行……。根据这种规律，我们每读取一行，就让当前的$y$与所有的自变量相乘，然后把所有的结果累加求和，即为我们想要的结果。</p>
+<script type="math/tex; mode=display">Y=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p</script><p>可令$X_0=1$，则模型可写做：</p>
+<script type="math/tex; mode=display">Y=\beta_0X_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_pX_p</script><p>表示成矩阵形式为：</p>
+<script type="math/tex; mode=display">Y=\beta X</script><p>其中，</p>
+<script type="math/tex; mode=display">\beta =
+\left[\begin{matrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2 \\
+\vdots \\
+\beta_p
+\end{matrix}
+\right]
+
+X=
+\left[\begin{matrix}
+&x_{10} &x_{11} &\cdots &x_{1p} \\
+&x_{20} &x_{21} &\cdots &x_{2p} \\
+&\vdots &\vdots &\ddots &\vdots \\
+&x_{n0} &x_{n1} &\cdots &x_{np}
+\end{matrix}\right]</script><p>则线性回归方程的最小二乘系数估计值为:</p>
+<script type="math/tex; mode=display">\hat{\beta} = (X'X)^{-1}X'Y</script><h2 id="编程思路"><a href="#编程思路" class="headerlink" title="编程思路"></a>编程思路</h2><p>利用MapReduce计算系数是，由于输入数据是一行一行进行读取的，因此在计算的时候，不可能直接利用矩阵乘法进行计算。这里，我们假设输入的数据格式为：</p>
+<script type="math/tex; mode=display">x_0\ x_1\ x_2\ \cdots x_p\ y</script><p>即</p>
+<script type="math/tex; mode=display">1\  x_1\ x_2\ \cdots x_p\ y</script><p>首先，考虑最简单的，计算$X’Y$，即计算</p>
+<script type="math/tex; mode=display">
+\left[\begin{matrix}
+&x_{10} &x_{20} &x_{30} &\cdots &x_{n0} \\
+&x_{11} &x_{21} &x_{31} &\cdots &x_{n1} \\
+&x_{12} &x_{22} &x_{32} &\cdots &x_{n2} \\
+&\vdots &\vdots &\vdots &\ddots &\vdots \\
+&x_{1p} &x_{2p} &x_{3p} &\cdots &x_{np}
+\end{matrix}\right] \times
+\left[\begin{matrix}
+        y_1 \\
+        y_2 \\
+        y_3 \\
+        \vdots \\
+        y_n
+    \end{matrix}\right]=\left[\begin{matrix}
+        &x_{10}y_1+&x_{20}y_2+&x_{30}y_3+&\cdots+&x_{n0}y_n \\
+        &x_{11}y_1+&x_{21}y_2+&x_{31}y_3+&\cdots+&x_{n1}y_n \\
+        &x_{12}y_1+&x_{22}y_2+&x_{32}y_3+&\cdots+&x_{n2}y_n \\
+        &\vdots &\vdots &\vdots &\ddots &\vdots \\
+        &x_{1p}y_1+&x_{2p}y_2+&x_{3p}y_3+&\cdots+&x_{np}y_n
+        \end{matrix}\right]</script><p>观察右侧矩阵可以发现，$y_1$总是与第一列相乘，$y_2$总是与第二列相乘，……，以此类推。而第一列实际上就是我们读取数据的第一行，第二列是读取数据的第二行……。根据这种规律，我们每读取一行，就让当前的$y$与所有的自变量相乘，然后把所有的结果累加求和，即为我们想要的结果。</p>
 <p>上面已经解决了矩阵自变量矩阵的转置与因变量向量的乘积，即：</p>
-<p>$$part1 = X’Y$$</p>
-<p>那么，矩阵转置与矩阵的乘积$X’X$仍然可以仿照上述的方法进行。</p>
-<p>$$X’X = \left[\begin{matrix}<br>&amp;x_{10} &amp;x_{20} &amp;x_{30} &amp;\cdots &amp;x_{n0} \<br>&amp;x_{11} &amp;x_{21} &amp;x_{31} &amp;\cdots &amp;x_{n1} \<br>&amp;x_{12} &amp;x_{22} &amp;x_{32} &amp;\cdots &amp;x_{n2} \<br>&amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{1p} &amp;x_{2p} &amp;x_{3p} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right]<br>\times\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{11} &amp;\cdots &amp;x_{1p} \<br>&amp;x_{20} &amp;x_{21} &amp;\cdots &amp;x_{2p} \<br>&amp;x_{30} &amp;x_{31} &amp;\cdots &amp;x_{2p} \<br>&amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{n0} &amp;x_{n1} &amp;\cdots &amp;x_{np}<br>\end{matrix}<br>\right]<br>$$</p>
-<p>$$=\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{20} &amp;x_{30} &amp;\cdots &amp;x_{n0} \<br>&amp;x_{11} &amp;x_{21} &amp;x_{31} &amp;\cdots &amp;x_{n1} \<br>&amp;x_{12} &amp;x_{22} &amp;x_{32} &amp;\cdots &amp;x_{n2} \<br>&amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{1p} &amp;x_{2p} &amp;x_{3p} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right]\times\left[\begin{matrix}<br>x_0, x_1, x_2, \cdots, x_p<br>\end{matrix}\right]<br>$$</p>
-<p>可以把上述既然课程看作是进行了$p+1$次的矩阵转置与向量乘积过程。当读取第一行时，我们可以得到一个矩阵：</p>
-<p>$$<br>step1 = \left[\begin{matrix}<br>        &amp;x_{10}x_{10} &amp;x_{11}x_{10} &amp;\cdots &amp;x_{1p}x_{10} \<br>        &amp;x_{10}x_{11} &amp;x_{11}x_{11} &amp;\cdots &amp;x_{1p}x_{11} \<br>        &amp;x_{10}x_{12} &amp;x_{11}x_{12} &amp;\cdots &amp;x_{1p}x_{12} \<br>        &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots                   \<br>        &amp;x_{10}x_{1p} &amp;x_{11}x_{1p} &amp;\cdots &amp;x_{1p}x_{1p}<br>    \end{matrix}\right]$$<br>同理，当读取第二行的时候，同样可以得到一个矩阵：</p>
-<p>$$<br>step2 = \left[<br>    \begin{matrix}<br>        &amp;x_{20}x_{20} &amp;x_{21}x_{20} &amp;\cdots &amp;x_{2p}x_{20} \<br>        &amp;x_{20}x_{21} &amp;x_{21}x_{21} &amp;\cdots &amp;x_{2p}x_{21} \<br>        &amp;x_{20}x_{22} &amp;x_{21}x_{12} &amp;\cdots &amp;x_{2p}x_{12} \<br>        &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots                   \<br>        &amp;x_{20}x_{2p} &amp;x_{21}x_{2p} &amp;\cdots &amp;x_{2p}x_{2p}<br>    \end{matrix}\right]$$</p>
-<p>此时，将$step1\ step2$对应元素相加，即得到我们的更新矩阵。迭代下去，最终读取完所在的数据，即为$X’X$的结果。</p>
+<script type="math/tex; mode=display">part1 = X'Y</script><p>那么，矩阵转置与矩阵的乘积$X’X$仍然可以仿照上述的方法进行。</p>
+<script type="math/tex; mode=display">X'X = \left[\begin{matrix}
+&x_{10} &x_{20} &x_{30} &\cdots &x_{n0} \\
+&x_{11} &x_{21} &x_{31} &\cdots &x_{n1} \\
+&x_{12} &x_{22} &x_{32} &\cdots &x_{n2} \\
+&\vdots &\vdots &\vdots &\ddots &\vdots \\
+&x_{1p} &x_{2p} &x_{3p} &\cdots &x_{np}
+\end{matrix}\right]
+\times\left[\begin{matrix}
+&x_{10} &x_{11} &\cdots &x_{1p} \\
+&x_{20} &x_{21} &\cdots &x_{2p} \\
+&x_{30} &x_{31} &\cdots &x_{2p} \\
+&\vdots &\vdots &\ddots &\vdots \\
+&x_{n0} &x_{n1} &\cdots &x_{np}
+\end{matrix}
+\right]</script><script type="math/tex; mode=display">=\left[\begin{matrix}
+&x_{10} &x_{20} &x_{30} &\cdots &x_{n0} \\
+&x_{11} &x_{21} &x_{31} &\cdots &x_{n1} \\
+&x_{12} &x_{22} &x_{32} &\cdots &x_{n2} \\
+&\vdots &\vdots &\vdots &\ddots &\vdots \\
+&x_{1p} &x_{2p} &x_{3p} &\cdots &x_{np}
+\end{matrix}\right]\times\left[\begin{matrix}
+x_0, x_1, x_2, \cdots, x_p
+\end{matrix}\right]</script><p>可以把上述既然课程看作是进行了$p+1$次的矩阵转置与向量乘积过程。当读取第一行时，我们可以得到一个矩阵：</p>
+<script type="math/tex; mode=display">
+step1 = \left[\begin{matrix}
+        &x_{10}x_{10} &x_{11}x_{10} &\cdots &x_{1p}x_{10} \\
+        &x_{10}x_{11} &x_{11}x_{11} &\cdots &x_{1p}x_{11} \\
+        &x_{10}x_{12} &x_{11}x_{12} &\cdots &x_{1p}x_{12} \\
+        &\vdots &\vdots &\ddots &\vdots                   \\
+        &x_{10}x_{1p} &x_{11}x_{1p} &\cdots &x_{1p}x_{1p}
+    \end{matrix}\right]</script><p>同理，当读取第二行的时候，同样可以得到一个矩阵：</p>
+<script type="math/tex; mode=display">
+step2 = \left[
+    \begin{matrix}
+        &x_{20}x_{20} &x_{21}x_{20} &\cdots &x_{2p}x_{20} \\
+        &x_{20}x_{21} &x_{21}x_{21} &\cdots &x_{2p}x_{21} \\
+        &x_{20}x_{22} &x_{21}x_{12} &\cdots &x_{2p}x_{12} \\
+        &\vdots &\vdots &\ddots &\vdots                   \\
+        &x_{20}x_{2p} &x_{21}x_{2p} &\cdots &x_{2p}x_{2p}
+    \end{matrix}\right]</script><p>此时，将$step1\ step2$对应元素相加，即得到我们的更新矩阵。迭代下去，最终读取完所在的数据，即为$X’X$的结果。</p>
 <p>当数据量很大的时候，用MapReduce方法进行计算，hadoop会将数据按照block的大小切分成若干块，每一块都执行mapper函数，在reducer里面把所有的mapper结果加起来，最后计算$(X’X)^{-1}X’Y$.</p>
 <h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>由于矩阵的输出不容易处理，因此在得到矩阵的时候，可以将其拉长为向量，这样就可以使用标准化输出函数print将计算结果输出，以便于reducer使用。</p>
-<p>mapper函数如下：</p>
-<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#! /usr/bin/anaconda2/bin/python</span></span><br><span class="line"><span class="hljs-comment"># -*- coding:UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> sys</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_input</span><span class="hljs-params">(file)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> file:</span><br><span class="line">        <span class="hljs-keyword">yield</span> line.strip()</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">matmulti</span><span class="hljs-params">()</span>:</span></span><br><span class="line">    </span><br><span class="line">    input = read_input(sys.stdin)</span><br><span class="line"></span><br><span class="line">    innerLength = <span class="hljs-number">0</span></span><br><span class="line">    length = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> input:</span><br><span class="line">        fields = line.split(<span class="hljs-string">","</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> innerLength == <span class="hljs-number">0</span>:</span><br><span class="line">            innerLength = len(fields) - <span class="hljs-number">1</span></span><br><span class="line">            data1 = np.array([<span class="hljs-number">0.0</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(innerLength)])</span><br><span class="line">        temp = np.array(fields,float)[:innerLength]*float(fields[innerLength])</span><br><span class="line">        data1 = data1 + temp</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">if</span> length == <span class="hljs-number">0</span>:</span><br><span class="line">            length = len(fields) - <span class="hljs-number">1</span></span><br><span class="line">            data2 = np.diag(np.zeros(length))</span><br><span class="line">        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> range(length):</span><br><span class="line">            data2[index] += np.array(fields[:length],dtype = float)*float(fields[index])</span><br><span class="line">            </span><br><span class="line">    <span class="hljs-keyword">return</span> data1,data2</span><br><span class="line"></span><br><span class="line">data1,data2 = matmulti()</span><br><span class="line">data1 = list(data1)</span><br><span class="line">length = len(data2)</span><br><span class="line">data2 = data2.reshape(<span class="hljs-number">1</span>,length**<span class="hljs-number">2</span>)</span><br><span class="line">data2 = list(data2[<span class="hljs-number">0</span>])</span><br><span class="line">data = data1 + data2</span><br><span class="line">print(<span class="hljs-string">"\t"</span>.join(str(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> data))</span><br></pre></td></tr></table></figure>
-
+<p>mapper函数如下：<br><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#! /usr/bin/anaconda2/bin/python</span></span><br><span class="line"><span class="hljs-comment"># -*- coding:UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> sys</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_input</span><span class="hljs-params">(file)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> file:</span><br><span class="line">        <span class="hljs-keyword">yield</span> line.strip()</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">matmulti</span><span class="hljs-params">()</span>:</span></span><br><span class="line">    </span><br><span class="line">    input = read_input(sys.stdin)</span><br><span class="line"></span><br><span class="line">    innerLength = <span class="hljs-number">0</span></span><br><span class="line">    length = <span class="hljs-number">0</span></span><br><span class="line">    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> input:</span><br><span class="line">        fields = line.split(<span class="hljs-string">","</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> innerLength == <span class="hljs-number">0</span>:</span><br><span class="line">            innerLength = len(fields) - <span class="hljs-number">1</span></span><br><span class="line">            data1 = np.array([<span class="hljs-number">0.0</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(innerLength)])</span><br><span class="line">        temp = np.array(fields,float)[:innerLength]*float(fields[innerLength])</span><br><span class="line">        data1 = data1 + temp</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">if</span> length == <span class="hljs-number">0</span>:</span><br><span class="line">            length = len(fields) - <span class="hljs-number">1</span></span><br><span class="line">            data2 = np.diag(np.zeros(length))</span><br><span class="line">        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> range(length):</span><br><span class="line">            data2[index] += np.array(fields[:length],dtype = float)*float(fields[index])</span><br><span class="line">            </span><br><span class="line">    <span class="hljs-keyword">return</span> data1,data2</span><br><span class="line"></span><br><span class="line">data1,data2 = matmulti()</span><br><span class="line">data1 = list(data1)</span><br><span class="line">length = len(data2)</span><br><span class="line">data2 = data2.reshape(<span class="hljs-number">1</span>,length**<span class="hljs-number">2</span>)</span><br><span class="line">data2 = list(data2[<span class="hljs-number">0</span>])</span><br><span class="line">data = data1 + data2</span><br><span class="line">print(<span class="hljs-string">"\t"</span>.join(str(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> data))</span><br></pre></td></tr></table></figure></p>
 <p>reducer函数如下：</p>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#! /usr/bin/anaconda2/bin/python</span></span><br><span class="line"><span class="hljs-comment"># -*- coding:UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> sys</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_input</span><span class="hljs-params">(file)</span>:</span></span><br><span class="line">    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> file:</span><br><span class="line">        <span class="hljs-keyword">yield</span> line.strip()</span><br><span class="line"></span><br><span class="line">input = read_input(sys.stdin)</span><br><span class="line"></span><br><span class="line">length = <span class="hljs-number">0</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> input:</span><br><span class="line">    fields = line.split(<span class="hljs-string">"\t"</span>)</span><br><span class="line">    <span class="hljs-keyword">if</span> length == <span class="hljs-number">0</span>:</span><br><span class="line">        length = len(fields)</span><br><span class="line">        data = np.array([<span class="hljs-number">0.0</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(length)])</span><br><span class="line">    fields = np.array(fields,dtype = float)</span><br><span class="line">    data += fields</span><br><span class="line"></span><br><span class="line">lenght = len(data)</span><br><span class="line">varnums = int((<span class="hljs-number">-1</span>+math.sqrt(<span class="hljs-number">1</span>+<span class="hljs-number">4.0</span>*length))/<span class="hljs-number">2.0</span>)</span><br><span class="line"></span><br><span class="line">part1 = np.mat(data[:varnums])</span><br><span class="line">part1 = part1.T</span><br><span class="line"></span><br><span class="line">part2 = data[varnums:]</span><br><span class="line">part2 = part2.reshape(varnums,varnums)</span><br><span class="line">part2 = np.mat(part2)</span><br><span class="line">part2 = part2.I</span><br><span class="line"></span><br><span class="line">result = part2*part1</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">print</span> result</span><br></pre></td></tr></table></figure>
-
-<p>用R随机生成一份样本量为100万的数据，R回归结果为：</p>
-<figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Coefficients:</span><br><span class="line">              Estimate Std. Error t value Pr(&gt;|t|)    </span><br><span class="line">(Intercept) <span class="hljs-number">19.9995945</span>  <span class="hljs-number">0.0602316</span> <span class="hljs-number">332.045</span>   &lt;<span class="hljs-number">2e-16</span> ***</span><br><span class="line">V2          -<span class="hljs-number">0.0012168</span>  <span class="hljs-number">0.0009998</span>  -<span class="hljs-number">1.217</span>   <span class="hljs-number">0.2236</span>    </span><br><span class="line">V3          -<span class="hljs-number">0.0018043</span>  <span class="hljs-number">0.0009990</span>  -<span class="hljs-number">1.806</span>   <span class="hljs-number">0.0709</span> .  </span><br><span class="line">V4           <span class="hljs-number">0.0017635</span>  <span class="hljs-number">0.0009990</span>   <span class="hljs-number">1.765</span>   <span class="hljs-number">0.0775</span> .  </span><br><span class="line">V5          -<span class="hljs-number">0.0021161</span>  <span class="hljs-number">0.0009987</span>  -<span class="hljs-number">2.119</span>   <span class="hljs-number">0.0341</span> *  </span><br><span class="line">V6          -<span class="hljs-number">0.0002982</span>  <span class="hljs-number">0.0009997</span>  -<span class="hljs-number">0.298</span>   <span class="hljs-number">0.7655</span>    </span><br><span class="line">V7           <span class="hljs-number">0.0008608</span>  <span class="hljs-number">0.0009998</span>   <span class="hljs-number">0.861</span>   <span class="hljs-number">0.3892</span>    </span><br><span class="line">V8           <span class="hljs-number">0.0007678</span>  <span class="hljs-number">0.0009995</span>   <span class="hljs-number">0.768</span>   <span class="hljs-number">0.4423</span>    </span><br><span class="line">V9           <span class="hljs-number">0.0009089</span>  <span class="hljs-number">0.0009991</span>   <span class="hljs-number">0.910</span>   <span class="hljs-number">0.3630</span>    </span><br><span class="line">V10          <span class="hljs-number">0.0009761</span>  <span class="hljs-number">0.0009991</span>   <span class="hljs-number">0.977</span>   <span class="hljs-number">0.3286</span></span><br></pre></td></tr></table></figure>
-
+<p>用R随机生成一份样本量为100万的数据，R回归结果为：<br><figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Coefficients:</span><br><span class="line">              Estimate Std. Error t value Pr(&gt;|t|)    </span><br><span class="line">(Intercept) <span class="hljs-number">19.9995945</span>  <span class="hljs-number">0.0602316</span> <span class="hljs-number">332.045</span>   &lt;<span class="hljs-number">2e-16</span> ***</span><br><span class="line">V2          -<span class="hljs-number">0.0012168</span>  <span class="hljs-number">0.0009998</span>  -<span class="hljs-number">1.217</span>   <span class="hljs-number">0.2236</span>    </span><br><span class="line">V3          -<span class="hljs-number">0.0018043</span>  <span class="hljs-number">0.0009990</span>  -<span class="hljs-number">1.806</span>   <span class="hljs-number">0.0709</span> .  </span><br><span class="line">V4           <span class="hljs-number">0.0017635</span>  <span class="hljs-number">0.0009990</span>   <span class="hljs-number">1.765</span>   <span class="hljs-number">0.0775</span> .  </span><br><span class="line">V5          -<span class="hljs-number">0.0021161</span>  <span class="hljs-number">0.0009987</span>  -<span class="hljs-number">2.119</span>   <span class="hljs-number">0.0341</span> *  </span><br><span class="line">V6          -<span class="hljs-number">0.0002982</span>  <span class="hljs-number">0.0009997</span>  -<span class="hljs-number">0.298</span>   <span class="hljs-number">0.7655</span>    </span><br><span class="line">V7           <span class="hljs-number">0.0008608</span>  <span class="hljs-number">0.0009998</span>   <span class="hljs-number">0.861</span>   <span class="hljs-number">0.3892</span>    </span><br><span class="line">V8           <span class="hljs-number">0.0007678</span>  <span class="hljs-number">0.0009995</span>   <span class="hljs-number">0.768</span>   <span class="hljs-number">0.4423</span>    </span><br><span class="line">V9           <span class="hljs-number">0.0009089</span>  <span class="hljs-number">0.0009991</span>   <span class="hljs-number">0.910</span>   <span class="hljs-number">0.3630</span>    </span><br><span class="line">V10          <span class="hljs-number">0.0009761</span>  <span class="hljs-number">0.0009991</span>   <span class="hljs-number">0.977</span>   <span class="hljs-number">0.3286</span></span><br></pre></td></tr></table></figure></p>
 <p>MapReduce的输出结果为：</p>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[[  <span class="hljs-number">1.99995945e+01</span>]	</span><br><span class="line"> [ <span class="hljs-number">-1.21684122e-03</span>]	</span><br><span class="line"> [ <span class="hljs-number">-1.80428969e-03</span>]	</span><br><span class="line"> [  <span class="hljs-number">1.76352620e-03</span>]	</span><br><span class="line"> [ <span class="hljs-number">-2.11610460e-03</span>]	</span><br><span class="line"> [ <span class="hljs-number">-2.98208998e-04</span>]	</span><br><span class="line"> [  <span class="hljs-number">8.60846240e-04</span>]	</span><br><span class="line"> [  <span class="hljs-number">7.67848910e-04</span>]	</span><br><span class="line"> [  <span class="hljs-number">9.08866936e-04</span>]	</span><br><span class="line"> [  <span class="hljs-number">9.76052909e-04</span>]]</span><br></pre></td></tr></table></figure>
-
 <p>二者的计算结果是一样的。</p>
 
         </div>
@@ -229,7 +283,7 @@
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
     
         
 <div class="card widget">
@@ -383,7 +437,7 @@
 
     
     
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
         
             
 <div class="card widget">
@@ -724,7 +778,7 @@
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
     
         
 <div class="card widget">
