@@ -211,6 +211,7 @@
 </ol>
 <p>现在主要应用的都是分布式表示形式了。下面介绍一种简单的分布式表示形式——基于矩阵的表示形式。</p>
 <p>如下表所示：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -221,7 +222,8 @@
 <th>k = fashion</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>$p(k\vert ice)$</td>
 <td>$1.9\times 10^{-4}$</td>
 <td>$6.6\times 10^{-5}$</td>
@@ -242,7 +244,9 @@
 <td>$1.36$</td>
 <td>$0.96$</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>简单说一下上面的矩阵。</p>
 <p>假设我们对一些热力学短语或者词语的概念感兴趣，我们选择i=ice，k=steam，我们想看看ice和steam的关系，可以通过他们与其他词语的共现频率来研究。这些其他词语我们称之为探测词。这里我们选择探测词k为solid，gas，water和fashion。显然，ice与solid的相关性较高，但是与steam相关性较低，因此我们期望看到的是$p_{ik}/p_{jk}$比值比较大。对于探测词gas，我们期望看到的是$p_{ik}/p_{jk}$比值比较小。而water和fashion与ice和steam的关系要么都十分密切，要么都不怎么密切，因此对于这两个探测词，$p_{ik}/p_{jk}$应该接近于1.</p>
 <p>上表是基于一个很大的语料库统计得出的，符合我们的预期。相比于单独使用原始概率，概率比值可以更好的区分相关词语和不相关词语，比如solid和gas与water和fashion；也可以很容易区分两个相关词。</p>
@@ -254,26 +258,30 @@
 
 美主席联储本·伯南克告诉昨天媒体7000亿美元的资金救助将借给百上家银行、保险公司和汽公车司
 
-美主车席联储本·克告诉昨天公司媒体7000伯南亿美行元的金将借给百救助上家资银、保险公司和汽</code></pre><p>对于第一个句子，语句通畅，意思也很不明白；对于第二个句子，虽然个别词语调换了位置，但也不影响阅读，我们仍然能够知道表达的是什么意思；对于第三个句子，我们就很难知道具体表示什么意思了。</p>
+美主车席联储本·克告诉昨天公司媒体7000伯南亿美行元的金将借给百救助上家资银、保险公司和汽
+</code></pre><p>对于第一个句子，语句通畅，意思也很不明白；对于第二个句子，虽然个别词语调换了位置，但也不影响阅读，我们仍然能够知道表达的是什么意思；对于第三个句子，我们就很难知道具体表示什么意思了。</p>
 <p>如果问你为什么第三个句子不知道表达什么，你可能会说句子混乱，语义不清晰。在上个世纪70年代的时候，科学家们也是这样想的，并且试图让计算机去判断一个句子的语义是否清晰，然而，这样的方法是走不通的。</p>
 <p><strong>贾里尼克</strong>想到了一种很好的统计模型来解决上述问题。判断一个句子是否合理，只需要看它在所有句子中出现的概率就行了。第一个句子出现的概率大概是$10^{-20}$,第二个句子出现的概率大概是$10^{-25}$，第三个句子出现的概率大概是$10^{-70}$，第一个句子出现的可能性最大，因此这个句子最为合理。</p>
 <p>那么，如何计算一个句子出现的概率呢，我们可以把有史以来人类说过的话都统计一遍，这样就能很方便的计算概率了。然而，你我都知道这条路走不通。</p>
 <p>假设想知道S在文本中出现的可能性，也就是数学上所说的S的概率，既然$S=w_1,w_2,…,w_n$,那么不妨把S展开表示，</p>
-<p>$$P(S)=P(w_1,w_2,…,w_n)$$</p>
-<p>利用条件概率的公式，S这个序列出现的概率等于每一个词出现的条件概率的乘乘积，展开为：</p>
-<p>$$<br>P(w_1,w_2,…,w_n)=P(w_1)P(w_2\vert w_1)P(w_3\vert w_1,w_2)\cdots P(w_n\vert w_1,w_2,\cdots w_{n-1})<br>$$</p>
-<p>计算$P(w_1)$很容易，$P(w_2\vert w_1)$也还能算出来，$P(w_3\vert w_1,w_2)$已经非常难以计算了。</p>
+<script type="math/tex; mode=display">P(S)=P(w_1,w_2,...,w_n)</script><p>利用条件概率的公式，S这个序列出现的概率等于每一个词出现的条件概率的乘乘积，展开为：</p>
+<script type="math/tex; mode=display">
+P(w_1,w_2,...,w_n)=P(w_1)P(w_2\vert w_1)P(w_3\vert w_1,w_2)\cdots P(w_n\vert w_1,w_2,\cdots w_{n-1})</script><p>计算$P(w_1)$很容易，$P(w_2\vert w_1)$也还能算出来，$P(w_3\vert w_1,w_2)$已经非常难以计算了。</p>
 <h3 id="2-偷懒的马尔科夫-Andrey-Markov"><a href="#2-偷懒的马尔科夫-Andrey-Markov" class="headerlink" title="2. 偷懒的马尔科夫(Andrey Markov)"></a>2. 偷懒的<strong>马尔科夫</strong>(Andrey Markov)</h3><p>假设上面的n不取很长，而只取2个，那么就可以大大减少计算量。即在此时，假设一个词$w_i$出现的概率只与它前面的$w_{i-1}$有关，这种假设称为1阶马尔科夫假设。</p>
-<p>现在，S的概率就变得简单了：<br>$$<br>P(w_1,w_2,…,w_n) \approx P(w_1)P(w_2\vert w_1)<br>$$ </p>
-<p>那么，接下来的问题就变成了估计条件概率$P(w_i\vert w_{i-1})$,根据它的定义，</p>
-<p>$$<br>P(w_i\vert w_{i-1}) = \frac{P(w_i,w_{i-1})}{P(w_{i-1})}<br>$$<br>,</p>
-<p>当样本量很大的时候，基于大数定律，一个短语或者词语出现的概率可以用其频率来表示，即<br>$$<br>P(w_i,w_{i-1})\approx \frac{count(w_i,w_{i-1})}{count(*)}<br>$$</p>
-<p>$$<br>P(w_{i-1}) \approx \frac{count(w_{i-1})}{count(*)}<br>$$</p>
-<p>其中，$count(i)$表示词$i$出现的次数，$count$表示语料库的大小。</p>
+<p>现在，S的概率就变得简单了：</p>
+<script type="math/tex; mode=display">
+P(w_1,w_2,...,w_n) \approx P(w_1)P(w_2\vert w_1)</script><p>那么，接下来的问题就变成了估计条件概率$P(w_i\vert w_{i-1})$,根据它的定义，</p>
+<script type="math/tex; mode=display">
+P(w_i\vert w_{i-1}) = \frac{P(w_i,w_{i-1})}{P(w_{i-1})}</script><p>,</p>
+<p>当样本量很大的时候，基于大数定律，一个短语或者词语出现的概率可以用其频率来表示，即</p>
+<script type="math/tex; mode=display">
+P(w_i,w_{i-1})\approx \frac{count(w_i,w_{i-1})}{count(*)}</script><script type="math/tex; mode=display">
+P(w_{i-1}) \approx \frac{count(w_{i-1})}{count(*)}</script><p>其中，$count(i)$表示词$i$出现的次数，$count$表示语料库的大小。</p>
 <p>那么</p>
-<p>$$<br>P(w_i\vert w_{i-1}) = \frac{P(w_i,w_{i-1})}{P(w_{i-1})} \approx \frac{count(w_i,w_{i-1})}{count(w_{i-1})}<br>$$</p>
-<h3 id="3-高阶语言模型"><a href="#3-高阶语言模型" class="headerlink" title="3. 高阶语言模型"></a>3. 高阶语言模型</h3><p>在前面的模型中，每个词只与前面1个词有关，和更前面的词就没有关系了，这似乎简单的有点过头了。那么，假定每个词$w_i$都与前面的N-1个词有关，而与更前面的词无关，这样，当前词的概率只取决于前面N-1个词的联合概率，即</p>
-<p>$$<br>P(w_1\vert w_1,w_2,\cdots w_{i-1}) \approx P(w_1\vert w_{i-N+1},w_{i-N+2},\cdots w_{i-1})<br>$$<br>,</p>
+<script type="math/tex; mode=display">
+P(w_i\vert w_{i-1}) = \frac{P(w_i,w_{i-1})}{P(w_{i-1})} \approx \frac{count(w_i,w_{i-1})}{count(w_{i-1})}</script><h3 id="3-高阶语言模型"><a href="#3-高阶语言模型" class="headerlink" title="3. 高阶语言模型"></a>3. 高阶语言模型</h3><p>在前面的模型中，每个词只与前面1个词有关，和更前面的词就没有关系了，这似乎简单的有点过头了。那么，假定每个词$w_i$都与前面的N-1个词有关，而与更前面的词无关，这样，当前词的概率只取决于前面N-1个词的联合概率，即</p>
+<script type="math/tex; mode=display">
+P(w_1\vert w_1,w_2,\cdots w_{i-1}) \approx P(w_1\vert w_{i-N+1},w_{i-N+2},\cdots w_{i-1})</script><p>,</p>
 <p>上面这种假设被称为n-1阶马尔科夫假设，对应的模型称为N元模型。N=2就是二元模型，N=1其实就是上下文无关的模型，基本不怎么使用。</p>
 <p>上面的模型看起来已经很完美了，但是考虑以下两个问题，对于二元模型：</p>
 <p>如果此时$count(w_i,w_{i-1})=0$，是否可以说$P(w_i\vert w_{i-1})=0$ ?</p>
@@ -282,27 +290,39 @@
 <p>但是，实际上上述两种情况肯定是会出现的，尤其是语料足够大的时候，那么，我们怎么解决上述问题呢？</p>
 <p>古德和图灵给出了一个很漂亮的重新估计概率的公式，这个公式后来被称为古德-图灵估计。</p>
 <p>古德图灵的原理是：</p>
-<pre><code>对于没有看见的事件，我们不能认为他发生的概率就是0，因此从概率的总量中，分配一个很小的比例给这些没有看见的事件。这样一来，看见的那些事件的概率就要小于1了，因此，需要将所有看见的事件的概率调小一点。至于小多少，要根据“越是不可信的统计折扣越多”的方法进行。</code></pre><p>假定在语料库中出现$r$次的词有$N_r$个，特别的，未出现的词数量为$N_0$，语料库大小为$N$，那么，很显然，</p>
-<p>$$<br>N = \sum _{r=1}^ \infty rN_r<br>$$<br>,</p>
+<pre><code>对于没有看见的事件，我们不能认为他发生的概率就是0，因此从概率的总量中，分配一个很小的比例给这些没有看见的事件。这样一来，看见的那些事件的概率就要小于1了，因此，需要将所有看见的事件的概率调小一点。至于小多少，要根据“越是不可信的统计折扣越多”的方法进行。
+</code></pre><p>假定在语料库中出现$r$次的词有$N_r$个，特别的，未出现的词数量为$N_0$，语料库大小为$N$，那么，很显然，</p>
+<script type="math/tex; mode=display">
+N = \sum _{r=1}^ \infty rN_r</script><p>,</p>
 <p>出现$r$次的词在整个语料库中的相对频度则是${rN_r}/{N}$，如果不做任何处理，这个相对频度作为这些词的概率。但是当$r$比较小的时候，统计上可能不可靠，因此需要使用一个更小的次数$d_r$来表示，古德-图灵按照如下公式计算$d_r$:</p>
-<p>$$<br>d_r=(r+1)\cdot N_{r+1}/N_r<br>$$<br>,</p>
+<script type="math/tex; mode=display">
+d_r=(r+1)\cdot N_{r+1}/N_r</script><p>,</p>
 <p>显然</p>
-<p>$$<br>\sum_r d_r\cdot N_r = \sum_r (r+1)\cdot N_{r+1} = N<br>$$<br>,</p>
+<script type="math/tex; mode=display">
+\sum_r d_r\cdot N_r = \sum_r (r+1)\cdot N_{r+1} = N</script><p>,</p>
 <p>此时，</p>
-<p>$$<br>d_0 = (0+1)\cdot N_1/N_0 = \frac{N_1}{N_0} &gt; 0<br>$$</p>
-<p>在实际处理的时候，一般对出现次数超过某个阈值的词，频率不下调。</p>
+<script type="math/tex; mode=display">
+d_0 = (0+1)\cdot N_1/N_0 = \frac{N_1}{N_0} > 0</script><p>在实际处理的时候，一般对出现次数超过某个阈值的词，频率不下调。</p>
 <p>基于这种思想，估计二元模型概率的公式如下：</p>
-<p>$$<br>P(w_i\vert w_{i-1})=<br>\begin{cases}<br>f(wi\vert w_{i-1}) &amp; {if\quad count(w_{i-1},w_i)} \ge T \<br>f_{gt}(w_i\vert w_{i-1})&amp; if\quad 0 \le count(w_{i-1},w_i) &lt; T \<br>Q(w_{i-1})\cdot f(w_i) &amp; otherwise<br>\end{cases}<br>$$<br>,</p>
+<script type="math/tex; mode=display">
+P(w_i\vert w_{i-1})=
+\begin{cases}
+f(wi\vert w_{i-1}) & {if\quad count(w_{i-1},w_i)} \ge T \\
+f_{gt}(w_i\vert w_{i-1})& if\quad 0 \le count(w_{i-1},w_i) < T \\
+Q(w_{i-1})\cdot f(w_i) & otherwise
+\end{cases}</script><p>,</p>
 <p>其中, $f(\cdot)$ 表示相对频度，即频率。</p>
-<p>$$<br>Q(w_{i-1})=\frac{1-\sum_{w_i\quad seen}P(w_i \vert w_{i-1})}{\sum _{wi\quad unseen}f(w_i)}<br>$$</p>
-<p>上面这种方法称为卡茨退避法。</p>
+<script type="math/tex; mode=display">
+Q(w_{i-1})=\frac{1-\sum_{w_i\quad seen}P(w_i \vert w_{i-1})}{\sum _{wi\quad unseen}f(w_i)}</script><p>上面这种方法称为卡茨退避法。</p>
 <p>n-gram模型的作用就是，基于语料库计算出各种词串出现的概率，遇到一个句子的时候，可以直接使用上面所计算的概率，把所有的概率连乘，就得到了整个句子的概率。</p>
 <h3 id="4-机器学习的思想"><a href="#4-机器学习的思想" class="headerlink" title="4. 机器学习的思想"></a>4. 机器学习的思想</h3><p>机器学习的套路是，对所研究的问题建模，构造一个目标函数，然后优化参数，最后用这个目标函数进行预测。</p>
 <p>对于统计语言模型，常使用最大对数似然作为目标函数，即</p>
-<p>$$<br>L = \sum_{w\in C}logP(w\vert context(w))<br>$$<br>,</p>
+<script type="math/tex; mode=display">
+L = \sum_{w\in C}logP(w\vert context(w))</script><p>,</p>
 <p>在n-gram模型中，$context(w_i) = (w_{i-n+1},w_{i-n+2},\cdots,w_{i-1})$,</p>
 <p>由此可见，概率$P(w_i\vert context(w_i))$是关于$w$和$context(w)$的函数，即</p>
-<p>$$<br>P(w\vert context(w)) = F(w,context(w),\theta)<br>$$<br>,</p>
+<script type="math/tex; mode=display">
+P(w\vert context(w)) = F(w,context(w),\theta)</script><p>,</p>
 <p>一旦$F$确定下来了，任何概率都可以使用这个函数进行计算了。</p>
 <p><strong>似乎到这里，我们仍然不知道词向量是什么，因为n-gram模型中根本没有用到词向量。那么，接下来将要介绍的神经网络语言模型则是实实在在用到了词向量。之所以提到统计语言模型，是因为它是其他语言模型的基础，我们得知道语言模型是干嘛的，然后再对语言模型进行展开。</strong></p>
 <hr>
@@ -332,7 +352,7 @@
 </li>
 <li><p>目标是找到一个好的模型，使得$f(W_t,…,W_{t-n+1})=\hat{P}(W_t|W_1^{n-1})$</p>
 </li>
-<li><p>唯一的约束条件是$\sum <em>{i=1}^{|V|}f(i,W</em>{t-1},…,W_t-n+1)=1,f&gt;0$</p>
+<li><p>唯一的约束条件是$\sum _{i=1}^{|V|}f(i,W_{t-1},…,W_t-n+1)=1,f&gt;0$</p>
 </li>
 </ul>
 <p><img src="/picture/nnlm.png" alt="photo"> </p>
@@ -343,22 +363,23 @@
 <li><p>每个词的概率函数是由$C$来表示的：函数$g$将输入的词特征向量$(C(W_{t-n+1}),…,C(W_{t-1}))$映射为词$W_t$前面$n-1$个词的条件概率分布。</p>
 </li>
 </ol>
-<p>$$<br>f(i,W_{t-1},…,W_{t-n+1})=g(i,C(W_{t-1}),…,C(W_{t-n+1}))$$</p>
-<p>函数$f$是由两个映射组成的($C&amp;g$),$C$是所有词共享的。每一个部分都与一些参数有关。</p>
+<script type="math/tex; mode=display">
+f(i,W_{t-1},...,W_{t-n+1})=g(i,C(W_{t-1}),...,C(W_{t-n+1}))</script><p>函数$f$是由两个映射组成的($C\&amp;g$),$C$是所有词共享的。每一个部分都与一些参数有关。</p>
 <p>映射$C$的参数实际上就是特征向量本身，表示为一个$|V|\times m$矩阵，矩阵的每一行代表词$i$的特征向量$C(i)$.</p>
 <p>函数$g$的参数是$\omega$，所有的参数就是$\theta = (C,\omega)$.</p>
 <p>当寻找到使得带惩罚项的训练语料库的对数似然率最大的$\theta$，那么训练完成。</p>
-<p>$$<br>L = \frac{1}{T}\sum <em>t log f(W_t,W</em>{t-1},…,W_t-n+1)+R(\theta)<br>$$</p>
-<p>$R(\theta)$是惩罚项，只作用于神经网络的权重和矩阵$C$。自由参数的规模是$V$的线性函数，也是$n$的线性函数。</p>
+<script type="math/tex; mode=display">
+L = \frac{1}{T}\sum _t log f(W_t,W_{t-1},...,W_t-n+1)+R(\theta)</script><p>$R(\theta)$是惩罚项，只作用于神经网络的权重和矩阵$C$。自由参数的规模是$V$的线性函数，也是$n$的线性函数。</p>
 <p>在下面的大多数试验中，神经网络只有一个隐藏层，外加一个映射层。还有一个可选的直连层。所以说实际上有两个隐藏层，但是由于影射层只是做了一个线性变换，并没有添加新的信息，因此不能视为真正的隐藏层。所以真正的隐藏层就只有一个。</p>
 <p>从图中可以看出，最底层实际上就是一些单一的词，表示成one-hot形式，即长度为词汇表的长度。然后，每个one-hot向量分别与投影矩阵C相乘，则原来长度为$|V|$的one-hot向量，经过线性变换以后，缩短为一个长度为$m$的向量，其中m就是我们设置的特征的个数，一般在2个数量级。投影完成以后，将所有的特征向量按照顺序首尾相连，形成一个长度为$m(n-1)$的向量，以词向量作为隐藏层的输入，隐藏层的激活函数为双曲正切函数$tanh$。输出层接受隐藏层的输出作为输入，经过一个softmax函数进行转换，得到最终的输出P.</p>
 <p>即</p>
-<p>$$<br>\hat{P}(w_t\vert w_{t-1},…,w_{t-n+1})=\frac{e^{y_{w_t}}}{\sum_i e^{y_i}}<br>$$<br>,</p>
+<script type="math/tex; mode=display">
+\hat{P}(w_t\vert w_{t-1},...,w_{t-n+1})=\frac{e^{y_{w_t}}}{\sum_i e^{y_i}}</script><p>,</p>
 <p>其中</p>
-<p>$$<br>y = b+Wx + Utanh(d+Hx)<br>$$</p>
-<p>双曲正切函数逐个应用于隐藏层的各个单元。当没有直连的时候，$W=0$，$x$是首尾相连的特征向量：</p>
-<p>$$<br>x = (C(w_{t-1}),C(w_{t-2}),…,C(w_{t-n+1}))<br>$$</p>
-<p>令$h$是隐藏层的单元数，$m$是特征向量的长度，当没有直连的时候，$W=0$。那么，所有的自由参数就是：</p>
+<script type="math/tex; mode=display">
+y = b+Wx + Utanh(d+Hx)</script><p>双曲正切函数逐个应用于隐藏层的各个单元。当没有直连的时候，$W=0$，$x$是首尾相连的特征向量：</p>
+<script type="math/tex; mode=display">
+x = (C(w_{t-1}),C(w_{t-2}),...,C(w_{t-n+1}))</script><p>令$h$是隐藏层的单元数，$m$是特征向量的长度，当没有直连的时候，$W=0$。那么，所有的自由参数就是：</p>
 <ul>
 <li><p>输出层的偏置$b$，长度为|V|</p>
 </li>
@@ -375,11 +396,11 @@
 </ul>
 <p><strong>此时的输出$y$实际上是一个长度为$|V|$的向量，那么分量$y_{wt}$不能表示给出前(n-1)个词的情况下$w_t$的概率，因此需要进行一次归一化。</strong></p>
 <p>那么，我们所有的参数如下：</p>
-<p>$$<br>\theta = (b,d,W,U,H,C)<br>$$</p>
-<p>主要的计算量都集中在隐藏层到输出层的以及输出层的归一化计算。</p>
+<script type="math/tex; mode=display">
+\theta = (b,d,W,U,H,C)</script><p>主要的计算量都集中在隐藏层到输出层的以及输出层的归一化计算。</p>
 <p>使用随机梯度下降进行参数求解：</p>
-<p>$$<br>\theta \leftarrow \theta + \epsilon\frac{\partial log \hat{P}(w_t\vert w_{t-1},w_{t-2},w_{t-n+1})}{\partial \theta}<br>$$</p>
-<p>其中，$\epsilon$是学习率。</p>
+<script type="math/tex; mode=display">
+\theta \leftarrow \theta + \epsilon\frac{\partial log \hat{P}(w_t\vert w_{t-1},w_{t-2},w_{t-n+1})}{\partial \theta}</script><p>其中，$\epsilon$是学习率。</p>
 <p>当训练结束以后，矩阵$C$就是我们需要的词向量，每一行代表该位置的词的向量。得到了词向量，就可以进行许多有趣的分析。</p>
 <p>比如：</p>
 <ul>
@@ -428,16 +449,16 @@
 <p>由于这个神经网络没有激活函数，因此看起来比较简单。</p>
 <p>神经网络的计算过程如下：</p>
 <ul>
-<li><p>首先，将输入词向量(one-hot)投影到隐藏层(投影层)，即$$<br>i^T\times P=1\times |V|\times |V| \times m=1\times m<br>$$</p>
+<li><p>首先，将输入词向量(one-hot)投影到隐藏层(投影层)，即<script type="math/tex">i^T\times P=1\times |V|\times |V| \times m=1\times m</script></p>
 </li>
-<li><p>将隐藏层的结果乘以隐藏层到输出层的权重矩阵$W$，即$$<br>1\times m \times m\times |V|=1\times |V|<br>$$</p>
+<li><p>将隐藏层的结果乘以隐藏层到输出层的权重矩阵$W$，即<script type="math/tex">1\times m \times m\times |V|=1\times |V|</script></p>
 </li>
 <li><p>将输出层的输出结果进行softmax归一化，即</p>
 </li>
 </ul>
-<p>$$y=\frac{e^{y}}{\sum_{i\in y}e^i }$$</p>
-<p>此时$y$是一个$1\times |V|$向量，向量的每个分量代表给定词$w_i$的情况下，其相邻词是词汇表中对应词的概率。将$y$与output的one-hot向量相乘，就可以得到给定$w_i$的情况下，其相邻词是output的概率，即</p>
-<p>$$<br>P(w_o\vert w_i)=y\times w_o<br>$$<br>,</p>
+<script type="math/tex; mode=display">y=\frac{e^{y}}{\sum_{i\in y}e^i }</script><p>此时$y$是一个$1\times |V|$向量，向量的每个分量代表给定词$w_i$的情况下，其相邻词是词汇表中对应词的概率。将$y$与output的one-hot向量相乘，就可以得到给定$w_i$的情况下，其相邻词是output的概率，即</p>
+<script type="math/tex; mode=display">
+P(w_o\vert w_i)=y\times w_o</script><p>,</p>
 <p>其中，$w_o$是词output的向量形式。</p>
 <p><strong>以上矩阵相乘只是为了说明维度变化，并不是实际上的矩阵乘法。</strong></p>
 <p>用矩阵说明如下：</p>
@@ -463,19 +484,21 @@
 </ul>
 <p><strong>skip-gram的目标是对于训练样本$w_1,w_2,\cdots,w_T$,最大化如下平均对数似然概率：</strong></p>
 <p><img src="/picture/5.jpg" alt="matrix2"></p>
-<p>$$<br>\frac{1}{T}\sum <em>{t=1}^T\sum</em>{-c\le i\le c,j\ne 0}log p(w_{t+j}\vert w_t)<br>$$</p>
-<p>实际上，以上模型是难以实现的，因为计算 $\nabla logp(w_O\vert w_I)$的代价随着$W$的增大而增大(W表示词汇表的长度),经常达到$10^5-10^7$数量级。</p>
+<script type="math/tex; mode=display">
+\frac{1}{T}\sum _{t=1}^T\sum_{-c\le i\le c,j\ne 0}log p(w_{t+j}\vert w_t)</script><p>实际上，以上模型是难以实现的，因为计算 $\nabla logp(w_O\vert w_I)$的代价随着$W$的增大而增大(W表示词汇表的长度),经常达到$10^5-10^7$数量级。</p>
 <h2 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h2><h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a><strong>哈夫曼树</strong></h3><p>哈夫曼树是一种最优二叉树，它是这样定义的：</p>
-<pre><code>给定n个权值作为n个叶子结点，构造一棵二叉树，若带权路径长度达到最小，称这样的二叉树为最优二叉树。</code></pre><p>哈夫曼树的构造方法如下：</p>
+<pre><code>给定n个权值作为n个叶子结点，构造一棵二叉树，若带权路径长度达到最小，称这样的二叉树为最优二叉树。
+</code></pre><p>哈夫曼树的构造方法如下：</p>
 <p>(1) 将$w_1,w_2,\cdots,w_n$看成是有n 棵树的森林(每棵树仅有一个结点)；</p>
 <p>(2) 在森林中选出两个根结点的权值最小的树合并，作为一棵新树的左、右子树，且新树的根结点权值为其左、右子树根结点权值之和；</p>
 <p>(3)从森林中删除选取的两棵树，并将新树加入森林；</p>
 <p>(4)重复(2)、(3)步，直到森林中只剩一棵树为止，该树即为所求得的哈夫曼树</p>
 <p>假设我们的权值为：26    24    15    10    17    18    10    27</p>
 <p>首先对上面的权值按照从小到大排序：</p>
-<pre><code>排序后的权值为：10 10 15 17 18 24 26 27</code></pre><p>然后。我们按照上述步骤构建哈夫曼树。</p>
+<pre><code>排序后的权值为：10 10 15 17 18 24 26 27
+</code></pre><p>然后。我们按照上述步骤构建哈夫曼树。</p>
 <p><strong>此处我们约定将大的权值放在左子树。</strong></p>
-<p>—Begin</p>
+<p>—-Begin</p>
 <ul>
 <li><p>选择最小的两个权值10，10，合并成一个新树的左右子树。新树的权值为20，删除合并的两个权值，将20加入到森林，此时的权值为（仍然进行排序）：15 17 18 <strong>20</strong> 24 26 27</p>
 </li>
@@ -492,30 +515,31 @@
 <li><p>选择最小的59和88合并，删除59和88，将147加入到森林，此时的权值为：<strong>147</strong></p>
 </li>
 </ul>
-<p>—End</p>
+<p>—-End</p>
 <p>根据上述权值构造的哈夫曼树如下：</p>
 <p><img src="/picture/6.png" alt="Huffman Tree"></p>
 <p><strong>背景为黄色的是新生成的树</strong></p>
 <h3 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a><strong>逻辑回归</strong></h3><p>逻辑回归通常用来处理二分类问题，因变量通常只有两个可能的取值，自变量既可以是连续型变量，也可以是分类变量。</p>
 <p>利用sigmoid函数，对于任意的样本$x=(x_1,x_2,\cdots,x_n)^T$，可将二分类问题的h函数(hypothesis)写成如下形式：</p>
-<p>$$<br>h_\theta(x)=\sigma(\theta_0+\theta_1x_1+\cdots+\theta_nx_n)$$<br>,</p>
+<script type="math/tex; mode=display">
+h_\theta(x)=\sigma(\theta_0+\theta_1x_1+\cdots+\theta_nx_n)</script><p>,</p>
 <p>其中$\theta =(\theta_0,\theta_1,\cdots,\theta_n)$为待定参数，为了简化起见，可以引入$x_0=1$将$x$扩展为$(x_0,x_1,\cdots,x_n)$,于是，$h_\theta$可简写为</p>
-<p>$$<br>h_\theta(x)=\sigma(\theta^Tx)=\frac{1}{1+e^{-\theta^Tx}}<br>$$</p>
-<p>sigmoid函数图像如下：</p>
+<script type="math/tex; mode=display">
+h_\theta(x)=\sigma(\theta^Tx)=\frac{1}{1+e^{-\theta^Tx}}</script><p>sigmoid函数图像如下：</p>
 <p><img src="/picture/7.png" alt="sigmoid"></p>
 <p><strong>函数$h_\theta(x)$的值有特殊的含义，它表示结果取1的概率，因此对于输入$x$,分类结果为类别1和类别0的概率分别为：</strong></p>
-<p>$$<br>P(y=1\vert x;\theta)=h_\theta(x)<br>$$</p>
-<p>$$<br>P(y=0\vert x;\theta)=1-h_\theta(x)<br>$$</p>
-<p>上式也可以写成如下综合形式：</p>
-<p>$$<br>P(y\vert x;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y}<br>$$</p>
-<p><strong>sigmoid函数具有很好的导数特征</strong></p>
+<script type="math/tex; mode=display">
+P(y=1\vert x;\theta)=h_\theta(x)</script><script type="math/tex; mode=display">
+P(y=0\vert x;\theta)=1-h_\theta(x)</script><p>上式也可以写成如下综合形式：</p>
+<script type="math/tex; mode=display">
+P(y\vert x;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y}</script><p><strong>sigmoid函数具有很好的导数特征</strong></p>
 <p>已知</p>
-<p>$$<br>\sigma(x) = \frac{1}{1+e^{-x}}<br>$$</p>
-<p>则</p>
-<p>$$<br>\sigma(x)^{‘}=\frac{e^{-x}}{(1+e^{-x})^2}=\sigma(x)(1-\sigma(x))<br>$$</p>
-<p>另外</p>
-<p>$$<br>[log\sigma(x)]^{‘}=1-\sigma(x),[log(1-\sigma(x))^{‘}=- \sigma(x)<br>$$</p>
-<h3 id="Hierarchical-Softmax-1"><a href="#Hierarchical-Softmax-1" class="headerlink" title="Hierarchical Softmax"></a><strong>Hierarchical Softmax</strong></h3><p>hierarchical softmax使用一颗二叉树的叶子结点来代表输出层对应词汇表中每个词的输出结果。每个结点都代表了它的孩子结点的相关概率。这种方式定义了一种给词分配概率的随机游走解决方案。</p>
+<script type="math/tex; mode=display">
+\sigma(x) = \frac{1}{1+e^{-x}}</script><p>则</p>
+<script type="math/tex; mode=display">
+\sigma(x)^{'}=\frac{e^{-x}}{(1+e^{-x})^2}=\sigma(x)(1-\sigma(x))</script><p>另外</p>
+<script type="math/tex; mode=display">
+[log\sigma(x)]^{'}=1-\sigma(x),[log(1-\sigma(x))^{'}=- \sigma(x)</script><h3 id="Hierarchical-Softmax-1"><a href="#Hierarchical-Softmax-1" class="headerlink" title="Hierarchical Softmax"></a><strong>Hierarchical Softmax</strong></h3><p>hierarchical softmax使用一颗二叉树的叶子结点来代表输出层对应词汇表中每个词的输出结果。每个结点都代表了它的孩子结点的相关概率。这种方式定义了一种给词分配概率的随机游走解决方案。</p>
 <p>准确地说，从根结点出发，每一个词都能以一条确定的路径抵达。对所使用的符号作如下阐述：</p>
 <ul>
 <li><p>$w$：代表词汇表中的词，用叶子结点表示</p>
@@ -535,12 +559,12 @@
 </li>
 </ul>
 <p>hierarchical softmax定义$P(w_o\vert w_i)$如下：</p>
-<p>$$<br>P(w\vert w_i)=\prod_{j=1}^{L(w)-1}\sigma([[n(w,j+1)=ch(n(w,j))]]\cdot (v^{‘}<em>{n(w,j)})^T v</em>{w_i})<br>$$</p>
-<p>其中</p>
-<p>$$<br>\sigma(x)=1/(1+e^{-x})<br>$$</p>
-<p>可以证明：</p>
-<p>$$<br>\sum _{i=1}^Wp(w\vert w_i)=1<br>$$</p>
-<p>那么，hierarchical softmax框架下的skip-gram结构是什么样的呢?</p>
+<script type="math/tex; mode=display">
+P(w\vert w_i)=\prod_{j=1}^{L(w)-1}\sigma([[n(w,j+1)=ch(n(w,j))]]\cdot (v^{'}_{n(w,j)})^T v_{w_i})</script><p>其中</p>
+<script type="math/tex; mode=display">
+\sigma(x)=1/(1+e^{-x})</script><p>可以证明：</p>
+<script type="math/tex; mode=display">
+\sum _{i=1}^Wp(w\vert w_i)=1</script><p>那么，hierarchical softmax框架下的skip-gram结构是什么样的呢?</p>
 <p><img src="/picture/8.png" alt="hierarchical softmax skip-gram"></p>
 <p>如上图所示，与basic版本的skip-gram模型相比，hierarchical softmax版本的模型输出层不再是线性结构，而是树形结构。</p>
 <p>上面已经说过，线性结构的skip-gram模型的参数规模十分庞大，最大能够达到$10^7$数量级，再加上动辄10亿级别的语料库，训练代价很高，效率就特别低了。</p>
@@ -548,82 +572,78 @@
 <p><strong>下面假装正经地推导参数的更新过程：</strong></p>
 <p>假设我们的训练样本是【今天我上课迟到了，然后被老师批评了】，对应词汇表中的词汇为【今天 我 上课 迟到 了 然后 被 老师 批评】</p>
 <p>假设在语料库中，上述词汇对应的频数如下表所示：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">词汇</th>
-<th align="center">频率</th>
+<th style="text-align:center">词汇</th>
+<th style="text-align:center">频率</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">今天</td>
-<td align="center">8</td>
+<tbody>
+<tr>
+<td style="text-align:center">今天</td>
+<td style="text-align:center">8</td>
 </tr>
 <tr>
-<td align="center">我</td>
-<td align="center">15</td>
+<td style="text-align:center">我</td>
+<td style="text-align:center">15</td>
 </tr>
 <tr>
-<td align="center">上课</td>
-<td align="center">2</td>
+<td style="text-align:center">上课</td>
+<td style="text-align:center">2</td>
 </tr>
 <tr>
-<td align="center">迟到</td>
-<td align="center">1</td>
+<td style="text-align:center">迟到</td>
+<td style="text-align:center">1</td>
 </tr>
 <tr>
-<td align="center">了</td>
-<td align="center">20</td>
+<td style="text-align:center">了</td>
+<td style="text-align:center">20</td>
 </tr>
 <tr>
-<td align="center">然后</td>
-<td align="center">10</td>
+<td style="text-align:center">然后</td>
+<td style="text-align:center">10</td>
 </tr>
 <tr>
-<td align="center">被</td>
-<td align="center">5</td>
+<td style="text-align:center">被</td>
+<td style="text-align:center">5</td>
 </tr>
 <tr>
-<td align="center">老师</td>
-<td align="center">3</td>
+<td style="text-align:center">老师</td>
+<td style="text-align:center">3</td>
 </tr>
 <tr>
-<td align="center">批评</td>
-<td align="center">2</td>
+<td style="text-align:center">批评</td>
+<td style="text-align:center">2</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>将频率看做是哈夫曼树的权值，将大的权值放在左子树，小的权值放在右子树。</p>
 <p>绘制出的带权值的哈夫曼树如下：</p>
-<p><img src="%5Cpicture%5C9.png" alt="output"></p>
+<p><img src="\picture\9.png" alt="output"></p>
 <p>说明如下：</p>
 <ul>
 <li><p>黄色的结点表示新生成的树</p>
 </li>
 <li><p>$\theta_i^w \in R^m$，非叶子结点对应的向量</p>
 </li>
-<li><p>$d_1^w,d_2^w,\cdots,d_{l(w)-1}^w \in {0,1}$：词$w$的哈夫曼编码，由$l(w)-1$位编码构成，$d_j^w$对应对应路径中第$j$个非叶子结点的编码(0 or 1).</p>
+<li><p>$d_1^w,d_2^w,\cdots,d_{l(w)-1}^w \in \{0,1\}$：词$w$的哈夫曼编码，由$l(w)-1$位编码构成，$d_j^w$对应对应路径中第$j$个非叶子结点的编码(0 or 1).</p>
 </li>
 </ul>
 <p>根据基于hierarchical softmax的skip-gram模型，投影层将输入的one-hot向量投影成$R^m$空间中的向量，即输出层接受的输入为投影层的输出，即$v_m$。</p>
 <p>目标函数仍然是最大化对数似然概率，那么，当前的重点是条件概率函数的构造。</p>
 <p>skip-gram模型将其定义为</p>
-<p>$$P(context(w_i)\vert w_i)=\prod _{u\in context(w_i)}p(u\vert w_i)$$</p>
-<p>而根据hierarchical softmax的思想，$p(u\vert w_i)$可以写出如下形式：</p>
-<p>$$p(u\vert w_i)=\prod <em>{j=2}^{l(w)}p(d_j^u\vert v_m;\theta</em>{j-1}^u)$$</p>
-<p>其中</p>
-<p>$$p(d_j^u\vert v_m;\theta_{j-1}^u)=[\sigma(v_m^T\theta^u_{j-1})]^{1-d_j^u}\cdot[1-\sigma(v_m^T\theta^u_{j-1})]^{d_j^u}$$</p>
-<p>那么，我们的目标函数可以写成如下形式：</p>
-<p>$$L=\sum <em>{w\in C} log \prod _{u\in context(w)}\prod _{j=2}^{l(w)}[\sigma(v_m^T\theta^u</em>{j-1})]^{1-d_j^u}\cdot[1-\sigma(v_m^T\theta^u_{j-1})]^{d_j^u}$$<br>$$=\sum <em>{w\in C}\sum _{u \in context(w)}\sum _{j=2}^{l(w)}{(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u</em>{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]}$$</p>
-<p>上面的函数就是skip-gram的目标函数，为了方便推导梯度，将三重求和符号下花括号的内容简记为$L(w,u,j)$，即</p>
-<p>$$L(w,u,j)=(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]$$</p>
-<p>首先考虑$L$关于$\theta_{j-1}^u$的梯度计算：</p>
-<p>$$\frac{\partial L}{\partial \theta_{j-1}^u}=\frac{\partial L(w,u,j)}{\partial \theta_{j-1}^u}=\frac{\partial {(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]}}
-{\partial \theta_{j-1}^u}=[1-d_j^u-\sigma(v_m^T\theta_{j-1}^u)]\cdot v_m$$</p>
-<p>于是，$\theta_{j-1}^u$的更新公式可写为：</p>
-<p>$$\theta_{j-1}^u\leftarrow \theta_{j-1}^u+\epsilon [1-d_j^u-\sigma(v_m^T\theta_{j-1}^u)]\cdot v_m$$</p>
-<p>接下来考虑$L$对$v_m$的梯度。由于在$L$中，$v_m$与$\theta_{j-1}^u$具有对称性，因此可以根据上述所求，直接写出$v_m$的更新公式：</p>
-<p>$$v_m\leftarrow v_m+\epsilon \sum _{u\in C}\sum _{j=2}^{l(w)}\frac{\partial L(w,u,j)}{\partial v_m}$$</p>
-<p>其中，$\epsilon$是学习率。</p>
+<script type="math/tex; mode=display">P(context(w_i)\vert w_i)=\prod _{u\in context(w_i)}p(u\vert w_i)</script><p>而根据hierarchical softmax的思想，$p(u\vert w_i)$可以写出如下形式：</p>
+<script type="math/tex; mode=display">p(u\vert w_i)=\prod _{j=2}^{l(w)}p(d_j^u\vert v_m;\theta_{j-1}^u)</script><p>其中</p>
+<script type="math/tex; mode=display">p(d_j^u\vert v_m;\theta_{j-1}^u)=[\sigma(v_m^T\theta^u_{j-1})]^{1-d_j^u}\cdot[1-\sigma(v_m^T\theta^u_{j-1})]^{d_j^u}</script><p>那么，我们的目标函数可以写成如下形式：</p>
+<script type="math/tex; mode=display">L=\sum _{w\in C} log \prod _{u\in context(w)}\prod _{j=2}^{l(w)}[\sigma(v_m^T\theta^u_{j-1})]^{1-d_j^u}\cdot[1-\sigma(v_m^T\theta^u_{j-1})]^{d_j^u}</script><script type="math/tex; mode=display">=\sum _{w\in C}\sum _{u \in context(w)}\sum _{j=2}^{l(w)}\{(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]\}</script><p>上面的函数就是skip-gram的目标函数，为了方便推导梯度，将三重求和符号下花括号的内容简记为$L(w,u,j)$，即</p>
+<script type="math/tex; mode=display">L(w,u,j)=(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]</script><p>首先考虑$L$关于$\theta_{j-1}^u$的梯度计算：</p>
+<script type="math/tex; mode=display">\frac{\partial L}{\partial \theta_{j-1}^u}=\frac{\partial L(w,u,j)}{\partial \theta_{j-1}^u}=\frac{\partial \{(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]\}}
+{\partial \theta_{j-1}^u}=[1-d_j^u-\sigma(v_m^T\theta_{j-1}^u)]\cdot v_m</script><p>于是，$\theta_{j-1}^u$的更新公式可写为：</p>
+<script type="math/tex; mode=display">\theta_{j-1}^u\leftarrow \theta_{j-1}^u+\epsilon [1-d_j^u-\sigma(v_m^T\theta_{j-1}^u)]\cdot v_m</script><p>接下来考虑$L$对$v_m$的梯度。由于在$L$中，$v_m$与$\theta_{j-1}^u$具有对称性，因此可以根据上述所求，直接写出$v_m$的更新公式：</p>
+<script type="math/tex; mode=display">v_m\leftarrow v_m+\epsilon \sum _{u\in C}\sum _{j=2}^{l(w)}\frac{\partial L(w,u,j)}{\partial v_m}</script><p>其中，$\epsilon$是学习率。</p>
 <h2 id="Negative-Sampling-and-Subsampling-of-Frequent-Words"><a href="#Negative-Sampling-and-Subsampling-of-Frequent-Words" class="headerlink" title="Negative Sampling and Subsampling of Frequent Words"></a>Negative Sampling and Subsampling of Frequent Words</h2><p>考虑到basic版本的skip-gram模型拥有两个异常巨大的权重矩阵，再加上一个10亿数量级的语料库，神经网络跑起来会非常吃力。</p>
 <p>word2vec的作者是这样处理这个问题的，主要有以下三个创新点：</p>
 <ol>
@@ -639,11 +659,13 @@
 <p>negative sampling的思想就是，当我们在训练一个特定样本的时候，能不能只更新几个输出为0的权重，这样计算起来就比较轻松了。</p>
 <p>我们把one-hot向量分量为负的位置所对应的词称为negative words，在训练一次样本时，我们只更新几个(假如说5个吧)negative words，同时也更新我们的pisitive words(即分量为1所对应的位置在词汇表中对应的词)。</p>
 <p>作者在论文中说到，当样本量比较小的时候，选择5-20个negative words效果会比较好，当样本量比较大的时候，2-5个negative words就能得到很好的效果。</p>
-<p>现在假设我们在basic model中需要更新的权重矩阵为$300\times 10000$矩阵，那么basic model每次迭代需要更新$3\times 10^6$个参数，而采用了negative sampling 方法以后，我们只需要更新5个negative words和1个positive words对应的权重，也就是$300\times (5+1)=1800$个权重，是原来的$1800/3\times 10^6=0.06%$.</p>
+<p>现在假设我们在basic model中需要更新的权重矩阵为$300\times 10000$矩阵，那么basic model每次迭代需要更新$3\times 10^6$个参数，而采用了negative sampling 方法以后，我们只需要更新5个negative words和1个positive words对应的权重，也就是$300\times (5+1)=1800$个权重，是原来的$1800/3\times 10^6=0.06\%$.</p>
 <p>想法是好的，我们要怎么选择这5个negative words呢？</p>
 <p>我们知道，语料库中的每个词都有一定的频率，那么我们就利用频率这个信息，对negative words进行采样。</p>
 <p>由此可见，高频词被选为negative words的概率就比较大，同理，低频词被选为negative words的概率就比较小。</p>
-<p>作者的处理方法是，赋予每一个词被选为negative words的概率，具体计算公式如下：<br>$$<br>P(w_i)=\frac{f(w_i)^{0.75}}{\sum _{j=0}^nf(w_i)^{0.75}}<br>$$<br>,</p>
+<p>作者的处理方法是，赋予每一个词被选为negative words的概率，具体计算公式如下：</p>
+<script type="math/tex; mode=display">
+P(w_i)=\frac{f(w_i)^{0.75}}{\sum _{j=0}^nf(w_i)^{0.75}}</script><p>,</p>
 <p>至于为什么是0.75，这是作者及其团队经过不断试验得出的效果比较好的，没有特别的原因。</p>
 <p>计算出了概率，我们又怎么选择相应的negative words呢？</p>
 <p>作者在其代码中给出了答案。</p>
@@ -656,8 +678,8 @@
 </ol>
 <p>根据一元模型可以从语料库生成样本（也就是把语料库中的文本以词的形式展示）</p>
 <p>填充次数times的计算公式为：</p>
-<p>$$<br>times = P(w_i)\times 100000<br>$$</p>
-<ol start="3">
+<script type="math/tex; mode=display">
+times = P(w_i)\times 100000</script><ol>
 <li>欲选出你的negative words，只需要在0-100M之间随机生成一个整数，以这个整数为索引，在数组中查找元素，该元素也是一个索引，根据这个元素从词汇表中查找negative words。</li>
 </ol>
 <p><strong>不难理解，$P(w_i)$大的被选中的概率就大。</strong></p>
@@ -681,8 +703,8 @@
 </ol>
 <p>那么，我们怎么决定是否删除一个词呢？</p>
 <p>假设$w_i$是待定删除的词，$z(w_i)$是$w_i$在语料库中出现的频率,$P(w_i)$是保留该词的概率:</p>
-<p>$$<br>P(w_i)=(\sqrt{\frac{z(w_i)}{0.001}}+1)\cdot \frac{0.001}{z(w_i)}<br>$$</p>
-<p><strong>0.001也是一个经验参数，如果比0.001还要小，那么保留词的概率就会更小。</strong></p>
+<script type="math/tex; mode=display">
+P(w_i)=(\sqrt{\frac{z(w_i)}{0.001}}+1)\cdot \frac{0.001}{z(w_i)}</script><p><strong>0.001也是一个经验参数，如果比0.001还要小，那么保留词的概率就会更小。</strong></p>
 <p>下面是$P(w_i)$函数的图像：</p>
 <p><img src="/picture/10.png" alt="p(wi)"></p>
 <p>从图像可以看出：</p>
@@ -695,11 +717,13 @@
 </li>
 </ul>
 <h3 id="Learning-Phrase"><a href="#Learning-Phrase" class="headerlink" title="Learning Phrase"></a>Learning Phrase</h3><p>learning phrase 方法使得样本更加接近真实世界。考虑以下句子：</p>
-<pre><code>New York is a beautiful and modern city where I want to have a travel.</code></pre><p>我们设置窗口大小为4，对beautiful进行采样，获得如下样本：</p>
-<pre><code>(beautiful,New) (beautiful,York) (beautiful,is) (beautiful,a) (beautiful,New) (beautiful,and) (beautiful,modern) (beautiful,city) </code></pre><p>采用一元的方法，会将常用的词组分开，从而降低词向量的质量。</p>
+<pre><code>New York is a beautiful and modern city where I want to have a travel.
+</code></pre><p>我们设置窗口大小为4，对beautiful进行采样，获得如下样本：</p>
+<pre><code>(beautiful,New) (beautiful,York) (beautiful,is) (beautiful,a) (beautiful,New) (beautiful,and) (beautiful,modern) (beautiful,city) 
+</code></pre><p>采用一元的方法，会将常用的词组分开，从而降低词向量的质量。</p>
 <p>我们可以采取一个简单的数据驱动的方法，来对两个词是否能组成词组进行打分：</p>
-<p>$$<br>score(w_i,w_j) = \frac{count(w_iw_j)-\delta}{count(w_i)\times count(w_j)}<br>$$</p>
-<p>$\delta$作为一个折扣系数的作用，用来防止那些不怎么经常一起出现的词语形成词组。当score超过了我们设置的阈值时，将两个词视为词组。</p>
+<script type="math/tex; mode=display">
+score(w_i,w_j) = \frac{count(w_iw_j)-\delta}{count(w_i)\times count(w_j)}</script><p>$\delta$作为一个折扣系数的作用，用来防止那些不怎么经常一起出现的词语形成词组。当score超过了我们设置的阈值时，将两个词视为词组。</p>
 <p>上述打分程序可以多进行几次，以获得三元组或者更多词的词组。</p>
 <hr>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1]McCormick, C. (2016, April 19). Word2Vec Tutorial - The Skip-Gram Model. Retrieved from <a href="http://www.mccormickml.com" target="_blank" rel="noopener">http://www.mccormickml.com</a></p>
