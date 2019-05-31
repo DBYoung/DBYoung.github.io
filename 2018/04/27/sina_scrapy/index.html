@@ -141,6 +141,12 @@
                 <time class="level-item has-text-grey" datetime="2018-04-26T16:00:00.000Z">2018-04-27</time>
                 
                 
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 669 个字)
+                </span>
+                
                 
             </div>
         </div>
@@ -155,14 +161,12 @@
 <p><img src="./picture/sina_scrapy.png" alt="sina_scrapy"></p>
 <p>从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。</p>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> requests</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="hljs-keyword">import</span> re</span><br><span class="line"><span class="hljs-keyword">import</span> time</span><br><span class="line"><span class="hljs-keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#第一页的URL</span></span><br><span class="line">startURL = <span class="hljs-string">'http://search.sina.com.cn/?c=news&amp;q=%D0%F0%C0%FB%D1%C7+%BF%D5%CF%AE&amp;range=all&amp;time=2018&amp;stime=&amp;etime=&amp;num=20'</span></span><br><span class="line"></span><br><span class="line">url = startURL</span><br><span class="line">allNewsURL = []</span><br><span class="line">errorPages = []</span><br><span class="line">count = <span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-keyword">while</span> url:</span><br><span class="line">    <span class="hljs-keyword">try</span>:</span><br><span class="line">        res = requests.get(url)</span><br><span class="line">        print(<span class="hljs-string">'已经爬取了第'</span>,count,<span class="hljs-string">'页！'</span>)</span><br><span class="line">        print(<span class="hljs-string">'URL:'</span>,url)</span><br><span class="line">        soup = BeautifulSoup(res.text,<span class="hljs-string">'html.parser'</span>)</span><br><span class="line">        <span class="hljs-keyword">for</span> news <span class="hljs-keyword">in</span> soup.findAll(<span class="hljs-string">'h2'</span>):</span><br><span class="line">            allNewsURL.append(news.find(<span class="hljs-string">'a'</span>).get(<span class="hljs-string">'href'</span>))</span><br><span class="line">        pages = soup.find(<span class="hljs-string">'div'</span>,&#123;<span class="hljs-string">'id'</span>:<span class="hljs-string">"_function_code_page"</span>&#125;).findAll(<span class="hljs-string">'a'</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> pages[<span class="hljs-number">-1</span>].get(<span class="hljs-string">'title'</span>) == <span class="hljs-string">'下一页'</span>:</span><br><span class="line">            url = <span class="hljs-string">'http://search.sina.com.cn'</span> + pages[<span class="hljs-number">-1</span>].get(<span class="hljs-string">'href'</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">        time.sleep(np.random.rand() + <span class="hljs-number">2</span>)</span><br><span class="line">        count += <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">except</span> AttributeError:</span><br><span class="line">        print(<span class="hljs-string">'ip被封！'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'xuliyakongxi.csv'</span>,<span class="hljs-string">'a'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> allNewsURL:</span><br><span class="line">        f.write(url+<span class="hljs-string">'\n'</span>)</span><br></pre></td></tr></table></figure>
-
 <h2 id="获取文章详情"><a href="#获取文章详情" class="headerlink" title="获取文章详情"></a>获取文章详情</h2><p>获取文章详情需要注意以下两点：</p>
 <ul>
 <li>不同的新闻来源具有不同的channel。</li>
 <li>不是所有的新闻都具有关键词、源链接等信息，因此需要进行异常处理。</li>
 </ul>
 <figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">URLs = []</span><br><span class="line"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'xuliyakongxi.csv'</span>,<span class="hljs-string">'r'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> f.readlines():</span><br><span class="line">        url = url.strip(<span class="hljs-string">'\n'</span>)</span><br><span class="line">        URLs.append(url)</span><br><span class="line"></span><br><span class="line">allNews = []</span><br><span class="line">count = <span class="hljs-number">0</span></span><br><span class="line">comments = []</span><br><span class="line">notMatch= []</span><br><span class="line"><span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> URLs:</span><br><span class="line">    <span class="hljs-keyword">try</span>:</span><br><span class="line">        currentNews = []</span><br><span class="line">        request = requests.get(url,timeout=<span class="hljs-number">4</span>)</span><br><span class="line">        request.encoding = <span class="hljs-string">'utf-8'</span></span><br><span class="line">        soup = BeautifulSoup(request.text,<span class="hljs-string">'html.parser'</span>)</span><br><span class="line"></span><br><span class="line">        newsid = re.search(<span class="hljs-string">'doc-i(.+).shtml'</span>,url).group(<span class="hljs-number">1</span>) <span class="hljs-comment">#新闻ID</span></span><br><span class="line">        </span><br><span class="line">        allChannels = [<span class="hljs-string">'gz'</span>,<span class="hljs-string">'shc'</span>,<span class="hljs-string">'gn'</span>,<span class="hljs-string">'gj'</span>,<span class="hljs-string">'jc'</span>,<span class="hljs-string">'cj'</span>,<span class="hljs-string">'kj'</span>,<span class="hljs-string">'sh'</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-comment">#不同来源的新闻对应不同的channel，此处将所有的channel进行遍历，并加入了异常处理</span></span><br><span class="line">        <span class="hljs-keyword">for</span> channel <span class="hljs-keyword">in</span> allChannels:</span><br><span class="line">            <span class="hljs-keyword">try</span>:</span><br><span class="line">                comm = <span class="hljs-string">'http://comment5.news.sina.com.cn/page/info?version=1&amp;format=json&amp;channel='</span>+channel+<span class="hljs-string">'&amp;newsid=comos-'</span>+ newsid</span><br><span class="line">                res_comm = requests.get(comm)</span><br><span class="line">                commentsDesc = json.loads(res_comm.text)</span><br><span class="line">                engageNum = commentsDesc[<span class="hljs-string">'result'</span>][<span class="hljs-string">'count'</span>][<span class="hljs-string">'total'</span>] <span class="hljs-comment">#参与</span></span><br><span class="line">                commentsNum = commentsDesc[<span class="hljs-string">'result'</span>][<span class="hljs-string">'count'</span>][<span class="hljs-string">'show'</span>] <span class="hljs-comment">#评论</span></span><br><span class="line">                comments.append(commentsDesc[<span class="hljs-string">'result'</span>][<span class="hljs-string">'count'</span>])</span><br><span class="line">            <span class="hljs-keyword">except</span>:</span><br><span class="line">                <span class="hljs-keyword">if</span> channel == <span class="hljs-string">'sh'</span>:</span><br><span class="line">                    print(<span class="hljs-string">'没有匹配'</span>)</span><br><span class="line">                    engageNum = <span class="hljs-keyword">None</span></span><br><span class="line">                    commentsNum = <span class="hljs-keyword">None</span></span><br><span class="line">                    notMatch.append(comm)</span><br><span class="line">                <span class="hljs-keyword">else</span>:</span><br><span class="line">                    <span class="hljs-keyword">continue</span></span><br><span class="line">            <span class="hljs-keyword">else</span>:</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">        </span><br><span class="line">        titleAndKeywords = soup.find(<span class="hljs-string">'title'</span>).text </span><br><span class="line">        tk = titleAndKeywords.split(<span class="hljs-string">'|'</span>)</span><br><span class="line">        title = tk[<span class="hljs-number">0</span>] <span class="hljs-comment">#标题</span></span><br><span class="line">        <span class="hljs-keyword">if</span> len(tk) &gt; <span class="hljs-number">2</span>:</span><br><span class="line">            keywords = tk[<span class="hljs-number">1</span>:(len(tk)<span class="hljs-number">-1</span>)]</span><br><span class="line">            keywords.append(tk[<span class="hljs-number">-1</span>].split(<span class="hljs-string">'_'</span>)[<span class="hljs-number">0</span>]) <span class="hljs-comment">#关键词</span></span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            keywords = tk[<span class="hljs-number">-1</span>].split(<span class="hljs-string">'_'</span>)[<span class="hljs-number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        paras = soup.find(<span class="hljs-string">'div'</span>,&#123;<span class="hljs-string">'class'</span>:<span class="hljs-string">'article'</span>&#125;).text <span class="hljs-comment">#正文，存在脏数据</span></span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">try</span>:</span><br><span class="line">            date = soup.find(<span class="hljs-string">'span'</span>,&#123;<span class="hljs-string">'class'</span>:<span class="hljs-string">'date'</span>&#125;).text <span class="hljs-comment">#日期</span></span><br><span class="line">        <span class="hljs-keyword">except</span>:</span><br><span class="line">            date = <span class="hljs-keyword">None</span></span><br><span class="line">            </span><br><span class="line">        <span class="hljs-keyword">try</span>:</span><br><span class="line">            sourceUrl = soup.find(<span class="hljs-string">'a'</span>,&#123;<span class="hljs-string">'class'</span>:<span class="hljs-string">'source'</span>&#125;).get(<span class="hljs-string">'href'</span>) <span class="hljs-comment">#源链接</span></span><br><span class="line">            source = soup.find(<span class="hljs-string">'a'</span>,&#123;<span class="hljs-string">'class'</span>:<span class="hljs-string">'source'</span>&#125;).text <span class="hljs-comment">#来源</span></span><br><span class="line">        <span class="hljs-keyword">except</span>:</span><br><span class="line">            sourceUrl = <span class="hljs-keyword">None</span></span><br><span class="line">            source = <span class="hljs-keyword">None</span></span><br><span class="line">            </span><br><span class="line">        currentNews.append(url) <span class="hljs-comment">#url</span></span><br><span class="line">        currentNews.append(title)  <span class="hljs-comment">#标题</span></span><br><span class="line">        currentNews.append(keywords) <span class="hljs-comment">#关键词</span></span><br><span class="line">        currentNews.append(paras) <span class="hljs-comment">#正文</span></span><br><span class="line">        currentNews.append(date) <span class="hljs-comment">#日期</span></span><br><span class="line">        currentNews.append(sourceUrl) <span class="hljs-comment">#源链接</span></span><br><span class="line">        currentNews.append(source) <span class="hljs-comment">#来源</span></span><br><span class="line">        currentNews.append(engageNum) <span class="hljs-comment">#参与人数</span></span><br><span class="line">        currentNews.append(commentsNum) <span class="hljs-comment">#评论人数</span></span><br><span class="line"></span><br><span class="line">        allNews.append(currentNews)</span><br><span class="line">        count += <span class="hljs-number">1</span></span><br><span class="line"></span><br><span class="line">        print(<span class="hljs-string">'已经爬取'</span>,str(count),<span class="hljs-string">'个页面.'</span>)</span><br><span class="line">        print(<span class="hljs-string">'comment URL:'</span>,comm)</span><br><span class="line">        time.sleep(<span class="hljs-number">1</span>+abs(np.random.rand()))</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> count % <span class="hljs-number">20</span> == <span class="hljs-number">0</span>:</span><br><span class="line">            time.sleep(<span class="hljs-number">5</span>)</span><br><span class="line"><span class="hljs-comment">#         if count &gt; 36:</span></span><br><span class="line"><span class="hljs-comment">#             break;</span></span><br><span class="line">    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:</span><br><span class="line">        print(e)</span><br><span class="line">        <span class="hljs-keyword">continue</span></span><br></pre></td></tr></table></figure>
-
 
         </div>
         
@@ -268,7 +272,7 @@
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
     
         
 <div class="card widget">
@@ -277,7 +281,7 @@
             <div class="level-item has-text-centered">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="https://www.gravatar.com/avatar/d2bf9993682e898ece4bb36e7d4b40b3?s=128" alt="Feng Yangyang">
+                        <img class="image is-128x128 has-mb-6" src="/images/touxiang.jpg" alt="Feng Yangyang">
                     
                     
                     <p class="is-size-4 is-block">
@@ -422,7 +426,7 @@
 
     
     
-        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        <div class="column-right-shadow is-hidden-widescreen ">
         
             
 <div class="card widget">
@@ -432,6 +436,12 @@
         </h3>
         
         <article class="media">
+            
+            <a href="/2018/07/02/R语言简明教程/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/Rlogo.png" alt="R语言简明教程">
+                </p>
+            </a>
             
             <div class="media-content">
                 <div class="content">
@@ -446,6 +456,12 @@
         
         <article class="media">
             
+            <a href="/2018/05/09/排序算法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="排序算法">
+                </p>
+            </a>
+            
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-08T16:00:00.000Z">2018-05-09</time></div>
@@ -458,6 +474,12 @@
         </article>
         
         <article class="media">
+            
+            <a href="/2018/05/05/梯度下降/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="线性回归与梯度下降算法">
+                </p>
+            </a>
             
             <div class="media-content">
                 <div class="content">
@@ -472,6 +494,12 @@
         
         <article class="media">
             
+            <a href="/2018/05/04/牛顿法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="平方根与牛顿法">
+                </p>
+            </a>
+            
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-04T02:50:15.447Z">2018-05-04</time></div>
@@ -484,6 +512,12 @@
         </article>
         
         <article class="media">
+            
+            <a href="/2018/05/03/逻辑回归/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="逻辑回归">
+                </p>
+            </a>
             
             <div class="media-content">
                 <div class="content">
@@ -733,7 +767,7 @@
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
     
         
 <div class="card widget">
@@ -743,6 +777,12 @@
         </h3>
         
         <article class="media">
+            
+            <a href="/2018/07/02/R语言简明教程/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/Rlogo.png" alt="R语言简明教程">
+                </p>
+            </a>
             
             <div class="media-content">
                 <div class="content">
@@ -757,6 +797,12 @@
         
         <article class="media">
             
+            <a href="/2018/05/09/排序算法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="排序算法">
+                </p>
+            </a>
+            
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-08T16:00:00.000Z">2018-05-09</time></div>
@@ -769,6 +815,12 @@
         </article>
         
         <article class="media">
+            
+            <a href="/2018/05/05/梯度下降/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="线性回归与梯度下降算法">
+                </p>
+            </a>
             
             <div class="media-content">
                 <div class="content">
@@ -783,6 +835,12 @@
         
         <article class="media">
             
+            <a href="/2018/05/04/牛顿法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="平方根与牛顿法">
+                </p>
+            </a>
+            
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-04T02:50:15.447Z">2018-05-04</time></div>
@@ -795,6 +853,12 @@
         </article>
         
         <article class="media">
+            
+            <a href="/2018/05/03/逻辑回归/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="逻辑回归">
+                </p>
+            </a>
             
             <div class="media-content">
                 <div class="content">
@@ -1188,24 +1252,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="/js/insight.js" defer></script>
 <link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
 </body>
 </html>
