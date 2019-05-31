@@ -7,19 +7,19 @@
 
 
 
-    <meta name="description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2} Boosting提升（boosting）方法是一">
+    <meta name="description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$  Boosting提升（boosting">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="集成学习">
 <meta property="og:url" content="http://yoursite.com/2018/04/04/集成学习/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
-<meta property="og:description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2} Boosting提升（boosting）方法是一">
+<meta property="og:description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$  Boosting提升（boosting">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/ensemble.jpg">
 <meta property="og:updated_time" content="2019-05-31T04:44:59.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集成学习">
-<meta name="twitter:description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2} Boosting提升（boosting）方法是一">
+<meta name="twitter:description" content="个体与集成 Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &amp;gt; 0$有如下等式成立： $$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$  Boosting提升（boosting">
 <meta name="twitter:image" content="http://yoursite.com/thumbnails/ensemble.jpg">
 
 
@@ -165,7 +165,8 @@
         <div class="content">
             <h2 id="个体与集成"><a href="#个体与集成" class="headerlink" title="个体与集成"></a>个体与集成</h2><blockquote>
 <p>Hoeffding不等式：给定m个取值在[0,1]区间的独立随机变量$x_1,x_2,\cdots,x_n$，对任意$\epsilon &gt; 0$有如下等式成立：</p>
-<script type="math/tex; mode=display">P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}</script></blockquote>
+<p>$$P(|\frac{1}{m}\sum _{1=1}^mx_i-\frac{1}{m}E(x_i)|\ge \epsilon) \le 2e^{-2m\epsilon^2}$$</p>
+</blockquote>
 <h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p>提升（boosting）方法是一种常用的机器学习方法，应用广泛且有效。在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。</p>
 <h3 id="提升方法的基本思路"><a href="#提升方法的基本思路" class="headerlink" title="提升方法的基本思路"></a>提升方法的基本思路</h3><p>提升方法基于这样一种思想：对于一个复杂的任务来说，将多个专家的判断进行适当的综合所得出的判断，要比其中任何一个专家单独的判断好。实际上，就是“三个臭皮匠赛过诸葛亮”的道理。</p>
 <p>历史上，Kearns和Valiant首先提出了“强可学习（strong learnable）”和“弱可学习（weakly learnable）”的概念。指出：在概率近似正确学习的框架中，一个概念（一个类），如果存在一个多项式的学习算法能够学习它，并且正确率很高，那么就称这个概念是强可学习的；一个概念，如果存在一个多项式的学习算法能够学习它，学习的正确率仅比随机猜测略好，那么就称这个概念是弱可学习的。非常有趣的是Schapire后来证明强可学习与弱可学习是等价的，也就是说，在PAC学习的框架下，一个概念是强可学习的充分必要条件是这个概念是弱可学习的。</p>
@@ -174,50 +175,64 @@
 <p>这样，对提升方法来说，有两个问题需要回答：一是在每一轮如何改变数据的权值或概率分布；二是如何将弱分类器组合为一个强分类器。关于第1个问题，AdaBoost的做法是，提高那些被前一轮弱分类器分错的样本权值，而降低那些被正确分类样本的权值。这样一来，那些没有得到正确分类的数据，由于其权值的加大而受到后一轮的弱分类器的更大关注。于是，分类问题被一系列弱分类器“分而治之”。至于第2个问题，即弱分类器的组合，AdaBoost采取加权多数表决的方法。具体地，加大分类误差率小的弱分类器的权值，使其在表决中起较大的作用，减小分类误差率大的弱分类器的权值，使其在表决中起较小的作用。</p>
 <p>AdaBoost的巧妙之处在于它将这些想法自然且有效地实现在一种算法里。</p>
 <h3 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h3><p>现在叙述AdaBoost算法。假设给定一个二分类的训练数据集</p>
-<script type="math/tex; mode=display">T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}</script><p>其中，每个样本点由实例与标记组成。实例$x_i\in R^n$,标记$y_i\in \{-1,1\}$。AdaBoost利用以下算法，从训练数据中学习一系列弱分类器或基本分类器，并将这些弱分类器线性组合为一个强分类器。</p>
-<p>输入：训练数据集$T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}$,其中$x_i\in R^n$,标记$y_i\in \{-1,1\}$；弱分类算法。</p>
+<p>$$T={(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)}$$</p>
+<p>其中，每个样本点由实例与标记组成。实例$x_i\in R^n$,标记$y_i\in {-1,1}$。AdaBoost利用以下算法，从训练数据中学习一系列弱分类器或基本分类器，并将这些弱分类器线性组合为一个强分类器。</p>
+<p>输入：训练数据集$T={(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)}$,其中$x_i\in R^n$,标记$y_i\in {-1,1}$；弱分类算法。</p>
 <p>输出：最终分类器$G(x)$。</p>
 <ol>
 <li>初始化训练数据的权值分布，</li>
 </ol>
-<script type="math/tex; mode=display">D_1=(w_{11},\cdots,w_{1i},\cdots,w_{1N}),w_{1i}=\frac{1}{N},i=1,2,\cdots,N</script><ol>
+<p>$$D_1=(w_{11},\cdots,w_{1i},\cdots,w_{1N}),w_{1i}=\frac{1}{N},i=1,2,\cdots,N$$</p>
+<ol start="2">
 <li>对$m=1,2,\cdots,M$  </li>
 </ol>
 <ul>
 <li>使用具有权值分布$D_m$的训练数据集学习，得到基本分类器</li>
 </ul>
 <blockquote>
-<script type="math/tex; mode=display">G_m(x):R^n \rightarrow \{-1,1\}</script></blockquote>
+<p>$$G_m(x):R^n \rightarrow {-1,1}$$</p>
+</blockquote>
 <ul>
 <li>计算$G_m(x)$在训练数据上的分类误差率</li>
 </ul>
 <blockquote>
-<script type="math/tex; mode=display">e_m=\sum _{i=1}^NP(G_m(x)\ne y_i)=\sum _{i=1}^Nw_{mi}I(G_m(x)\ne y_i)</script></blockquote>
+<p>$$e_m=\sum <em>{i=1}^NP(G_m(x)\ne y_i)=\sum _{i=1}^Nw</em>{mi}I(G_m(x)\ne y_i) $$</p>
+</blockquote>
 <ul>
 <li>计算$G_m(x)$的系数</li>
 </ul>
 <blockquote>
-<script type="math/tex; mode=display">\alpha _m = \frac{1}{2} ln \frac{1-e_m}{e_m}</script></blockquote>
+<p>$$\alpha _m = \frac{1}{2} ln \frac{1-e_m}{e_m}$$ </p>
+</blockquote>
 <ul>
 <li>更新训练数据集的权值分布</li>
 </ul>
 <blockquote>
-<script type="math/tex; mode=display">D_{m+1} = (w_{m+1,1},\cdots,w_{m+1,i},\cdots,w_{m+1,N})</script><script type="math/tex; mode=display">w_{m+1,i} = \frac{w_{mi}}{Z_m}e^{-\alpha _m y_i G_m(x_i)},i=1,2,\cdots,N</script></blockquote>
+<p>$$D_{m+1} = (w_{m+1,1},\cdots,w_{m+1,i},\cdots,w_{m+1,N})$$ </p>
+</blockquote>
+<blockquote>
+<p>$$w_{m+1,i} = \frac{w_{mi}}{Z_m}e^{-\alpha _m y_i G_m(x_i)},i=1,2,\cdots,N$$ </p>
+</blockquote>
 <p>这里，$Z_m$是规范化因子</p>
-<script type="math/tex; mode=display">Z_m = \sum _{i=1}^N e^{-\alpha _m y_i G_m(x_i)}</script><p>它使$D_{m+1}$成为一个概率分布。</p>
-<ol>
+<p>$$Z_m = \sum _{i=1}^N e^{-\alpha _m y_i G_m(x_i)}$$ </p>
+<p>它使$D_{m+1}$成为一个概率分布。</p>
+<ol start="3">
 <li>构建基本分类器的线性组合</li>
 </ol>
-<script type="math/tex; mode=display">f(x) = \sum _{m=1}^M \alpha_m G_m(x)</script><p>得到最终的分类器</p>
-<script type="math/tex; mode=display">G(X) = sign(f(x)) = sign(\sum _{m=1}^M \alpha_m G_m(x))</script><p>对AdaBoost算法作如下说明：</p>
+<p>$$f(x) = \sum _{m=1}^M \alpha_m G_m(x)$$ </p>
+<p>得到最终的分类器</p>
+<p>$$G(X) = sign(f(x)) = sign(\sum _{m=1}^M \alpha_m G_m(x))$$ </p>
+<p>对AdaBoost算法作如下说明：</p>
 <p>步骤1 假设数据集具有均匀的权值分布，即每个训练样本在基本分类器中作用相同，这一假设保证第1步能够在原始数据集上学习基本分类器$G_1(x)$。</p>
 <p>步骤2 AdaBoost反复学习基本分类器，在每一轮$m=1,2,\cdots,M$中顺次地执行下列操作：</p>
 <p>（a）使用当前分布$D_m$加权的训练数据集，学习基本分类器$G_m(x)$。</p>
 <p>（b）计算基本分类器$G_m(x)$在加权训练数据集上的分类误差率：</p>
-<script type="math/tex; mode=display">e_m = \sum _{i=1}^N P(G_m(x_i)\ne y_i) = \sum _{G_m(x_i)\ne y_i} w_{mi}</script><p>这里，$w_{mi}$表示第$m$轮中第$i$个实例的权值，$\sum _{i=1}^N w_{mi}=1$。这表明，$G_m(x)$在加权的训练数据上的分类误差率是被$G_m(x)$误分类样本的权值之和，由此可以看出数据权值分布$D_m$与基本分类器$G_m(x)$的分类误差率的关系。</p>
+<p>$$e_m = \sum <em>{i=1}^N P(G_m(x_i)\ne y_i) = \sum _{G_m(x_i)\ne y_i} w</em>{mi}$$  </p>
+<p>这里，$w_{mi}$表示第$m$轮中第$i$个实例的权值，$\sum <em>{i=1}^N w</em>{mi}=1$。这表明，$G_m(x)$在加权的训练数据上的分类误差率是被$G_m(x)$误分类样本的权值之和，由此可以看出数据权值分布$D_m$与基本分类器$G_m(x)$的分类误差率的关系。</p>
 <p>（c）计算基本分类器$G_m(x)$的系数$\alpha _m$，$\alpha _m$表示$G_m(x)$在最终分类器中的重要性。由(2)可知，当$e_m\le \frac{1}{2}$时，$\alpha_m \ge 0$，并且$\alpha_m$随着$e_m$的减小而增大，所以分类误差率越小的基本分类器在最终分类器中的所用越大。</p>
 <p>（d）更新训练数据的权值分布为下一轮作准备，式(4)可以写成：</p>
-<script type="math/tex; mode=display">w_{m+1,i}=\left\{\begin{aligned}\frac{w_{mi}}{Z_m}e^{-\alpha_m} &  & G_m(x_i)=y_i \\\frac{w_{mi}}{Z_m}e^{\alpha_m} &  & G_m(x_i) \ne y_i \end{aligned}\right.</script><p>由此可知，被基本分类器$G_m(x)$误分类样本的权值得以扩大，而被正确分类样本的权值却得以缩小。两相比较，由式(2)知误分类样本的权值被放大$e^{2\alpha_m}=\frac{1-e_m}{e_m}$倍。因此，误分类样本在下一轮学习中起更大的作用。不改变所给的训练数据，而不断改变训练数据的权值分布，使得训练数据在基本分类器的学习中起到不同的作用，这是AdaBoost的一个特点。</p>
+<p>$$ w_{m+1,i}=\left{\begin{aligned}\frac{w_{mi}}{Z_m}e^{-\alpha_m} &amp;  &amp; G_m(x_i)=y_i \\frac{w_{mi}}{Z_m}e^{\alpha_m} &amp;  &amp; G_m(x_i) \ne y_i \end{aligned}\right.$$</p>
+<p>由此可知，被基本分类器$G_m(x)$误分类样本的权值得以扩大，而被正确分类样本的权值却得以缩小。两相比较，由式(2)知误分类样本的权值被放大$e^{2\alpha_m}=\frac{1-e_m}{e_m}$倍。因此，误分类样本在下一轮学习中起更大的作用。不改变所给的训练数据，而不断改变训练数据的权值分布，使得训练数据在基本分类器的学习中起到不同的作用，这是AdaBoost的一个特点。</p>
 <p>步骤3 线性组合$f(x)$实现$M$个基本分类器的加权表决。系数$\alpha_m$表示了基本分类器$G_m(x)$的重要性，这里，所有$\alpha_m$之和并不为1.$f(x)$的符号决定实例$x$的分类，$f(x)$的绝对值表示分类的确信度。利用基本分类器的线性组合构建最终分类器是AdaBoost的另一个特点。</p>
 <h3 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h3><h3 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h3><p>XGBoost是”极端梯度上升”(Extreme Gradient Boosting)的简称,从技术上说，XGBoost是Extreme Gradient Boosting的缩写。它的流行源于在著名的Kaggle数据科学竞赛上被称为”奥托分类”的挑战。它可以处理多种目标函数，包括回归，分类和排序，是一个较为全面的分类器。<br>由于其他许多分类器，不管是强分类器或是集成分类器，在预测性能上的强大但是相对缓慢的实现，如上一章的Adaboost集成算法，不管是在在运行时间上还是在内存占有上开销都很大。XGBoost成为很多比赛的理想选择。XGBoost包还添加了做交叉验证和发现关键变量的额外功能。在优化模型时，这个算法使用了好几个参数。所以为了提高模型的表现，参数的调整十分必要。本节将讨论这些因素。</p>
 <h4 id="XGBoost优势"><a href="#XGBoost优势" class="headerlink" title="XGBoost优势"></a>XGBoost优势</h4><p>XGBoost算法总结起来大致其有三个优点：高效、准确度、模型的交互性。</p>
@@ -230,15 +245,25 @@
 <li>内置交叉验证：XGBoost允许在每一轮boosting迭代中使用交叉验证。因此，可以方便地获得最优boosting迭代次数。而传统的GBDT使用网格搜索，只能检测有限个值。</li>
 </ul>
 <h4 id="XGBoost算法推导"><a href="#XGBoost算法推导" class="headerlink" title="XGBoost算法推导"></a>XGBoost算法推导</h4><p>XGBoost 在函数空间中用牛顿法进行优化。首先，boosting是一种加法模型。XGBoost同样属于GBDT梯度提升法，模型的基分类器都包含有树，对于给定的数据集D={($x_i​$,$y_i​$)}，XGBoost进行additive learning，学习K棵树，采用以下函数对样本进行预测。</p>
-<script type="math/tex; mode=display">\widehat{y}=\phi(x_i)=\sum_{k=1}^{K}f_{k}(x_i)\qquad f_k\in F</script><p>这里F是函数空间，$f(x)$是回归树CART。</p>
-<script type="math/tex; mode=display">F=\{f(x)=w_{q(x)}\}(q:R^m\to T,w\in R)</script><p>$q(x)$标识将样本x分到了某个叶子节点上，$w$是叶子节点的分数，（leaf score），所以$w_q(x)$ 表示回归树对样本的预测值。<br>回归树的预测输出是实数分数，可以用于回归，分类，排序等任务中，对于回归问题，可以直接作为目标值，对于分类问题，需要映射成概率，比如采用逻辑函数，然后可以控制阈值，进行两种分类错误的把控。<br>XGBoost对传统的提升树算法Adaboost等的改进，在于在参数空间的目标函数中加入了正则化项，来惩罚模型的复杂程度，进而控制过拟合。和Adaboost一样都是通过最小化损失函数求解最优模型，并加入了阈值，如下公式所示：</p>
-<script type="math/tex; mode=display">L(\phi)=\sum_{i}l(\widehat{y}_l,y_i)+\sum_{k}\Omega(f_k)</script><p>误差函数可以是square loss，logloss等，也可以自己定义损失函数，只要能够求出目标函数的梯度和Hessian矩阵，用户就可以自定义训练模型时的目标函数 这也正是XGBoost的优势之一，可以通过研究目的的不同自己定义损失函数，<br>在公式（3-3）中，相比于原始的GBDT，XGBoost的目标函数多了正则项，是学习出来的模型更加不容易过拟合。衡量树的复杂程度主要与树的深度，内部节点的个数，叶子节点的个数，叶子节点的权重有关，因此XGBoost对这些参量进行了约束。得出了正则项为：</p>
-<script type="math/tex; mode=display">\Omega(f)=\gamma T+\frac{1}{2}\rho\|w\|^2</script><p>正则项对每棵树的复杂程度都应进行惩罚，对每个节点进行了复杂度的惩罚，从另一种角度来说也就进行了自动的剪枝。<br>另外，还可以选择使用线性模型替代树模型，从而得到带$L1+L2$惩罚的线性回归正则项可以是$L1$正则，$L2$正则 。<br>第$t$次迭代后，模型的预测等于前$t-1$次的模型预测加上第t棵树的预测。将目标函数在前$t-1$次的模型$y_i^{t-1}$处进行泰勒展开，并将常数项去掉即得到：</p>
-<script type="math/tex; mode=display">L^{(t)}=\sum_{i=1}^{n}[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)</script><p>公式中，$g_i=\delta_{\widehat{y}^{(t-1)}}l(y_i,\widehat{y}^{(t-1)})\qquad h_i=\delta^2_{\widehat{y}^{(t-1)}}l(y_i,\widehat{y}^{(t-1)})$<br>把$f_t$, $\Omega(f_t)$写成树结构的形式，得到：</p>
-<script type="math/tex; mode=display">L^{(t)}=\sum_{i=1}^{n}[g_iw_{q(x_i)}+\frac{1}{2}h_iw^2_{q(x_i)}]+\gamma T+\rho\frac{1}{2}\sum_{j=i}^{T}w_j^2</script><p>则目标函数可以写成按叶节点累加的形式：</p>
-<script type="math/tex; mode=display">L^{(t)}=\sum_{j=1}^{T}[G_iw_j+\frac{1}{2}(H_j+\rho)w_j^2]+\gamma T</script><p>如果确定了树的结构（即$q(x)$确定），为了使目标函数最小，可以令其导数为0，解得每个叶节点的最优预测分数为：</p>
-<script type="math/tex; mode=display">W_j^*=-\frac{G_j}{H_j+\rho}</script><script type="math/tex; mode=display">\widehat{L}^*=-\frac{1}{2}\sum_{j=1}^{T}\frac{G_j^2}{H_j+\rho}+\gamma T</script><p>公式（3-9）的负部衡量了每个叶子节点对总体损失的的贡献，我们希望损失越小越好，则公式的（3-9）的负部值越大越好。<br>因此，对一个叶子节点进行分裂，分裂前后的增益定义为：</p>
-<script type="math/tex; mode=display">Gain=\frac{G_L^2}{H_L+\rho}+\frac{G_R^2}{H_R+\rho}-\frac{(G_L+G_R)^2}{H_L+H_R+\rho}-\gamma</script><p>Gain的值越大，分裂后L减小越多。所以当对一个叶节点分割时，计算所有候选特征值所对应的gain，选取gain最大的进行分割。但由于精确遍历所有可能的分割点是效率很低的，所以，实际上XGBoost采用的是对于每个特征，不是简单地按照样本个数进行分位，而是以二阶导数值作为权重，进行分位点的选择，以此减少计算复杂度。在学习每棵树前，提出候选切分点，这也是XGBoost可以实现并行的原因之一，可以提前切割分位点。<br> 最后，XGBoost算法还借鉴了bagging的bootstrap自助法行抽样，还借鉴了随机森林的列抽样，即特征抽样。这样减少过拟合同时还降低了计算复杂度。</p>
+<p>$$\widehat{y}=\phi(x_i)=\sum_{k=1}^{K}f_{k}(x_i)\qquad f_k\in F$$</p>
+<p>这里F是函数空间，$f(x)$是回归树CART。</p>
+<p>$$F={f(x)=w_{q(x)}}(q:R^m\to T,w\in R)$$</p>
+<p>$q(x)$标识将样本x分到了某个叶子节点上，$w$是叶子节点的分数，（leaf score），所以$w_q(x)$ 表示回归树对样本的预测值。<br>回归树的预测输出是实数分数，可以用于回归，分类，排序等任务中，对于回归问题，可以直接作为目标值，对于分类问题，需要映射成概率，比如采用逻辑函数，然后可以控制阈值，进行两种分类错误的把控。<br>XGBoost对传统的提升树算法Adaboost等的改进，在于在参数空间的目标函数中加入了正则化项，来惩罚模型的复杂程度，进而控制过拟合。和Adaboost一样都是通过最小化损失函数求解最优模型，并加入了阈值，如下公式所示：</p>
+<p>$$L(\phi)=\sum_{i}l(\widehat{y}<em>l,y_i)+\sum</em>{k}\Omega(f_k)$$</p>
+<p>误差函数可以是square loss，logloss等，也可以自己定义损失函数，只要能够求出目标函数的梯度和Hessian矩阵，用户就可以自定义训练模型时的目标函数 这也正是XGBoost的优势之一，可以通过研究目的的不同自己定义损失函数，<br>在公式（3-3）中，相比于原始的GBDT，XGBoost的目标函数多了正则项，是学习出来的模型更加不容易过拟合。衡量树的复杂程度主要与树的深度，内部节点的个数，叶子节点的个数，叶子节点的权重有关，因此XGBoost对这些参量进行了约束。得出了正则项为：</p>
+<p>$$\Omega(f)=\gamma T+\frac{1}{2}\rho|w|^2$$</p>
+<p>正则项对每棵树的复杂程度都应进行惩罚，对每个节点进行了复杂度的惩罚，从另一种角度来说也就进行了自动的剪枝。<br>另外，还可以选择使用线性模型替代树模型，从而得到带$L1+L2$惩罚的线性回归正则项可以是$L1$正则，$L2$正则 。<br>第$t$次迭代后，模型的预测等于前$t-1$次的模型预测加上第t棵树的预测。将目标函数在前$t-1$次的模型$y_i^{t-1}$处进行泰勒展开，并将常数项去掉即得到：</p>
+<p>$$L^{(t)}=\sum_{i=1}^{n}[g_if_t(x_i)+\frac{1}{2}h_if_t^2(x_i)]+\Omega(f_t)$$</p>
+<p>公式中，$g_i=\delta_{\widehat{y}^{(t-1)}}l(y_i,\widehat{y}^{(t-1)})\qquad h_i=\delta^2_{\widehat{y}^{(t-1)}}l(y_i,\widehat{y}^{(t-1)})$<br>把$f_t$, $\Omega(f_t)$写成树结构的形式，得到：</p>
+<p>$$L^{(t)}=\sum_{i=1}^{n}[g_iw_{q(x_i)}+\frac{1}{2}h_iw^2_{q(x_i)}]+\gamma T+\rho\frac{1}{2}\sum_{j=i}^{T}w_j^2$$</p>
+<p>则目标函数可以写成按叶节点累加的形式：</p>
+<p>$$L^{(t)}=\sum_{j=1}^{T}[G_iw_j+\frac{1}{2}(H_j+\rho)w_j^2]+\gamma T$$</p>
+<p>如果确定了树的结构（即$q(x)$确定），为了使目标函数最小，可以令其导数为0，解得每个叶节点的最优预测分数为：</p>
+<p>$$W_j^*=-\frac{G_j}{H_j+\rho}$$</p>
+<p>$$\widehat{L}^*=-\frac{1}{2}\sum_{j=1}^{T}\frac{G_j^2}{H_j+\rho}+\gamma T$$</p>
+<p>公式（3-9）的负部衡量了每个叶子节点对总体损失的的贡献，我们希望损失越小越好，则公式的（3-9）的负部值越大越好。<br>因此，对一个叶子节点进行分裂，分裂前后的增益定义为：</p>
+<p>$$Gain=\frac{G_L^2}{H_L+\rho}+\frac{G_R^2}{H_R+\rho}-\frac{(G_L+G_R)^2}{H_L+H_R+\rho}-\gamma$$</p>
+<p>Gain的值越大，分裂后L减小越多。所以当对一个叶节点分割时，计算所有候选特征值所对应的gain，选取gain最大的进行分割。但由于精确遍历所有可能的分割点是效率很低的，所以，实际上XGBoost采用的是对于每个特征，不是简单地按照样本个数进行分位，而是以二阶导数值作为权重，进行分位点的选择，以此减少计算复杂度。在学习每棵树前，提出候选切分点，这也是XGBoost可以实现并行的原因之一，可以提前切割分位点。<br> 最后，XGBoost算法还借鉴了bagging的bootstrap自助法行抽样，还借鉴了随机森林的列抽样，即特征抽样。这样减少过拟合同时还降低了计算复杂度。</p>
 <h2 id="Bagging-amp-随机森林"><a href="#Bagging-amp-随机森林" class="headerlink" title="Bagging &amp; 随机森林"></a>Bagging &amp; 随机森林</h2>
         </div>
         
@@ -297,16 +322,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/13/神经网络/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/降维方法/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">神经网络和深度学习</span>
+                <span class="level-item">降维方法</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/04/线性模型/">
-                <span class="level-item">线性模型</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/04/支持向量机/">
+                <span class="level-item">支持向量机</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
