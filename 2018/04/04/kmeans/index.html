@@ -16,7 +16,7 @@
 <meta property="og:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/Kmeans.gif">
-<meta property="og:updated_time" content="2019-01-14T07:11:40.798Z">
+<meta property="og:updated_time" content="2019-06-01T02:53:43.587Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k-means聚类算法学习笔记">
 <meta name="twitter:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
@@ -299,9 +299,12 @@
 <p>$$RI=\frac{a+d}{m(m-1)/2}=\frac{a+d}{C_m^2}.$$</p>
 <p>显然，上述性能度量的结果均在[0,1]之间，值越大越好。}</p>
 <h4 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h4><p>考虑聚类结果的划分$C={C_1,C_2,…,C_k}$,定义：<br>$$avg(C)=\frac{2}{|C|(|C|-1)} \sum <em>{1\le i&lt;j \le |C|}dist(x_i,x_j),$$<br>$$diam(C)=max</em>{1\le i&lt;j \le |C|}dist(x_i,x_j),$$<br>$$d_{min}(C_i,C_j)=min_{x_i\in C_i,x_i\in C_j}dist(x_i,x_j),$$<br>$$d_{cen}(C_i,C_j)=dist(\mu _i,\mu _j),$$</p>
-<p>其中，$dist(·,·)$ 用于计算两个样本之间的距离，$\mu$代表$C$的中心点$\mu =\frac{1}{|C|}\sum <em>{1\le i \le |C|}x</em>{i}.$显然，$avg(C)$对应于$C$内样本间的平均距离，$diam(C)$对应于簇$C$内样本间的最远距离，$d_{min}(C_i,C_j)$对应于簇$C_i$与簇$C_j$最近样本间的距离，$d_{cen}(C_i,C_j)$对应于簇$C_i$与簇$C_j$中心点的距离。</p>
+<p>其中，$dist(·,·)$ 用于计算两个样本之间的距离，$\mu$ 代表 $C$ 的中心点 $\mu =\frac{1}{|C|}\sum <em>{1\le i \le |C|}x</em>{i}.$ 显然，$avg(C)$ 对应于 $C$ 内样本间的平均距离，$diam(C)$ 对应于簇 $C$ 内样本间的最远距离，$d_{min}(C_i,C_j) $对应于簇$C_i$ 与簇 $C_j$ 最近样本间的距离，$d_{cen}(C_i,C_j)$ 对应于簇 $C_i$ 与簇 $C_j$ 中心点的距离。</p>
 <p>基于上式可以导出下面这些常用的聚类性能度量内部指标。</p>
-<p> DB指数(Davies-Bouldin Index,简称DBI)<br>$$DBI=\frac{1}{k}\sum <em>{i=1}^k max</em>{j\ne i}(\frac{avg(C_i)+avg(C_j)}{d_{cen}(\mu <em>i,\mu _j)}).$$<br> Dunn指数(Dunn Index，简称DI)<br>$$DI=min</em>{1\le i \le k}{min_{j\ne i}(\frac{d_{min}(C_i,C_j)}{max_{1\le l \le k}\ diam(C_l)})}$$</p>
+<p>DB指数(Davies-Bouldin Index,简称DBI)</p>
+<p>$$DBI=\frac{1}{k}\sum <em>{i=1}^k max</em>{j\ne i}(\frac{avg(C_i)+avg(C_j)}{d_{cen}(\mu _i,\mu _j)}).$$</p>
+<p>Dunn指数(Dunn Index，简称DI)</p>
+<p>$$DI=min_{1\le i \le k}{min_{j\ne i}(\frac{d_{min}(C_i,C_j)}{max_{1\le l \le k}\ diam(C_l)})}$$</p>
 <p>显然，DBI的值越小越好，而DI则相反，值越大越好。 </p>
 <h4 id="共表型相关系数"><a href="#共表型相关系数" class="headerlink" title="共表型相关系数"></a>共表型相关系数</h4><p>共表型相关系数(Cophenetic Correlation Coefficient，简称CPCC)</p>
 <p>内容参考：http//people.revoledu.com/kardi/tutorial/Clustering/index.html.</p>
@@ -588,23 +591,30 @@
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-keyword">library</span>(cluster)</span><br><span class="line">&gt; iris_test &lt;- iris[,<span class="hljs-number">14</span>]</span><br><span class="line">&gt; d &lt;-dist(iris_test)</span><br><span class="line">&gt; hc1 &lt;- hclust(d,<span class="hljs-string">'complete'</span>)  <span class="hljs-comment">#最大距离法</span></span><br><span class="line">&gt; d1 &lt;- cophenetic(hc1)</span><br><span class="line">&gt; cor(d,d1)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">0.7269857</span></span><br><span class="line">&gt; </span><br><span class="line">&gt; hc2 &lt;- hclust(d,<span class="hljs-string">'single'</span>)  <span class="hljs-comment">#最小距离法</span></span><br><span class="line">&gt; d2 &lt;- cophenetic(hc2)</span><br><span class="line">&gt; cor(d,d2)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">0.8638787</span></span><br></pre></td></tr></table></figure>
 
 <p>从上述R中的运行结果来看，single方法(最小距离法)的结果要优于complete法(最大距离法)。</p>
-<h3 id="聚类个数的选择"><a href="#聚类个数的选择" class="headerlink" title="聚类个数的选择"></a>聚类个数的选择</h3><h4 id="轮廓系数-Silhouette-Coefficient-简称SC"><a href="#轮廓系数-Silhouette-Coefficient-简称SC" class="headerlink" title="轮廓系数(Silhouette Coefficient,简称SC)"></a>轮廓系数(Silhouette Coefficient,简称SC)</h4><p>对于数据集$x={x_1,x_2,…,x_n}$,使用某种聚类方法得到类的集合$C={C_1,C_2,…,C_k}$,每个类的样本量为$num={n_1,n_2,…,n_k}$}<br>$$a_i=\frac{1}{n_k-1}\sum <em>{x_i,x_j\in C_k}dist</em>{i\ne j}(x_i,x_j) $$<br>$$b_i=min(\frac{1}{n_l}\sum _{x_i\in C_k,x_j\in C_l,l\ne k}dist(x_i,x_j))$$<br>$$S_i=\frac{b_i-a_i}{max(b_i,a_i)}$$<br>$$SC=\frac{1}{n}\sum _{i=1}^n S_i$$<br>SC即为轮廓系数。该值处于-1-1之间，值越大，表示聚类效果越好。</p>
+<h3 id="聚类个数的选择"><a href="#聚类个数的选择" class="headerlink" title="聚类个数的选择"></a>聚类个数的选择</h3><h4 id="轮廓系数-Silhouette-Coefficient-简称SC"><a href="#轮廓系数-Silhouette-Coefficient-简称SC" class="headerlink" title="轮廓系数(Silhouette Coefficient,简称SC)"></a>轮廓系数(Silhouette Coefficient,简称SC)</h4><p>对于数据集$x={x_1,x_2,…,x_n}$,使用某种聚类方法得到类的集合$C={C_1,C_2,…,C_k}$,每个类的样本量为$num={n_1,n_2,…,n_k}$}</p>
+<p>$$a_i=\frac{1}{n_k-1}\sum <em>{x_i,x_j\in C_k}dist</em>{i\ne j}(x_i,x_j)$$</p>
+<p>$$b_i=min(\frac{1}{n_l}\sum _{x_i\in C_k,x_j\in C_l,l\ne k}dist(x_i,x_j))$$</p>
+<p>$$S_i=\frac{b_i-a_i}{max(b_i,a_i)}$$</p>
+<p>$$SC=\frac{1}{n}\sum _{i=1}^n S_i$$</p>
+<p>SC即为轮廓系数。该值处于-1-1之间，值越大，表示聚类效果越好。</p>
 <h4 id="Gap统计量-Gap-Statistic-简称GS"><a href="#Gap统计量-Gap-Statistic-简称GS" class="headerlink" title="Gap统计量(Gap Statistic,简称GS)}"></a>Gap统计量(Gap Statistic,简称GS)}</h4><p>下面简单说一下Gap统计量原理及计算方法。}<br>Tibshirani等人在2001年提出了使用Gap统计量来确定聚类过程中最佳聚类个数k，这个统计量除了可以使用在最常用的k-means聚类方法上，对于任何聚类方法都适用。</p>
 <p>假设有数据集${x_{ij}},i=1,2,3…,n,j=1,2,…,p$，该数据有n个观测点和p个特征。令$d_{ii’}$表示观测点$i$和观测点$i’$之间的距离，最常用的是欧氏距离。</p>
 <p>假设我们已经将数据聚成$k$个类，分别是$C_1,C_2,…,C_k$，其中$C_r$表示第$r$个类的下标，令$n_r=|C_r|.$即$n_r$表示类$C_r$中的观测点的个数。令</p>
-<p>$$D_r=\sum <em>{i,i’\in C_r}d</em>{ii’}=\sum _{i,i’\in C_r}|x_i-x_i’|^2=2n_r\sum _{i\in C_r}|xi-\bar x|^2$$<br>$$W_k=\sum _{r=1}^k\frac{1}{2n_r}D_r $$</p>
+<p>$$D_r=\sum <em>{i,i’\in C_r}d</em>{ii’}=\sum _{i,i’\in C_r}|x_i-x_i’|^2=2n_r\sum _{i\in C_r}|xi-\bar x|^2$$</p>
+<p>$$W_k=\sum _{r=1}^k\frac{1}{2n_r}D_r$$</p>
 <p>也可以使用$W_k$来确定聚类个数$k$，寻找使得$W_k$突然变小的$k$.但是使用$W_k$来确定聚类个数有以下两个问题：}</p>
 <p> 没有相关的类进行比较。<br> $W_k-W_{k-1}$的值没有进行标准化，以至于不同的模型无法进行比较。</p>
 <p>Gap统计量将$W_k$进行了标准化，公式为<br>$$Gap_n(k)=E_n^+{log(W_k)}-log(W_k) ,$$<br>寻找使得$Gap(k)$达到最大的那个$k$，即为最佳的聚类个数。<br>其中，$E_n^+$表示根据某一相关分布构造的样本量为n的数据，其<br>$log(W_k)$的期望值。<br>通常，构造上述的样本具有以下两种方法，即：</p>
 <p> 计算出每个特征（或变量）的取值范围，然后在该范围内随机生成n个服从均匀分布的数字，作为构造的样本观测值。<br> 如果$X$是一个$n\times p$的数值矩阵，假设每一列的均值都是0，然后对$X$进行奇异值分解，<br>$$X=UDV^T.$$<br>将$X$进行转换，得到$X’$<br>$$X’=XV.$$<br>然后利用方法1根据$X’$得到每一列的数值$Z’$。<br>最后，将$Z’$进行转换，<br>$$Z=Z’V^T$$<br>最终得到我们需要的数据$Z$。</p>
 <p>计算Gap统计量的步骤如下。</p>
 <p> 将数据聚类，类的个数分别取$k=1,2,…,K$，得出$W_k,k=1,2,…,K.$<br> 根据均匀分布，使用上面的方法生成B个数据集。计算出每个数据集的<br>$W_{kb}^+,b=1,2,…,B,k=1,2,…,K$，计算出估计的Gap统计量的值：</p>
-<p>$$Gap(k)=(1/B)\sum <em>b log(W</em>{kb}^+)-log(W_k) $$</p>
+<p>$$Gap(k)=(1/B)\sum <em>b log(W</em>{kb}^+)-log(W_k)$$</p>
 <p>令</p>
 <p>$$\bar l = (1/B)\sum <em>b log(W</em>{kb}^+)$$，</p>
 <p>计算标准误差</p>
 <p>$$sd_k=[(1/B)\sum <em>b {log(W</em>{kb}^+)-\bar l}^2]^{1/2}$$</p>
-<p>定义$s_k=sd_k\sqrt {1+1/B}$，最后，计算出最佳的聚类个数$\hat k$，<br>$$\hat k=smallest\  k\  such\  that\  Gap(k) \le Gap(k+1)-s_{k+1} $$</p>
+<p>定义$s_k=sd_k\sqrt {1+1/B}$，最后，计算出最佳的聚类个数$\hat k$，</p>
+<p>$$\hat k=smallest\  k\  such\  that\  Gap(k) \le Gap(k+1)-s_{k+1}$$</p>
 
         </div>
         
