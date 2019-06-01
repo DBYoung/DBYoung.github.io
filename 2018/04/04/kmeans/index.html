@@ -16,7 +16,7 @@
 <meta property="og:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/Kmeans.gif">
-<meta property="og:updated_time" content="2019-06-01T02:53:43.587Z">
+<meta property="og:updated_time" content="2019-06-01T02:58:50.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k-means聚类算法学习笔记">
 <meta name="twitter:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
@@ -204,39 +204,39 @@
 <p>与此同时，我们在y轴上可以看见$f(x)$,$f(b)$和$f(EX)$的值，并且，$E[f(X)]$$f(a)$和$f(b)$之间。从这个例子可以看出，因为$f$是一个凸函数，所以肯定满足$E[f(X)]\ge f(EX)$。<br>一般来说，很多人会忘记上式的不等号方向，那么，记住这个图，就很易能够想起来上面的公式了。</p>
 <p>注意，如果$f$是一个(严格的)凹函数($f’’(x)\le 0$或者$H\le0$)，Jensen不等式仍然成立，只是方向反过来而已，即$E[f(X)]\le f(EX).$}</p>
 <h4 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h4><p>假设我们有包含m个独立样本的训练集${x^{(1)},x^{(2)},…,x^{(m)}}$,基于该样本和模型$p(x,z)$估计待估参数$\theta$,似然函数如下：</p>
-<p>$$\ell (\theta)=\sum _{i=1}^mlogp(x;\theta)=\sum _{i=1}^mlog\sum _zp(x,z;\theta). $$</p>
+<p>$$\ell (\theta)=\sum _{i=1}^mlogp(x;\theta)=\sum _{i=1}^mlog\sum _zp(x,z;\theta).$$</p>
 <p>但是，明确找出$\theta$的最大似然估计值恐怕非常困难。因为在这里，$z^{(i)}$是隐含随机变量，通常情况下如果已知$z^{(i)}$，那么求上述最大似然估计值会比较容易。</p>
 <p>在这种情况下，EM算法给出了一种有效的求最大似然估计值的方法。直接求$\ell (\theta)$的最大似然估计值也许会很困难，我们的策略是在$\ell (\theta)$下面构造一个下界(E-步骤)，然后优化这个下界，使其不断逼近求$\ell (\theta)$的最大似然估计值(M-步骤)。</p>
 <p> 对于每一个$i$，令$Q_i$是$z^{(i)}$上关于某一分布的概率，($\sum _zQ_i(z)=1,Q_i(z)\ge 0$).}得到下面的式子.如果z是连续型随机变量，那么$Q_i$就是密度函数，$Q_i$在z上的总和就是$Q_i$在z上的积分：</p>
-<p> $$\sum _i logp(x^{(i)};\theta)=\sum _ilog\sum _{z^{(i)}} p(x^{(i)},z^{(i)};\theta)<br> $$<br> $$<br> =\sum _i log \sum _{z^{(i)}}Q_i(z^{(i)})\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br> $$</p>
-<p> $$<br> \ge \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$$</p>
+<p>$$\sum _i logp(x^{(i)};\theta)=\sum _ilog\sum _{z^{(i)}} p(x^{(i)},z^{(i)};\theta)<br>$$<br>$$<br> =\sum _i log \sum _{z^{(i)}}Q_i(z^{(i)})\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br>$$</p>
+<p>$$<br> \ge \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$$</p>
 <p> 最后一步应用了Jensen不等式。特别地，在这里$f(x)=logx$是一个凹函数，因为在实数范围内</p>
-<p> $$f’’(x)=-1/x^2&lt;0$$</p>
+<p>$$f’’(x)=-1/x^2&lt;0$$</p>
 <p> 式子</p>
-<p> $$\sum _{z^{(i)}}Q_i(z^{(i)})[\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}] $$</p>
+<p>$$\sum _{z^{(i)}}Q_i(z^{(i)})[\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}]$$</p>
 <p> 是式子的$[p(x^{(i)},z^{(i)};\theta)/Q_i(z^{(i)})]$关于$z^{(i)}$在$Q_i$给出的分布上的期望。根据Jensen不等式，有：</p>
-<p> $$f(E_{z^{(i)}\sim Q_i}[\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}])\ge E_{z^{(i)}\sim Q_i}[f(\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})})]$$</p>
+<p>$$f(E_{z^{(i)}\sim Q_i}[\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}])\ge E_{z^{(i)}\sim Q_i}[f(\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})})]$$</p>
 <p> 下标$z^{(i)}\sim Q_i$表示期望是对来自于分布$Q_i$的随机变量$z^{(i)}$所求的期望。这个条件使式子(2)到式子(3)得以成立。</p>
 <p> 现在，对于来自于$Q_i$的任意一个集合，式子(3)给出了一个$\ell (\theta)$的一个下界。$Q_i$有很多种可能的选择，我们应该选哪个呢?如果我们当前对参数$\theta$(基于已有的条件)已经有了一些猜测，那么使这个下界与$\theta$的值接近看起来就比较自然了。换句话说，我们可以使上述的不等式在$\theta$的某个特定值的条件下变成等式。(稍后我们就能看到上述是何如使$\ell (\theta)$在EM的迭代下单调递增的。)</p>
 <p> 为了使下界尽可能地靠近$\theta$的某个特定值，我们需要在步骤中加入上面推导的Jensen不等式以得到等式。为了实现上述步骤，我们知道只需要使期望变成常量——固定的随机变量就行了。例如，我们需要满足：</p>
 <p>$$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}=c$$</p>
 <p> 而这个常数$c$不依赖于$z^{(i)}$。这个很简单就可以实现，只需要使</p>
-<p>$$Q_i(z^{(i)})\propto p(x^{(i)},z^{(i)};\theta) $$</p>
+<p>$$Q_i(z^{(i)})\propto p(x^{(i)},z^{(i)};\theta)$$</p>
 <p> 实际上，因为我们已知$\sum _zQ_i(z^{(i)})=1$,所以有：</p>
-<p>$$Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum _zp(x^{(i)},z^{(i)};\theta)} $$<br>$$=\frac{p(x^{(i)},z^{(i)};\theta)}{p(x^{(i)};\theta)} $$<br>$$=p(z^{(i)}|x^{(i)};\theta)$$</p>
+<p>$$Q_i(z^{(i)})=\frac{p(x^{(i)},z^{(i)};\theta)}{\sum _zp(x^{(i)},z^{(i)};\theta)}$$<br>$$=\frac{p(x^{(i)},z^{(i)};\theta)}{p(x^{(i)};\theta)}$$<br>$$=p(z^{(i)}|x^{(i)};\theta)$$</p>
 <p> 因此，我们简单假设$Q_i$是在给定$x^{(i)}$和参数$\theta$的情况下$z^{(i)}$的后验概率.</p>
 <p> 现在，对于上述的$Q_i$，公式(3)给出了我们想取极大值的似然函数$\ell$的下界。这是E步骤。在算法里的M步骤，我们又对公式(3)取极大值以获得新的$\theta$.重复执行上述步骤，即：</p>
 <p> start循环直到收敛</p>
 <p>(E-step)对于每一个i,令：</p>
-<p>$$Q_i(z^{(i)})=p(z^{(i)}|x^{(i)};\theta) $$</p>
+<p>$$Q_i(z^{(i)})=p(z^{(i)}|x^{(i)};\theta)$$</p>
 <p>M-step 令：</p>
-<p>$$\theta=arg\ max_\theta \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})} $$</p>
+<p>$$\theta=arg\ max_\theta \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$$</p>
 <p> 我们怎么知道这个算法最终收敛呢？假设$\theta^{(t)}$和$\theta^{(t+1)}$是EM算法连续迭代两次以后得到的参数。下面证明$\theta^{(t)} \le \theta^{(t+1)}$，即证明EM算法会使log似然概率单调递增。证明上述的关键是对于$Q_i$的选择。在以$\theta^{(t)}$为起始标志的EM算法迭代过程中，我们会选择$Q_i^{(t)}(z^{(i)})=p(z^{(i)}|x^{(i)};\theta^{(t)})$.我们在前面已经看到了，上述选择会满足Jensen不等式，像公式(3)的应用一样，能够得到收敛的等式，即：</p>
 <p>$$\ell (\theta^{(t)})=\sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t)})}{Q_i^{(t)}(z^{(i)})}$$</p>
 <p> 最大化等式右边得到参数$\theta^{(t+1)}$，因此：</p>
-<p> $$<br> \ell (\theta^{(t+1)})\ge<br>  \sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t+1)})}{Q_i^{(t)}(z^{(i)})}<br>$$</p>
-<p>$$<br> \ge \sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t)})}{Q_i^{(t)}(z^{(i)})}<br> =\ell (\theta^{(t)})<br> $$</p>
-<p> 第一个不等式来自于：<br>$$<br> \ell(\theta) \ge \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br> $$<br> 上式对于$Q_i$和$\theta$的任意值，尤其是$Q_i=Q_i^{(t)}$,$\theta=\theta^{(t+1)}$时成立。为了得到不等式(5)，我们依据的是$\theta^{(t+1)}$应该等于：<br>$$<br> arg\ max_\theta \ \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br> $$<br> 因此根据上式计算的$\theta^{(t+1)}$肯定是大于等于$\theta^{(t)}$的。最后，自然而然就推到了公式(6).</p>
+<p>$$<br> \ell (\theta^{(t+1)})\ge<br>  \sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t+1)})}{Q_i^{(t)}(z^{(i)})}<br>$$</p>
+<p>$$<br> \ge \sum _i \sum _{z^{(i)}}Q_i^{(t)}(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta^{(t)})}{Q_i^{(t)}(z^{(i)})}<br> =\ell (\theta^{(t)})<br>$$</p>
+<p> 第一个不等式来自于：<br>$$<br> \ell(\theta) \ge \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br>$$<br> 上式对于$Q_i$和$\theta$的任意值，尤其是$Q_i=Q_i^{(t)}$,$\theta=\theta^{(t+1)}$时成立。为了得到不等式(5)，我们依据的是$\theta^{(t+1)}$应该等于：<br>$$<br> arg\ max_\theta \ \sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br>$$<br> 因此根据上式计算的$\theta^{(t+1)}$肯定是大于等于$\theta^{(t)}$的。最后，自然而然就推到了公式(6).</p>
 <p> 因此，EM使得似然函数单调收敛。我们们关于EM算法的描述中，我们说最终似然函数会收敛。尽管我们的结果已经展示了上述结论，但是一个令人信服的收敛性检验将会检查在给定的参数容忍度的情况下，</p>
 <p> $\ell(\theta)$会随着EM算法的迭代而不断增加，如果EM使得$\ell(\theta)$的上升速度慢到一定程度，就意味着收敛。</p>
 <p> 如果我们定义<br>$$<br> J(Q,\theta)=\sum _i \sum _{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}<br> ,$$<br> 在我们前面的推导中已经知道了$\ell (\theta)\ge J(Q,\theta)$。EM算法还可以看作使畸变函数J不断上升的过程。E-step固定Q，最大化J；M-step固定$\theta$最大化J。而Q和$\theta$都是在迭代过程中不断更新的。</p>
@@ -259,7 +259,7 @@
 <p>重复如下步骤直到收敛：</p>
 <p> 对于每一个i，令</p>
 <p>$$<br>c^{(i)}=arg \   {min_j ||x^{(i)}-\mu_j||^2}<br>$$</p>
-<p> 对于每一个j，令<br>$$\mu_j=\frac{\sum _{i=1}^m1{c^{(i)}=j}x^{(i)}}<br>{\sum _{i=1}^m1{c^{(i)}=j}} $$</p>
+<p> 对于每一个j，令<br>$$\mu_j=\frac{\sum _{i=1}^m1{c^{(i)}=j}x^{(i)}}<br>{\sum _{i=1}^m1{c^{(i)}=j}}$$</p>
 <p>那么，k-means算法是否能够保证一定收敛呢？答案是肯定的。<br>定义畸变函数</p>
 <p>$$J(c,\mu)=\sum _{i=1}^n||x^{(i)}-\mu _c^{(i)}||^2$$</p>
 <p>k-means算法的目的就是使J降至最小。在内循环中，固定$\mu$,可以通过调整$c$来使J减小；同样的，固定$c$，调整每个类的质心$\mu$也可以使J减小。当J减到最小时，$\mu$和$c$也同时收敛。</p>
@@ -298,14 +298,18 @@
 <p> Rand指数(Rand Index,简称RI)</p>
 <p>$$RI=\frac{a+d}{m(m-1)/2}=\frac{a+d}{C_m^2}.$$</p>
 <p>显然，上述性能度量的结果均在[0,1]之间，值越大越好。}</p>
-<h4 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h4><p>考虑聚类结果的划分$C={C_1,C_2,…,C_k}$,定义：<br>$$avg(C)=\frac{2}{|C|(|C|-1)} \sum <em>{1\le i&lt;j \le |C|}dist(x_i,x_j),$$<br>$$diam(C)=max</em>{1\le i&lt;j \le |C|}dist(x_i,x_j),$$<br>$$d_{min}(C_i,C_j)=min_{x_i\in C_i,x_i\in C_j}dist(x_i,x_j),$$<br>$$d_{cen}(C_i,C_j)=dist(\mu _i,\mu _j),$$</p>
+<h4 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h4><p>考虑聚类结果的划分$C={C_1,C_2,…,C_k}$,定义：</p>
+<p>$$avg(C)=\frac{2}{|C|(|C|-1)} \sum _{1\le i&lt;j \le |C|}dist(x_i,x_j)$$</p>
+<p>$$diam(C)=max_{1\le i&lt;j \le |C|}dist(x_i,x_j)$$</p>
+<p>$$d_{min}(C_i,C_j)=min_{x_i\in C_i,x_i\in C_j}dist(x_i,x_j)$$</p>
+<p>$$d_{cen}(C_i,C_j)=dist(\mu _i,\mu _j)$$</p>
 <p>其中，$dist(·,·)$ 用于计算两个样本之间的距离，$\mu$ 代表 $C$ 的中心点 $\mu =\frac{1}{|C|}\sum <em>{1\le i \le |C|}x</em>{i}.$ 显然，$avg(C)$ 对应于 $C$ 内样本间的平均距离，$diam(C)$ 对应于簇 $C$ 内样本间的最远距离，$d_{min}(C_i,C_j) $对应于簇$C_i$ 与簇 $C_j$ 最近样本间的距离，$d_{cen}(C_i,C_j)$ 对应于簇 $C_i$ 与簇 $C_j$ 中心点的距离。</p>
 <p>基于上式可以导出下面这些常用的聚类性能度量内部指标。</p>
 <p>DB指数(Davies-Bouldin Index,简称DBI)</p>
 <p>$$DBI=\frac{1}{k}\sum <em>{i=1}^k max</em>{j\ne i}(\frac{avg(C_i)+avg(C_j)}{d_{cen}(\mu _i,\mu _j)}).$$</p>
 <p>Dunn指数(Dunn Index，简称DI)</p>
 <p>$$DI=min_{1\le i \le k}{min_{j\ne i}(\frac{d_{min}(C_i,C_j)}{max_{1\le l \le k}\ diam(C_l)})}$$</p>
-<p>显然，DBI的值越小越好，而DI则相反，值越大越好。 </p>
+<p>显然，DBI的值越小越好，而DI则相反，值越大越好。</p>
 <h4 id="共表型相关系数"><a href="#共表型相关系数" class="headerlink" title="共表型相关系数"></a>共表型相关系数</h4><p>共表型相关系数(Cophenetic Correlation Coefficient，简称CPCC)</p>
 <p>内容参考：http//people.revoledu.com/kardi/tutorial/Clustering/index.html.</p>
 <p>另外，共表相关系数也属于内部指标，这里单独拿出来是因为其计算比较复杂，且仅仅用在层次聚类方法上。共表型相关系数是用于衡量层次聚类聚类性能的指标，为了清楚说明共表相关系数的计算，下面先从层次聚类说起。<br>层次聚类的标准输出结果是一个树状图，树状图的横坐标显示的是样本点，纵坐标是树的高度。树状图可以看作是层次聚类的可视化结果。</p>
@@ -431,13 +435,13 @@
 <p>因为距离矩阵是一个对称矩阵，所以一般只采用上三角或者下三角数据，本文采用的是下三角矩阵。对角线上的元素全为0，因为计算的是样本点与自己的距离。总的来说，如果有m个样本点，那么下三角矩阵包含有$\frac{1}{2}m(m-1)$的数据。在我们的例子里，一共有$1/2\times6\times(6-1)=15$个元素。可以看出，在距离矩阵中最小的元素是0.5，即D与F之间的距离。如果样本点包含的还有分类数据，则可以采用其他方法计算样本点之间的距离。</p>
 <p>如何将对象聚在一个类中是层次聚类的关键。给出一个距离矩阵，对象之间的距离可以通过计算类之间的距离的一些标准来确定。最基础和最常用的几个方法如下。</p>
 <p>Single Linkageminimun distance criteron</p>
-<p>$$d_{A\rightarrow B}=min_{\forall i \in A,\forall j \in B}(d_{ij}) $$</p>
+<p>$$d_{A\rightarrow B}=min_{\forall i \in A,\forall j \in B}(d_{ij})$$</p>
 <p>Complete Linkagemaximun distance criteron</p>
-<p>$$d_{A\rightarrow B}=max_{\forall i \in A,\forall j \in B}(d_{ij}) $$</p>
+<p>$$d_{A\rightarrow B}=max_{\forall i \in A,\forall j \in B}(d_{ij})$$</p>
 <p>Average Groupaverage distance criteron</p>
-<p>$$d_{A\rightarrow B}=average_{\forall i \in A,\forall j \in B}(d_{ij}) $$</p>
+<p>$$d_{A\rightarrow B}=average_{\forall i \in A,\forall j \in B}(d_{ij})$$</p>
 <p>Centroid distance criteron</p>
-<p>$$d_{A\rightarrow B}=||c_A-c_B||=\frac{1}{n_in_j}\sum_ {\forall i \in A,\forall j \in B}(d_{ij}) $$</p>
+<p>$$d_{A\rightarrow B}=||c_A-c_B||=\frac{1}{n_in_j}\sum_ {\forall i \in A,\forall j \in B}(d_{ij})$$</p>
 <p>已存在的包含有$n_k$个样本的类k与新聚成的类$(r,s)$之间的距离公式如下：</p>
 <p>$$<br>d_{k \rightarrow (r,s)} =\alpha_r d_{k\rightarrow r}+\alpha_s d_{k\rightarrow s}+\beta d_{r\rightarrow s}+<br>\gamma |d_{k\rightarrow r}-d_{k\rightarrow s}|<br>$$</p>
 <p>具体的参数如表4所示。</p>
