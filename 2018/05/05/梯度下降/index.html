@@ -174,7 +174,7 @@
 <p><img src="/picture/1525406306009-1525855946681.png" alt="1525406306009"></p>
 <p><img src="/picture/1525406028458.png" alt="1525406028458"></p>
 <p>我们将身高与体重的关系在Excel里面用折线图表示，并且添加了线性的趋势线。蓝色的线条是真实数据，红色的实线是模型给出的预测值。蓝色线条与红色线条之间的距离绝对值是预测误差。所以，我们要找到最优的$a$和$b$来拟合这条直线，使得我们模型的总误差最小。</p>
-<p>$$Error = \frac{1}{2}(Actual\ weight - Predicted\ weight)^2=\frac{1}{2}(Y-Ypred)^2$$</p>
+<p>$$Error = \frac{1}{2}(Actual weight - Predicted weight)^2=\frac{1}{2}(Y-Ypred)^2$$</p>
 <p>我们使用均方误差来表示模型的误差，由于$Ypred = a + bx$，因此，模型的均方误差可以表示为</p>
 <p>$$SSE = \sum \frac{1}{2}(Y-a-bx)^2$$</p>
 <p>也就是说，$SSE$是关于$a$和$b$的函数，我们只需要不断调整$a$和$b$，使$SSE$降到最低就可以了。这个时候，我们就可以利用梯度下降算法，来求解$a$和$b$的值。</p>
@@ -329,10 +329,10 @@
 
 <h2 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a>Adadelta</h2><p>AdaDelta是在AdaGrad的基础上发展而来的，目的是解决AdaGrad算法中学习率的单调减少问题。AdaDelta不再采用累积梯度平方和的方法来调整学习率，而是根据一些固定的$w$的大小来限制过去累积梯度的窗口。</p>
 <p>AdaDelta不再无效率地存储历史梯度的平方和，而将历史梯度平方和定义为衰减均值(decaying average)。第$t$步的移动平均值$E[g^2]_t$仅仅取决于过去的平均值和当前梯度（有点类似于momentum）：</p>
-<p>$$E[g^2]<em>t = \gamma E[g^2]</em>{t-1} + (1-\gamma)g_t^2$$</p>
+<p>$$E[g^2]_t = \gamma E[g^2]_{t-1} + (1-\gamma)g_t^2$$</p>
 <p>同样的，我们把$\gamma$设置在0.9附近。为清楚起见，我们重新写下更新规则：</p>
 <blockquote>
-<p>$$\Delta \theta <em>t = - \eta \cdot g</em>{t,i}$$</p>
+<p>$$\Delta \theta _t = - \eta \cdot g_{t,i}$$</p>
 <p>$$\theta _{t+1} = \theta_t + \Delta \theta _t$$</p>
 </blockquote>
 <p>根据AdaGrad我们推出AdaDelta的参数更新公式：</p>
@@ -348,10 +348,10 @@
 <p>$$\Delta \theta_t = -\frac{\eta}{RMS[g]_t}g_t$$</p>
 </blockquote>
 <p>作者们发现上述更新中的单位不一致（可以理解为量纲不一致），因此，他们定义了另外一个指数衰减均值，这次不用梯度的平方了，而是用参数的平方来进行更新：</p>
-<p>$$E[\Delta \theta^2]<em>t = \gamma E[\Delta \theta^2]</em>{t-1} + (1-\gamma)\Delta\theta_t^2$$</p>
+<p>$$E[\Delta \theta^2]_t = \gamma E[\Delta \theta^2]_{t-1} + (1-\gamma)\Delta\theta_t^2$$</p>
 <p>参数更新的均方误差即：</p>
 <p>$$RMS[\Delta\theta]_t = \sqrt{E[\Delta\theta^2]_t + \epsilon}$$</p>
-<p>因为$RMS[\theta]<em>t$是未知的，我们可以用之前所有的更新过的参数的RMS来代替。将之前的学习率$\eta$换成$RMS[\Delta\theta]</em>{t-1}$，那么，我们得出AdaDelta的更新规则：</p>
+<p>因为$RMS[\theta]_t$是未知的，我们可以用之前所有的更新过的参数的RMS来代替。将之前的学习率$\eta$换成$RMS[\Delta\theta]_{t-1}$，那么，我们得出AdaDelta的更新规则：</p>
 <p>$$\Delta\theta_t = -\frac{RMS[\Delta\theta]_{t-1}}{RMS[g]_t}g_t$$</p>
 <p>$$\theta_{t+1} = \theta_t + \Delta\theta_t$$</p>
 <p>AdaDelta甚至不需要初始化学习率，因为在更新规则中已经不见它的身影了。</p>

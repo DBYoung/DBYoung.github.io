@@ -188,7 +188,7 @@
 <h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p>总结一下：我们有一个二分输出变量$Y$，我们希望构造一个关于$x$的函数来计算$Y$的条件概率$Pr（{Y=1|X=x}）$，所有的未知参数都可以通过最大似然法来估计。到目前为止，你不会惊讶于发现统计学家们通过问自己“我们如何使用线性回归来解决这个问题”。</p>
 <ul>
 <li>最简单的一个想法就是令$p(x)$为线性函数。无论$x$在什么位置，$x$每增加一个单位，$p$的变化量是一样的。由于线性函数不能保证预测结果位于0和1之间，因此从概念上线性函数就不适合。另外，在很多情况下，根据我们的经验可知，当$p$很大的时候，对于$p$的相同的变化量，$x$的变化量将会大于$p$在1/2附近的变化量。线性函数做不到这样。</li>
-<li>另一个最直观的想法是令$log\ p(x)$为$x$的线性函数。但是对数函数只在一个方向上是无界的，因此也不符合要求。</li>
+<li>另一个最直观的想法是令$log p(x)$为$x$的线性函数。但是对数函数只在一个方向上是无界的，因此也不符合要求。</li>
 <li>最后，我们选择了$p$经过logit变换以后的函数$ln\frac{p}{1-p}$。这个函数就很好啊，满足了我们的所有需求。</li>
 </ul>
 <p>最后一个选择就是我们所说的逻辑回归。一般的，逻辑回归的模型可以表示为如下形式：</p>
@@ -199,9 +199,9 @@
 <h2 id="似然函数和逻辑回归"><a href="#似然函数和逻辑回归" class="headerlink" title="似然函数和逻辑回归"></a>似然函数和逻辑回归</h2><p>因为逻辑回归的预测结果是概率，而不是类别，因此我们可以用似然函数来拟合模型。对于每一个样本点，我们有一个特征向量$x_i$，这个向量的维度就是特征的个数。同时还有一个观测类别$y_i$。当$y_i=1$的时候，该类的概率为$p$，否则为$1-p$。因此，似然函数为：</p>
 <p>$$L(\beta_0,\beta) = \prod _{i=1}^np(x_i)^{y_i}(1-p(x_i))^{1-y_i}$$</p>
 <p>对数似然函数为：</p>
-<p>$$\begin{aligned} \ell(\beta_0,\beta) &amp;= \sum_{i=1}^ny_iln(p(x_i))+(1-y_i)ln(1-p(x_i)) \&amp;=\sum_{i=1}^n(y_i(ln\frac{p(x_i)}{1-p(x_i)})+ln(1-p(x_i))) \&amp;=\sum_{i=1}^ny_i(\beta_0+x_i\beta)-ln(1+e^{\beta_0+x_i\beta}) \end{aligned}$$</p>
+<p>$$\begin{aligned} \ell(\beta_0,\beta) &amp;= \sum_{i=1}^ny_iln(p(x_i))+(1-y_i)ln(1-p(x_i)) \\&amp;=\sum_{i=1}^n(y_i(ln\frac{p(x_i)}{1-p(x_i)})+ln(1-p(x_i))) \\&amp;=\sum_{i=1}^ny_i(\beta_0+x_i\beta)-ln(1+e^{\beta_0+x_i\beta}) \end{aligned}$$</p>
 <p> 为了表示方便，统一将$\beta_0,\beta$表示成$\beta$,则$\ell$对$\beta$的一阶导数为： </p>
-<p>$$\begin{aligned} \frac{\partial \ell}{\partial \beta} &amp;=\sum _{i=1}^n[y_i-\frac{e^{\beta^Tx_i}}{1+\beta^Tx_i}]x_i\&amp; = \sum _{i=1}^n(y_i-p_i)x_i\end{aligned}$$</p>
+<p>$$\begin{aligned} \frac{\partial \ell}{\partial \beta} &amp;=\sum _{i=1}^n[y_i-\frac{e^{\beta^Tx_i}}{1+\beta^Tx_i}]x_i\\&amp; = \sum _{i=1}^n(y_i-p_i)x_i\end{aligned}$$</p>
 <h2 id="多分类逻辑回归"><a href="#多分类逻辑回归" class="headerlink" title="多分类逻辑回归"></a>多分类逻辑回归</h2><p>如果$Y$有多个类别，我们仍然可以使用逻辑回归。假如有$k$个类别，分别是$0,1,\cdots,k-1$，对于每一个类$k$，其都有对应的$\beta_0$和$\beta$，每个类对应的概率为:</p>
 <p>$$P(Y=c|X=x)=\frac{e^{\beta_0^c+x\beta^c}}{\sum e^{\beta_0^c+x\beta^c}}$$</p>
 <p>观察上式可以发现，二分类逻辑回归求是多分类逻辑回归的特例.</p>

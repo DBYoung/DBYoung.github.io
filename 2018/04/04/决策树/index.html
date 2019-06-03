@@ -166,12 +166,12 @@
 <a id="more"></a>
 
 <h3 id="ID3决策树"><a href="#ID3决策树" class="headerlink" title="ID3决策树"></a>ID3决策树</h3><p>信息熵(Information entropy)是度量样本集合纯度最常用的一种指标，假定当前样本集合$D$中第$k$类样本所占的比例为$p_k,(k=1,2,\cdots,n)$，则$D$的信息熵定义为：</p>
-<p>$$Ent(D)=-\sum _{k=1}^np_k\ log_2p_k$$</p>
+<p>$$Ent(D)=-\sum _{k=1}^np_k log_2p_k$$</p>
 <p>$Ent(D)$的值越小，则$D$的纯度越高</p>
 <blockquote>
 <p>其实我们在高中化学就接触过“熵”的概念，指的是物质的混乱程度。是纯度的对立面。我们说熵越大，混乱程度越高，也就是纯度越低。同理，熵越小，混乱程度越低，即纯度越高。 </p>
 </blockquote>
-<p>假设离散属性$a$有$V$个可能的取值${a^1,a^2,\cdots,a^V}$,若使用$a$来对样本集$D$进行划分，则会产生$V$个分支结点，其中第$v$个分支结点包含了$D$中所有在属性$a$上取值为$a^v$的样本，记为$D^v$。我们可以根据上式计算法$D^v$的信息熵，再考虑到不同的分支结点所包含的样本数不同，给分支结点赋予权重$|D^v|/|D|$，即样本越多的分支结点的影响越大，于是计算出用属性$a$对样本集$D$进行划分所获得的“信息增益”：</p>
+<p>假设离散属性$a$有$V$个可能的取值$\{a^1,a^2,\cdots,a^V\}$,若使用$a$来对样本集$D$进行划分，则会产生$V$个分支结点，其中第$v$个分支结点包含了$D$中所有在属性$a$上取值为$a^v$的样本，记为$D^v$。我们可以根据上式计算法$D^v$的信息熵，再考虑到不同的分支结点所包含的样本数不同，给分支结点赋予权重$|D^v|/|D|$，即样本越多的分支结点的影响越大，于是计算出用属性$a$对样本集$D$进行划分所获得的“信息增益”：</p>
 <p>$$Gain(D,a) = Ent(D) - \sum _{v=1}^V \frac{|D^v|}{|D|}Ent(D^v)$$</p>
 <p>一般来说，信息增益越大，意味着使用属性$a$来进行划分所获得的“纯度提升”越大。因此，我们总是选择使得信息增益最大的那个属性来进行划分。</p>
 <p>我们用下面的例子来说明划分的过程。该数据是一份医学数据，根据病人的一些特征，给出佩戴硬质隐形眼镜、软质隐形眼镜和不佩戴隐形眼镜的建议。数据共有5个变量，其中4个自变量，1个因变量。</p>
@@ -440,7 +440,7 @@
 <p>$$IV(a) = - \sum _{v=1}^V\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}$$</p>
 <p>称为$a$的固有值。属性$a$的可能取值数目却大，则$IV(a)$的值通常会越大。</p>
 <h3 id="CART决策树"><a href="#CART决策树" class="headerlink" title="CART决策树"></a>CART决策树</h3><p>CART树使用基尼指数(Gini index)来选择划分属性，延用上述符号，数据集$D$的纯度可用基尼值来度量：</p>
-<p>$$Gini(D) = \sum <em>{k=1}^n\sum _{k’ \ne k}p_kp</em>{k’} = 1- \sum _{k=1}^n p_k^2$$</p>
+<p>$$Gini(D) = \sum _{k=1}^n\sum _{k’ \ne k}p_kp_{k’} = 1- \sum _{k=1}^n p_k^2$$</p>
 <p>直观来说，$Gini(D)$反映了从数据集D中随机抽取两个样本，其类别标记不一致的概率。因此，Gini(D)越小，则数据的纯度越高。</p>
 <blockquote>
 <p>假设所有的类别都是一样的，则Gini(D)=0,纯度最高</p>
@@ -509,9 +509,9 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/特征选择/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/支持向量机/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">特征选择</span>
+                <span class="level-item">支持向量机</span>
             </a>
         </div>
         

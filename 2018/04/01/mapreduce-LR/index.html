@@ -176,9 +176,9 @@
 <p>则线性回归方程的最小二乘系数估计值为:</p>
 <p>$$\hat{\beta} = (X’X)^{-1}X’Y$$</p>
 <h2 id="编程思路"><a href="#编程思路" class="headerlink" title="编程思路"></a>编程思路</h2><p>利用MapReduce计算系数是，由于输入数据是一行一行进行读取的，因此在计算的时候，不可能直接利用矩阵乘法进行计算。这里，我们假设输入的数据格式为：</p>
-<p>$$x_0\ x_1\ x_2\ \cdots x_p\ y$$</p>
+<p>$$x_0 x_1 x_2 \cdots x_p y$$</p>
 <p>即</p>
-<p>$$1\  x_1\ x_2\ \cdots x_p\ y$$</p>
+<p>$$1  x_1 x_2 \cdots x_p y$$</p>
 <p>首先，考虑最简单的，计算$X’Y$，即计算</p>
 <p>$$<br>\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{20} &amp;x_{30} &amp;\cdots &amp;x_{n0} \<br>&amp;x_{11} &amp;x_{21} &amp;x_{31} &amp;\cdots &amp;x_{n1} \<br>&amp;x_{12} &amp;x_{22} &amp;x_{32} &amp;\cdots &amp;x_{n2} \<br>&amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>&amp;x_{1p} &amp;x_{2p} &amp;x_{3p} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right] \times<br>\left[\begin{matrix}<br>        y_1 \<br>        y_2 \<br>        y_3 \<br>        \vdots \<br>        y_n<br>    \end{matrix}\right]=\left[\begin{matrix}<br>        &amp;x_{10}y_1+&amp;x_{20}y_2+&amp;x_{30}y_3+&amp;\cdots+&amp;x_{n0}y_n \<br>        &amp;x_{11}y_1+&amp;x_{21}y_2+&amp;x_{31}y_3+&amp;\cdots+&amp;x_{n1}y_n \<br>        &amp;x_{12}y_1+&amp;x_{22}y_2+&amp;x_{32}y_3+&amp;\cdots+&amp;x_{n2}y_n \<br>        &amp;\vdots &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \<br>        &amp;x_{1p}y_1+&amp;x_{2p}y_2+&amp;x_{3p}y_3+&amp;\cdots+&amp;x_{np}y_n<br>        \end{matrix}\right]<br>$$</p>
 <p>观察右侧矩阵可以发现，$y_1$总是与第一列相乘，$y_2$总是与第二列相乘，……，以此类推。而第一列实际上就是我们读取数据的第一行，第二列是读取数据的第二行……。根据这种规律，我们每读取一行，就让当前的$y$与所有的自变量相乘，然后把所有的结果累加求和，即为我们想要的结果。</p>
@@ -190,7 +190,7 @@
 <p>可以把上述既然课程看作是进行了$p+1$次的矩阵转置与向量乘积过程。当读取第一行时，我们可以得到一个矩阵：</p>
 <p>$$<br>step1 = \left[\begin{matrix}<br>        &amp;x_{10}x_{10} &amp;x_{11}x_{10} &amp;\cdots &amp;x_{1p}x_{10} \<br>        &amp;x_{10}x_{11} &amp;x_{11}x_{11} &amp;\cdots &amp;x_{1p}x_{11} \<br>        &amp;x_{10}x_{12} &amp;x_{11}x_{12} &amp;\cdots &amp;x_{1p}x_{12} \<br>        &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots                   \<br>        &amp;x_{10}x_{1p} &amp;x_{11}x_{1p} &amp;\cdots &amp;x_{1p}x_{1p}<br>    \end{matrix}\right]$$<br>同理，当读取第二行的时候，同样可以得到一个矩阵：</p>
 <p>$$<br>step2 = \left[<br>    \begin{matrix}<br>        &amp;x_{20}x_{20} &amp;x_{21}x_{20} &amp;\cdots &amp;x_{2p}x_{20} \<br>        &amp;x_{20}x_{21} &amp;x_{21}x_{21} &amp;\cdots &amp;x_{2p}x_{21} \<br>        &amp;x_{20}x_{22} &amp;x_{21}x_{12} &amp;\cdots &amp;x_{2p}x_{12} \<br>        &amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots                   \<br>        &amp;x_{20}x_{2p} &amp;x_{21}x_{2p} &amp;\cdots &amp;x_{2p}x_{2p}<br>    \end{matrix}\right]$$</p>
-<p>此时，将$step1\ step2$对应元素相加，即得到我们的更新矩阵。迭代下去，最终读取完所在的数据，即为$X’X$的结果。</p>
+<p>此时，将$step1 step2$对应元素相加，即得到我们的更新矩阵。迭代下去，最终读取完所在的数据，即为$X’X$的结果。</p>
 <p>当数据量很大的时候，用MapReduce方法进行计算，hadoop会将数据按照block的大小切分成若干块，每一块都执行mapper函数，在reducer里面把所有的mapper结果加起来，最后计算$(X’X)^{-1}X’Y$.</p>
 <h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>由于矩阵的输出不容易处理，因此在得到矩阵的时候，可以将其拉长为向量，这样就可以使用标准化输出函数print将计算结果输出，以便于reducer使用。</p>
 <p>mapper函数如下：</p>
