@@ -16,7 +16,7 @@
 <meta property="og:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/Kmeans.gif">
-<meta property="og:updated_time" content="2019-06-01T03:49:52.854Z">
+<meta property="og:updated_time" content="2019-06-03T03:29:58.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k-means聚类算法学习笔记">
 <meta name="twitter:description" content="聚类算法介绍k-means算法介绍k-means聚类是最初来自于信号处理的一种矢量量化方法，现被广泛应用于数据挖掘。k-means聚类的目的是将n个观测值划分为k个类，使每个类中的观测值距离该类的中心（类均值）比距离其他类中心都近。">
@@ -150,7 +150,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1 小时 读完 (大约 8100 个字)
+                    1 小时 读完 (大约 8099 个字)
                 </span>
                 
                 
@@ -170,7 +170,7 @@
 <h3 id="k-means算法的提出与发展"><a href="#k-means算法的提出与发展" class="headerlink" title="k-means算法的提出与发展"></a>k-means算法的提出与发展</h3><p>詹姆斯·麦奎恩（James MacQueen）1967年第一次使用这个术语“k-means”，虽然这个想法可以追溯到1957年的雨果·斯坦豪斯（Hugo Steinhaus）。<br>标准算法首先由Stuart Lloyd在1957年提出，作为脉冲编码调制技术，尽管直到1982年才发布在贝尔实验室以外。<br>1965年，E. W. Forgy发表了基本相同的方法，这就是为什么它有时被称为Lloyd-Forgy。</p>
 <h3 id="k-means算法的优势适应问题"><a href="#k-means算法的优势适应问题" class="headerlink" title="k-means算法的优势适应问题"></a>k-means算法的优势适应问题</h3><ul>
 <li><p>k-means算法优点</p>
-<p>是解决聚类问题的一种经典算法，简单、快速。<br>对处理大数据集，该算法是相对可伸缩和高效率的。因为它的复杂度是$O(nkt)$, 其中, n 是所有对象的数目, k 是簇的数目, t 是迭代的次数。通常$k\ll n$且$t\ll n$ 。<br>当结果簇是密集的，而簇与簇之间区别明显时, 它的效果较好。</p>
+<p>是解决聚类问题的一种经典算法，简单、快速。<br>对处理大数据集，该算法是相对可伸缩和高效率的。因为它的复杂度是$O(nkt)$, 其中, n 是所有对象的数目, k 是簇的数目, t 是迭代的次数。通常$k\ll n$且$t\ll n$。<br>当结果簇是密集的，而簇与簇之间区别明显时, 它的效果较好。</p>
 </li>
 <li><p>k-means算法缺点</p>
 <p>在簇的平均值被定义的情况下才能使用，这对于处理符号属性的数据不适用。<br>必须事先给出k（要生成的簇的数目），而且对初值敏感，对于不同的初始值，可能会导致不同结果。<br>它对于“躁声”和孤立点数据是敏感的，少量的该类数据能够对平均值产生极大的影响。</p>
@@ -348,9 +348,9 @@
 <p>$$C={C_1,C_2,…,C_k},$$</p>
 <p>参考模型给出的簇划分为</p>
 <p>$$C^+={C_1^+,C_2^+,…,C_s^+}$$</p>
-<p>相应地，令 $\lambda$ 与 $\lambda^+$ 分别表示与 $C$ 和 $C^+$ 对应的簇标记向量，我们将样本两两配对考虑，定义</p>
+<p>相应地，令 $\lambda$与 $\lambda^+$分别表示与 $C$和 $C^+$对应的簇标记向量，我们将样本两两配对考虑，定义</p>
 <p>$$a=|SS|,SS={(x_i,x_j)|\lambda _i=\lambda _j,\lambda _i^+=\lambda _j^+,i&lt;j }$$<br>$$b=|SD|,SD={(x_i,x_j)|\lambda _i =\lambda _j,\lambda _i^+ \ne \lambda _j^+,i&lt;j }$$<br>$$c=|DS|,DS={(x_i,x_j)|\lambda _i \ne \lambda _j,\lambda _i^+=\lambda _j^+,i&lt;j }$$<br>$$d=|DD|,DD={(x_i,x_j)|\lambda _i \ne \lambda _j,\lambda _i^+ \ne \lambda _j^+,i&lt;j }$$</p>
-<p>其中集合$SS$包含了在$C$中隶属于相同簇且在$C^+$中也隶属于相同簇的样本对，集合$SD$包含了在$C$中隶属于相同簇但在$C^+$中隶属于不同簇的样本对，……由于每个样本对 $(x_i,x_j)(i&lt;j)$ 仅能出现在一个集合中，因此有 $a+b+c+d=m(m-1)/2$成立。</p>
+<p>其中集合$SS$包含了在$C$中隶属于相同簇且在$C^+$中也隶属于相同簇的样本对，集合$SD$包含了在$C$中隶属于相同簇但在$C^+$中隶属于不同簇的样本对，……由于每个样本对 $(x_i,x_j)(i&lt;j)$仅能出现在一个集合中，因此有 $a+b+c+d=m(m-1)/2$成立。</p>
 <p>基于以上给出的信息，可以导出下面常用的聚类性能度量外部指标。</p>
 <p> Jaccard系数(Jaccard Coefficient,简称JC)<br>$$JC=\frac{a}{a+b+c}.$$<br> FM指数(Fowlkws and Mallows Index,简称FMI)</p>
 <p>$$FMI=\sqrt{\frac{a}{a+b}\times \frac{a}{a+c}}.$$</p>
@@ -362,7 +362,7 @@
 <p>$$diam(C)=max_{1\le i&lt;j \le |C|}dist(x_i,x_j)$$</p>
 <p>$$d_{min}(C_i,C_j)=min_{x_i\in C_i,x_i\in C_j}dist(x_i,x_j)$$</p>
 <p>$$d_{cen}(C_i,C_j)=dist(\mu _i,\mu _j)$$</p>
-<p>其中，$dist(·,·)$ 用于计算两个样本之间的距离，$\mu$ 代表 $C$ 的中心点 $\mu =\frac{1}{|C|}\sum <em>{1\le i \le |C|}x</em>{i}$ 显然，$avg(C)$ 对应于 $C$ 内样本间的平均距离，$diam(C)$ 对应于簇 $C$ 内样本间的最远距离，$d_{min}(C_i,C_j)$ 对应于簇$C_i$ 与簇 $C_j$ 最近样本间的距离，$d_{cen}(C_i,C_j)$ 对应于簇 $C_i$ 与簇 $C_j$ 中心点的距离。</p>
+<p>其中,$dist(·,·)$用于计算两个样本之间的距离,$\mu$代表$C$的中心点$\mu =\frac{1}{|C|}\sum <em>{1\le i \le |C|}x</em>{i}$.显然,$avg(C)$对应于$C$内样本间的平均距离,$diam(C)$对应于簇$C$内样本间的最远距离,$d_{min}(C_i,C_j)$对应于簇$C_i$与簇$C_j$最近样本间的距离,$d_{cen}(C_i,C_j)$对应于簇$C_i$与簇$C_j$中心点的距离。</p>
 <p>基于上式可以导出下面这些常用的聚类性能度量内部指标。</p>
 <p>DB指数(Davies-Bouldin Index,简称DBI)</p>
 <p>$$DBI=\frac{1}{k}\sum <em>{i=1}^k max</em>{j\ne i}(\frac{avg(C_i)+avg(C_j)}{d_{cen}(\mu _i,\mu _j)})$$</p>
@@ -654,7 +654,7 @@
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="hljs-keyword">library</span>(cluster)</span><br><span class="line">&gt; iris_test &lt;- iris[,<span class="hljs-number">14</span>]</span><br><span class="line">&gt; d &lt;-dist(iris_test)</span><br><span class="line">&gt; hc1 &lt;- hclust(d,<span class="hljs-string">'complete'</span>)  <span class="hljs-comment">#最大距离法</span></span><br><span class="line">&gt; d1 &lt;- cophenetic(hc1)</span><br><span class="line">&gt; cor(d,d1)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">0.7269857</span></span><br><span class="line">&gt; </span><br><span class="line">&gt; hc2 &lt;- hclust(d,<span class="hljs-string">'single'</span>)  <span class="hljs-comment">#最小距离法</span></span><br><span class="line">&gt; d2 &lt;- cophenetic(hc2)</span><br><span class="line">&gt; cor(d,d2)</span><br><span class="line">[<span class="hljs-number">1</span>] <span class="hljs-number">0.8638787</span></span><br></pre></td></tr></table></figure>
 
 <p>从上述R中的运行结果来看，single方法(最小距离法)的结果要优于complete法(最大距离法)。</p>
-<h3 id="聚类个数的选择"><a href="#聚类个数的选择" class="headerlink" title="聚类个数的选择"></a>聚类个数的选择</h3><h4 id="轮廓系数-Silhouette-Coefficient-简称SC"><a href="#轮廓系数-Silhouette-Coefficient-简称SC" class="headerlink" title="轮廓系数(Silhouette Coefficient,简称SC)"></a>轮廓系数(Silhouette Coefficient,简称SC)</h4><p>对于数据集$x={x_1,x_2,…,x_n}$,使用某种聚类方法得到类的集合$C={C_1,C_2,…,C_k}$,每个类的样本量为$num={n_1,n_2,…,n_k}$}</p>
+<h3 id="聚类个数的选择"><a href="#聚类个数的选择" class="headerlink" title="聚类个数的选择"></a>聚类个数的选择</h3><h4 id="轮廓系数-Silhouette-Coefficient-简称SC"><a href="#轮廓系数-Silhouette-Coefficient-简称SC" class="headerlink" title="轮廓系数(Silhouette Coefficient,简称SC)"></a>轮廓系数(Silhouette Coefficient,简称SC)</h4><p>对于数据集$x={x_1,x_2,…,x_n}$,使用某种聚类方法得到类的集合$C={C_1,C_2,…,C_k}$,每个类的样本量为$num={n_1,n_2,…,n_k}$</p>
 <p>$$a_i=\frac{1}{n_k-1}\sum <em>{x_i,x_j\in C_k}dist</em>{i\ne j}(x_i,x_j)$$</p>
 <p>$$b_i=min(\frac{1}{n_l}\sum _{x_i\in C_k,x_j\in C_l,l\ne k}dist(x_i,x_j))$$</p>
 <p>$$S_i=\frac{b_i-a_i}{max(b_i,a_i)}$$</p>
@@ -673,7 +673,7 @@
 <p> 将数据聚类，类的个数分别取$k=1,2,…,K$，得出$W_k,k=1,2,…,K.$<br> 根据均匀分布，使用上面的方法生成B个数据集。计算出每个数据集的<br>$W_{kb}^+,b=1,2,…,B,k=1,2,…,K$，计算出估计的Gap统计量的值：</p>
 <p>$$Gap(k)=(1/B)\sum <em>b log(W</em>{kb}^+)-log(W_k)$$</p>
 <p>令</p>
-<p>$$\bar l = (1/B)\sum <em>b log(W</em>{kb}^+)$$，</p>
+<p>$$\bar l = (1/B)\sum <em>b log(W</em>{kb}^+)$$,</p>
 <p>计算标准误差</p>
 <p>$$sd_k=[(1/B)\sum <em>b {log(W</em>{kb}^+)-\bar l}^2]^{1/2}$$</p>
 <p>定义$s_k=sd_k\sqrt {1+1/B}$，最后，计算出最佳的聚类个数$\hat k$，</p>
