@@ -52,7 +52,8 @@
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>分类器，线性模型</tag>
+        <tag>分类器</tag>
+        <tag>线性模型</tag>
       </tags>
   </entry>
   <entry>
@@ -108,7 +109,8 @@
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>贝叶斯，分类器</tag>
+        <tag>分类器</tag>
+        <tag>贝叶斯</tag>
       </tags>
   </entry>
   <entry>
@@ -119,7 +121,8 @@
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>分类器，集成学习</tag>
+        <tag>分类器</tag>
+        <tag>集成学习</tag>
       </tags>
   </entry>
   <entry>
