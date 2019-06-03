@@ -83,8 +83,8 @@
     
 
 
-<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body class="is-3-column">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
     <div class="container">
@@ -165,49 +165,42 @@
         <div class="content">
             <h2 id="lubridate包简介"><a href="#lubridate包简介" class="headerlink" title="lubridate包简介"></a>lubridate包简介</h2><p>该包的描述文档介绍道：<br>lubridate包包含了一些处理时间点和时间段的函数：<br>快速并且友好的分割、提取和更新时间的函数（比如从日期中提取年、月、日等信息），在日期上进行代数运算.lubridate包运用了一致并且易于记忆的语法，使得用户在使用该包的时候会感到非常简单和愉快.</p>
 <a id="more"></a>
-
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">library</span>(lubridate)</span><br></pre></td></tr></table></figure>
-
 <h2 id="各种函数介绍"><a href="#各种函数介绍" class="headerlink" title="各种函数介绍"></a>各种函数介绍</h2><h3 id="add-with-rollback"><a href="#add-with-rollback" class="headerlink" title="add_with_rollback"></a>add_with_rollback</h3><p>add_with_rollback:Add and subtract months to a date without exceeding the last day of the new month.</p>
 <p>add_with_rollback:将某个日期加上或者减取若干个月，不考虑新获得的月份的最后一天的实际值.比如2009-10-31，加上一个月就是2009-11-31，但是11月没有31号，所以会显示NA.如果使用%m+%，则会以自然月的方式相加.</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">may &lt;- ymd_hms(<span class="hljs-string">"1994-05-31 07:40:38"</span>)</span><br><span class="line">may + months(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>)  <span class="hljs-comment">#六月31显示为NA</span></span><br><span class="line">may %m+% months(<span class="hljs-number">1</span>:<span class="hljs-number">3</span>)  <span class="hljs-comment">#不会有错误</span></span><br><span class="line"></span><br><span class="line">leap &lt;- ymd(<span class="hljs-string">"2012-02-29"</span>)</span><br><span class="line">leap + years(<span class="hljs-number">1</span>)  <span class="hljs-comment">#NA</span></span><br><span class="line">leap %m+% years(<span class="hljs-number">1</span>)  <span class="hljs-comment">#2013-02-28</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="am"><a href="#am" class="headerlink" title="am"></a>am</h3><p>am:Does date time occur in the am or pm?</p>
 <p>am:判断是否是上午，显然，其需要的参数应该包含一个具体的一天中的时间信息，如果只提供日期信息，则默认为00:00:00，显示为上午时间.</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- ymd(<span class="hljs-string">"2012-02-02"</span>)</span><br><span class="line">am(dt)</span><br><span class="line">time &lt;- ymd_hm(<span class="hljs-string">"2012-02-01 13:20"</span>)</span><br><span class="line">am(time)</span><br></pre></td></tr></table></figure>
-
 <h3 id="as-duration"><a href="#as-duration" class="headerlink" title="as.duration"></a>as.duration</h3><p>as.duration:as.duration changes Interval, Period and numeric class objects to Duration objects. Numeric objects are changed to Duration objects with the seconds unit equal to the numeric value.</p>
 <p>as.duration:将interval、period和数字转换为时间间隔——时间段.</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">span &lt;- interval(ymd(<span class="hljs-string">"1994-05-01"</span>),ymd(<span class="hljs-string">"1995-10-28"</span>))  <span class="hljs-comment">#interval</span></span><br><span class="line">as.duration(span)  <span class="hljs-comment">#47088000秒，约1.49年</span></span><br><span class="line">as.duration(<span class="hljs-number">10</span>)  <span class="hljs-comment">#10秒</span></span><br><span class="line">dur &lt;- duration(hours = <span class="hljs-number">10</span>,minutes = <span class="hljs-number">6</span>)  <span class="hljs-comment">#一段10分6秒的时间间隔</span></span><br><span class="line">as.numeric(dur,<span class="hljs-string">"hours"</span>)  <span class="hljs-comment">#10.1小时</span></span><br><span class="line">as.numeric(dur,<span class="hljs-string">"minutes"</span>)  <span class="hljs-comment">#606秒</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="as-interval"><a href="#as-interval" class="headerlink" title="as.interval"></a>as.interval</h3><p>as.intervel:Change an object to an interval.</p>
 <p>as.interval:将对象转换为inteval</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">diff &lt;- make_difftime(days = <span class="hljs-number">31</span>) <span class="hljs-comment">#加上31天</span></span><br><span class="line">as.interval(diff, ymd(<span class="hljs-string">"2009-01-01"</span>))</span><br><span class="line">as.interval(diff, ymd(<span class="hljs-string">"2009-02-01"</span>))</span><br><span class="line"></span><br><span class="line">dur &lt;- duration(days = <span class="hljs-number">31</span>) <span class="hljs-comment">#duration</span></span><br><span class="line">as.interval(dur, ymd(<span class="hljs-string">"2009-01-01"</span>))</span><br><span class="line">as.interval(dur, ymd(<span class="hljs-string">"2009-02-01"</span>))</span><br><span class="line"></span><br><span class="line">per &lt;- period(months = <span class="hljs-number">1</span>) <span class="hljs-comment">#period</span></span><br><span class="line">as.interval(per, ymd(<span class="hljs-string">"2009-01-01"</span>))</span><br><span class="line">as.interval(per, ymd(<span class="hljs-string">"2009-02-01"</span>))</span><br><span class="line"></span><br><span class="line">as.interval(<span class="hljs-number">3600</span>,ymd(<span class="hljs-string">"2009-01-01"</span>)) <span class="hljs-comment">##numeric，在2009-01-01的基础上加上3600天</span></span><br><span class="line">as.interval(duration(hours = <span class="hljs-number">3600</span>), ymd(<span class="hljs-string">"2009-01-01"</span>))  <span class="hljs-comment">#加上3600小时</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="as-period"><a href="#as-period" class="headerlink" title="as.period"></a>as.period</h3><p>as.period:Change an object to a period.</p>
 <p>as.period:将对象转换为period.</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">span &lt;- interval(as.POSIXct(<span class="hljs-string">"2009-01-01"</span>), as.POSIXct(<span class="hljs-string">"2010-02-02 01:01:01"</span>)) <span class="hljs-comment">#interval</span></span><br><span class="line">as.period(span)</span><br><span class="line">as.period(span, units = <span class="hljs-string">"day"</span>)</span><br></pre></td></tr></table></figure>
-
 <p>format of interval,duration and period:</p>
 <ul>
 <li>interval:</li>
 </ul>
-<p>1990-01-01 UTC–1990-01-11 UTC</p>
+<p>1990-01-01 UTC—1990-01-11 UTC</p>
 <ul>
 <li>duration:</li>
 </ul>
@@ -222,7 +215,6 @@
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dt_utc &lt;- ymd_hms(<span class="hljs-string">"2010-08-03 00:50:50"</span>)</span><br><span class="line">dt_europe &lt;- ymd_hms(<span class="hljs-string">"2010-08-03 00:50:50"</span>, tz = <span class="hljs-string">"Europe/London"</span>)</span><br><span class="line">c(as_date(dt_utc), as.Date(dt_utc))</span><br><span class="line">c(as_date(dt_europe), as.Date(dt_europe))</span><br><span class="line"><span class="hljs-comment">## need not suply origin，不需要提供初始值</span></span><br><span class="line"></span><br><span class="line">as_date(<span class="hljs-number">10</span>)  <span class="hljs-comment">#默认中1970-01-01年开始</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="as-datetime"><a href="#as-datetime" class="headerlink" title="as_datetime"></a>as_datetime</h3><p>as_datetime:Convert an object to a date or date-time</p>
 <p>as_datetime:将对象转换为date或者date-time类型</p>
 <ul>
@@ -234,7 +226,6 @@
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- as.POSIXct(<span class="hljs-string">"2012-03-26 23:12:13"</span>, tz = <span class="hljs-string">"Etc/GMT+8"</span>)</span><br><span class="line">x</span><br><span class="line">date(x)</span><br><span class="line">as.Date(x) <span class="hljs-comment">#as.Date()函数默认返回UTC时间</span></span><br><span class="line">as.Date(x,tz = <span class="hljs-string">'Etc/GMT+8'</span>)  <span class="hljs-comment">#返回Etc/GMT+8时区时间</span></span><br><span class="line">date(x) &lt;- as.Date(<span class="hljs-string">'2014-10-20'</span>)</span><br><span class="line">date(x)</span><br></pre></td></tr></table></figure>
-
 <h3 id="DateTimeUpdate"><a href="#DateTimeUpdate" class="headerlink" title="DateTimeUpdate"></a>DateTimeUpdate</h3><p>DateTimeUpdate:Description of the classes “POSIXlt” and “POSIXct” representing calendar dates and times.</p>
 <p>DateTimeUpdate:</p>
 <h3 id="date-decimal"><a href="#date-decimal" class="headerlink" title="date_decimal"></a>date_decimal</h3><p>date_decimal:Converts a decimal to a date.</p>
@@ -243,28 +234,24 @@
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">decimal &lt;- <span class="hljs-number">2017.12</span></span><br><span class="line">date_decimal(decimal)</span><br></pre></td></tr></table></figure>
-
 <h3 id="day"><a href="#day" class="headerlink" title="day"></a>day</h3><p>day:Get/set days component of a date-time.</p>
 <p>day:获取/设置日期中的具体日数据</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- as.Date(<span class="hljs-string">'2017-10-30'</span>)</span><br><span class="line">day(x) <span class="hljs-comment">#获取日期</span></span><br><span class="line">mday(x)  <span class="hljs-comment">#一个月中的第几天</span></span><br><span class="line">yday(x)  <span class="hljs-comment">#一年中的第几天</span></span><br><span class="line">wdayofdate &lt;- wday(x,label = <span class="hljs-literal">TRUE</span>,abbr = <span class="hljs-literal">FALSE</span>) </span><br><span class="line">levels(wdayofdate) &lt;- c(levels(wdayofdate)[<span class="hljs-number">2</span>:<span class="hljs-number">7</span>],levels(wdayofdate)[<span class="hljs-number">1</span>])</span><br><span class="line">wdayofdate</span><br><span class="line"><span class="hljs-comment">#一周中的第几天,以周日为第一天</span></span><br><span class="line"><span class="hljs-comment">#因为中国人默认周一为一周的第一天，所以可以更改一下因子的排序</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="days-in-month"><a href="#days-in-month" class="headerlink" title="days_in_month"></a>days_in_month</h3><p>days_in_month:Get the number of days in the month of a date-time.</p>
 <p>days_in_month:某月份有几天,输入一个带年份的日期数据</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">md &lt;- ymd(<span class="hljs-string">'1994-05-01'</span>)</span><br><span class="line">days_in_month(md)</span><br></pre></td></tr></table></figure>
-
 <h3 id="decimal-date"><a href="#decimal-date" class="headerlink" title="decimal_date"></a>decimal_date</h3><p>decimal_date:Converts a date to a decimal of its year.</p>
 <p>decimal_date:将日期转换成小数.</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- ymd(<span class="hljs-string">'2017-10-31'</span>)</span><br><span class="line">decimal_date(dt)</span><br></pre></td></tr></table></figure>
-
 <h3 id="dst"><a href="#dst" class="headerlink" title="dst"></a>dst</h3><p>dst:Get Daylight Savings Time indicator of a date-time.</p>
 <p>dst:</p>
 <h3 id="duration"><a href="#duration" class="headerlink" title="duration"></a>duration</h3><p>duration:Create a duration object.</p>
@@ -276,20 +263,17 @@
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- as.POSIXct(<span class="hljs-string">"2009-08-07 00:00:01"</span>, tz = <span class="hljs-string">"America/New_York"</span>)</span><br><span class="line">x</span><br><span class="line">force_tz(x, <span class="hljs-string">"GMT"</span>)</span><br></pre></td></tr></table></figure>
-
 <h3 id="guess-formats"><a href="#guess-formats" class="headerlink" title="guess_formats"></a>guess_formats</h3><p>guess_formats:Guess formats from the supplied date-time character vector.</p>
 <p>guess_formats:猜测提供的日期格式</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- c(<span class="hljs-string">'1990-01'</span>,<span class="hljs-string">'1990 09 01'</span>,<span class="hljs-string">'1992 Jan 01'</span>,<span class="hljs-string">'May 1 1992'</span>)</span><br><span class="line">guess_formats(dt,orders = c(<span class="hljs-string">"ymd"</span>,<span class="hljs-string">"ym"</span>,<span class="hljs-string">"mdy"</span>),print_matches = <span class="hljs-literal">TRUE</span>)</span><br></pre></td></tr></table></figure>
-
 <h3 id="hour"><a href="#hour" class="headerlink" title="hour"></a>hour</h3><p>hour；Get/set hours component of a date-time.<br>hour:获取/设置日期中的小时数据</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- now()</span><br><span class="line">hour(dt)</span><br><span class="line">hour(dt) &lt;- <span class="hljs-number">1</span></span><br><span class="line">dt</span><br></pre></td></tr></table></figure>
-
 <h3 id="interval"><a href="#interval" class="headerlink" title="interval"></a>interval</h3><p>interval:Utilities for creation and manipulation of Interval objects.</p>
 <h3 id="interval-class"><a href="#interval-class" class="headerlink" title="interval_class"></a>interval_class</h3><h3 id="is-Date"><a href="#is-Date" class="headerlink" title="is.Date"></a>is.Date</h3><p>is.Date():Is x a Date object?</p>
 <p>is.Date():x是否是一个日期对象</p>
@@ -297,42 +281,36 @@
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- <span class="hljs-string">'1970-01-01'</span></span><br><span class="line">is.Date(x)</span><br><span class="line">x1 &lt;- as.Date(x)</span><br><span class="line">is.Date(x1)</span><br><span class="line">x2 &lt;- ymd(x)</span><br><span class="line">is.Date(x2)</span><br></pre></td></tr></table></figure>
-
 <h3 id="is-difftime"><a href="#is-difftime" class="headerlink" title="is.difftime"></a>is.difftime</h3><p>is.difftime:Is x a difftime object?</p>
 <p>is.difftime:x是否是一个difftime对象</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">is.difftime(as.Date(<span class="hljs-string">'1999-09-09'</span>)) <span class="hljs-comment">#FALSE</span></span><br><span class="line">is.difftime(make_difftime(<span class="hljs-number">20</span>))  <span class="hljs-comment">#TRUE,默认20秒间隔</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="is-instant"><a href="#is-instant" class="headerlink" title="is.instant"></a>is.instant</h3><p>is.instant:Is x a date-time object?</p>
 <p>is.instant:x是否为日期对象，同is.Date()</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- as.Date(<span class="hljs-string">'1999-09-09'</span>)</span><br><span class="line">is.instant(x)</span><br><span class="line">is.timepoint(x)</span><br><span class="line">is.timepoint(<span class="hljs-number">10</span>)</span><br></pre></td></tr></table></figure>
-
 <h3 id="is-POSIXt"><a href="#is-POSIXt" class="headerlink" title="is.POSIXt"></a>is.POSIXt</h3><p>is.POSIXt:Is x a POSIXct or POSIXlt object?</p>
 <p>is.POSIXt:x是否为POSIXct对象或者POSIXlt对象?</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">is.POSIXt(as.Date(<span class="hljs-string">"1997-01-01"</span>))</span><br><span class="line">is.POSIXt(as.POSIXct(<span class="hljs-string">"1997-01-01"</span>))</span><br></pre></td></tr></table></figure>
-
 <h3 id="is-timespan"><a href="#is-timespan" class="headerlink" title="is.timespan"></a>is.timespan</h3><p>is.timespan:Is x a length of time?</p>
 <p>is.timespan:x是否时时间长度</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">is.timespan(as.Date(<span class="hljs-string">"1999-09-09"</span>))</span><br><span class="line">is.timespan(duration(second = <span class="hljs-number">1</span>))</span><br><span class="line">is.timespan(interval(ymd(<span class="hljs-string">"1999-09-09"</span>),ymd(<span class="hljs-string">"2000-01-01"</span>)))</span><br><span class="line">is.timespan(period(<span class="hljs-number">10</span>,units = <span class="hljs-string">'month'</span>))</span><br></pre></td></tr></table></figure>
-
 <h3 id="leap-year"><a href="#leap-year" class="headerlink" title="leap_year"></a>leap_year</h3><p>leap_year:Is a year a leap year?</p>
 <p>leap_year:是否时闰年</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">leap_year(<span class="hljs-number">2012</span>)</span><br><span class="line">leap_year(<span class="hljs-number">2013</span>)</span><br></pre></td></tr></table></figure>
-
 <h3 id="local-time"><a href="#local-time" class="headerlink" title="local_time"></a>local_time</h3><p>local_time:</p>
 <p>local_time:</p>
 <h3 id="make-date"><a href="#make-date" class="headerlink" title="make_date"></a>make_date</h3><h3 id="make-datetime"><a href="#make-datetime" class="headerlink" title="make_datetime"></a>make_datetime</h3><p>make_datetime:Efficient creation of date-times from numeric representations</p>
@@ -341,14 +319,12 @@
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dt &lt;- make_datetime(year = <span class="hljs-number">1999</span>,month = <span class="hljs-number">9</span>,day = <span class="hljs-number">10</span>)</span><br><span class="line">dt</span><br></pre></td></tr></table></figure>
-
 <h3 id="make-difftime"><a href="#make-difftime" class="headerlink" title="make_difftime"></a>make_difftime</h3><p>make_difftime:Create a difftime object.</p>
 <p>make_difftime:创建一个时间长度对象.</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">make_difftime(<span class="hljs-number">1</span>)</span><br><span class="line">make_difftime(<span class="hljs-number">60</span>)</span><br><span class="line">make_difftime(<span class="hljs-number">3600</span>)</span><br><span class="line">make_difftime(<span class="hljs-number">3600</span>, units = <span class="hljs-string">"minute"</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 60 mins</span></span><br><span class="line">make_difftime(second = <span class="hljs-number">90</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 1.5 mins</span></span><br><span class="line">make_difftime(minute = <span class="hljs-number">1.5</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 1.5 mins</span></span><br><span class="line">make_difftime(second = <span class="hljs-number">3</span>, minute = <span class="hljs-number">1.5</span>, hour = <span class="hljs-number">2</span>, day = <span class="hljs-number">6</span>, week = <span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 13.08441 days</span></span><br><span class="line">make_difftime(hour = <span class="hljs-number">1</span>, minute = -<span class="hljs-number">60</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of 0 secs</span></span><br><span class="line">make_difftime(day = -<span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-comment"># Time difference of -1 days</span></span><br><span class="line">make_difftime(second = <span class="hljs-number">120</span>,minute = <span class="hljs-number">10</span>,hour = <span class="hljs-number">10</span>,day = <span class="hljs-number">1</span>,week = <span class="hljs-number">1</span>, units = <span class="hljs-string">"hour"</span>)</span><br><span class="line">make_difftime(<span class="hljs-number">20</span>,day = <span class="hljs-number">6</span>,week = <span class="hljs-number">1</span>)</span><br><span class="line"><span class="hljs-comment"># Time differences in mins</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="minute"><a href="#minute" class="headerlink" title="minute"></a>minute</h3><p>minute:Get/set minutes component of a date-time.</p>
 <p>minute:类似于hour.</p>
 <h3 id="month"><a href="#month" class="headerlink" title="month"></a>month</h3><p>month:Get/set months component of a date-time.</p>
@@ -359,26 +335,22 @@
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">#ms:代表分钟,s代表秒</span></span><br><span class="line"><span class="hljs-comment">#hms:h代表小时</span></span><br><span class="line">ms(<span class="hljs-string">"09 10"</span>)</span><br><span class="line">hms(<span class="hljs-string">"09:10:10"</span>)</span><br><span class="line">hms(<span class="hljs-string">"3:22:::2"</span>)</span><br></pre></td></tr></table></figure>
-
 <h3 id="now"><a href="#now" class="headerlink" title="now"></a>now</h3><p>now:The current time</p>
 <p>now:获取当前时间</p>
 <p>+例子</p>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">now()</span><br></pre></td></tr></table></figure>
-
 <h3 id="origin"><a href="#origin" class="headerlink" title="origin"></a>origin</h3><p>origin：1970-01-01 UTC</p>
 <p>origin：1970-01-01 UTC，是一个常数，不是函数</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">origin</span><br></pre></td></tr></table></figure>
-
 <h3 id="parse-date-time"><a href="#parse-date-time" class="headerlink" title="parse_date_time"></a>parse_date_time</h3><p>parse_date_time:Parse character and numeric date-time vectors with user friendly order formats.</p>
 <p>parse_date_time:将字符型或者数值型日期转换成用户友好的格式。</p>
 <ul>
 <li>例子</li>
 </ul>
 <figure class="highlight r hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <h3 id="poriod"><a href="#poriod" class="headerlink" title="poriod"></a>poriod</h3><h3 id="peroid-to-seconds"><a href="#peroid-to-seconds" class="headerlink" title="peroid_to_seconds"></a>peroid_to_seconds</h3><h3 id="pretty-dates"><a href="#pretty-dates" class="headerlink" title="pretty_dates"></a>pretty_dates</h3><h3 id="quarter"><a href="#quarter" class="headerlink" title="quarter"></a>quarter</h3><h3 id="roll-back"><a href="#roll-back" class="headerlink" title="roll_back"></a>roll_back</h3><h3 id="round-date"><a href="#round-date" class="headerlink" title="round_date"></a>round_date</h3><h3 id="second"><a href="#second" class="headerlink" title="second"></a>second</h3><h3 id="stamp"><a href="#stamp" class="headerlink" title="stamp"></a>stamp</h3><h3 id="timespan"><a href="#timespan" class="headerlink" title="timespan"></a>timespan</h3><h3 id="time-length"><a href="#time-length" class="headerlink" title="time_length"></a>time_length</h3><h3 id="today"><a href="#today" class="headerlink" title="today"></a>today</h3><h3 id="tz"><a href="#tz" class="headerlink" title="tz"></a>tz</h3><h3 id="week"><a href="#week" class="headerlink" title="week"></a>week</h3><h3 id="with-tz"><a href="#with-tz" class="headerlink" title="with_tz"></a>with_tz</h3><h3 id="year"><a href="#year" class="headerlink" title="year"></a>year</h3><h3 id="ymd"><a href="#ymd" class="headerlink" title="ymd"></a>ymd</h3><h3 id="ymd-hms"><a href="#ymd-hms" class="headerlink" title="ymd_hms"></a>ymd_hms</h3><h3 id="m"><a href="#m" class="headerlink" title="%m+%"></a>%m+%</h3><h3 id="within"><a href="#within" class="headerlink" title="%within%"></a>%within%</h3><h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><h2 id="三、应用实例"><a href="#三、应用实例" class="headerlink" title="三、应用实例"></a>三、应用实例</h2>
         </div>
         
@@ -1464,7 +1436,24 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="/js/insight.js" defer></script>
 <link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<link rel="stylesheet" href="/css/insight.css">
     
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
 </body>
 </html>

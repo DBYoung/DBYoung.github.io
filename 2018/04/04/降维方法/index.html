@@ -83,8 +83,8 @@
     
 
 
-<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body class="is-3-column">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
     <div class="container">
@@ -164,7 +164,6 @@
         </h1>
         <div class="content">
             <h2 id="线性判别分析-LDA"><a href="#线性判别分析-LDA" class="headerlink" title="线性判别分析(LDA)"></a>线性判别分析(LDA)</h2><a id="more"></a>
-
 <h2 id="主成分分析-PCA"><a href="#主成分分析-PCA" class="headerlink" title="主成分分析(PCA)"></a>主成分分析(PCA)</h2><h2 id="奇异值分解-SVD"><a href="#奇异值分解-SVD" class="headerlink" title="奇异值分解(SVD)"></a>奇异值分解(SVD)</h2><h2 id="非负矩阵分解-NMF"><a href="#非负矩阵分解-NMF" class="headerlink" title="非负矩阵分解(NMF)"></a>非负矩阵分解(NMF)</h2><h2 id="tsne分解"><a href="#tsne分解" class="headerlink" title="tsne分解"></a>tsne分解</h2>
         </div>
         
@@ -223,16 +222,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/线性模型/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/04/贝叶斯分类器/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">线性模型</span>
+                <span class="level-item">贝叶斯分类器</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/04/集成学习/">
-                <span class="level-item">集成学习</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/04/线性模型/">
+                <span class="level-item">线性模型</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -1250,7 +1249,24 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="/js/insight.js" defer></script>
 <link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<link rel="stylesheet" href="/css/insight.css">
     
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
 </body>
 </html>
