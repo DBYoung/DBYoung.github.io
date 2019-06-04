@@ -16,7 +16,7 @@
 <meta property="og:description" content="几种主要的决策树决策树算法的关键是选择最优划分属性，据此人们提出了三种决策树模型。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/dtree.jpg">
-<meta property="og:updated_time" content="2019-06-03T07:03:27.306Z">
+<meta property="og:updated_time" content="2019-06-04T05:43:45.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="决策树算法">
 <meta name="twitter:description" content="几种主要的决策树决策树算法的关键是选择最优划分属性，据此人们提出了三种决策树模型。">
@@ -394,7 +394,7 @@
 <p>$$Ent(D^2)== \sum_{k=1}^3 -p_klog_2p_k=-(\frac{1}{8}log_2\frac{1}{8} + \frac{2}{8}log_2\frac{2}{8} + \frac{5}{8}log_2\frac{5}{8})=1.299$$</p>
 <p>$$Ent(D^2)== \sum_{k=1}^3 -p_klog_2p_k=-(\frac{1}{8}log_2\frac{1}{8} + \frac{1}{8}log_2\frac{1}{8} + \frac{6}{8}log_2\frac{6}{8})=1.061$$</p>
 <p>那么，age的信息增益为：</p>
-<p>$$\begin{aligned}Gain(D,age) = &amp; Ent(D) - \sum _{v=1}^3\frac{|D^v|}{|D|}Ent(D^v) \ =&amp;   1.326 - (\frac{1}{3}\times 1.5 + \frac{1}{3}\times 1.299+ \frac{1}{3}\times 1.061)=0.0393\end{aligned}$$</p>
+<p>$$\begin{aligned}Gain(D,age) = &amp; Ent(D) - \sum _{v=1}^3\frac{|D^v|}{|D|}Ent(D^v) \\ =&amp;   1.326 - (\frac{1}{3}\times 1.5 + \frac{1}{3}\times 1.299+ \frac{1}{3}\times 1.061) \\=&amp; 0.0393\end{aligned}$$</p>
 <p>类似的，我们可以计算出其他属性的信息增益：</p>
 <p>$$Gain(D,sp)=0.0395$$</p>
 <p>$$Gain(D,astigmatic ) = 0.377$$</p>
@@ -440,13 +440,13 @@
 <p>$$IV(a) = - \sum _{v=1}^V\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}$$</p>
 <p>称为$a$的固有值。属性$a$的可能取值数目却大，则$IV(a)$的值通常会越大。</p>
 <h3 id="CART决策树"><a href="#CART决策树" class="headerlink" title="CART决策树"></a>CART决策树</h3><p>CART树使用基尼指数(Gini index)来选择划分属性，延用上述符号，数据集$D$的纯度可用基尼值来度量：</p>
-<p>$$Gini(D) = \sum <em>{k=1}^n\sum _{k’ \ne k}p_kp</em>{k’} = 1- \sum _{k=1}^n p_k^2$$</p>
+<p>$$Gini(D) = \sum _{k=1}^n\sum _{k’ \ne k}p_kp_{k’} = 1 - \sum _{k=1}^n p_k^2$$</p>
 <p>直观来说，$Gini(D)$反映了从数据集D中随机抽取两个样本，其类别标记不一致的概率。因此，Gini(D)越小，则数据的纯度越高。</p>
 <blockquote>
 <p>假设所有的类别都是一样的，则Gini(D)=0,纯度最高</p>
 </blockquote>
 <p>那么，属性$a$的基尼指数定义为：</p>
-<p>$$Gini_index(D,a)=\sum _{v=1}^V\frac{|D^v|}{|D|}Gini(D^v)$$</p>
+<p>$$Gini_{index}(D,a)=\sum_{v=1}^V\frac{|D^v|}{|D|}Gini(D^v)$$</p>
 <p>于是，我们在候选属性集合$A$中，选择那个使得划分后基尼指数最小的属性作为划分属性。</p>
 <blockquote>
 <p>可以看出，CART树的构建比前两种树都简单一点。</p>
@@ -1711,7 +1711,7 @@ document.addEventListener('DOMContentLoaded', function () {
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

@@ -15,7 +15,7 @@
 <meta property="og:description" content="Q1: Mathjax 测试1.行内公式 行内公式，用两个单$包住。 一元二次函数根的计算公式为$-b \pm \frac{\sqrt{b^2-4ac}}{2a}$.一元二次函数根的计算公式为$-b \pm \frac{\sqrt{b^2-4ac}}{2a}$. 2.行间公式 行间公式，用两个$$包住。 一元二次函数根的计算公式为$$-b \pm \frac{\sqrt{b^2-4ac}}{2a}">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/QA.jpg">
-<meta property="og:updated_time" content="2019-06-04T02:06:52.033Z">
+<meta property="og:updated_time" content="2019-06-04T05:58:33.811Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建博客的问题及解决方案">
 <meta name="twitter:description" content="Q1: Mathjax 测试1.行内公式 行内公式，用两个单$包住。 一元二次函数根的计算公式为$-b \pm \frac{\sqrt{b^2-4ac}}{2a}$.一元二次函数根的计算公式为$-b \pm \frac{\sqrt{b^2-4ac}}{2a}$. 2.行间公式 行间公式，用两个$$包住。 一元二次函数根的计算公式为$$-b \pm \frac{\sqrt{b^2-4ac}}{2a}">
@@ -148,7 +148,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 264 个字)
+                    3 分钟 读完 (大约 395 个字)
                 </span>
                 
                 
@@ -177,6 +177,17 @@
 <p><code>$$X=\left[\begin{matrix}</code><br><code>&amp;x_{10} &amp;x_{11} &amp;\cdots &amp;x_{1p} \\\\</code><br><code>&amp;x_{20} &amp;x_{21} &amp;\cdots &amp;x_{2p} \\\\</code><br><code>&amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \\\\</code><br><code>&amp;x_{n0} &amp;x_{n1} &amp;\cdots &amp;x_{np}</code><br><code>\end{matrix}\right]$$</code></p>
 <p>解析成：</p>
 <p>$$X=\left[\begin{matrix}<br>&amp;x_{10} &amp;x_{11} &amp;\cdots &amp;x_{1p} \\<br>&amp;x_{20} &amp;x_{21} &amp;\cdots &amp;x_{2p} \\<br>&amp;\vdots &amp;\vdots &amp;\ddots &amp;\vdots \\<br>&amp;x_{n0} &amp;x_{n1} &amp;\cdots &amp;x_{np}<br>\end{matrix}\right]$$</p>
+<p>4.其他问题</p>
+<p><code>_</code>字符同样会被转义成<code>em</code>，因此需要在<code>_</code>前面加一个<code>\</code>。</p>
+<p>公式如下：</p>
+<p><code>$$Gini(D) = \sum \_{k=1}^n\sum \_{k&#39; \ne k}p\_kp\_{k&#39;} = 1 - \sum \_{k=1}^n p\_k^2$$</code></p>
+<p>结果如下：</p>
+<p>$$Gini(D) = \sum _{k=1}^n\sum _{k’ \ne k}p_kp_{k’} = 1 - \sum _{k=1}^n p_k^2$$</p>
+<p>或者修改em规则，将<code>_</code>表示的强调去掉。</p>
+<p>公式如下：</p>
+<p><code>$$Gini(D) = \sum _{k=1}^n\sum _{k&#39; \ne k}p_kp_{k&#39;} = 1 - \sum _{k=1}^n p_k^2$$</code></p>
+<p>结果如下：</p>
+<p>$$Gini(D) = \sum _{k=1}^n\sum _{k’ \ne k}p_kp_{k’} = 1 - \sum _{k=1}^n p_k^2$$</p>
 
         </div>
         
@@ -1421,7 +1432,7 @@ document.addEventListener('DOMContentLoaded', function () {
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
