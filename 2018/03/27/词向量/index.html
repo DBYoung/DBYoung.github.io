@@ -83,8 +83,8 @@
     
 
 
-<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body class="is-3-column">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
     <div class="container">
@@ -319,7 +319,7 @@
 </li>
 <li><p>目标是找到一个好的模型，使得$f(W_t,…,W_{t-n+1})=\hat{P}(W_t|W_1^{n-1})$</p>
 </li>
-<li><p>唯一的约束条件是$\sum _{i=1}^{|V|}f(i,W_{t-1},…,W_t-n+1)=1,f&gt;0$</p>
+<li><p>唯一的约束条件是$\sum <em>{i=1}^{|V|}f(i,W</em>{t-1},…,W_t-n+1)=1,f&gt;0$</p>
 </li>
 </ul>
 <p><img src="/picture/nnlm.png" alt="photo"> </p>
@@ -331,11 +331,11 @@
 </li>
 </ol>
 <p>$$<br>f(i,W_{t-1},…,W_{t-n+1})=g(i,C(W_{t-1}),…,C(W_{t-n+1}))$$</p>
-<p>函数$f$是由两个映射组成的($C\&amp;g$),$C$是所有词共享的。每一个部分都与一些参数有关。</p>
+<p>函数$f$是由两个映射组成的($C&amp;g$),$C$是所有词共享的。每一个部分都与一些参数有关。</p>
 <p>映射$C$的参数实际上就是特征向量本身，表示为一个$|V|\times m$矩阵，矩阵的每一行代表词$i$的特征向量$C(i)$.</p>
 <p>函数$g$的参数是$\omega$，所有的参数就是$\theta = (C,\omega)$.</p>
 <p>当寻找到使得带惩罚项的训练语料库的对数似然率最大的$\theta$，那么训练完成。</p>
-<p>$$<br>L = \frac{1}{T}\sum _t log f(W_t,W_{t-1},…,W_t-n+1)+R(\theta)<br>$$</p>
+<p>$$<br>L = \frac{1}{T}\sum <em>t log f(W_t,W</em>{t-1},…,W_t-n+1)+R(\theta)<br>$$</p>
 <p>$R(\theta)$是惩罚项，只作用于神经网络的权重和矩阵$C$。自由参数的规模是$V$的线性函数，也是$n$的线性函数。</p>
 <p>在下面的大多数试验中，神经网络只有一个隐藏层，外加一个映射层。还有一个可选的直连层。所以说实际上有两个隐藏层，但是由于影射层只是做了一个线性变换，并没有添加新的信息，因此不能视为真正的隐藏层。所以真正的隐藏层就只有一个。</p>
 <p>从图中可以看出，最底层实际上就是一些单一的词，表示成one-hot形式，即长度为词汇表的长度。然后，每个one-hot向量分别与投影矩阵C相乘，则原来长度为$|V|$的one-hot向量，经过线性变换以后，缩短为一个长度为$m$的向量，其中m就是我们设置的特征的个数，一般在2个数量级。投影完成以后，将所有的特征向量按照顺序首尾相连，形成一个长度为$m(n-1)$的向量，以词向量作为隐藏层的输入，隐藏层的激活函数为双曲正切函数$tanh$。输出层接受隐藏层的输出作为输入，经过一个softmax函数进行转换，得到最终的输出P.</p>
@@ -450,7 +450,7 @@
 </ul>
 <p><strong>skip-gram的目标是对于训练样本$w_1,w_2,\cdots,w_T$,最大化如下平均对数似然概率：</strong></p>
 <p><img src="/picture/5.jpg" alt="matrix2"></p>
-<p>$$<br>\frac{1}{T}\sum _{t=1}^T\sum_{-c\le i\le c,j\ne 0}log p(w_{t+j}\vert w_t)<br>$$</p>
+<p>$$<br>\frac{1}{T}\sum <em>{t=1}^T\sum</em>{-c\le i\le c,j\ne 0}log p(w_{t+j}\vert w_t)<br>$$</p>
 <p>实际上，以上模型是难以实现的，因为计算 $\nabla logp(w_O\vert w_I)$的代价随着$W$的增大而增大(W表示词汇表的长度),经常达到$10^5-10^7$数量级。</p>
 <h2 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h2><h3 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a><strong>哈夫曼树</strong></h3><p>哈夫曼树是一种最优二叉树，它是这样定义的：</p>
 <pre><code>给定n个权值作为n个叶子结点，构造一棵二叉树，若带权路径长度达到最小，称这样的二叉树为最优二叉树。</code></pre><p>哈夫曼树的构造方法如下：</p>
@@ -522,7 +522,7 @@
 </li>
 </ul>
 <p>hierarchical softmax定义$P(w_o\vert w_i)$如下：</p>
-<p>$$<br>P(w\vert w_i)=\prod_{j=1}^{L(w)-1}\sigma([[n(w,j+1)=ch(n(w,j))]]\cdot (v^{‘}_{n(w,j)})^T v_{w_i})<br>$$</p>
+<p>$$<br>P(w\vert w_i)=\prod_{j=1}^{L(w)-1}\sigma([[n(w,j+1)=ch(n(w,j))]]\cdot (v^{‘}<em>{n(w,j)})^T v</em>{w_i})<br>$$</p>
 <p>其中</p>
 <p>$$<br>\sigma(x)=1/(1+e^{-x})<br>$$</p>
 <p>可以证明：</p>
@@ -588,7 +588,7 @@
 </li>
 <li><p>$\theta_i^w \in R^m$，非叶子结点对应的向量</p>
 </li>
-<li><p>$d_1^w,d_2^w,\cdots,d_{l(w)-1}^w \in \{0,1\}$：词$w$的哈夫曼编码，由$l(w)-1$位编码构成，$d_j^w$对应对应路径中第$j$个非叶子结点的编码(0 or 1).</p>
+<li><p>$d_1^w,d_2^w,\cdots,d_{l(w)-1}^w \in {0,1}$：词$w$的哈夫曼编码，由$l(w)-1$位编码构成，$d_j^w$对应对应路径中第$j$个非叶子结点的编码(0 or 1).</p>
 </li>
 </ul>
 <p>根据基于hierarchical softmax的skip-gram模型，投影层将输入的one-hot向量投影成$R^m$空间中的向量，即输出层接受的输入为投影层的输出，即$v_m$。</p>
@@ -596,15 +596,16 @@
 <p>skip-gram模型将其定义为</p>
 <p>$$P(context(w_i)\vert w_i)=\prod _{u\in context(w_i)}p(u\vert w_i)$$</p>
 <p>而根据hierarchical softmax的思想，$p(u\vert w_i)$可以写出如下形式：</p>
-<p>$$p(u\vert w_i)=\prod _{j=2}^{l(w)}p(d_j^u\vert v_m;\theta_{j-1}^u)$$</p>
+<p>$$p(u\vert w_i)=\prod <em>{j=2}^{l(w)}p(d_j^u\vert v_m;\theta</em>{j-1}^u)$$</p>
 <p>其中</p>
 <p>$$p(d_j^u\vert v_m;\theta_{j-1}^u)=[\sigma(v_m^T\theta^u_{j-1})]^{1-d_j^u}\cdot[1-\sigma(v_m^T\theta^u_{j-1})]^{d_j^u}$$</p>
 <p>那么，我们的目标函数可以写成如下形式：</p>
-<p>$$L=\sum _{w\in C} log \prod _{u\in context(w)}\prod _{j=2}^{l(w)}[\sigma(v_m^T\theta^u_{j-1})]^{1-d_j^u}\cdot[1-\sigma(v_m^T\theta^u_{j-1})]^{d_j^u}$$<br>$$=\sum _{w\in C}\sum _{u \in context(w)}\sum _{j=2}^{l(w)}\{(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]\}$$</p>
+<p>$$L=\sum <em>{w\in C} log \prod _{u\in context(w)}\prod _{j=2}^{l(w)}[\sigma(v_m^T\theta^u</em>{j-1})]^{1-d_j^u}\cdot[1-\sigma(v_m^T\theta^u_{j-1})]^{d_j^u}$$<br>$$=\sum <em>{w\in C}\sum _{u \in context(w)}\sum _{j=2}^{l(w)}{(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u</em>{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]}$$</p>
 <p>上面的函数就是skip-gram的目标函数，为了方便推导梯度，将三重求和符号下花括号的内容简记为$L(w,u,j)$，即</p>
 <p>$$L(w,u,j)=(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]$$</p>
 <p>首先考虑$L$关于$\theta_{j-1}^u$的梯度计算：</p>
-<p>$$\frac{\partial L}{\partial \theta_{j-1}^u}=\frac{\partial L(w,u,j)}{\partial \theta_{j-1}^u}=\frac{\partial \{(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]\}}<br>{\partial \theta_{j-1}^u}=[1-d_j^u-\sigma(v_m^T\theta_{j-1}^u)]\cdot v_m$$</p>
+<p>$$\frac{\partial L}{\partial \theta_{j-1}^u}=\frac{\partial L(w,u,j)}{\partial \theta_{j-1}^u}=\frac{\partial {(1-d_j^u)\cdot log[\sigma(v_m^T\theta^u_{j-1})]+d_j^u\cdot log[1-\sigma(v_m^T\theta^u_{j-1})]}}
+{\partial \theta_{j-1}^u}=[1-d_j^u-\sigma(v_m^T\theta_{j-1}^u)]\cdot v_m$$</p>
 <p>于是，$\theta_{j-1}^u$的更新公式可写为：</p>
 <p>$$\theta_{j-1}^u\leftarrow \theta_{j-1}^u+\epsilon [1-d_j^u-\sigma(v_m^T\theta_{j-1}^u)]\cdot v_m$$</p>
 <p>接下来考虑$L$对$v_m$的梯度。由于在$L$中，$v_m$与$\theta_{j-1}^u$具有对称性，因此可以根据上述所求，直接写出$v_m$的更新公式：</p>
@@ -625,7 +626,7 @@
 <p>negative sampling的思想就是，当我们在训练一个特定样本的时候，能不能只更新几个输出为0的权重，这样计算起来就比较轻松了。</p>
 <p>我们把one-hot向量分量为负的位置所对应的词称为negative words，在训练一次样本时，我们只更新几个(假如说5个吧)negative words，同时也更新我们的pisitive words(即分量为1所对应的位置在词汇表中对应的词)。</p>
 <p>作者在论文中说到，当样本量比较小的时候，选择5-20个negative words效果会比较好，当样本量比较大的时候，2-5个negative words就能得到很好的效果。</p>
-<p>现在假设我们在basic model中需要更新的权重矩阵为$300\times 10000$矩阵，那么basic model每次迭代需要更新$3\times 10^6$个参数，而采用了negative sampling 方法以后，我们只需要更新5个negative words和1个positive words对应的权重，也就是$300\times (5+1)=1800$个权重，是原来的$1800/3\times 10^6=0.06\%$.</p>
+<p>现在假设我们在basic model中需要更新的权重矩阵为$300\times 10000$矩阵，那么basic model每次迭代需要更新$3\times 10^6$个参数，而采用了negative sampling 方法以后，我们只需要更新5个negative words和1个positive words对应的权重，也就是$300\times (5+1)=1800$个权重，是原来的$1800/3\times 10^6=0.06%$.</p>
 <p>想法是好的，我们要怎么选择这5个negative words呢？</p>
 <p>我们知道，语料库中的每个词都有一定的频率，那么我们就利用频率这个信息，对negative words进行采样。</p>
 <p>由此可见，高频词被选为negative words的概率就比较大，同理，低频词被选为negative words的概率就比较小。</p>
@@ -755,7 +756,7 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/03/30/Introduction-to-ETL/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/03/30/入门到放弃—ETL/">
                 <i class="level-item fas fa-chevron-left"></i>
                 <span class="level-item">Introduction to ETL</span>
             </a>
@@ -764,7 +765,7 @@
         
         <div class="level-end">
             <a class="level level-item has-link-grey  article-nav-next" href="/2017/09/01/hello-world/">
-                <span class="level-item">hello world</span>
+                <span class="level-item">搭建博客的问题及解决方案</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -839,7 +840,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        24
+                        23
                     </p>
                 </div>
             </div>
@@ -928,7 +929,7 @@
                 <span class="level-item">教程</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/数据仓库/">
@@ -1015,25 +1016,6 @@
         
         <article class="media">
             
-            <a href="/2018/07/02/R语言简明教程/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/Rlogo.png" alt="R语言简明教程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T03:43:55.696Z">2018-07-02</time></div>
-                    <a href="/2018/07/02/R语言简明教程/" class="has-link-black-ter is-size-6">R语言简明教程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/教程/">教程</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2018/05/09/排序算法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/sort.gif" alt="排序算法">
@@ -1108,6 +1090,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/2018/05/02/囚徒困境/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/qiutu.jpg" alt="囚徒困境">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-01T16:00:00.000Z">2018-05-02</time></div>
+                    <a href="/2018/05/02/囚徒困境/" class="has-link-black-ter is-size-6">囚徒困境</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/生活小札/">生活小札</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -1119,17 +1120,6 @@
             归档
         </h3>
         <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
-                <span class="level-start">
-                    <span class="level-item">七月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2018/05/">
@@ -1423,25 +1413,6 @@
         
         <article class="media">
             
-            <a href="/2018/07/02/R语言简明教程/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/Rlogo.png" alt="R语言简明教程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T03:43:55.696Z">2018-07-02</time></div>
-                    <a href="/2018/07/02/R语言简明教程/" class="has-link-black-ter is-size-6">R语言简明教程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/教程/">教程</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2018/05/09/排序算法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/sort.gif" alt="排序算法">
@@ -1516,6 +1487,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/2018/05/02/囚徒困境/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/qiutu.jpg" alt="囚徒困境">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-01T16:00:00.000Z">2018-05-02</time></div>
+                    <a href="/2018/05/02/囚徒困境/" class="has-link-black-ter is-size-6">囚徒困境</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/生活小札/">生活小札</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -1527,17 +1517,6 @@
             归档
         </h3>
         <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
-                <span class="level-start">
-                    <span class="level-item">七月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2018/05/">
@@ -1979,7 +1958,7 @@ document.addEventListener('DOMContentLoaded', function () {
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

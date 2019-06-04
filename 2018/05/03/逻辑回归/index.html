@@ -16,7 +16,7 @@
 <meta property="og:description" content="引言逻辑回归常用来处理分类问题，最常用来处理二分类问题。 生活中经常遇到具有两种结果的情况（冬天的北京会下雪，或者不会下雪；暗恋的对象也喜欢我，或者不喜欢我；今年的期末考试会挂科，或者不会挂科……）。对于这些二分类结果，我们通常会有一些输入变量，或者是连续性，或者是离散型。那么，我们怎样来对这些数据建立模型并且进行分析呢？">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/thumbnails/logistics.jpg">
-<meta property="og:updated_time" content="2019-06-03T07:12:35.098Z">
+<meta property="og:updated_time" content="2019-06-04T02:11:41.253Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逻辑回归">
 <meta name="twitter:description" content="引言逻辑回归常用来处理分类问题，最常用来处理二分类问题。 生活中经常遇到具有两种结果的情况（冬天的北京会下雪，或者不会下雪；暗恋的对象也喜欢我，或者不喜欢我；今年的期末考试会挂科，或者不会挂科……）。对于这些二分类结果，我们通常会有一些输入变量，或者是连续性，或者是离散型。那么，我们怎样来对这些数据建立模型并且进行分析呢？">
@@ -83,8 +83,8 @@
     
 
 
-<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body class="is-3-column">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
     <div class="container">
@@ -188,7 +188,7 @@
 <h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p>总结一下：我们有一个二分输出变量$Y$，我们希望构造一个关于$x$的函数来计算$Y$的条件概率$Pr（{Y=1|X=x}）$，所有的未知参数都可以通过最大似然法来估计。到目前为止，你不会惊讶于发现统计学家们通过问自己“我们如何使用线性回归来解决这个问题”。</p>
 <ul>
 <li>最简单的一个想法就是令$p(x)$为线性函数。无论$x$在什么位置，$x$每增加一个单位，$p$的变化量是一样的。由于线性函数不能保证预测结果位于0和1之间，因此从概念上线性函数就不适合。另外，在很多情况下，根据我们的经验可知，当$p$很大的时候，对于$p$的相同的变化量，$x$的变化量将会大于$p$在1/2附近的变化量。线性函数做不到这样。</li>
-<li>另一个最直观的想法是令$log p(x)$为$x$的线性函数。但是对数函数只在一个方向上是无界的，因此也不符合要求。</li>
+<li>另一个最直观的想法是令$log\ p(x)$为$x$的线性函数。但是对数函数只在一个方向上是无界的，因此也不符合要求。</li>
 <li>最后，我们选择了$p$经过logit变换以后的函数$ln\frac{p}{1-p}$。这个函数就很好啊，满足了我们的所有需求。</li>
 </ul>
 <p>最后一个选择就是我们所说的逻辑回归。一般的，逻辑回归的模型可以表示为如下形式：</p>
@@ -219,18 +219,18 @@
 <p>$$\frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T}=-X^TWX$$</p>
 <p>其中，$X$为原始自变量矩阵，$y$为类别向量，$p$为预测概率向量，$W$是一个$n\times n$对角矩阵，第$i$个元素取值为$p(x_i,\hat{\beta}^{old})(1-p(x_i,\hat{\beta}^{old}))$.</p>
 <p>联立上述两个式子，可以得出参数的迭代公式：</p>
-<p>$$\begin{aligned}\hat{\beta}^{new} &amp;=\hat{\beta}^{old}+(X^TWX)^{-1}X^T(y-p) \ &amp;=(X^TWX)^{-1}X^TW(X\hat{\beta^{old}}+W^{-1}(y-p)) \ &amp;=(X^TWX)^{-1}X^TWz \end{aligned}$$</p>
+<p>$$\begin{aligned}\hat{\beta}^{new} &amp;=\hat{\beta}^{old}+(X^TWX)^{-1}X^T(y-p) \\ &amp;=(X^TWX)^{-1}X^TW(X\hat{\beta^{old}}+W^{-1}(y-p)) \\ &amp;=(X^TWX)^{-1}X^TWz \end{aligned}$$</p>
 <p>其中，$z=X\hat{\beta^{old}}+W^{-1}(y-p)$.</p>
 <p>实际上，$X^TWX$是一个黑塞矩阵</p>
 <p>$$H(\beta) = \frac{\partial ^2\ell (\beta)}{\partial \beta \partial \beta^T}$$</p>
 <p>即目标函数对$\beta$的二阶偏导，那么，上述迭代公式也可以写作：</p>
-<p>$$\begin{aligned} \hat{\beta}^{new} &amp;=\hat{\beta}^{old} - H(\beta)^{-1}\frac{\partial \ell(\beta)}{\beta} \ &amp;= \hat{\beta}^{old} - H(\beta)^{-1}X^T(y-p) \end{aligned} $$ </p>
+<p>$$\begin{aligned} \hat{\beta}^{new} &amp;=\hat{\beta}^{old} - H(\beta)^{-1}\frac{\partial \ell(\beta)}{\beta} \\ &amp;= \hat{\beta}^{old} - H(\beta)^{-1}X^T(y-p) \end{aligned} $$ </p>
 <p>上述是我们熟悉的牛顿迭代公式。</p>
 <p>矩阵相乘的计算不算复杂，但是当数据量上升以后，黑塞矩阵的求逆就非常复杂了，因此衍生出许多拟牛顿算法，本节不讨论优化算法。</p>
 <p>很明显，本例的目标函数就是对数似然函数$\ell(\beta)$，也就是求其最大值。然而，很多同学已经习惯了牛顿法求最小值，因此，为了大家看着方便，下面介绍梯度下降法求解逻辑回归。</p>
 <p>只需要在上述似然函数前面加一个负号，本例就变成了一个梯度下降的问题了。为了形式上好看，还可以在前面对数似然函数求一个均值，即除以样本量。</p>
 <p>假设$J(\beta)$是我们的目标函数，则</p>
-<p>$$<br>\begin{aligned}<br>J(\beta) &amp;= -\frac{1}{n}\ell(\beta) \<br>&amp;=-\frac{1}{n}\sum_{i=1}^ny_iln(p(x_i))+(1-y_i)ln(1-p(x_i))<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>J(\beta) &amp;= -\frac{1}{n}\ell(\beta) \\<br>&amp;=-\frac{1}{n}\sum_{i=1}^ny_iln(p(x_i))+(1-y_i)ln(1-p(x_i))<br>\end{aligned}<br>$$</p>
 <p>此时我们的梯度公式就变成了：</p>
 <p>$$\frac{\partial J(\beta)}{\partial \beta}=-\frac{1}{n}\sum _{i=1}^n(y_i-p_i)x_i=\frac{1}{n}\sum _{i=1}^n(p_i-y_i)x_i$$</p>
 <p>我们的二阶偏导数就变成了</p>
@@ -387,7 +387,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        24
+                        23
                     </p>
                 </div>
             </div>
@@ -476,7 +476,7 @@
                 <span class="level-item">教程</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/数据仓库/">
@@ -563,25 +563,6 @@
         
         <article class="media">
             
-            <a href="/2018/07/02/R语言简明教程/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/Rlogo.png" alt="R语言简明教程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T03:43:55.696Z">2018-07-02</time></div>
-                    <a href="/2018/07/02/R语言简明教程/" class="has-link-black-ter is-size-6">R语言简明教程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/教程/">教程</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2018/05/09/排序算法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/sort.gif" alt="排序算法">
@@ -656,6 +637,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/2018/05/02/囚徒困境/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/qiutu.jpg" alt="囚徒困境">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-01T16:00:00.000Z">2018-05-02</time></div>
+                    <a href="/2018/05/02/囚徒困境/" class="has-link-black-ter is-size-6">囚徒困境</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/生活小札/">生活小札</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -667,17 +667,6 @@
             归档
         </h3>
         <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
-                <span class="level-start">
-                    <span class="level-item">七月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2018/05/">
@@ -971,25 +960,6 @@
         
         <article class="media">
             
-            <a href="/2018/07/02/R语言简明教程/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/Rlogo.png" alt="R语言简明教程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T03:43:55.696Z">2018-07-02</time></div>
-                    <a href="/2018/07/02/R语言简明教程/" class="has-link-black-ter is-size-6">R语言简明教程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/教程/">教程</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2018/05/09/排序算法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/sort.gif" alt="排序算法">
@@ -1064,6 +1034,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/2018/05/02/囚徒困境/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/qiutu.jpg" alt="囚徒困境">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-01T16:00:00.000Z">2018-05-02</time></div>
+                    <a href="/2018/05/02/囚徒困境/" class="has-link-black-ter is-size-6">囚徒困境</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/生活小札/">生活小札</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -1075,17 +1064,6 @@
             归档
         </h3>
         <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
-                <span class="level-start">
-                    <span class="level-item">七月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2018/05/">
@@ -1527,7 +1505,7 @@ document.addEventListener('DOMContentLoaded', function () {
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

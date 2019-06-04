@@ -2,22 +2,25 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-<title>Introduction to ETL - Young&#39;s Blog</title>
+<title>新浪新闻爬虫 - Young&#39;s Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="keywords" content="ETL,数据仓库">
+    <meta name="description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。">
+<meta name="keywords" content="爬虫">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Introduction to ETL">
-<meta property="og:url" content="http://yoursite.com/2018/03/30/Introduction-to-ETL/index.html">
+<meta property="og:title" content="新浪新闻爬虫">
+<meta property="og:url" content="http://yoursite.com/2018/04/27/爬虫-新浪新闻/index.html">
 <meta property="og:site_name" content="Young&#39;s Blog">
+<meta property="og:description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/thumbnails/ETL.jpg">
-<meta property="og:updated_time" content="2019-06-03T06:50:14.110Z">
+<meta property="og:image" content="http://yoursite.com/thumbnails/sina.jpg">
+<meta property="og:updated_time" content="2019-06-03T07:04:19.849Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Introduction to ETL">
-<meta name="twitter:image" content="http://yoursite.com/thumbnails/ETL.jpg">
+<meta name="twitter:title" content="新浪新闻爬虫">
+<meta name="twitter:description" content="获取标题列表新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。">
+<meta name="twitter:image" content="http://yoursite.com/thumbnails/sina.jpg">
 
 
 
@@ -80,15 +83,15 @@
     
 
 
-<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body class="is-3-column">
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
     <div class="container">
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Introduction to ETL" height="28">
+                <img src="/images/logo.svg" alt="新浪新闻爬虫" height="28">
             
             </a>
         </div>
@@ -128,7 +131,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/ETL.jpg" alt="Introduction to ETL">
+            <img class="thumbnail" src="/thumbnails/sina.jpg" alt="新浪新闻爬虫">
         </span>
     </div>
     
@@ -136,17 +139,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-03-30T14:54:51.000Z">2018-03-30</time>
+                <time class="level-item has-text-grey" datetime="2018-04-26T16:00:00.000Z">2018-04-27</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/数据仓库/">数据仓库</a>
+                <a class="has-link-grey -link" href="/categories/数据获取/">数据获取</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 1 个字)
+                    4 分钟 读完 (大约 670 个字)
                 </span>
                 
                 
@@ -155,18 +158,32 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Introduction to ETL
+                新浪新闻爬虫
             
         </h1>
         <div class="content">
-            <a id="more"></a>
+            <h2 id="获取标题列表"><a href="#获取标题列表" class="headerlink" title="获取标题列表"></a>获取标题列表</h2><p>新浪新闻总是不断更新的，因此有可能每次查询的返回新闻数量都是不一样的，所以我们最好不要通过设置固定的条数取爬取。</p>
+<a id="more"></a>
+
+<p><img src="/picture/sina_scrapy.png" alt="sina_scrapy"></p>
+<p>从上图可以看出，只要有“下一页”存在，我们就可以从下一页获取链接，从而开始下一页的爬取。</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> requests</span><br><span class="line"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np</span><br><span class="line"><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="hljs-keyword">import</span> re</span><br><span class="line"><span class="hljs-keyword">import</span> time</span><br><span class="line"><span class="hljs-keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">#第一页的URL</span></span><br><span class="line">startURL = <span class="hljs-string">'http://search.sina.com.cn/?c=news&amp;q=%D0%F0%C0%FB%D1%C7+%BF%D5%CF%AE&amp;range=all&amp;time=2018&amp;stime=&amp;etime=&amp;num=20'</span></span><br><span class="line"></span><br><span class="line">url = startURL</span><br><span class="line">allNewsURL = []</span><br><span class="line">errorPages = []</span><br><span class="line">count = <span class="hljs-number">1</span></span><br><span class="line"><span class="hljs-keyword">while</span> url:</span><br><span class="line">    <span class="hljs-keyword">try</span>:</span><br><span class="line">        res = requests.get(url)</span><br><span class="line">        print(<span class="hljs-string">'已经爬取了第'</span>,count,<span class="hljs-string">'页！'</span>)</span><br><span class="line">        print(<span class="hljs-string">'URL:'</span>,url)</span><br><span class="line">        soup = BeautifulSoup(res.text,<span class="hljs-string">'html.parser'</span>)</span><br><span class="line">        <span class="hljs-keyword">for</span> news <span class="hljs-keyword">in</span> soup.findAll(<span class="hljs-string">'h2'</span>):</span><br><span class="line">            allNewsURL.append(news.find(<span class="hljs-string">'a'</span>).get(<span class="hljs-string">'href'</span>))</span><br><span class="line">        pages = soup.find(<span class="hljs-string">'div'</span>,&#123;<span class="hljs-string">'id'</span>:<span class="hljs-string">"_function_code_page"</span>&#125;).findAll(<span class="hljs-string">'a'</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span> pages[<span class="hljs-number">-1</span>].get(<span class="hljs-string">'title'</span>) == <span class="hljs-string">'下一页'</span>:</span><br><span class="line">            url = <span class="hljs-string">'http://search.sina.com.cn'</span> + pages[<span class="hljs-number">-1</span>].get(<span class="hljs-string">'href'</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            <span class="hljs-keyword">break</span></span><br><span class="line">        time.sleep(np.random.rand() + <span class="hljs-number">2</span>)</span><br><span class="line">        count += <span class="hljs-number">1</span></span><br><span class="line">    <span class="hljs-keyword">except</span> AttributeError:</span><br><span class="line">        print(<span class="hljs-string">'ip被封！'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'xuliyakongxi.csv'</span>,<span class="hljs-string">'a'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> allNewsURL:</span><br><span class="line">        f.write(url+<span class="hljs-string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取文章详情"><a href="#获取文章详情" class="headerlink" title="获取文章详情"></a>获取文章详情</h2><p>获取文章详情需要注意以下两点：</p>
+<ul>
+<li>不同的新闻来源具有不同的channel。</li>
+<li>不是所有的新闻都具有关键词、源链接等信息，因此需要进行异常处理。</li>
+</ul>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">URLs = []</span><br><span class="line"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'xuliyakongxi.csv'</span>,<span class="hljs-string">'r'</span>) <span class="hljs-keyword">as</span> f:</span><br><span class="line">    <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> f.readlines():</span><br><span class="line">        url = url.strip(<span class="hljs-string">'\n'</span>)</span><br><span class="line">        URLs.append(url)</span><br><span class="line"></span><br><span class="line">allNews = []</span><br><span class="line">count = <span class="hljs-number">0</span></span><br><span class="line">comments = []</span><br><span class="line">notMatch= []</span><br><span class="line"><span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> URLs:</span><br><span class="line">    <span class="hljs-keyword">try</span>:</span><br><span class="line">        currentNews = []</span><br><span class="line">        request = requests.get(url,timeout=<span class="hljs-number">4</span>)</span><br><span class="line">        request.encoding = <span class="hljs-string">'utf-8'</span></span><br><span class="line">        soup = BeautifulSoup(request.text,<span class="hljs-string">'html.parser'</span>)</span><br><span class="line"></span><br><span class="line">        newsid = re.search(<span class="hljs-string">'doc-i(.+).shtml'</span>,url).group(<span class="hljs-number">1</span>) <span class="hljs-comment">#新闻ID</span></span><br><span class="line">        </span><br><span class="line">        allChannels = [<span class="hljs-string">'gz'</span>,<span class="hljs-string">'shc'</span>,<span class="hljs-string">'gn'</span>,<span class="hljs-string">'gj'</span>,<span class="hljs-string">'jc'</span>,<span class="hljs-string">'cj'</span>,<span class="hljs-string">'kj'</span>,<span class="hljs-string">'sh'</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-comment">#不同来源的新闻对应不同的channel，此处将所有的channel进行遍历，并加入了异常处理</span></span><br><span class="line">        <span class="hljs-keyword">for</span> channel <span class="hljs-keyword">in</span> allChannels:</span><br><span class="line">            <span class="hljs-keyword">try</span>:</span><br><span class="line">                comm = <span class="hljs-string">'http://comment5.news.sina.com.cn/page/info?version=1&amp;format=json&amp;channel='</span>+channel+<span class="hljs-string">'&amp;newsid=comos-'</span>+ newsid</span><br><span class="line">                res_comm = requests.get(comm)</span><br><span class="line">                commentsDesc = json.loads(res_comm.text)</span><br><span class="line">                engageNum = commentsDesc[<span class="hljs-string">'result'</span>][<span class="hljs-string">'count'</span>][<span class="hljs-string">'total'</span>] <span class="hljs-comment">#参与</span></span><br><span class="line">                commentsNum = commentsDesc[<span class="hljs-string">'result'</span>][<span class="hljs-string">'count'</span>][<span class="hljs-string">'show'</span>] <span class="hljs-comment">#评论</span></span><br><span class="line">                comments.append(commentsDesc[<span class="hljs-string">'result'</span>][<span class="hljs-string">'count'</span>])</span><br><span class="line">            <span class="hljs-keyword">except</span>:</span><br><span class="line">                <span class="hljs-keyword">if</span> channel == <span class="hljs-string">'sh'</span>:</span><br><span class="line">                    print(<span class="hljs-string">'没有匹配'</span>)</span><br><span class="line">                    engageNum = <span class="hljs-keyword">None</span></span><br><span class="line">                    commentsNum = <span class="hljs-keyword">None</span></span><br><span class="line">                    notMatch.append(comm)</span><br><span class="line">                <span class="hljs-keyword">else</span>:</span><br><span class="line">                    <span class="hljs-keyword">continue</span></span><br><span class="line">            <span class="hljs-keyword">else</span>:</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">        </span><br><span class="line">        titleAndKeywords = soup.find(<span class="hljs-string">'title'</span>).text </span><br><span class="line">        tk = titleAndKeywords.split(<span class="hljs-string">'|'</span>)</span><br><span class="line">        title = tk[<span class="hljs-number">0</span>] <span class="hljs-comment">#标题</span></span><br><span class="line">        <span class="hljs-keyword">if</span> len(tk) &gt; <span class="hljs-number">2</span>:</span><br><span class="line">            keywords = tk[<span class="hljs-number">1</span>:(len(tk)<span class="hljs-number">-1</span>)]</span><br><span class="line">            keywords.append(tk[<span class="hljs-number">-1</span>].split(<span class="hljs-string">'_'</span>)[<span class="hljs-number">0</span>]) <span class="hljs-comment">#关键词</span></span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            keywords = tk[<span class="hljs-number">-1</span>].split(<span class="hljs-string">'_'</span>)[<span class="hljs-number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        paras = soup.find(<span class="hljs-string">'div'</span>,&#123;<span class="hljs-string">'class'</span>:<span class="hljs-string">'article'</span>&#125;).text <span class="hljs-comment">#正文，存在脏数据</span></span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">try</span>:</span><br><span class="line">            date = soup.find(<span class="hljs-string">'span'</span>,&#123;<span class="hljs-string">'class'</span>:<span class="hljs-string">'date'</span>&#125;).text <span class="hljs-comment">#日期</span></span><br><span class="line">        <span class="hljs-keyword">except</span>:</span><br><span class="line">            date = <span class="hljs-keyword">None</span></span><br><span class="line">            </span><br><span class="line">        <span class="hljs-keyword">try</span>:</span><br><span class="line">            sourceUrl = soup.find(<span class="hljs-string">'a'</span>,&#123;<span class="hljs-string">'class'</span>:<span class="hljs-string">'source'</span>&#125;).get(<span class="hljs-string">'href'</span>) <span class="hljs-comment">#源链接</span></span><br><span class="line">            source = soup.find(<span class="hljs-string">'a'</span>,&#123;<span class="hljs-string">'class'</span>:<span class="hljs-string">'source'</span>&#125;).text <span class="hljs-comment">#来源</span></span><br><span class="line">        <span class="hljs-keyword">except</span>:</span><br><span class="line">            sourceUrl = <span class="hljs-keyword">None</span></span><br><span class="line">            source = <span class="hljs-keyword">None</span></span><br><span class="line">            </span><br><span class="line">        currentNews.append(url) <span class="hljs-comment">#url</span></span><br><span class="line">        currentNews.append(title)  <span class="hljs-comment">#标题</span></span><br><span class="line">        currentNews.append(keywords) <span class="hljs-comment">#关键词</span></span><br><span class="line">        currentNews.append(paras) <span class="hljs-comment">#正文</span></span><br><span class="line">        currentNews.append(date) <span class="hljs-comment">#日期</span></span><br><span class="line">        currentNews.append(sourceUrl) <span class="hljs-comment">#源链接</span></span><br><span class="line">        currentNews.append(source) <span class="hljs-comment">#来源</span></span><br><span class="line">        currentNews.append(engageNum) <span class="hljs-comment">#参与人数</span></span><br><span class="line">        currentNews.append(commentsNum) <span class="hljs-comment">#评论人数</span></span><br><span class="line"></span><br><span class="line">        allNews.append(currentNews)</span><br><span class="line">        count += <span class="hljs-number">1</span></span><br><span class="line"></span><br><span class="line">        print(<span class="hljs-string">'已经爬取'</span>,str(count),<span class="hljs-string">'个页面.'</span>)</span><br><span class="line">        print(<span class="hljs-string">'comment URL:'</span>,comm)</span><br><span class="line">        time.sleep(<span class="hljs-number">1</span>+abs(np.random.rand()))</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> count % <span class="hljs-number">20</span> == <span class="hljs-number">0</span>:</span><br><span class="line">            time.sleep(<span class="hljs-number">5</span>)</span><br><span class="line"><span class="hljs-comment">#         if count &gt; 36:</span></span><br><span class="line"><span class="hljs-comment">#             break;</span></span><br><span class="line">    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:</span><br><span class="line">        print(e)</span><br><span class="line">        <span class="hljs-keyword">continue</span></span><br></pre></td></tr></table></figure>
+
+
         </div>
         
         <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/ETL/">ETL</a>, <a class="has-link-grey -link" href="/tags/数据仓库/">数据仓库</a>
+                    <a class="has-link-grey -link" href="/tags/爬虫/">爬虫</a>
                 </div>
             </div>
         </div>
@@ -217,16 +234,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/01/mapreduce-LR/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/05/02/囚徒困境/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">MapReduce计算线性回归的系数</span>
+                <span class="level-item">囚徒困境</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/03/27/词向量/">
-                <span class="level-item">Word2Vec-语言模型的前世今生</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/26/岭回归/">
+                <span class="level-item">改进的删一法交叉验证与逐步回归比较</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -245,7 +262,7 @@
 <script src="https://www.wenjunjiang.win/js/gitment.js"></script>
 <script>
 	var gitment = new Gitment({
-		id: '2018/03/30/Introduction-to-ETL/',
+		id: '2018/04/27/爬虫-新浪新闻/',
 		owner: 'DBYoung',
 		repo: 'DBYoung.github.io',
 		oauth: {
@@ -301,7 +318,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        24
+                        23
                     </p>
                 </div>
             </div>
@@ -390,7 +407,7 @@
                 <span class="level-item">教程</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/数据仓库/">
@@ -477,25 +494,6 @@
         
         <article class="media">
             
-            <a href="/2018/07/02/R语言简明教程/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/Rlogo.png" alt="R语言简明教程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T03:43:55.696Z">2018-07-02</time></div>
-                    <a href="/2018/07/02/R语言简明教程/" class="has-link-black-ter is-size-6">R语言简明教程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/教程/">教程</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2018/05/09/排序算法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/sort.gif" alt="排序算法">
@@ -570,6 +568,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/2018/05/02/囚徒困境/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/qiutu.jpg" alt="囚徒困境">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-01T16:00:00.000Z">2018-05-02</time></div>
+                    <a href="/2018/05/02/囚徒困境/" class="has-link-black-ter is-size-6">囚徒困境</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/生活小札/">生活小札</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -581,17 +598,6 @@
             归档
         </h3>
         <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
-                <span class="level-start">
-                    <span class="level-item">七月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2018/05/">
@@ -885,25 +891,6 @@
         
         <article class="media">
             
-            <a href="/2018/07/02/R语言简明教程/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/Rlogo.png" alt="R语言简明教程">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T03:43:55.696Z">2018-07-02</time></div>
-                    <a href="/2018/07/02/R语言简明教程/" class="has-link-black-ter is-size-6">R语言简明教程</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/教程/">教程</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
             <a href="/2018/05/09/排序算法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/sort.gif" alt="排序算法">
@@ -978,6 +965,25 @@
             </div>
         </article>
         
+        <article class="media">
+            
+            <a href="/2018/05/02/囚徒困境/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/qiutu.jpg" alt="囚徒困境">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-05-01T16:00:00.000Z">2018-05-02</time></div>
+                    <a href="/2018/05/02/囚徒困境/" class="has-link-black-ter is-size-6">囚徒困境</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/生活小札/">生活小札</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
     </div>
 </div>
 
@@ -989,17 +995,6 @@
             归档
         </h3>
         <ul class="menu-list">
-        
-        <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
-                <span class="level-start">
-                    <span class="level-item">七月 2018</span>
-                </span>
-                <span class="level-end">
-                    <span class="level-item tag">1</span>
-                </span>
-            </a>
-        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2018/05/">
@@ -1285,7 +1280,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Introduction to ETL" height="28">
+                    <img src="/images/logo.svg" alt="新浪新闻爬虫" height="28">
                 
                 </a>
                 <p class="is-size-7">
@@ -1441,7 +1436,7 @@ document.addEventListener('DOMContentLoaded', function () {
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script> --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
