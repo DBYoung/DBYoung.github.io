@@ -8,7 +8,7 @@
 
 
     <meta name="description" content="每个人都是平凡的，同时也是与众不同的。">
-<meta name="keywords" content="MapReduce,线性回归,ETL,数据仓库,排序,数据结构,分类器,爬虫,降维,数据处理,优化算法,牛顿法,感知机,神经网络,深度学习,线性模型,贝叶斯,机器学习,矩阵分解,R语言,Lubridate,树模型,集成学习,岭回归,逐步回归,梯度下降,自然语言处理,词向量,kmeans,聚类算法">
+<meta name="keywords" content="ETL,数据仓库,MapReduce,线性回归,分类器,排序,数据结构,爬虫,优化算法,牛顿法,降维,数据处理,感知机,神经网络,深度学习,线性模型,贝叶斯,机器学习,矩阵分解,R语言,Lubridate,树模型,集成学习,岭回归,逐步回归,梯度下降,自然语言处理,词向量,kmeans,聚类算法">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Young&#39;s Blog">
 <meta property="og:url" content="http://yoursite.com/tags/index.html">
@@ -1021,7 +1021,23 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="/js/insight.js" defer></script>
 <link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<link rel="stylesheet" href="/css/insight.css">
     
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
